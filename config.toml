@@ -1,0 +1,22 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "IMTorg Blog Site"
+
+theme = "hugo-theme-minos"
+paginate = 10
+[params]
+    smartToc = true
+    katex = true
+    
+[[menu.main]]
+    name = "Categories"
+    url = "/categories/"
+    
+[[menu.main]]
+    name = "Tags"
+    url = "/tags/"
+    
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+
