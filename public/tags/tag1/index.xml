@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tag1 on IMTorg Blog Site</title>
+    <link>https://imtorgdemo.github.io/tags/tag1/</link>
+    <description>Recent content in tag1 on IMTorg Blog Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 04 May 2019 03:47:03 -0400</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Second</title>
+      <link>https://imtorgdemo.github.io/posts/the-second/</link>
+      <pubDate>Sat, 04 May 2019 03:47:03 -0400</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/the-second/</guid>
+      <description>Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa.
+Nulla quia non qui sed. Voluptatem et enim nesciunt sunt pariatur. Libero eius excepturi voluptatibus reprehenderit. Facere enim neque dolorem sed ullam non. Dolor sit molestias repellendus.
+Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa.</description>
+    </item>
+    
+    <item>
+      <title>Formatting for Jupyter (.ipynb) Notebooks</title>
+      <link>https://imtorgdemo.github.io/posts/00.index/</link>
+      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/00.index/</guid>
+      <description>This is the index file for jpy-flette
+print(&#39;goodbye!&#39;)  goodbye!  import matplotlib.pyplot as plt import numpy as np a=[x for x in range(10)] b=np.square(a) plt.plot(a,b) plt.show()  </description>
+    </item>
+    
+  </channel>
+</rss>

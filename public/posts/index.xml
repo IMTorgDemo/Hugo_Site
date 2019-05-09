@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on IMTorg Blog Site</title>
+    <link>https://imtorgdemo.github.io/posts/</link>
+    <description>Recent content in Posts on IMTorg Blog Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Generalizing the Machine Learning Process</title>
+      <link>https://imtorgdemo.github.io/posts/proc_models_machinelearning/</link>
+      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/proc_models_machinelearning/</guid>
+      <description>This work describes a general approach to follow when performing machine learning (ML) manually, and when automating in a deployment setting. Unlike a classical statistical analysis, standard machine learning projects typically follow a general and repeatable process. While the practicioner should be aware of details for each of the steps and the reasons for choosing them, there is much less design-thinking and checking of assumptions that are necessary components of more mathematical modeling fields.</description>
+    </item>
+    
+    <item>
+      <title>The Second</title>
+      <link>https://imtorgdemo.github.io/posts/the-second/</link>
+      <pubDate>Sat, 04 May 2019 03:47:03 -0400</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/the-second/</guid>
+      <description>Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa.
+Nulla quia non qui sed. Voluptatem et enim nesciunt sunt pariatur. Libero eius excepturi voluptatibus reprehenderit. Facere enim neque dolorem sed ullam non. Dolor sit molestias repellendus.
+Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa.</description>
+    </item>
+    
+    <item>
+      <title>Formatting a Markdown Post</title>
+      <link>https://imtorgdemo.github.io/posts/my-first-post/</link>
+      <pubDate>Thu, 02 May 2019 16:00:35 -0400</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/my-first-post/</guid>
+      <description>Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa.
+Nulla quia non qui sed. Voluptatem et enim nesciunt sunt pariatur. Libero eius excepturi voluptatibus reprehenderit. Facere enim neque dolorem sed ullam non. Dolor sit molestias repellendus.
+This is a footnote.1
+In addition, we have task lists:
+a task list item list syntax required incomplete completed  One stormy night.</description>
+    </item>
+    
+    <item>
+      <title>Formatting for Jupyter (.ipynb) Notebooks</title>
+      <link>https://imtorgdemo.github.io/posts/00.index/</link>
+      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/00.index/</guid>
+      <description>This is the index file for jpy-flette
+print(&#39;goodbye!&#39;)  goodbye!  import matplotlib.pyplot as plt import numpy as np a=[x for x in range(10)] b=np.square(a) plt.plot(a,b) plt.show()  </description>
+    </item>
+    
+    <item>
+      <title>Formatting an R Markdown Post</title>
+      <link>https://imtorgdemo.github.io/posts/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/2015-07-23-r-rmarkdown/</guid>
+      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+    </item>
+    
+  </channel>
+</rss>
