@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>IMTorg Blog Site</title>
-    <link>https://imtorgdemo.github.io/</link>
-    <description>Recent content on IMTorg Blog Site</description>
+    <title>tag on IMTorg Blog Site</title>
+    <link>https://imtorgdemo.github.io/tags/tag/</link>
+    <description>Recent content in tag on IMTorg Blog Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 02 May 2019 16:00:35 -0400</lastBuildDate>
     
-	<atom:link href="https://imtorgdemo.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://imtorgdemo.github.io/tags/tag/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,16 +22,6 @@ Nulla quia non qui sed. Voluptatem et enim nesciunt sunt pariatur. Libero eius e
 This is a footnote.1
 In addition, we have task lists:
 a task list item list syntax required incomplete completed  One stormy night.</description>
-    </item>
-    
-    <item>
-      <title>About IMTorg</title>
-      <link>https://imtorgdemo.github.io/about/</link>
-      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/about/</guid>
-      <description>This blog site is a knowledge base of various innovations produced by Information Management Technologies. If you would like to learn more, please contact us. We&amp;rsquo;ve helped many firms of all sizes, both commercial and public, including the following:
- STG National Institutes of Health Global Association of Risk Proffesionals US Department of State Wisconsin Department of Transportation multiple start-ups  </description>
     </item>
     
   </channel>

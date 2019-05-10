@@ -6,55 +6,10 @@
     <description>Recent content in Tags on IMTorg Blog Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 May 2019 16:00:35 -0400</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>best-practice</title>
-      <link>https://imtorgdemo.github.io/tags/best-practice/</link>
-      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/best-practice/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>machine-learning</title>
-      <link>https://imtorgdemo.github.io/tags/machine-learning/</link>
-      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tag1</title>
-      <link>https://imtorgdemo.github.io/tags/tag1/</link>
-      <pubDate>Sat, 04 May 2019 03:47:03 -0400</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/tag1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tag2</title>
-      <link>https://imtorgdemo.github.io/tags/tag2/</link>
-      <pubDate>Sat, 04 May 2019 03:47:03 -0400</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/tag2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tag3</title>
-      <link>https://imtorgdemo.github.io/tags/tag3/</link>
-      <pubDate>Sat, 04 May 2019 03:47:03 -0400</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/tag3/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>markdown</title>
@@ -66,29 +21,11 @@
     </item>
     
     <item>
-      <title>R Markdown</title>
-      <link>https://imtorgdemo.github.io/tags/r-markdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <title>tag</title>
+      <link>https://imtorgdemo.github.io/tags/tag/</link>
+      <pubDate>Thu, 02 May 2019 16:00:35 -0400</pubDate>
       
-      <guid>https://imtorgdemo.github.io/tags/r-markdown/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>plot</title>
-      <link>https://imtorgdemo.github.io/tags/plot/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/plot/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>regression</title>
-      <link>https://imtorgdemo.github.io/tags/regression/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/regression/</guid>
+      <guid>https://imtorgdemo.github.io/tags/tag/</guid>
       <description></description>
     </item>
     

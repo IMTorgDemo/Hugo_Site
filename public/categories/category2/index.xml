@@ -35,15 +35,5 @@ In addition, we have task lists:
 a task list item list syntax required incomplete completed  One stormy night.</description>
     </item>
     
-    <item>
-      <title>Formatting for Jupyter (.ipynb) Notebooks</title>
-      <link>https://imtorgdemo.github.io/posts/00.index/</link>
-      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/posts/00.index/</guid>
-      <description>This is the index file for jpy-flette
-print(&#39;goodbye!&#39;)  goodbye!  import matplotlib.pyplot as plt import numpy as np a=[x for x in range(10)] b=np.square(a) plt.plot(a,b) plt.show()  </description>
-    </item>
-    
   </channel>
 </rss>
