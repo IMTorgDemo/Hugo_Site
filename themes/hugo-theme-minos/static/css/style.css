@@ -112,13 +112,15 @@ body,
 #container {
   height: 100%;
 }
+/*MODIFIED*/
 body {
-  background: #fff;
+  background: #FFF7DE;
   font: 16px 'PT Serif', 'STZhongsong', '华文中宋', 'Microsoft Yahei', serif;
   -webkit-text-size-adjust: 100%;
 }
+/* MODIFIED*/
 .outer {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
 }
 .outer:before,
@@ -158,13 +160,14 @@ body {
   background-position: left center;
   background-repeat: no-repeat;
 }
+/* MODIFIED*/
 .logo-text {
   width: auto;
   color: #000;
   font-size: 24px;
   font-weight: 700;
   line-height: 57px;
-  margin-right: 25px;
+  margin-right: 150px;
   text-decoration: none;
   background-image: none;
 }
@@ -694,8 +697,9 @@ a.article-title:hover,
   margin-left: 20px;
   margin-top: 2px;
 }
+/*MODIFIED*/
 .article-toc li a {
-  color: #000;
+  color: #4da0ff;
   text-decoration: none;
 }
 .article-toc li a.active {
