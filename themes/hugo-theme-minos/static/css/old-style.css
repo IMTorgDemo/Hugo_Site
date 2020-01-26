@@ -509,39 +509,6 @@ a.article-title:hover,
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-/* includes alternating gray and white with on-hover color */
-
-.dataframe {
-    font-size: 11pt; 
-    font-family: Arial;
-    border-collapse: collapse; 
-    border: 2px solid silver;
-
-}
-
-.dataframe thead tr th{
-	text-align: center;
-	font-weight: bold;
-	border: 1px solid silver;
-}
-
-.dataframe td, th {
-    padding: 5px;
-    border: 1px solid silver;
-}
-
-.dataframe tr:nth-child(even) {
-    background: #E0E0E0;
-}
-
-.dataframe tr:hover {
-    background: silver;
-    cursor: pointer;
-}
-
-
-
 .article-entry th {
   font-weight: 600;
   border-bottom: 3px solid #ddd;
@@ -849,96 +816,54 @@ a.article-title:hover,
 }
 
 
-/* MODIFIED */
-.article-entry ul > li > p {
-  margin: 0;
-}
 
-/* MODIFIED */
-.article-entry code,
 .article-entry pre,
 .article-entry .highlight {
   margin: 0;
-  font-size: 10px;
+  font-size: 14px;
   background: #23241f;
   padding: 15px 0;
   overflow: auto;
   color: #fff;
-  line-height: 12.4px;
-  border-radius: 5px;
+  line-height: 22.4px;
 }
 .article-entry .highlight .gutter pre,
 .article-entry .gist .gist-file .gist-data .line-numbers {
   color: #666;
   font-size: 0.85em;
 }
-
-.article-entry code,
 .article-entry pre,
 .article-entry code {
   font-family: "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace, '华文中宋';
 }
-
 .article-entry code {
-  /*background: #f2f2f2;*/
-  background: #23241f;
-  /*padding: 0 0.3em;*/
-  padding: 2px;
+  background: #f2f2f2;
+  padding: 0 0.3em;
 }
-
 .article-entry pre {
-  padding: 3px;
+  padding: 2px;
   margin-top: 2px;
 }
 
-.article-entry .output pre {
-  padding: 3px;
-  margin-top: 2px;
-  background: #00000026;
-}
 
-.article-entry pre code[class="language-nb-output"] {
-  color: black;
-  background: none;
-}
-
-
-/* MODIFIED 
+/* MODIFIED */
 .article-entry pre code{
-  background: none;
-  text-shadow: none;
-}
-*/
-
-/* */
-.article-entry pre code[class^='language-']:not(.language-nb-output){
   background: none;
   text-shadow: none;
   padding: 0;
 }
-
-
-/* ALL TYPES OF OUTPUT 
-.article-entry pre:first-of-type + pre code:not(.language-python)  {
-  background: #ffffffba;
-  color:black;
+/*
+.article-entry pre code[class^='language-']{
+  background: none;
   text-shadow: none;
-}*/
-.article-entry pre code[class="hljs css"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs coffeescript"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs cs"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs http"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs perl"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs json"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs ruby"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs bash"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs nginx"]:not(.language-python):not(.xml),
-.article-entry pre code[class="hljs python"]:not(.language-python):not(.xml)   {
-  background: #ffffffba;
-  color:black;
-  text-shadow: none;
+  padding: 0;
 }
-
+*/
+.article-entry pre:first-of-type + pre code:not(.language-python)  {
+  background: #ffffff47;
+  text-shadow: none;
+  padding: 0;
+}
 
 
 

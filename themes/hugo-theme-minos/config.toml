@@ -1,12 +1,19 @@
 baseURL = "https://imtorgdemo.github.io/"
+testURL = "http://localhost:1313/"
 languageCode = "en-us"
-title = "IMTorg Kbase"
+title = "IMTorg"
+name = "Jason Beach"
 
 theme = "hugo-theme-minos"
-paginate = 10
+paginate = 10   
+
 [params]
+    GitHubUser = "IMTorg"
+    SidebarRecentLimit = 5
+    Subtitle = "Data-driven story telling"
     smartToc = true
     katex = true
+    headerimg = "header_01_blue.jpg"
     
 [[menu.main]]
     name = "Categories"
