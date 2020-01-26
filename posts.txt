@@ -14,5 +14,5 @@ blog_datastore-elasticsearch/
 blog_nlp-regular_expressions_workflow/
 blog_models-machine_learning/
 blog_test-hugo_blog/
-my-first-post/
+blog_test-my_first_post/
 blog_page-todo/
