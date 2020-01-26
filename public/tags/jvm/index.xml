@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jvm on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/jvm/</link>
+    <description>Recent content in jvm on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Jun 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Data Scientist&#39;s Guide to Modern Java(8&#43;) and the JVM</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_java-modern_java/</link>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_java-modern_java/</guid>
+      <description>Most data scientists avoid the Java Virtual Machine (JVM) like the plague. The features that make developers and data engineers so productive as a team, such as access modifiers and powerful IDEs, feel slow, old, and cumbersome to individuals interacting with data and prototyping new algorithms. However, the JVM and its supporting system matured to an indominatble force since its inception. It is ubiquitous in the most popular open-source projects; espectially in Big Data and distributed systems, such as Hadoop and Kafka.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Groovy for Data Science on the JVM</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_java-groovy/</link>
+      <pubDate>Thu, 20 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_java-groovy/</guid>
+      <description>Groovy is a scripting language that compiles to the Java Virtual Machine. It would be more-aptly named JavaScript if that name were not already taken, but it has many similarities to Python. In fact, some of the libraries implemented for Groovy, such as TableSaw, attempt to take it in the same Data Science direction as Python.
+This post will provide an introduction to the Groovy language using Jupyter notebook with BeakerX, and provides specific applications to Data Science.</description>
+    </item>
+    
+  </channel>
+</rss>

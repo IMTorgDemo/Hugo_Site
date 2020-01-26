@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Process on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/categories/process/</link>
+    <description>Recent content in Process on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 19 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/categories/process/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Solving Textual Problems with Regular Expressions</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/</link>
+      <pubDate>Sun, 19 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/</guid>
+      <description>Regular Expressions provide an important foundation for learning systems. They are useful for quick and direct approaches to solving problems without creating mounds of training data, nor the infrastructure for deploying a model. While they are a common programming technique, and simple enough to employ, they tend to be used so infrequently that you must re-learn them each time you wish to apply. This post summarizes the basic regex syntax, strategies, and workflow in hopes it will decrease the time needed to implement.</description>
+    </item>
+    
+    <item>
+      <title>Generalizing the Machine Learning Process</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-machine_learning/</link>
+      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-machine_learning/</guid>
+      <description>This work describes a general approach to follow when performing machine learning (ML) manually, and when automating in a deployment setting. Unlike a classical statistical analysis, standard machine learning projects typically follow a general and repeatable process. While the practictioner should be aware of details for each of the steps and the reasons for choosing them, there is much less design-thinking and checking of assumptions that are necessary components of more mathematical modeling fields.</description>
+    </item>
+    
+  </channel>
+</rss>

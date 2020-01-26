@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Introduction to Groovy for Data Science on the JVM // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Introduction to Groovy for Data Science on the JVM" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_programming_java-groovy/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://imtorgdemo.github.io/">IMTorg Kbase</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/tags/">Tags</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Introduction to Groovy for Data Science on the JVM</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_programming_java-groovy/" class="article-date">
+                <time datetime='2019-06-20T00:00:00.000&#43;00:00' itemprop="datePublished">2019-06-20</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/programming">Programming</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/datascience">DataScience</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Groovy is a scripting language that compiles to the Java Virtual Machine.  It would be more-aptly named <em>JavaScript</em> if that name were not already taken, but it has many similarities to Python.  In fact, some of the libraries implemented for Groovy, such as <a href="https://jtablesaw.github.io/tablesaw/">TableSaw</a>, attempt to take it in the same <em>Data Science</em> direction as Python.</p>
+
+<p>This post will provide an introduction to the Groovy language using Jupyter notebook with BeakerX, and provides specific applications to Data Science.  It begins with a tour of the Groovy language, then describes some of the most interesting features that the language provides.  We give a comparison to Java with some notes for making integration with Java environments easier.  We finish-off with applications and examples in Data Science.</p>
+
+<p>This notebook takes code and examples from this github repo: <a href="https://github.com/twosigma/beakerx">https://github.com/twosigma/beakerx</a></p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>You can get started with Groovy in a few different ways.  After installing Groovy, the console (comes with Groovy distribution) is a Java Swing application where we can write and run code, interactively.</p>
+
+<pre><code>\\( groovyconsole
+</code></pre>
+
+<p>Or you can run a script, directly.</p>
+
+<pre><code>\\) groovy your-script.groovy
+</code></pre>
+
+<p>In this post we will use Jupyter with the <a href="https://github.com/twosigma/beakerx">BeakerX JVM kernel</a>.  BeakerX provides a variety of languages and support transforming data structures among them.  This makes it ideal for learning and prototyping.  You can get started with BeakerX using Docker.</p>
+
+<pre><code>$ docker run -p 8888:8888 beakerx/beakerx
+</code></pre>
+
+<h2 id="introduction">Introduction</h2>
+
+<h3 id="basic-syntax">Basic syntax</h3>
+
+<p>We provide the obligatory <em>hello world</em> example using a simple println statement to print output to the console.</p>
+
+<pre><code class="language-Groovy">class Example {
+   static void main(String[] args) {
+      println('Hello World');
+   }
+}
+Example.main()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Hello World
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>By default, Groovy includes the following libraries in your code, so you don’t need to explicitly import them.</p>
+
+<pre><code class="language-Groovy">import java.lang.* 
+import java.util.* 
+import java.io.* 
+import java.net.* 
+
+import groovy.lang.* 
+import groovy.util.* 
+
+import java.math.BigInteger 
+import java.math.BigDecimal
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Groovy supports all Java types (primitive and reference types).</p>
+
+<p>All primitive types are auto-converted to their wrapper types. So <code>int a = 2</code> will become <code>Integer a = 2</code></p>
+
+<p>When declaring variables we can do one of the followings:</p>
+
+<ul>
+<li>Do not use any type (that will create a global variable): <code>a = 2</code></li>
+<li>Use keyword def (that will create a local variable): <code>def a = 2</code></li>
+<li>Use the actual type (that will create a local variable of strict type Integer): <code>int a = 3</code></li>
+</ul>
+
+<p>When no type is used, variables act like they are of type Object, so they can be reassigned to different types.</p>
+
+<pre><code class="language-Groovy">a = 2
+printf &quot;%s - %s%n&quot;, a.getClass().getName(), a
+a = &quot;apple&quot;
+printf &quot;%s - %s%n&quot;, a.getClass().getName(), a
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">java.lang.Integer - 2
+java.lang.String - apple
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<h3 id="running-the-code">Running the code</h3>
+
+<p>The code outside methods but still in a script is copied to at run to an object method.  So during runtime everything is inside methods. In that sense, this feature allows the variables declared in a method to be accessible to other methods.</p>
+
+<p>Groovy keeps these global variables in a map like object (<code>groovy.lang.Binding</code>).</p>
+
+<p>When def is used, variables act like they are of type Object, so they can be reassigned to different types (same as when no type is used):</p>
+
+<pre><code class="language-Groovy">//';' should be used after each statement, but is not necessary in beakerx cells
+//def is a keyword used in Groovy to define an identifier
+def c = 1;    //local variable
+d = 2;        //global variable - var with no type are global so they can be accessed across methods
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">c //error - var declared with def are local, so they cannot be accessed across methods
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">groovy.lang.MissingPropertyException: No such property: c for class: script1561051888331
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at this cell line 1
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">d //this works
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2
+</code></pre>
+
+</div>
+
+
+<h3 id="data-types">Data types</h3>
+
+<p>Using actual types (same as Java types).  They follow strict typing rules (just like Java). So they cannot be reassigned to different types:</p>
+
+<pre><code class="language-Groovy">int a = 2
+println a
+a = &quot;apple&quot;
+println a
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object 'apple' with class 'java.lang.String' to class 'int'
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at this cell line 3
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+</code></pre>
+
+</div>
+
+
+<p>Like <code>def</code> variables they are also local, so they cannot be accessed across methods.</p>
+
+<pre><code class="language-Groovy">int e = 2
+void printVars() {
+    println e;
+}
+printVars();
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">groovy.lang.MissingPropertyException: No such property: e for class: script1561051968611
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at script1561051968611.printVars(script1561051968611:4)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at this cell line 7
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">//remove variables
+binding.variables.remove 'a'
+binding.variables.remove 'b' 
+binding.variables.remove 'c' 
+binding.variables.remove 'd' 
+binding.variables.remove 'e'
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>As seen above, Groovy uses Objects for everything (int is printed as java.lang.Integer). Primitives are auto-converted to their wrapper type.</p>
+
+<pre><code class="language-Groovy">int a = 2
+printf(&quot;%s - %s%n&quot;, a.getClass(), a.getClass().isPrimitive())
+
+def b = 2
+printf &quot;%s - %s%n&quot;, b.getClass(), b.getClass().isPrimitive()
+
+c = 2
+printf &quot;%s - %s%n&quot;, c.getClass(), c.getClass().isPrimitive()
+
+double d = 2.2
+printf &quot;%s - %s%n&quot;, d.getClass(), d.getClass().isPrimitive()
+
+e = 2.3//no type
+printf &quot;%s - %s%n&quot;, e.getClass(), e.getClass().isPrimitive()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">class java.lang.Integer - false
+class java.lang.Integer - false
+class java.lang.Integer - false
+class java.lang.Double - false
+class java.math.BigDecimal - false
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>All of the variables are initialized (even local) with their default values (just like instance variable).</p>
+
+<pre><code class="language-Groovy">def a //initialized with null
+println a
+
+String s //initialized with null
+println s
+
+int b//initialized with 0
+println b
+println b + 3
+
+boolean bool//initialized with false
+println bool
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+null
+0
+3
+false
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Using actual types.</p>
+
+<pre><code class="language-Groovy">int sum(int x, int y) {
+    x + y;
+}
+println sum(1, 3)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">4
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Using <code>def</code>.</p>
+
+<pre><code class="language-Groovy">def sum(def x, def y) {
+    x + y;
+}
+println sum(1, 3)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">4
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Using no types with parameters.</p>
+
+<pre><code class="language-Groovy">def sum(x, y) {
+    x + y;
+}
+println sum(1, 3)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">4
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Methods must return def or actual type.</p>
+
+<pre><code class="language-Groovy">sum(x, y) {
+    x + y;
+}
+println sum(1, 3)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">groovy.lang.MissingPropertyException: No such property: x for class: script1561052241554
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at this cell line 1
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">class Example { 
+   static void main(String[] args) { 
+      //Example of a int datatype 
+      int x = 5; 
+		
+      //Example of a long datatype 
+      long y = 100L; 
+		
+      //Example of a floating point datatype 
+      float a = 10.56f; 
+		
+      //Example of a double datatype 
+      double b = 10.5e40; 
+		
+      //Example of a BigInteger datatype 
+      BigInteger bi = 30g; 
+		
+      //Example of a BigDecimal datatype 
+      BigDecimal bd = 3.5g; 
+		
+      println(x); 
+      println(y); 
+      println(a); 
+      println(b); 
+      println(bi); 
+      println(bd); 
+   } 
+}
+Example.main()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">5
+100
+10.56
+1.05E41
+30
+3.5
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<h2 id="features">Features</h2>
+
+<p>Groovy has many different features.  We have seen a few of these, earlier, but the others are mentioned, here.</p>
+
+<ul>
+<li>Support for both static and dynamic typing</li>
+<li>Support for operator overloading</li>
+<li>Native syntax for lists and associative arrays</li>
+<li>Native support for regular expressions</li>
+<li>Native support for various markup languages such as XML and HTML.</li>
+<li>Similar syntax to Java</li>
+<li>Use of existing Java libraries</li>
+<li>Extends the java.lang.Object</li>
+</ul>
+
+<h3 id="support-for-regular-expressions">Support for regular expressions</h3>
+
+<pre><code class="language-Groovy">def m = &quot;Groovy is groovy&quot; =~ /(G|g)roovy/
+println m[0][0] // The first whole match (i.e. the first word Groovy)
+println m[0][1] // The first group in the first match (i.e. G)
+println m[1][0] // The second whole match (i.e. the word groovy)
+println m[1][1] // The first group in the second match (i.e. g)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Groovy
+G
+groovy
+g
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<h3 id="support-for-markup-languages">Support for markup languages</h3>
+
+<p>One of the most used classes for creating HTML or XML markup.</p>
+
+<pre><code class="language-Groovy">import groovy.xml.MarkupBuilder 
+def xml = new MarkupBuilder() 
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">groovy.xml.MarkupBuilder@7500ce0e
+</code></pre>
+
+</div>
+
+
+<h3 id="liberal-use-of-closures">Liberal use of closures</h3>
+
+<pre><code class="language-Groovy">//closure example
+timesTwo = {x -&gt; x*2}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">script1556559307332$_run_closure1@cad3663
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">timesTwo(4)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">8
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">timesTwo(&quot;Multiplying Strings!&quot;)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Multiplying Strings!Multiplying Strings!
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">sin(3.1415)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">9.265358966049026E-5
+</code></pre>
+
+</div>
+
+
+<h2 id="comparison-of-groovy-with-java">Comparison of Groovy with Java</h2>
+
+<h3 id="basic-differences">Basic differences</h3>
+
+<ul>
+<li>automatically a wrapping a class called Script for every program</li>
+<li>default access specifier is public</li>
+<li>getters and setters are automatically generated for class members</li>
+<li>abbreviated commands, such as <code>println</code></li>
+<li>semicolons <code>;</code> and paraentheses <code>()</code> are optional</li>
+<li>dynamic typing with the <code>def &lt;var&gt;</code> keyword (locar var), or with no prefix <code>&lt;var&gt;</code> (global var)</li>
+<li>string interpolation (GString) is performed with <code>\\(</code> operator, such as <code>&quot;Hello, \\){firstName[0]}. $name&quot;</code></li>
+<li>&rdquo;&ldquo;&ldquo;multi-line strings are also allowed&rdquo;&ldquo;&rdquo;</li>
+<li>implicit truthy <code>if(100)</code> because 100 exists</li>
+</ul>
+
+<h3 id="new-operators">New operators</h3>
+
+<ul>
+<li><p>conditional operators</p>
+
+<ul>
+<li><strong>safe navigation</strong><code>?</code> operator checks for properties, such as <code>if(company.getContact()?.getAddress()?.getCountry() == Country.NEW_ZEALAND) { ... }</code> means If the contact or the address are null, the result of the left side will just be null, but no exception will be thrown.</li>
+<li><strong>ternary / elvis</strong> <code>?</code> operator <code>def name = client.getName() ?: &quot;&quot;</code> will assign client.getName() if it isn’t false and the empty string, otherwise</li>
+</ul></li>
+
+<li><p>type operators</p>
+
+<ul>
+<li><strong>spaceship</strong> <code>&lt;=&gt;</code> delegates to the compareTo() method: <code>def x = 1 &lt;=&gt; 2; println x; // calls Integer.compareTo</code></li>
+<li><strong>identity</strong> <code>is()</code> tests object reference equality, while <code>==</code> checks equality with <code>.equals()</code></li>
+<li><strong>coercion</strong> <code>as</code> converts an object from one type to another (using <code>.asType()</code>), without assignment compatibility, which is different from casting: <code>String s = &quot;1.1&quot;; BigDecimal bd = s as BigDecimal; println bd.class.name</code></li>
+</ul></li>
+</ul>
+
+<h3 id="using-methods">Using methods</h3>
+
+<ul>
+<li>a function used in a script will be compiled to a method within an object</li>
+<li><code>return</code> keyword is optional</li>
+<li>method operators
+
+<ul>
+<li><strong>method pointer</strong> <code>.&amp;</code> stores a reference to a method in a variable: <code>def power = Math.&amp;pow; def result = power(2, 4);</code></li>
+<li><strong>call operator</strong> <code>()</code> an object with a call method can be called directly: <code>class A{def call(println(&quot;hi&quot;){}}; def a = new A(); a();</code></li>
+</ul></li>
+<li>closures
+
+<ul>
+<li>like Java8 lambdas</li>
+<li>anonymous first-class functions are often called lambda functions</li>
+<li><code>def power = { int x, int y -&gt; return Math.pow(x, y) }; println power(2, 3)</code></li>
+</ul></li>
+<li>currying</li>
+<li>memoization</li>
+</ul>
+
+<h3 id="collections-list-and-map">Collections: list and map</h3>
+
+<ul>
+<li>list and map operators
+
+<ul>
+<li><strong>subscript</strong> <code>[]</code> allows to read/write to collections and maps: <code>def list = [2, 4]; println list[0]; def map = [x: 2, y: 4]; println map['x']</code></li>
+<li><strong>membership</strong> <code>in</code> test whether value is in the target collection: <code>def numbers = [2,4,6,8]; println 2 in numbers</code></li>
+<li><strong>spread-dot</strong> <code>*.</code> invokes an action on all items of an aggregate object: <code>def lists = [[1], [10, 20, 30], [6, 8]]; def sizes = lists*.size(); //[1, 3, 2]</code>
+<strong>range</strong> <code>..</code> to create ranges of objects: <code>def numbers = 1..5; println numbers</code></li>
+</ul></li>
+<li>create an ArrayList with the given numbers: <code>def list = [1,1,2,3,5]</code></li>
+<li>closures make it easy to iterate, filter and transform lists
+
+<ul>
+<li>iterate a list using a passed closure executed once for each element, implicitly passed, as a parameter to the closure: <code>list.each { println it }</code></li>
+<li>filter a list: <code>list.findAll { it % 2 == 0 }</code></li>
+<li>transform a list: <code>list.collect { it * it }</code></li>
+<li>improve: <code>[&quot;Hello&quot;, &quot;World&quot;].collect { it.toUpperCase() }</code> using the spread-dot: <code>[&quot;Hello&quot;, &quot;World&quot;]*.toUpperCase()</code></li>
+<li>Collection (and Iterable) interfaces provide some more methods, like <code>any</code> or <code>every</code></li>
+</ul></li>
+
+<li><p>maps act similar to lists</p>
+
+<pre><code>def key = 'Key3'
+def aMap = [
+'Key1': 'Value 1', // Put key1 -&gt; Value 1 to the map
+Key2: 'Value 2', // You can also skip the quotes, the key will automatically be a String
+(key): 'Another value' // If you want the key to be the value of a variable, you need to put it in parantheses
+]
+</code></pre></li>
+</ul>
+
+<h2 id="applications-in-data-science">Applications in Data Science</h2>
+
+<h3 id="dataframes-with-tablesaw">Dataframes with Tablesaw</h3>
+
+<p><a href="https://tablesaw.tech/">Tablesaw</a> is easy to add to the BeakerX Groovy kernel.
+Tablesaw provides the ability to easily transform, summarize, and filter data, as well as computing descriptive statistics and fundamental machine learning algorithms.</p>
+
+<p>Two helpful demo notebooks (scala) include:
+* <a href="https://github.com/IMTorgDemo/IMTorgDemo-Notebooks/blob/master/demo_RS-WhitehawkRecommendSystem.ipynb">Recommnder System</a>
+* <a href="https://github.com/IMTorgDemo/IMTorgDemo-Notebooks/blob/master/demo_RS-WhitehawkEvolutionDataDriven.ipynb">Evolution to a Data-Driven System</a></p>
+
+<p>Add using <code>mvn</code>.</p>
+
+<pre><code class="language-Groovy">%%classpath add mvn
+tech.tablesaw tablesaw-plot 0.11.4
+tech.tablesaw tablesaw-smile 0.11.4
+tech.tablesaw tablesaw-beakerx 0.11.4
+</code></pre>
+
+<pre><code class="language-Groovy">%import tech.tablesaw.aggregate.*
+%import tech.tablesaw.api.*
+%import tech.tablesaw.api.ml.clustering.*
+%import tech.tablesaw.api.ml.regression.*
+%import tech.tablesaw.columns.*
+
+// display Tablesaw tables with BeakerX table display widget
+tech.tablesaw.beakerx.TablesawDisplayer.register()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Read .csv data.</p>
+
+<pre><code class="language-Groovy">tornadoes = Table.read().csv(&quot;../doc/resources/data/tornadoes_2014.csv&quot;)
+</code></pre>
+
+<p>Print the dataset structure.</p>
+
+<pre><code class="language-Groovy">tornadoes.structure()
+</code></pre>
+
+<p>Get header names.</p>
+
+<pre><code class="language-Groovy">tornadoes.columnNames()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[Date, Time, State, State No, Scale, Injuries, Fatalities, Start Lat, Start Lon, Length, Width]
+</code></pre>
+
+</div>
+
+
+<p>Displays the row and column counts.</p>
+
+<pre><code class="language-Groovy">tornadoes.shape()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">908 rows X 11 cols
+</code></pre>
+
+</div>
+
+
+<p>Displays the first n rows.</p>
+
+<pre><code class="language-Groovy">tornadoes.first(3)
+</code></pre>
+
+<pre><code class="language-Groovy">import static tech.tablesaw.api.QueryHelper.column
+tornadoes.structure().selectWhere(column(&quot;Column Type&quot;).isEqualTo(&quot;FLOAT&quot;))
+</code></pre>
+
+<p>Summarize the data in each column.</p>
+
+<pre><code class="language-Groovy">tornadoes.summary()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">
+Table summary for: tornadoes_2014.csv
+       Column: Date        
+ Measure   |    Value     |
+---------------------------
+    Count  |         908  |
+  Missing  |           0  |
+ Earliest  |  2014-01-11  |
+   Latest  |  2014-12-29  |
+     Column: Time     
+ Measure   |  Value  |
+----------------------
+    Count  |    908  |
+  Missing  |      0  |
+ Earliest  |  00:01  |
+   Latest  |  23:59  |
+    Column: State     
+ Category  |  Count  |
+----------------------
+       GA  |     32  |
+       NM  |     15  |
+       MT  |      8  |
+       CO  |     49  |
+       WV  |      9  |
+       IN  |     28  |
+       MD  |      2  |
+       CA  |      9  |
+       AL  |     55  |
+       TN  |     18  |
+      ...  |    ...  |
+       MO  |     47  |
+       ME  |      4  |
+       LA  |     15  |
+       MI  |     13  |
+       SC  |      7  |
+       KY  |     28  |
+       MA  |      3  |
+       CT  |      1  |
+       NH  |      2  |
+   Column: State No   
+ Measure   |  Value  |
+----------------------
+        n  |  908.0  |
+      sum  |    0.0  |
+     Mean  |    0.0  |
+      Min  |    0.0  |
+      Max  |    0.0  |
+    Range  |    0.0  |
+ Variance  |    0.0  |
+ Std. Dev  |    0.0  |
+       Column: Scale       
+ Measure   |    Value     |
+---------------------------
+        n  |       908.0  |
+      sum  |       567.0  |
+     Mean  |   0.6244493  |
+      Min  |         0.0  |
+      Max  |         4.0  |
+    Range  |         4.0  |
+ Variance  |   0.6272737  |
+ Std. Dev  |  0.79200613  |
+     Column: Injuries      
+ Measure   |    Value     |
+---------------------------
+        n  |       908.0  |
+      sum  |       684.0  |
+     Mean  |  0.75330395  |
+      Min  |         0.0  |
+      Max  |       193.0  |
+    Range  |       193.0  |
+ Variance  |    57.68108  |
+ Std. Dev  |    7.594806  |
+     Column: Fatalities     
+ Measure   |     Value     |
+----------------------------
+        n  |        908.0  |
+      sum  |         48.0  |
+     Mean  |  0.052863438  |
+      Min  |          0.0  |
+      Max  |         16.0  |
+    Range  |         16.0  |
+ Variance  |   0.44262686  |
+ Std. Dev  |    0.6653021  |
+    Column: Start Lat     
+ Measure   |    Value    |
+--------------------------
+        n  |      908.0  |
+      sum  |  34690.984  |
+     Mean  |   38.20593  |
+      Min  |        0.0  |
+      Max  |      48.86  |
+    Range  |      48.86  |
+ Variance  |  22.448586  |
+ Std. Dev  |  4.7379937  |
+    Column: Start Lon     
+ Measure   |    Value    |
+--------------------------
+        n  |      908.0  |
+      sum  |  -83613.02  |
+     Mean  |  -92.08483  |
+      Min  |   -122.946  |
+      Max  |        0.0  |
+    Range  |    122.946  |
+ Variance  |   91.84773  |
+ Std. Dev  |   9.583722  |
+      Column: Length      
+ Measure   |    Value    |
+--------------------------
+        n  |      908.0  |
+      sum  |    3014.49  |
+     Mean  |   3.319923  |
+      Min  |        0.0  |
+      Max  |      45.68  |
+    Range  |      45.68  |
+ Variance  |  28.736567  |
+ Std. Dev  |  5.3606496  |
+      Column: Width       
+ Measure   |    Value    |
+--------------------------
+        n  |      908.0  |
+      sum  |   149778.0  |
+     Mean  |  164.95375  |
+      Min  |        0.0  |
+      Max  |     2640.0  |
+    Range  |     2640.0  |
+ Variance  |  57764.465  |
+ Std. Dev  |  240.34239  |
+
+</code></pre>
+
+</div>
+
+
+<p>Mapping operations.</p>
+
+<pre><code class="language-Groovy">def month = tornadoes.dateColumn(&quot;Date&quot;).month()
+tornadoes.addColumn(month);
+tornadoes.columnNames()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[Date, Time, State, State No, Scale, Injuries, Fatalities, Start Lat, Start Lon, Length, Width, Date month]
+</code></pre>
+
+</div>
+
+
+<p>Sorting by column.</p>
+
+<pre><code class="language-Groovy">tornadoes.sortOn(&quot;-Fatalities&quot;)
+</code></pre>
+
+<p>Descriptive statistics.</p>
+
+<pre><code class="language-Groovy">tornadoes.column(&quot;Fatalities&quot;).summary()
+</code></pre>
+
+<p>Performing totals and sub-totals.</p>
+
+<pre><code class="language-Groovy">def injuriesByScale = tornadoes.median(&quot;Injuries&quot;).by(&quot;Scale&quot;)
+injuriesByScale.setName(&quot;Median injuries by Tornado Scale&quot;)
+injuriesByScale
+</code></pre>
+
+<p>Cross tabulation.</p>
+
+<pre><code class="language-Groovy">CrossTab.xCount(tornadoes, tornadoes.categoryColumn(&quot;State&quot;), tornadoes.shortColumn(&quot;Scale&quot;))
+</code></pre>
+
+<h3 id="example-with-tablesaw">Example with Tablesaw</h3>
+
+<p>You can fetch data from <a href="https://www.quandl.com/">Quandl</a> and load it directly into Tablesaw</p>
+
+<pre><code class="language-Groovy">%classpath add mvn com.jimmoores quandl-tablesaw 2.0.0
+%import com.jimmoores.quandl.*
+%import com.jimmoores.quandl.tablesaw.*
+</code></pre>
+
+<pre><code class="language-Groovy">TableSawQuandlSession session = TableSawQuandlSession.create();
+Table table = session.getDataSet(DataSetRequest.Builder.of(&quot;WIKI/AAPL&quot;).build());
+</code></pre>
+
+<pre><code class="language-Groovy">// Create a new column containing the year
+ShortColumn yearColumn = table.dateColumn(&quot;Date&quot;).year();
+yearColumn.setName(&quot;Year&quot;);
+table.addColumn(yearColumn);
+// Create max, min and total volume tables aggregated by year
+Table summaryMax = table.groupBy(&quot;year&quot;).max(&quot;Adj. Close&quot;);
+Table summaryMin = table.groupBy(&quot;year&quot;).min(&quot;Adj. Close&quot;);
+Table summaryVolume = table.groupBy(&quot;year&quot;)sum(&quot;Volume&quot;);
+// Create a new table from each of these
+summary = Table.create(&quot;Summary&quot;, summaryMax.column(0), summaryMax.column(1), 
+                       summaryMin.column(1), summaryVolume.column(1));
+// Add back a DateColumn to the summary...will be used for plotting
+DateColumn yearDates = new DateColumn(&quot;YearDate&quot;);
+for(year in summary.column('Year')){
+    yearDates.append(java.time.LocalDate.of(year,1,1));
+}
+summary.addColumn(yearDates)
+
+summary
+</code></pre>
+
+<pre><code class="language-Groovy">years = summary.column('YearDate').collect()
+
+plot = new TimePlot(title: 'Price Chart for AAPL', xLabel: 'Time', yLabel: 'Max [Adj. Close]')
+plot &lt;&lt; new YAxis(label: 'Volume')
+plot &lt;&lt; new Points(x: years, y: summary.column('Max [Adj. Close]').collect())
+plot &lt;&lt; new Line(x: years, y: summary.column('Max [Adj. Close]').collect(), color: Color.blue)
+plot &lt;&lt; new Stems(x: years, y: summary.column('Sum [Volume]').collect(), yAxis: 'Volume')
+</code></pre>
+
+<h3 id="auto-translation-in-beakerx">Auto-Translation in BeakerX</h3>
+
+<p>Auto-Translation is the act of converting a data structure in one language to another.  In the context of data science, the obvious data structures are lists and data frames.</p>
+
+<pre><code class="language-Groovy">//start with groovy
+beakerx.foo = &quot;a groovy value&quot;
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">a groovy value
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">//to javascript
+%%javascript
+beakerx.bar = [23, 48, 7, &quot;from JS&quot;];
+beakerx.foo
+</code></pre>
+
+<pre><code class="language-Groovy">//back to groovy
+beakerx.bar 
+</code></pre>
+
+<pre><code class="language-Groovy">//to python
+%%python
+from beakerx import beakerx
+beakerx.foo
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">'a groovy value'
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">//to scala
+%%scala
+beakerx.foo
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">a groovy value
+</code></pre>
+
+</div>
+
+
+<h3 id="graphing-with-beakerx">Graphing with BeakerX</h3>
+
+<p>Both BeakerX and Tablesaw do a good job of addressing the need to visualize data.</p>
+
+<pre><code class="language-Groovy">rates = new CSV().read(&quot;../doc/resources/data/interest-rates.csv&quot;)
+def f = new java.text.SimpleDateFormat(&quot;yyyy MM dd&quot;)
+lehmanDate = f.parse(&quot;2008 09 15&quot;)
+bubbleBottomDate = f.parse(&quot;2002 10 09&quot;)
+inversion1 = [f.parse(&quot;2000 07 22&quot;), f.parse(&quot;2001 02 16&quot;)]
+inversion2 = [f.parse(&quot;2006 08 01&quot;), f.parse(&quot;2007 06 07&quot;)]
+def size = rates.size()
+(0 ..&lt; size).each{row = rates[it]; row.spread = row.y10 - row.m3}
+
+OutputCell.HIDDEN
+</code></pre>
+
+<pre><code class="language-Groovy">// The simplest chart function with all defaults:
+new SimpleTimePlot(rates, [&quot;y1&quot;, &quot;y10&quot;])
+</code></pre>
+
+<pre><code class="language-Groovy">//scatter plot
+def c = new Color(120, 120, 120, 100)
+new Plot() &lt;&lt; new Points(x: rates.y1, y: rates.y30, displayName: &quot;y1 vs y30&quot;) \
+           &lt;&lt; new Points(x: rates.m3, y: rates.y5, displayName: &quot;m3 vs y5&quot;) \
+           &lt;&lt; new Line(x: rates.m3, y: rates.y5, color: c) \
+           &lt;&lt; new Line(x: rates.y1, y: rates.y30, color: c)
+</code></pre>
+
+<pre><code class="language-Groovy">def ch = new Crosshair(color: Color.gray, width: 2, style: StrokeType.DOT)
+
+// The top plot has 2 lines.
+p1 = new TimePlot(yLabel: &quot;Interest Rate&quot;, crosshair: ch)
+p1 &lt;&lt; new Line(x: rates.time, y: rates.m3, displayName: &quot;3 month&quot;)
+p1 &lt;&lt; new Line(x: rates.time, y: rates.y10, displayName: &quot;10 year&quot;)
+
+// The bottom plot has an area filled in.
+p2 = new TimePlot(yLabel: &quot;Spread&quot;, crosshair: ch)
+p2 &lt;&lt; new Area(x: rates.time, y: rates.spread, color: new Color(120, 60, 0))
+
+// Highlight the inversion intervals
+def b1 = new ConstantBand(x: inversion1, color: new Color(240, 100, 100, 55))
+def b2 = new ConstantBand(x: inversion2, color: new Color(240, 100, 100, 55))
+
+// Add notation and line for Lehman Bankruptcy.
+p1 &lt;&lt; new Text(x: lehmanDate, y: 7.5, text: &quot;Lehman Brothers Bankruptcy&quot;)
+def l1 = new ConstantLine(x: lehmanDate, style: StrokeType.DOT, color: Color.gray)
+
+// Add notation and line for Stocks Nadir.
+p1 &lt;&lt; new Text(x: bubbleBottomDate, y: 5.75, text: &quot;Stocks Hit Bottom&quot;)
+def l2 = new ConstantLine(x: bubbleBottomDate, style: StrokeType.DOT, color: Color.gray)
+
+// add the notations and highlight bands to both plots
+p1 &lt;&lt; l1 &lt;&lt; l2 &lt;&lt; b1 &lt;&lt; b2
+p2 &lt;&lt; l1 &lt;&lt; l2 &lt;&lt; b1 &lt;&lt; b2
+
+OutputCell.HIDDEN
+</code></pre>
+
+<pre><code class="language-Groovy">// Then use a CombinedPlot to get stacked plots with linked X axis.
+def c = new CombinedPlot(title: &quot;US Treasuries&quot;, initWidth: 1000)
+
+// add both plots to the combined plot, and including their relative heights.
+c.add(p1, 3)
+c.add(p2, 1)
+</code></pre>
+
+<h3 id="integration-with-d3js">Integration with D3js</h3>
+
+<p>Being able to prototype for the frontend is key for deliverying quickly.  The BeakerX integration with D3js is great for this.</p>
+
+<pre><code class="language-Groovy">def r = new Random()
+def nnodes = 100
+def nodes = []
+def links = []
+
+for (x in (0..nnodes)){
+  nodes.add(name:&quot;&quot; + x, group:((int) x*7/nnodes))
+}
+
+for (x in (0..(int) nnodes*1.15)) { 
+  source = x % nnodes
+  target = ((int) log(1 + r.nextInt(nnodes))/log(1.3))
+  value = 10.0 / (1 + abs(source - target))
+  links.add(source: source, target: target, value: value*value)
+}
+
+beakerx.graph = [nodes: nodes, links: links]
+OutputCell.HIDDEN
+</code></pre>
+
+<pre><code class="language-javascript">%%javascript
+require.config({
+  paths: {
+      d3: '//cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min'
+  }});
+</code></pre>
+
+<pre><code class="language-Groovy">%%html
+&lt;style&gt;
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+&lt;/style&gt;
+</code></pre>
+
+<p><html><style>
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}</p>
+
+<p>.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+</style></html></p>
+
+<pre><code class="language-javascript">%%javascript
+
+beakerx.displayHTML(this, '&lt;div id=&quot;fdg&quot;&gt;&lt;/div&gt;');
+
+var graph = beakerx.graph
+
+var d3 = require(['d3'], function (d3) {
+    
+    var width = 600,
+        height = 500;
+
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    var simulation = d3.forceSimulation()
+        .force(&quot;link&quot;, d3.forceLink().distance(30))
+        .force(&quot;charge&quot;, d3.forceManyBody().strength(-200))
+        .force(&quot;center&quot;, d3.forceCenter(width / 2, height / 2))
+        .force(&quot;y&quot;, d3.forceY(width / 2).strength(0.3))
+        .force(&quot;x&quot;, d3.forceX(height / 2).strength(0.3));
+
+    var svg = d3.select(&quot;#fdg&quot;)
+                .append(&quot;svg&quot;)
+                .attr(&quot;width&quot;, width)
+                .attr(&quot;height&quot;, height)
+                .attr(&quot;transform&quot;, &quot;translate(&quot;+[100, 0]+&quot;)&quot;);
+
+    simulation
+          .nodes(graph.nodes)
+          .force(&quot;link&quot;)
+          .links(graph.links);
+
+    var link = svg.selectAll(&quot;.link&quot;)
+          .data(graph.links)
+          .enter().append(&quot;line&quot;)
+          .attr(&quot;class&quot;, &quot;link&quot;)
+          .style(&quot;stroke-width&quot;, function(d) { return Math.sqrt(d.value); });
+
+    var node = svg.selectAll(&quot;.node&quot;)
+          .data(graph.nodes)
+          .enter().append(&quot;circle&quot;)
+          .attr(&quot;class&quot;, &quot;node&quot;)
+          .attr(&quot;r&quot;, 10)
+          .style(&quot;fill&quot;, function(d) { return color(d.group); });
+
+    node.append(&quot;title&quot;)
+          .text(function(d) { return d.name; });
+
+    simulation.on(&quot;tick&quot;, function() {
+        link.attr(&quot;x1&quot;, function(d) { return d.source.x; })
+            .attr(&quot;y1&quot;, function(d) { return d.source.y; })
+            .attr(&quot;x2&quot;, function(d) { return d.target.x; })
+            .attr(&quot;y2&quot;, function(d) { return d.target.y; });
+
+        node.attr(&quot;cx&quot;, function(d) { return d.x; })
+            .attr(&quot;cy&quot;, function(d) { return d.y; });
+    });
+    
+    node.call(d3.drag()
+        .on(&quot;start&quot;, dragstarted)
+        .on(&quot;drag&quot;, dragged)
+        .on(&quot;end&quot;, dragended)
+    );
+    
+    function dragstarted(d) {
+        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+        if (!d3.event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+});
+</code></pre>
+
+<h2 id="references">References</h2>
+
+<h3 id="table-of-keywords">Table of keywords</h3>
+
+<p>The following table lists the keywords which are defined in Groovy</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>as</td>
+<td>assert</td>
+<td>break</td>
+<td>case</td>
+<td></td>
+</tr>
+
+<tr>
+<td>catch</td>
+<td>class</td>
+<td>const</td>
+<td>continue</td>
+<td></td>
+</tr>
+
+<tr>
+<td>def</td>
+<td>default</td>
+<td>do</td>
+<td>else</td>
+<td></td>
+</tr>
+
+<tr>
+<td>enum</td>
+<td>extends</td>
+<td>false</td>
+<td>Finally</td>
+<td></td>
+</tr>
+
+<tr>
+<td>for</td>
+<td>goto</td>
+<td>if</td>
+<td>implements</td>
+<td></td>
+</tr>
+
+<tr>
+<td>import</td>
+<td>in</td>
+<td>instanceof</td>
+<td>interface</td>
+<td></td>
+</tr>
+
+<tr>
+<td>new</td>
+<td>pull</td>
+<td>package</td>
+<td>return</td>
+<td></td>
+</tr>
+
+<tr>
+<td>super</td>
+<td>switch</td>
+<td>this</td>
+<td>throw</td>
+<td></td>
+</tr>
+
+<tr>
+<td>throws</td>
+<td>trait</td>
+<td>true</td>
+<td>try</td>
+<td></td>
+</tr>
+
+<tr>
+<td>while</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p>Groovy but not Java:</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>as</td>
+<td>def</td>
+<td>in</td>
+<td>trait</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="data-types-1">Data types</h3>
+
+<p>Primitive data types</p>
+
+<pre><code>    byte − represent a byte value. An example is 2
+    short − represent a short number. An example is 10
+    int − represent whole numbers. An example is 1234
+    long − represent a long number. An example is 10000090
+    float − represent 32-bit floating point numbers. An example is 12.34
+    double − represent 64-bit floating point numbers which are longer decimal numbers which may be required at times. An example is 12.3456565
+    char − defines a single character literal. An example is ‘a’
+    Boolean − represents a Boolean value which can either be true or false
+    String − text literals which are represented in the form of chain of characters. For example “Hello World”.
+</code></pre>
+
+<p>In addition to the primitive types, the following object types (sometimes referred to as wrapper types) are allowed −</p>
+
+<pre><code>    java.lang.Byte
+    java.lang.Short
+    java.lang.Integer
+    java.lang.Long
+    java.lang.Float
+    java.lang.Double
+</code></pre>
+
+<p>For arbitrary precision artithemetic</p>
+
+<pre><code>java.math.BigInteger
+java.math.BigDecimal
+</code></pre>
+
+<h3 id="online">Online</h3>
+
+<ul>
+<li><a href="http://groovy-lang.org/documentation.html">official website and documentation</a></li>
+<li><a href="https://www.jetbrains.com/help/idea/getting-started-with-groovy.html">getting started with groovy in IntelliJ</a></li>
+<li><a href="https://www.timroes.de/groovy-tutorial-for-java-developers">groovy for java developers</a></li>
+<li><a href="https://www.guru99.com/groovy-tutorial.html">groovy tutorial</a></li>
+<li><a href="https://www.logicbig.com/tutorials/misc/groovy.html">detailed groovy tutorials</a></li>
+</ul>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#basic-syntax">Basic syntax</a></li>
+<li><a href="#running-the-code">Running the code</a></li>
+<li><a href="#data-types">Data types</a></li>
+</ul></li>
+<li><a href="#features">Features</a>
+<ul>
+<li><a href="#support-for-regular-expressions">Support for regular expressions</a></li>
+<li><a href="#support-for-markup-languages">Support for markup languages</a></li>
+<li><a href="#liberal-use-of-closures">Liberal use of closures</a></li>
+</ul></li>
+<li><a href="#comparison-of-groovy-with-java">Comparison of Groovy with Java</a>
+<ul>
+<li><a href="#basic-differences">Basic differences</a></li>
+<li><a href="#new-operators">New operators</a></li>
+<li><a href="#using-methods">Using methods</a></li>
+<li><a href="#collections-list-and-map">Collections: list and map</a></li>
+</ul></li>
+<li><a href="#applications-in-data-science">Applications in Data Science</a>
+<ul>
+<li><a href="#dataframes-with-tablesaw">Dataframes with Tablesaw</a></li>
+<li><a href="#example-with-tablesaw">Example with Tablesaw</a></li>
+<li><a href="#auto-translation-in-beakerx">Auto-Translation in BeakerX</a></li>
+<li><a href="#graphing-with-beakerx">Graphing with BeakerX</a></li>
+<li><a href="#integration-with-d3js">Integration with D3js</a></li>
+</ul></li>
+<li><a href="#references">References</a>
+<ul>
+<li><a href="#table-of-keywords">Table of keywords</a></li>
+<li><a href="#data-types-1">Data types</a></li>
+<li><a href="#online">Online</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/groovy">groovy
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/jvm">jvm
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/data_visualization">data_visualization
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_programming_java-modern_java/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            A Data Scientist&#39;s Guide to Modern Java(8&#43;) and the JVM
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_econ-return_rate/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">The Cost of Internal Investment&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

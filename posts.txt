@@ -1,6 +1,6 @@
 blog_nlp-intro_spacy/
 blog_nlp-history_nlp_deep_learn/
-blog_prototype-creating_frontend/
+blog_prototype-creating_frontend/ => cp IMTorgDemo-Notebooks/blog_prototype-creating_frontend.md Hugo_Site/content/posts/
 blog_nlp-explain_metrics/
 blog_math-competitive_edge/
 blog-logic_for_math/

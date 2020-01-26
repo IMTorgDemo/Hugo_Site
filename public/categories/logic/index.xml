@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Logic on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/categories/logic/</link>
+    <description>Recent content in Logic on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/categories/logic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building Math from the Ground-Up</title>
+      <link>https://imtorgdemo.github.io/posts/blog-logic_for_math/</link>
+      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog-logic_for_math/</guid>
+      <description>After completing basic high school mathematics, one might think that math stands on its own. To understand and know that 1+1=2 is obvious. But math can go much deeper. In fact, we can build new concepts from math as well as build a math, itself. This is important because it effects how we think about other subjects, and is especially useful in helping us think about language and abstract concepts, such as in programming.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to LaTeX</title>
+      <link>https://imtorgdemo.github.io/posts/blog-intro_latex/</link>
+      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog-intro_latex/</guid>
+      <description>LaTeX is the document preparation and typesetting system used for scientific publications. LaTeX is based on the idea that &amp;lsquo;it is better to leave document design to document designers&amp;rsquo;, so the user can focus on the content. It requires a greater technical understanding than typical simple note-taking systems; however, because it is incredibly descriptive and produces aesthetically-appealing output, it is becoming more popular. This post provides a reference to configuration and syntax.</description>
+    </item>
+    
+  </channel>
+</rss>

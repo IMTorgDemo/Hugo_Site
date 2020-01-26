@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A Data Scientist&#39;s Guide to Modern Java(8&#43;) and the JVM // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="A Data Scientist&#39;s Guide to Modern Java(8&#43;) and the JVM" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_programming_java-modern_java/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://imtorgdemo.github.io/">IMTorg Kbase</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/tags/">Tags</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">A Data Scientist&#39;s Guide to Modern Java(8&#43;) and the JVM</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_programming_java-modern_java/" class="article-date">
+                <time datetime='2019-06-26T00:00:00.000&#43;00:00' itemprop="datePublished">2019-06-26</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/java">Java</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/computerscience">ComputerScience</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Most data scientists avoid the Java Virtual Machine (JVM) like the plague.  The features that make developers and data engineers so productive as a team, such as access modifiers and powerful IDEs, feel slow, old, and cumbersome to individuals interacting with data and prototyping new algorithms.  However, the JVM and its supporting system matured to an indominatble force since its inception.  It is ubiquitous in the most popular open-source projects; espectially in <em>Big Data</em> and distributed systems, such as Hadoop and Kafka.  The only competitors to Java in this domain are supporting languages that compile to the JVM, such as Scala, Groovy, and Kotlin.  Because of these factors the JVM culture sets precedence in a manner similar to Linux.</p>
+
+<p>Data scientists need to understand the perspective of other engineers and the tools they use in order to progress in their careers, and knowing Java is the backbone to this.  Another advantage to knowing java is that it exposes users to many fundamental computer science concepts.  This guide will provide the basics for getting familiar with Java, fast, as well as displaying different programming abstractions, such as testing, team integration and design patterns, not readily available to most consulting data scientists.  It will also provide support for a multitude of JVM languages that, while not necessary to know Java, will make life much easier.</p>
+
+<h2 id="culture-and-precendence">Culture and Precendence</h2>
+
+<p>Because Java is such an old and popular language it has quite alot of culture and history (some might say <em>baggage</em>) built around it.  This culture also creates precedence which might not be enforced by a compiler, but is so sacrosanct that anyone breaking the rules will quickly become a target.  Most of this is created around how Java found its niche: as a portable language for large organizations of development teams to deliver code.  For individual programmers much of Java functionality will not seem necessary, and even tiresome.  It grew-up before the age serverless technology or microservices.  But all of that changes once it is used by teams who have to work together, and, in turn, deliver components for a large, monolith system.</p>
+
+<p>Some general knowledge and basic conventions that help beginners:</p>
+
+<ul>
+<li>modern Java begins with version Java 1.8, but is called Java8</li>
+<li>the Java platform includes packages of functions, such as <code>java</code>, <code>javax</code>, <code>org.omg</code>; and the most fundamental: <code>java.lang</code></li>
+<li>package namespaces are the url of the company, backwards, such as <code>com.firmname.classify.functions</code></li>
+<li>directory structures are implemented from the package name, so there can be alot of empty folders depending on how many suffixes you used</li>
+<li>the directory path is for <code>src</code> the other is for <code>test</code></li>
+<li>each Java class must be in an individual file, so you may have to have many files open in order to find something</li>
+<li>dependency management is performed by maven (traditional xml-based) or gradle (groovy-based)</li>
+</ul>
+
+<p>Naming conventions:</p>
+
+<ul>
+<li>Class and Inteface names should be nouns, in mixed case, such as <code>class ImageSprite</code></li>
+<li>Methods should be verbs and Variables should be nouns, both in mixed camel case, such as <code>getBackground()</code> and <code>float myWidth</code>, respectivly</li>
+<li>constants should be all upper-case, such as <code>static final int MIN_WIDTH = 4</code></li>
+</ul>
+
+<h2 id="basics">Basics</h2>
+
+<h3 id="configuation-and-envrironment">Configuation and envrironment</h3>
+
+<p>Proper development in Java demands an Integrated Development Environment IDE.  JetBrain&rsquo;s <a href="https://www.jetbrains.com/idea/">Intellij IDEA</a> is one of the best.  However, some time must be taken to become acquainted with it.</p>
+
+<p>Gotchas:</p>
+
+<ul>
+<li>Intellij creates a project folder within its own directory for each project you create.  You must delete a project in both places.</li>
+<li>Always Import a project, instead of just Opening one.</li>
+<li>???</li>
+</ul>
+
+<p>To get started with Intellij, Import a new project.  Then move to the <code>tests</code> directory, open a file, and run tests by clicking on the green arrows that appear on the left side.</p>
+
+<p>This tutorial will be created using Two Sigma&rsquo;s <a href="http://beakerx.com/">BeakerX</a> JVM kernel for the Jupyter notebook.  So we will focus on package-level code snippets before looking at a larger project.  BeakerX allows you to reference work among cells by creating assigning the cell to a <code>package</code> just as you do within a project.</p>
+
+<p>The following code cell creates a class <code>BeakerTest</code>, the class is then instantated, in the next cell.</p>
+
+<pre><code class="language-Java">package test.beaker;
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+public class BeakerTest {
+  private Date _date;
+  private SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mmZ&quot;);
+  
+  public BeakerTest() {
+    _date = new Date();
+  }
+
+  public String getDateTxt() {
+    return &quot;Today:&quot; + sdf.format(_date);
+  }
+
+  public String getDateUpperCaseTxt() {
+    return getDateTxt().toUpperCase();
+  }
+
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">test.beaker.BeakerTest
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package test.beaker;
+
+BeakerTest bt = new BeakerTest();
+return bt.getDateTxt();
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Today:2019-06-27T13:20+0000
+</code></pre>
+
+</div>
+
+
+<p>Because BeakerX is designed for data science, graphs can be created by importing their <code>Plot</code> package.</p>
+
+<pre><code class="language-Java">import java.util.List;
+import java.util.ArrayList;
+import com.twosigma.beakerx.chart.xychart.Plot;
+import com.twosigma.beakerx.chart.xychart.plotitem.*;
+import com.twosigma.beakerx.chart.Color;
+
+Plot p = new Plot();
+
+p.setTitle(&quot;this is a Java plot&quot;);
+
+Bars b = new Bars();
+
+List&lt;Number&gt; yList = new ArrayList&lt;Number&gt;();
+yList.add(2);
+yList.add(5);
+yList.add(4);
+yList.add(8);
+
+b.setY(yList);
+b.setColor(Color.blue);
+b.setWidth(0.5);
+
+p.add(b);
+  
+return p;
+</code></pre>
+
+<pre><code class="language-Java">package test.beaker;
+interface DateGetter {
+   public String getDateTxt();
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">test.beaker.DateGetter
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package test.beaker;
+public class DG2 extends BeakerTest implements DateGetter {
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">test.beaker.DG2
+</code></pre>
+
+</div>
+
+
+<h3 id="core-packages">Core packages</h3>
+
+<p>The following are core packages that do not require dependency tracking, such as maven.</p>
+
+<ul>
+<li>java.lang — basic language functionality and fundamental types</li>
+<li>java.util — collection data structure classes</li>
+<li>java.io   — file operations</li>
+<li>java.math — multiprecision arithmetics</li>
+<li>java.nio  — the Non-blocking I/O framework for Java</li>
+<li>java.net  — networking operations, sockets, DNS lookups, &hellip;</li>
+<li>java.security — key generation, encryption and decryption</li>
+<li>java.sql  — Java Database Connectivity (JDBC) to access databases</li>
+<li>java.awt  — basic hierarchy of packages for native GUI components</li>
+<li>java.text — Provides classes and interfaces for handling text, dates, numbers, and messages in a manner independent of natural languages.</li>
+<li>java.rmi  — Provides the RMI package.</li>
+<li>java.time — The main API for dates, times, instants, and durations.</li>
+<li>java.beans — The java.beans package contains classes and interfaces related to JavaBeans components.</li>
+<li>java.Applet — This package provides classes and methods to create and communicate with the applets.</li>
+</ul>
+
+<p>The java.lang package is available without the use of an import statement.</p>
+
+<h3 id="popular-libraries">Popular libraries</h3>
+
+<ul>
+<li><p>standard</p>
+
+<ul>
+<li>lang</li>
+<li>util</li>
+<li>io, nio</li>
+<li>math</li>
+<li>net</li>
+</ul></li>
+
+<li><p>productivity</p>
+
+<ul>
+<li>apache commons</li>
+<li>math</li>
+<li>cli</li>
+<li>csv</li>
+<li>io</li>
+<li>guava, google commons</li>
+<li>google-gson</li>
+</ul></li>
+
+<li><p>testing</p>
+
+<ul>
+<li>junit</li>
+<li>mockito</li>
+</ul></li>
+
+<li><p>logging</p>
+
+<ul>
+<li>log4j</li>
+<li>slf4j</li>
+</ul></li>
+
+<li><p>application development</p>
+
+<ul>
+<li>http</li>
+<li>h2</li>
+<li>jhipster</li>
+<li>spring</li>
+<li>hibernate orm</li>
+</ul></li>
+</ul>
+
+<h3 id="syntax">Syntax</h3>
+
+<p>Basic operations</p>
+
+<pre><code class="language-Java">double result = 2.3 + 4.5;
+System.out.println(result);
+String result1 = &quot;Hello, &quot; + &quot;World&quot;;
+System.out.println(result1);
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">6.8
+Hello, World
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Basic arrays</p>
+
+<pre><code class="language-Java">int[] nums = {2, 5, 4, 9};
+System.out.println(nums[0]);
+String[] strings = {&quot;alsdj&quot;, &quot;asldfj&quot;, &quot;owiure&quot;};
+System.out.println(strings.length);
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2
+3
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Typical main within class</p>
+
+<pre><code class="language-Java">class Programm {
+  public static void main(String[] args){
+    Programm programm = new Programm();
+    programm.start();
+  }
+  public void start(){
+    String[] test = {&quot;This&quot;, &quot;is&quot;, &quot;a&quot;, &quot;test&quot;};
+    for(String t:test){
+        System.out.println(t);
+    }
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.Programm
+</code></pre>
+
+</div>
+
+
+<p>Example using strings and conditionals</p>
+
+<pre><code class="language-Java">package test.beaker;
+
+import java.lang.String;
+
+
+public class Input1 {
+    
+  public String mIfElse(String[] args) {
+      String testr;
+    if(args.length &gt; 3){
+      String sArgs =  String.join(&quot;,&quot;, args);
+      testr =  &quot;Your argument is: &quot; + sArgs;
+        for(String arg: args){
+            System.out.println(arg);
+        }
+    } else {
+      testr = &quot;Not many arguments&quot;;
+        for(int i=0; i&lt;args.length; i++){
+            System.out.println(args[i]);
+        }
+    }
+      return testr;
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">test.beaker.Input1
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package test.beaker;
+
+Input1 x = new Input1();
+String[] test = {&quot;This&quot;, &quot;is&quot;, &quot;a&quot;, &quot;test&quot;}; 
+System.out.println(x.mIfElse( test ));
+
+String[] y = {&quot;a&quot;,&quot;test&quot;};
+System.out.println( x.mIfElse(y) );
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">This
+is
+a
+test
+Your argument is: This,is,a,test
+a
+test
+Not many arguments
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Array actions</p>
+
+<pre><code class="language-Java">package test.beaker;
+
+import java.lang.String;
+
+
+public class ArraySum {
+    public void sum() {
+        double[] numbers = { 1.1, 2.2, 3.3 };
+        System.out.println(&quot;[v1] Sum1 of {1.1,2.2,3.3}=&quot; + arraySum1(numbers));
+        System.out.println(&quot;[v2] Sum2 of {1.1,2.2,3.3}=&quot; + arraySum2(numbers));
+        System.out.println(&quot;[v3] Sum3 of {1.1,2.2,3.3}=&quot; + arraySum3(numbers));
+    }
+
+    public static double arraySum1(double[] nums) {
+        double sum = 0;
+        for(double num: nums) {
+            sum = sum + num;    // Or sum += num
+            }
+        return(sum);
+    }
+    
+    public static double arraySum2(double[] nums) {
+        double sum = 0;
+        for(int i=0; i&lt;nums.length; i++) {
+            sum = sum + nums[i]; 
+        }
+        return(sum);
+    }
+    public static double arraySum3(double[] nums) {
+        double sum = 0;
+        int i=0;
+        while(i&lt;nums.length) {
+            sum = sum + nums[i]; 
+            i++;            // Or i = i + 1, or i += 1
+        }
+        return(sum);
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">test.beaker.ArraySum
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package test.beaker;
+
+ArraySum x = new ArraySum();
+x.sum();
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[v1] Sum1 of {1.1,2.2,3.3}=6.6
+[v2] Sum2 of {1.1,2.2,3.3}=6.6
+[v3] Sum3 of {1.1,2.2,3.3}=6.6
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Declare and allocate arrays</p>
+
+<pre><code class="language-Java">package test.beaker;
+
+public class Allocate{
+    
+    public static void run(){
+        // one-step
+        int[] val1 = {1,2,3};
+        // two-step
+        int[] val2 = new int[3];
+        val2[0] = 1;
+        val2[1] = 2;
+        val2[2] = 3;
+        
+        System.out.println(val1[0]);
+        System.out.println(val2[0]);
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">test.beaker.Allocate
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package test.beaker;
+Allocate x = new Allocate();
+x.run();
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1
+1
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Typical class</p>
+
+<pre><code class="language-Java">package test.beaker;
+
+public class Circle {
+  private double radius;
+
+  public Circle(double radius) {
+    this.radius = radius;
+  }
+
+  public double getRadius() {
+    return(radius);
+  }
+
+  public void setRadius(double radius) {
+    this.radius = radius;
+  }
+
+  public double getArea() {
+    return(Math.PI * radius * radius);
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">test.beaker.Circle
+</code></pre>
+
+</div>
+
+
+<p>Allocating arrays</p>
+
+<pre><code class="language-Java">package test.beaker;
+
+public class CircleArray {
+  public static void main(String[] args) {
+    // Do something with arrays
+  }
+  
+  /** Builds an array of Circles and returns the array. After allocating space for the Circles, 
+   *  it loops down, builds a Circle, and puts it into the appropriate place in the array.
+   *  This is the correct approach. 
+   */
+  public static Circle[] makeCircles1(int numCircles) {
+    Circle[] circles = new Circle[numCircles];      // Allocate space
+    for(int i=0; i&lt;circles.length; i++) {
+      circles[i] = new Circle(Math.random() * 10);  // Put circles in the array
+    }
+    return(circles);
+  }
+  
+  /** Attempts to build an array of Circles. Crashes with NullPointerException since after
+   *  first line there are no Circle objects, just null pointers. So, trying to call setRadius
+   *  on null crashes. 
+   */
+  public static Circle[] makeCircles2(int numCircles) {
+    Circle[] circles = new Circle[numCircles];
+    for(int i=0; i&lt;circles.length; i++) {
+      circles[i].setRadius(Math.random() * 10); // Crashes with NullPointerException
+    }
+    return(circles);
+  }
+  
+  /** Attempts to build an array of Circles. Fails because it never puts any Circles
+   *  into the array. To put something into an array, you must have the index.
+   *  
+   *  The funny @SuppressWarnings entry below is something we have not yet
+   *  covered. It just tells Eclipse not to warn that the variable c in the loop
+   *  below is never used, since I already know that the code is wrong. It is a bad habit
+   *  to leave code in your projects that has warnings, because then you get in the habit
+   *  of ignoring the warnings, and the vast majority of the warnings are useful.
+   *  If you are deliberately doing something that will result in a warning from Eclipse, 
+   *  suppress the warnings using 
+   *  http://help.eclipse.org/mars/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Ftasks%2Ftask-suppress_warnings.htm
+   *  and, preferably document why you are doing things a knowingly bad way.
+   */
+  @SuppressWarnings(&quot;unused&quot;)
+  public static Circle[] makeCircles3(int numCircles) {
+    Circle[] circles = new Circle[numCircles];
+    for(Circle c: circles) {
+      c = new Circle(Math.random() * 10);; // Fails to store c in array
+    }
+    return(circles); // Array still contains only null pointers
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">test.beaker.CircleArray
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package test.beaker;
+
+CircleArray x = new CircleArray();
+Circle[] y = x.makeCircles1(3);
+System.out.println(y[0].getRadius() );
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">3.716013423654272
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Static methods (math operations) these are essentially global functions</p>
+
+<pre><code class="language-Java">double rand = Math.random();
+System.out.println(rand);
+System.out.println(Math.pow(2,3));
+
+System.out.println(Math.exp(2.30));
+System.out.println(Math.log(10));
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0.03994823989553764
+8.0
+9.974182454814718
+2.302585092994046
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Use of static import</p>
+
+<pre><code class="language-Java">import static java.lang.Math.*;
+...
+double d1 = cos(...);   // Instead of Math.cos(...)
+double d2 = sin(...);   // Instead of Math.sin(...)
+double d3 = random(); // Instead of Math.random()
+</code></pre>
+
+<h3 id="keywords">Keywords</h3>
+
+<p>The following is a table of all keywords.  Some noteworthy points regarding Java keywords:</p>
+
+<ul>
+<li><code>const</code> and <code>goto</code> are resevered words but not used</li>
+<li><code>true</code>, <code>false</code> and <code>null</code> are literals, not keywords</li>
+<li>since Java 8, the <code>default</code> keyword is also used to declare default methods in interfaces</li>
+<li>since Java 10, the word <code>var</code> is used to declare local variables (local variables type inference). For backward compatibility, you can still use <code>var</code> as variable names. So <code>var</code> is a reserved word, not keyword</li>
+<li>all keywords are in lower-case</li>
+<li>all keywords are reserved words but all reserved words are not keywords. Specifically, Java has two reserved words (goto and const) which are not keywords
+
+<ul>
+<li>Reserved words are those that cannot be used as identifiers (class names, method names, varaible names etc).  For example, <code>class</code>, <code>public</code>, <code>int</code>, <code>etc</code> are reserved words</li>
+<li>Keywords are those words which convey some special meaning to the compiler. For example, the kewyord <code>break</code> indicates some form of branching, <code>class</code> is used to specify  a class definition</li>
+</ul></li>
+</ul>
+
+<p><img src="java-all_keywords.jpg" alt="all keywords" /></p>
+
+<p><strong>Access modifiers:</strong> private, protected, public</p>
+
+<p><strong>Flow control:</strong> break, case, continue, default, do, else, for, if, instanceof, return, switch, while</p>
+
+<p><strong>Package control:</strong> import, package</p>
+
+<p><strong>Primitive types:</strong> boolean, byte, char, double, float, int, long, short</p>
+
+<p><strong>Error handling:</strong> assert, catch, finally, throw, throws, try</p>
+
+<p><strong>Enumeration:</strong> enum</p>
+
+<p><strong>Others:</strong>  super, this, void</p>
+
+<p><strong>Unused (reserved):</strong> const, goto</p>
+
+<p><strong>Class, method, variable modifiers:</strong></p>
+
+<p>abstract, class, default, extends, final,</p>
+
+<p>implements, interface, native, new,</p>
+
+<p>static, strictfp, synchronized, transient,</p>
+
+<p>var, volatile</p>
+
+<h3 id="annotations">Annotations</h3>
+
+<ul>
+<li><p>Standard</p>
+
+<ul>
+<li>@Override</li>
+<li>@Deprecated</li>
+<li>@SuppressWarnings
+<br /></li>
+</ul></li>
+
+<li><p>Spring</p>
+
+<ul>
+<li>???</li>
+<li>???</li>
+</ul></li>
+</ul>
+
+<h3 id="generics">Generics</h3>
+
+<p>Intermediate Java developers should also to be able to define classes or methods that support generics.</p>
+
+<p><strong>Using <code>&lt;TypeVariable&gt;</code></strong></p>
+
+<ul>
+<li>If you put variables in angle brackets in the class or method definition, it tells Java that uses of those variables refer to types, not to values</li>
+<li>It is conventional to use short names in upper case, such as T, R (input type, result type) or T1, T2 (type1, type2), or E (element type)</li>
+</ul>
+
+<p><strong>Using Generic Types in Existing Classes</strong></p>
+
+<p>Find a data structure that accepts Object(s)</p>
+
+<ul>
+<li>ArrayList, LinkedList, HashMap, HashSet, Stack</li>
+</ul>
+
+<p>Declare the data structure with the type(s) in angle brackets
+immediately after type name</p>
+
+<ul>
+<li><code>List&lt;String&gt; names = new ArrayList&lt;&gt;();</code></li>
+<li><code>Map&lt;String,Person&gt; employees = new HashMap&lt;&gt;();</code></li>
+</ul>
+
+<p>Insert objects of the appropriate type</p>
+
+<ul>
+<li><code>names.add(&quot;Some String&quot;);</code></li>
+<li><code>employees.put(person.getEmployeeId(), person);</code></li>
+</ul>
+
+<p>No typecast required on removal</p>
+
+<ul>
+<li><code>String firstName = names.get(0);</code></li>
+<li><code>Person p1 = employees.get(&quot;a1234&quot;);</code></li>
+</ul>
+
+<hr />
+
+<p><code>&lt;&gt;</code> diamond operator</p>
+
+<p>Autoboxing</p>
+
+<ul>
+<li>So you cannot actually store int, double, and other primitives. You cannot declare the List to take primitives (e.g., <code>List&lt;int&gt;</code> is illegal)</li>
+<li>These data structures can only store wrapper types (Integer, Double, etc.)</li>
+</ul>
+
+<p><img src="tbl_Java_BigO_List.png" alt="BigO for List" /></p>
+
+<pre><code class="language-Java">import java.util.*;
+
+public class RandomList {
+    public static void main(String[] args) {
+        List&lt;String&gt; entries = new ArrayList&lt;&gt;();
+        double d;
+        while((d = Math.random()) &gt; 0.1) {
+            entries.add(&quot;Value: &quot; + d);
+        }
+        for(String entry: entries) {System.out.println(entry);}
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.RandomList
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">/*
+This says that the best method takes a List of T’s and returns a T.
+The '&lt;T&gt;' at the beginning means T is not a real type, but a type 
+that Java will figure out from the method call
+*/
+    
+`public static &lt;T&gt; T methodname(List&lt;T&gt; entries, ...) { ... }`
+</code></pre>
+
+<pre><code class="language-Java">package generics.beaker;
+
+import java.util.Random;
+
+
+public class RandomUtils {
+  private static Random r = new Random();
+
+  /** Return a random int from 0 to range-1. So, randomInt(4)
+   *  returns any of 0, 1, 2, or 3.
+   */
+  public static int randomInt(int range) {
+    return(r.nextInt(range));
+  }
+
+  /** Return a random index of an array. */
+  public static int randomIndex(Object[] array) {
+    return(randomInt(array.length));
+  }
+
+  /** Return a random element from an array.
+   *  Uses generics, so no typecast is required
+   *  for the return value.
+   */
+  public static &lt;T&gt; T randomElement(T[] array) {
+    return(array[randomIndex(array)]);
+  }
+  /* &lt;T&gt;
+    • In rest of method, T refers to a type.
+    • Java will figure out what type T is by looking at the parameters of the method call.
+    • Even if there is an existing class actually called T, it is irrelevant here.
+  */
+  /* T and T[]
+    This says that the method takes in an array of T’s and returns a T.
+    For example, if you pass in an array of Strings, you get out a String;
+    if you pass in an array of Employees, you get out an Employee.
+    No typecasts required in any of the cases.
+  */
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">generics.beaker.RandomUtils
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package generics.beaker;
+
+import java.util.Random;
+import java.util.*;
+
+RandomUtils r = new RandomUtils();
+String[] arr = new String[3]; 
+arr[0] = &quot;one&quot;;
+arr[1] = &quot;two&quot;;
+arr[2] = &quot;three&quot;;
+System.out.println( r.randomElement(arr) );
+String[] names = { &quot;Joe&quot;, &quot;John&quot;, &quot;Jane&quot; };
+String name = r.randomElement(names);
+System.out.println(name);
+Integer[] nums = { 1, 2, 3, 4 };    
+int num = r.randomElement(nums);
+System.out.println(num);
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">one
+John
+3
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package generics.beaker;
+
+import java.util.*;
+
+public class Cprint {
+    
+    public static &lt;T&gt; T mPrint(List&lt;T&gt; lArg ){
+        for(T item: lArg){
+            System.out.println(item);
+        }
+        //return(lArg.get(0));    &lt;-- wierd, seems like it should have to return something
+    }
+    static &lt;T&gt; void mDisplay(List&lt;T&gt; lArg){
+        for(T item: lArg){
+            System.out.println(item);
+        }
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">generics.beaker.Cprint
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">// WTF???
+package generics.beaker;
+
+import java.util.*;
+
+Cprint inst = new Cprint();
+List&lt;String&gt; lArg = new ArrayList&lt;&gt;(); 
+lArg.add(&quot;one&quot;);
+lArg.add(&quot;two&quot;);
+lArg.add(&quot;three&quot;);
+inst.mPrint(lArg);
+System.out.println(&quot;&quot;);
+inst.mDisplay(lArg);
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">cannot find symbol
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  symbol:   class Cprint
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  location: class generics.beaker.BeakerWrapperClass1261714175Id08595fc76c1a46ebbef0e11cd0c086e8
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> Cprint inst = new Cprint()
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> ^     ^                     
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"></code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">cannot find symbol
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  symbol:   class Cprint
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  location: class generics.beaker.BeakerWrapperClass1261714175Id08595fc76c1a46ebbef0e11cd0c086e8
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> Cprint inst = new Cprint()
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">                   ^     ^   
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">// Class
+// We use &lt; &gt; to specify Parameter type
+class Test&lt;T&gt;{
+    // An object of type T is declared
+    T obj;
+    Test(T obj) {  this.obj = obj;  }  // constructor
+    public T getObject()  { return this.obj; }
+}
+  
+// Driver class to test above
+class Main{
+    public static void main (String[] args)
+    {
+        // instance of Integer type
+        Test &lt;Integer&gt; iObj = new Test&lt;Integer&gt;(15);
+        System.out.println(iObj.getObject());
+        // instance of String type
+        Test &lt;String&gt; sObj = new Test&lt;String&gt;(&quot;GeeksForGeeks&quot;);
+        System.out.println(sObj.getObject());
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.Test
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">// yeah, I could spend some time one this
+</code></pre>
+
+<h3 id="methods">Methods</h3>
+
+<p><strong>Methods (pass by value)</strong></p>
+
+<ul>
+<li><a href="http://www.javadude.com/articles/passbyvalue.htm">ref</a></li>
+<li><a href="https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value">discussion</a></li>
+</ul>
+
+<p><em>Pass-by-value</em>
+    The actual parameter (or argument expression) is fully evaluated and the resulting value is copied into a location being used to hold the formal parameter&rsquo;s value during method/function execution. That location is typically a chunk of memory on the runtime stack for the application (which is how Java handles it), but other languages could choose parameter storage differently.</p>
+
+<p><em>Pass-by-reference</em>
+    The formal parameter merely acts as an alias for the actual parameter. Anytime the method/function uses the formal parameter (for reading or writing), it is actually using the actual parameter.</p>
+
+<h3 id="autoboxing">Autoboxing</h3>
+
+<pre><code class="language-Java">import java.util.*;
+
+public class Autoboxing {
+    public static void main(String[] args) {
+        List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();
+        int[] values = { 2, 4, 6 };
+        for(int value: values) {
+            nums.add(value);
+        }
+        System.out.println(&quot;List: &quot; + nums);
+        int secondNum = nums.get(1);
+        System.out.println(&quot;Second number: &quot; + secondNum);
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.Autoboxing
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">/* Java program to illustrate autoboxing */
+import java.io.*;
+import java.util.*;
+ 
+class GFG
+{
+    public static void main (String[] args)
+    {
+        /* Here we are creating a list
+          of elements of Integer type.
+          adding the int primitives type values */
+        List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+        for (int i = 0; i &lt; 10; i++)
+            list.add(i);
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.GFG
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">/* Java program to illustrate autoboxing */
+import java.io.*;
+import java.util.*;
+ 
+class GFG
+{
+    public static void main (String[] args)
+    {
+        /* Here we are creating a list of elements
+          of Integer type. Adding the int primitives
+          type values by converting them into Integer
+          wrapper Object*/
+        List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+        for (int i = 0; i &lt; 10; i++)
+            list.add(Integer.valueOf(i));
+ 
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.GFG
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">/*Another example of auto and unboxing is to find sum of odd numbers in a list. 
+Important point in the program is that the operators remainder (%) and unary 
+plus (+=) operators do not apply to Integer objects. But still code compiles
+successfully because the unboxing of Integer Object to primitive int value is
+taking place by invoking intValue() method at runtime.
+*/
+// Java program to illustrate  find sum
+// of odd numbers using autobxing and unboxing
+import java.io.*;
+import java.util.*;
+ 
+class GFG
+{
+    public static int sumOfOddNumber(List&lt;Integer&gt; list)
+    {
+        int sum = 0;
+        for (Integer i : list)
+        {
+            // unboxing of i automatically
+            if(i % 2 != 0)
+                sum += i;
+            /* unboxing of i is done automatically
+               using intvalue implicitly
+            if(i.intValue() % 2 != 0)
+                sum += i.intValue();*/
+        }
+        return sum;
+    }
+ 
+    public static void main (String[] args)
+    {
+        /* Here we are creating a list of elements
+           of Integer type and adding the int primitives
+           type values to the list*/
+        List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+        for (int i = 0; i &lt; 10; i++)
+            list.add(i);
+ 
+        // getting sum of all odd no. in the list.
+        int sumOdd = sumOfOddNumber(list);
+        System.out.println(&quot;Sum of odd numbers = &quot; + sumOdd);
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.GFG
+</code></pre>
+
+</div>
+
+
+<h3 id="collections">Collections</h3>
+
+<pre><code class="language-Java">package test.beaker;
+/*
+You say List (the interface type) instead of ArrayList (the concrete class) here so that you do not 
+accidentally use one of the few methods that is specific to ArrayList. That way, if you decide to 
+change to LinkedList for performance reasons, all the rest of your code stays the same, and the 
+output is unchanged. And of course if you make a method that accepts a list, it is doubly 
+important that you declare the parameter as List&lt;Blah&gt;, not ArrayList&lt;Blah&gt;, so that the same 
+method can also be used for another type of List.
+*/
+import java.util.*;
+
+List&lt;String&gt; myArr = new ArrayList&lt;&gt;();
+List&lt;String&gt; myLink = new LinkedList&lt;&gt;();
+
+myArr.add(&quot;new item&quot;);
+myArr.add(0,&quot;first new item&quot;);
+myArr.add(&quot;another item&quot;);
+myArr.add(&quot;last item&quot;);
+/*
+ builtin toString method that shows the 
+List values separated by commas. 
+*/
+System.out.println(myArr);
+System.out.println(myArr.get(1));
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[first new item, new item, another item, last item]
+new item
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package test.beaker;
+
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
+
+List&lt;String&gt; myArr = new ArrayList&lt;&gt;();
+myArr.add(&quot;new item&quot;);
+myArr.add(0,&quot;first new item&quot;);
+myArr.add(&quot;another item&quot;);
+myArr.add(&quot;last item&quot;);
+
+
+for(String item: myArr){
+    System.out.println(item);
+}
+System.out.println(&quot;\n&quot;);
+myArr.forEach(System.out::println);
+
+System.out.println(&quot;\n&quot;);
+List&lt;String&gt; result = myArr.stream()                        // convert list to stream
+                .filter(line -&gt; !&quot;last item&quot;.equals(line))  // we dont like mkyong
+                .collect(Collectors.toList());              // collect the output and convert streams to a List
+System.out.println(result);
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">first new item
+new item
+another item
+last item
+
+
+first new item
+new item
+another item
+last item
+
+
+[first new item, new item, another item]
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p><strong>List methods</strong></p>
+
+<pre><code class="language-Java">import java.util.*;
+
+List&lt;String&gt; words = new ArrayList&lt;&gt;();
+// List&lt;String&gt; words = new LinkedList&lt;&gt;();
+// List&lt;String&gt; wordList1 = Arrays.asList(&quot;word1&quot;, &quot;word2&quot;, ...);      &lt;&lt;&lt; asList() not used in production
+words.add(&quot;hi&quot;);
+words.add(&quot;hello&quot;);
+words.add(&quot;hola&quot;);
+System.out.println(&quot;List: &quot; + words);
+System.out.println(&quot;Num words: &quot; + words.size());
+String secondWord = words.get(1);
+System.out.println(&quot;2nd word: &quot; + secondWord);
+System.out.println(&quot;Contains 'hi'? &quot; + words.contains(&quot;hi&quot;));
+System.out.println(&quot;Contains 'bye'? &quot; + words.contains(&quot;bye&quot;));
+words.remove(&quot;hello&quot;);
+System.out.println(&quot;List: &quot; + words);
+System.out.println(&quot;Num words: &quot; + words.size());
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">List: [hi, hello, hola]
+Num words: 3
+2nd word: hello
+Contains 'hi'? true
+Contains 'bye'? false
+List: [hi, hola]
+Num words: 2
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">// lambda
+import java.util.*;
+
+List&lt;String&gt; words = new ArrayList&lt;&gt;(); 
+// or,  = new LinkedList&lt;&gt;();
+words.add(&quot;hi&quot;);
+words.add(&quot;hello&quot;);
+words.add(&quot;hola&quot;);
+System.out.println(&quot;List: &quot; + words);
+words.sort((word1,word2) -&gt; word1.length()-word2.length());
+System.out.println(&quot;List: &quot; + words);
+words.replaceAll(word -&gt; word.toUpperCase() + &quot;!&quot;);
+System.out.println(&quot;List: &quot; + words);
+words.removeIf(word -&gt; word.contains(&quot;E&quot;));
+System.out.println(&quot;List: &quot; + words);
+words.forEach(word -&gt; System.out.println(&quot;Word: &quot; + word));
+String[] wordArray = words.toArray(new String[0]);
+for(String word: wordArray) {
+    System.out.println(&quot;Word: &quot; + word);
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">List: [hi, hello, hola]
+List: [hi, hola, hello]
+List: [HI!, HOLA!, HELLO!]
+List: [HI!, HOLA!]
+Word: HI!
+Word: HOLA!
+Word: HI!
+Word: HOLA!
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">// maps / hashmaps (lookup tables or associative arrays)
+import java.util.*;
+
+Map&lt;String, Double&gt; map = new HashMap&lt;&gt;();
+map.put(&quot;one&quot;,1.0);
+Double result = map.get(&quot;one&quot;);
+System.out.println(result);
+
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1.0
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>hashmap performance</p>
+
+<ul>
+<li>Inserting a value associated with a key
+
+<ul>
+<li>Independent of the number of entries in the table, i.e., O(1)<br /></li>
+</ul></li>
+<li>Finding the value associated with a key
+
+<ul>
+<li>Independent of the number of entries in the table, i.e., O(1)</li>
+</ul></li>
+<li>Finding the key associated with a value
+
+<ul>
+<li>Requires you to look at every entry, i.e., O(N)</li>
+</ul></li>
+</ul>
+
+<pre><code class="language-Java">package map.beaker;
+
+import java.util.*;
+
+public class StateMap {
+    
+    private static String[][] stateArray = {{&quot;AK&quot;,&quot;Alaska&quot;},{&quot;AL&quot;,&quot;Arizona&quot;},{&quot;AR&quot;,&quot;Arkansas&quot;}};
+    
+    private static Map&lt;String, String&gt; stateMap = new HashMap&lt;&gt;();
+    
+    static{
+        for(String[] state: stateArray ){
+            stateMap.put(state[0],state[1]);
+        }
+    }
+    
+    public static String statename(String stateCode){
+        return( stateMap.getOrDefault(stateCode, &quot;[None]&quot;) );
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">map.beaker.StateMap
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package map.beaker;
+
+import java.util.*;
+
+StateMap x = new StateMap();
+String result = x.statename(&quot;AK&quot;);
+System.out.println(result);
+
+// new hashmap
+Map&lt;String, Integer&gt; stateMap = new HashMap&lt;&gt;();
+stateMap.put(&quot;one&quot;,1);
+stateMap.put(&quot;two&quot;,2);
+stateMap.put(&quot;three&quot;,3);
+
+System.out.println(stateMap.keySet());
+System.out.println(stateMap.values());
+System.out.println(stateMap.size());
+stateMap.forEach((k,v) -&gt; System.out.printf(&quot;(%s,%s)%n&quot;, k, v));
+//stateMap.computeIfAbsent('four', f());
+//map.merge(key, message, String::concat)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Alaska
+[one, two, three]
+[1, 2, 3]
+3
+(one,1)
+(two,2)
+(three,3)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">// set
+// Similar to a Map where the values corresponding to each key are just boolean true
+import java.util.*;
+
+Set&lt;String&gt; set = new HashSet&lt;&gt;();
+set.add(&quot;one&quot;);
+set.add(&quot;two&quot;);
+set.add(&quot;two&quot;);
+
+System.out.println( set.contains(&quot;two&quot;) );
+System.out.println( set.contains(&quot;three&quot;) );
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">true
+false
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>// printf</p>
+
+<p><code>System.out.printf(&quot;%s, %s, and %s.%n&quot;, v1, v2, v3);</code></p>
+
+<pre><code class="language-Java">// variable arguments (Type... argument)
+public class MathUtils {
+    public static int min(int... numbers){
+        int minimum = Integer.MAX_VALUE;
+        for(int number: numbers) {
+            if (number &lt; minimum) {
+                minimum = number;
+            }
+        }
+        return(minimum);
+    }
+    public static void main(String[] args) {
+        System.out.printf(&quot;Min of 2 nums: %d.%n&quot;, min(2,1));
+        System.out.printf(&quot;Min of 7 nums: %d.%n&quot;, min(2,4,6,8,1,2,3));
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.MathUtils
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">// String - immutable
+// performance: O(N^2)
+// i)copied result, ii)allocate a new String object, iii)assign that new object to result
+public static String padChars1(int n, String orig) {
+    String result = &quot;&quot;;
+    for(int i=0; i&lt;n; i++) {
+        result = result + orig;
+    }
+    return(result);
+}
+</code></pre>
+
+<pre><code class="language-Java">// StringBuilder - mutable
+// performance: O(N)
+public static String padChars2(int n, String orig) {
+    StringBuilder result = new StringBuilder(&quot;&quot;);
+    for(int i=0; i&lt;n; i++) {
+        result = result.append(orig);
+    }
+    return(result.toString());
+}
+</code></pre>
+
+<h2 id="object-oriented-programming">Object Oriented Programming</h2>
+
+<h3 id="thinking-like-a-developer">Thinking like a developer</h3>
+
+<p>OOP for modeling the world</p>
+
+<p>Difficulties when working in a team</p>
+
+<p>Getters and setters</p>
+
+<h3 id="access-modifiers">Access modifiers</h3>
+
+<ul>
+<li><a href="https://www.geeksforgeeks.org/access-modifiers-java/">access modifiers</a></li>
+<li><a href="https://dzone.com/articles/all-about-java-modifier">general modifiers</a></li>
+</ul>
+
+<p>Once you learn about private, your strategy is this:</p>
+
+<ul>
+<li>If you want code that uses your class to access the method, make it public.</li>
+<li>If your method is called only by other met hods in the same class,  make it private.</li>
+<li>Make it private unless you have a specific reason to do otherwise.</li>
+</ul>
+
+<p><img src="java-access_modifiers.png" alt="access modifiers" /></p>
+
+<p><strong>Default</strong></p>
+
+<pre><code class="language-Java">//Java program to illustrate default modifier
+package p1.beaker;
+ 
+//Class Geeks is having Default access modifier
+class Geek
+{
+    void display()
+       {
+           System.out.println(&quot;Hello World!&quot;);
+       }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">p1.beaker.Geek
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">//Java program to illustrate error while 
+//using class from different package with
+//default modifier
+package p2.beaker;
+import p1.*;
+ 
+//This class is having default access modifier
+class GeekNew
+{
+    public static void main(String args[])
+       {  
+          //accessing class Geek from package p1
+          Geeks obj = new Geek();
+          obj.display();
+       }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">ERROR: java.lang.IllegalStateException: package p1 does not exist
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> import p1.*
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> ^           
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"></code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">cannot find symbol
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  symbol:   class Geeks
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  location: class p2.beaker.GeekNew
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> Geeks obj = new Geek()
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> ^    ^                  
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"></code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">cannot find symbol
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  symbol:   class Geek
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  location: class p2.beaker.GeekNew
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> Geeks obj = new Geek()
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">                 ^   ^   
+</code></pre>
+
+</div>
+
+
+<p><strong>Private</strong></p>
+
+<pre><code class="language-Java">//Java program to illustrate error while 
+//using class from different package with
+//private modifier
+package p1.beaker;
+ 
+class A
+{
+   private void display()
+    {
+        System.out.println(&quot;GeeksforGeeks&quot;);
+    }
+}
+ 
+class B
+{
+   public static void main(String args[])
+      {
+          A obj = new A();
+          //trying to access private method of another class
+          obj.display();
+      }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">ERROR: java.lang.IllegalStateException: display() has private access in p1.beaker.A
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> obj.display()
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> ^          ^   
+</code></pre>
+
+</div>
+
+
+<p><strong>Protected</strong></p>
+
+<pre><code class="language-Java">//Java program to illustrate
+//protected modifier
+package p1.beaker;
+ 
+//Class A
+public class A
+{
+   protected void display()
+    {
+        System.out.println(&quot;GeeksforGeeks&quot;);
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">p1.beaker.A
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">//Java program to illustrate
+//protected modifier
+package p2.beaker;
+import p1.*; //importing all classes in package p1
+ 
+//Class B is subclass of A
+class B extends A
+{
+   public static void main(String args[])
+   {  
+       B obj = new B();  
+       obj.display();  
+   }  
+     
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">ERROR: java.lang.IllegalStateException: package p1 does not exist
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> import p1.*
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> ^           
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"></code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">cannot find symbol
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  symbol: class A
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> class B extends A
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">                 ^^ 
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"></code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">cannot find symbol
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  symbol:   method display()
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">  location: variable obj of type p2.beaker.B
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> obj.display()
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output"> ^          ^   
+</code></pre>
+
+</div>
+
+
+<p><strong>Public</strong></p>
+
+<pre><code class="language-Java">//Java program to illustrate
+//public modifier
+package p1.beaker;
+public class A
+{
+   public void display()
+      {
+          System.out.println(&quot;GeeksforGeeks&quot;);
+      }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">p1.beaker.A
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package p1.beaker;
+// should work with the below
+//package p2.beaker;
+//import p1.beaker;
+class B
+{
+    public static void main(String args[])
+      {
+          A obj = new A();
+          obj.display();
+      }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">p1.beaker.B
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">// Static Blocks
+// – Code that runs when class is loaded, not when instance is built (as with constructor).  Used to initialize static variables that require multiple steps to build their values.
+import java.util.*;
+
+public class Blah{
+    private static Map&lt;String,String&gt; map = new HashMap&lt;&gt;();
+    static {
+        map.put(&quot;key1&quot;, &quot;value1&quot;);
+        map.put(&quot;key2&quot;, &quot;value2&quot;);
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">com.twosigma.beaker.javash.bkr9f024aeb.Blah
+</code></pre>
+
+</div>
+
+
+<h3 id="abstract-and-interface">Abstract and Interface</h3>
+
+<ul>
+<li>Interfaces are more flexible, because a class can implement multiple interfaces.  Since Java does not have multiple inheritance, using abstract classes prevents your users from using any other class hierarchy. In general, <strong>prefer interfaces when there are no default implementations or state.</strong> Java collections offer good examples of this (Map, Set, etc.).</li>
+<li>Abstract classes have the advantage of allowing better forward compatibility.  Once clients use an interface, you cannot change it; if they use an abstract class, you can still add behavior without breaking existing code. <strong>If compatibility is a concern, consider using abstract classes.</strong></li>
+<li>Even if you do have default implementations or internal state, consider offering an interface and an abstract implementation of it. This will assist clients, but still allow them greater freedom if desired</li>
+</ul>
+
+<p><strong>Interfaces</strong></p>
+
+<ul>
+<li>Enforces behavior - Like abstract classes, guarantees classes have certain methods</li>
+<li>More flexibility that abstract classes – Classes can implement multiple interfaces</li>
+<li>You cannot directly extend multiple abstract classes</li>
+<li>New features in Java 8 interfaces – Interfaces can have static methods</li>
+<li>Example shown on upcoming slides in this section – Interfaces can have concrete (default) methods</li>
+<li>Example and more details in later section on Java 8 interfaces</li>
+<li>Restriction – Even in Java 8, interfaces cannot have mutable (modifiable) instance variables</li>
+</ul>
+
+<pre><code class="language-Java">package shape3.beaker;
+
+/** Represents the parent of all shapes that have a getArea method.
+ *  This (using an interface) is the third attempt at a design that will support 
+ *  making a static method to sum the areas of a mixed set of shapes. This approach is 
+ *  better than the second approach (using an abstract class) in two ways: because classes
+ *  can implement more than one interface, and because with static methods in interfaces
+ *  Java enforces that you call them via InterfaceName.staticMethodName(...), whereas with
+ *  static methods in abstract classes it is possible to call them via instanceName.staticMethodName(...),
+ *  which misleads readers of the code into thinking that they are normal instance methods
+ *  instead of static methods. General rule in Java 8 and later: use interfaces instead of abstract
+ *  classes except for the relatively rare case where you need to define instance variables
+ *  in the abstract class.
+ */
+
+public interface Shape {
+  double getArea(); // All real shapes must define a getArea 
+  
+  static double sumAreas(Shape[] shapes) {
+    double sum = 0;
+    for(Shape s: shapes) {
+      sum = sum + s.getArea();
+    }
+    return(sum);
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">shape3.beaker.Shape
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package shape3.beaker;
+/** Represents a simplistic Circle. Used to illustrate encapsulation (private instance vars),
+ *  JavaDoc (these comments), and inheritance (extending Shape so that we can make an array
+ *  of mixed shapes and sum their areas).
+ */
+
+public class Circle implements Shape {
+  private double radius;
+
+  /** Builds a Circle with the given radius. */
+  
+  public Circle(double radius) {
+    this.radius = radius;
+  }
+
+  /** Returns the current radius. */
+  
+  public double getRadius() {
+    return(radius);
+  }
+
+  /** Sets the current radius. */
+  
+  public void setRadius(double radius) {
+    this.radius = radius;
+  }
+
+  /** Calculates the area from the radius. */
+  @Override
+  public double getArea() {
+    return(Math.PI * radius * radius);
+  }
+
+  /** Indirectly sets the area by working backward to the radius.
+   *  The resultant area may not be EXACTLY what you set, due to roundoff
+   *  error when working with doubles.
+    */
+  public void setArea(double area) {
+    radius = Math.sqrt(area / Math.PI);
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">shape3.beaker.Circle
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package shape3.beaker;
+/** Represents a simplistic Rectangle. Also see the Square subclass.
+ *   &lt;p&gt;
+ *  From &lt;a href=&quot;http://courses.coreservlets.com/Course-Materials/&quot;&gt;the
+ *  coreservlets.com tutorials on JSF 2, PrimeFaces, Ajax, jQuery, GWT, Android,
+ *  Spring, Hibernate, JPA, RESTful Web Services, Hadoop, 
+ *  servlets, JSP, and Java 7 and Java 8 programming&lt;/a&gt;.
+ */
+public class Rectangle implements Shape {
+  private double width, height;
+
+  public Rectangle(double width, double height) {
+    this.width = width;
+    this.height = height;
+  }
+
+  public double getWidth() {
+    return(width);
+  }
+
+  public void setWidth(double width) {
+    this.width = width;
+  }
+
+  public double getHeight() {
+    return(height);
+  }
+
+  public void setHeight(double height) {
+    this.height = height;
+  }
+
+  @Override
+  public double getArea() {
+    return(width * height);
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">shape3.beaker.Rectangle
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package shape3.beaker;
+/** Tests using mixed Shape types and the static sumAreas method.
+ *  &lt;p&gt;
+ *  From &lt;a href=&quot;http://courses.coreservlets.com/Course-Materials/&quot;&gt;the
+ *  coreservlets.com tutorials on JSF 2, PrimeFaces, Ajax, jQuery, GWT, Android,
+ *  Spring, Hibernate, JPA, RESTful Web Services, Hadoop, 
+ *  servlets, JSP, and Java 7 and Java 8 programming&lt;/a&gt;.
+ */
+
+public class ShapeTest {
+  public static void main(String[] args) {
+    Shape[] shapes = { new Circle(10),            // Area is about 314.159
+                       new Rectangle(5, 10)};          // Area is 50
+    System.out.println(&quot;Sum of areas: &quot; +
+                       Shape.sumAreas(shapes));   // Area is about 464.159
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">shape3.beaker.ShapeTest
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package enums1.beaker;
+
+
+public class DayTest {
+    
+public enum Day {
+  SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+  THURSDAY, FRIDAY, SATURDAY;
+}
+    public static boolean isWeekend(Day d) {
+        return(d == Day.SATURDAY || d == Day.SUNDAY);
+    }
+    public static void main(String[] args) {
+        System.out.println(&quot;Monday is weekend? &quot; + 
+                           isWeekend(Day.MONDAY));
+        System.out.println(&quot;Saturday is weekend? &quot; + 
+                           isWeekend(Day.SATURDAY));
+    }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">enums1.beaker.DayTest
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Java">package enums1.beaker;
+
+public class DayTest {
+    
+public enum Day {
+  // typical usage
+  SUNDAY(&quot;Sun&quot;), MONDAY(&quot;Mon&quot;), TUESDAY(&quot;Tues&quot;), 
+  WEDNESDAY(&quot;Wed&quot;), THURSDAY(&quot;Thurs&quot;), 
+  FRIDAY(&quot;Fri&quot;), SATURDAY(&quot;Sat&quot;);
+  
+  private String abbreviation;
+  
+  private Day(String abbreviation) {
+    this.abbreviation = abbreviation;
+  }
+  
+  public String getAbbreviation() {
+    return(abbreviation);
+  }
+
+  public boolean isWeekend() {
+    return(this == SATURDAY || this == SUNDAY);
+  }
+  
+  public boolean isWeekday() {
+    return(!isWeekend());
+  }
+}
+   
+  public static void main(String[] args) {
+    Day day1 = Day.MONDAY;
+    System.out.println(day1);  // toString is automatic with enums
+    System.out.println(day1.getAbbreviation() + 
+                       &quot; is weekend? &quot; + 
+                       day1.isWeekend());
+    Day day2 = Day.SATURDAY;
+    System.out.println(day2.getAbbreviation() + 
+                       &quot; is weekend? &quot; + 
+                       day2.isWeekend());
+  }
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">enums1.beaker.DayTest
+</code></pre>
+
+</div>
+
+
+<h3 id="final-keyword">Final keyword</h3>
+
+<p><img src="java-final_keyword.jpg" alt="final keyword" /></p>
+
+<h3 id="static-keyword">Static keyword</h3>
+
+<p><img src="java-static_keyword.png" alt="static keyword" /></p>
+
+<h2 id="advanced-concepts">Advanced Concepts</h2>
+
+<h3 id="design-patterns">Design patterns</h3>
+
+<h3 id="testing">Testing</h3>
+
+<p><a href="http://www.vogella.com/tutorials/JUnit/article.html">reference</a></p>
+
+<h3 id="driven-development">&lt;?&gt;-driven development</h3>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<h2 id="references">References</h2>
+
+<h3 id="tables">Tables</h3>
+
+<h3 id="external">External</h3>
+
+<ul>
+<li><a href="http://www.mkyong.com/tutorials/java-8-tutorials/">snippet tutorials</a></li>
+<li><a href="https://www.codejava.net/java-core/the-java-language/java-keywords">snippet tutorials</a></li>
+<li><a href="https://www.baeldung.com/java-tutorial">baeldong: in-depth explanations</a></li>
+
+<li><p><a href="https://www.geeksforgeeks.org/interfaces-in-java/">geeks-for-geeks: all questions answered</a></p></li>
+
+<li><p><a href="http://www.baeldung.com/java-collections">java collections</a></p></li>
+
+<li><p><a href="https://github.com/winterbe/java8-tutorial#maps">collections: maps</a></p></li>
+
+<li><p><a href="https://github.com/google/guava/wiki">google guava</a></p></li>
+</ul>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#culture-and-precendence">Culture and Precendence</a></li>
+<li><a href="#basics">Basics</a>
+<ul>
+<li><a href="#configuation-and-envrironment">Configuation and envrironment</a></li>
+<li><a href="#core-packages">Core packages</a></li>
+<li><a href="#popular-libraries">Popular libraries</a></li>
+<li><a href="#syntax">Syntax</a></li>
+<li><a href="#keywords">Keywords</a></li>
+<li><a href="#annotations">Annotations</a></li>
+<li><a href="#generics">Generics</a></li>
+<li><a href="#methods">Methods</a></li>
+<li><a href="#autoboxing">Autoboxing</a></li>
+<li><a href="#collections">Collections</a></li>
+</ul></li>
+<li><a href="#object-oriented-programming">Object Oriented Programming</a>
+<ul>
+<li><a href="#thinking-like-a-developer">Thinking like a developer</a></li>
+<li><a href="#access-modifiers">Access modifiers</a></li>
+<li><a href="#abstract-and-interface">Abstract and Interface</a></li>
+<li><a href="#final-keyword">Final keyword</a></li>
+<li><a href="#static-keyword">Static keyword</a></li>
+</ul></li>
+<li><a href="#advanced-concepts">Advanced Concepts</a>
+<ul>
+<li><a href="#design-patterns">Design patterns</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#driven-development">&lt;?&gt;-driven development</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#references">References</a>
+<ul>
+<li><a href="#tables">Tables</a></li>
+<li><a href="#external">External</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/jvm">jvm
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/tag2">tag2
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/tag3">tag3
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog-intro_latex/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Introduction to LaTeX
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_programming_java-groovy/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Introduction to Groovy for Data Science on the JVM&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

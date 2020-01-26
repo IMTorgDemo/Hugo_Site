@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nltk on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/nltk/</link>
+    <description>Recent content in nltk on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/nltk/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Processing Natural Language with Python and Friends</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</guid>
+      <description>Python is a typical language chosen for Data Science work, and its strengths with strings make it especially useful for working with natural language. While the nltk library opened-up this work for python users, the newer spacy improves upon processing power by implementing Cython code. Tests display its power in production when compared with more traditional approaches, such as with Stanford&amp;rsquo;s CoreNLP. This post is an outline of examples from the spacy coursework and examples.</description>
+    </item>
+    
+  </channel>
+</rss>

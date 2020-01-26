@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>fed on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/fed/</link>
+    <description>Recent content in fed on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 19 Jun 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/fed/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Cost of Internal Investment</title>
+      <link>https://imtorgdemo.github.io/posts/blog_econ-return_rate/</link>
+      <pubDate>Wed, 19 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_econ-return_rate/</guid>
+      <description>There is one question on every economist&amp;rsquo;s mind: Where has inflation gone? It is imperative to understanding how actors make decisions and allocate limited resources. The fact that the inflation rate is so low for so long is incredibly disconcerting for many reasons (with the fear of deflation being just one reason).
+Because of low growth and a lack of inflation the US government and Federal Reserve, as well as nearly every nations&amp;rsquo; central Bank, are pouring fuel onto the economy and getting a paltry return.</description>
+    </item>
+    
+  </channel>
+</rss>

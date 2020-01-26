@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tag2 on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/tag2/</link>
+    <description>Recent content in tag2 on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 16 Aug 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/tag2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Letter to Students: Math is the Basis for Competitive Edge in Every Field</title>
+      <link>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</link>
+      <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</guid>
+      <description>Math is the greatest tool humans have for solving problems. However, it is incredibly expensive to get the experience of using it in the real-world. This is magnified by most teachers, and many university professors, not having any experience applying math anyplace other than academic contexts. This post shows the author&amp;rsquo;s trying experiences with learning maths in school, as well as the excitement of applying them to solve actual industry problems.</description>
+    </item>
+    
+    <item>
+      <title>Building Math from the Ground-Up</title>
+      <link>https://imtorgdemo.github.io/posts/blog-logic_for_math/</link>
+      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog-logic_for_math/</guid>
+      <description>After completing basic high school mathematics, one might think that math stands on its own. To understand and know that 1+1=2 is obvious. But math can go much deeper. In fact, we can build new concepts from math as well as build a math, itself. This is important because it effects how we think about other subjects, and is especially useful in helping us think about language and abstract concepts, such as in programming.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to LaTeX</title>
+      <link>https://imtorgdemo.github.io/posts/blog-intro_latex/</link>
+      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog-intro_latex/</guid>
+      <description>LaTeX is the document preparation and typesetting system used for scientific publications. LaTeX is based on the idea that &amp;lsquo;it is better to leave document design to document designers&amp;rsquo;, so the user can focus on the content. It requires a greater technical understanding than typical simple note-taking systems; however, because it is incredibly descriptive and produces aesthetically-appealing output, it is becoming more popular. This post provides a reference to configuration and syntax.</description>
+    </item>
+    
+    <item>
+      <title>A Data Scientist&#39;s Guide to Modern Java(8&#43;) and the JVM</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_java-modern_java/</link>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_java-modern_java/</guid>
+      <description>Most data scientists avoid the Java Virtual Machine (JVM) like the plague. The features that make developers and data engineers so productive as a team, such as access modifiers and powerful IDEs, feel slow, old, and cumbersome to individuals interacting with data and prototyping new algorithms. However, the JVM and its supporting system matured to an indominatble force since its inception. It is ubiquitous in the most popular open-source projects; espectially in Big Data and distributed systems, such as Hadoop and Kafka.</description>
+    </item>
+    
+    <item>
+      <title>The Linux Command Line with Fish Shell</title>
+      <link>https://imtorgdemo.github.io/posts/blog_cmdln-linux_fish/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_cmdln-linux_fish/</guid>
+      <description>The Linux terminal (typically implemented with the Bourne Again Shell Script, BASH) can be intimidating for beginners and annoying for experienced programmers. But, it is a necessity for most users of Linux; and, in many situations, it can also be a huge productivity enhancer over graphical interfaces.
+Fish is a commandline tool that is a great complement to BASH. It is highly configureable and provides nice features such as syntax coloring and TAB command completion, out-of-the-box.</description>
+    </item>
+    
+    <item>
+      <title>Simple, Scalable, and Responsive Data Retrieval with ElasticSearch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_datastore-elasticsearch/</link>
+      <pubDate>Fri, 24 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_datastore-elasticsearch/</guid>
+      <description>Distributed systems are very popular tools in the &amp;lsquo;big data&amp;rsquo; market space and ElasticSearch evolved to become one of the major players. It serves the niche role of scaling to store large amounts of data, then allows querying it quickly. It evolved greatly over the last ten years to provide a variety of functionality. While it serves its primary purpose well, teams should resist the urge to use it in other roles, such as advanced analytics.</description>
+    </item>
+    
+    <item>
+      <title>List of ToDo Posts</title>
+      <link>https://imtorgdemo.github.io/posts/blog_page-todo/</link>
+      <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_page-todo/</guid>
+      <description> This is a list of blog posts that are referenced, but not yet complete.
+List of Future Posts General Machine Learning
+ scoring metrics, model performance metrics, and graphs imbalanced data feature engineering models in-depth  Natural Language Processing
+ functional programming numpy nltk / spaCy gensim word2vec fasttext nlp overview  General Data Concepts
+ datawarehousing infrastructure architectures serverless deployments  Business and Sales
+ pricing pyramid matching problems and solutions marketing -&amp;gt; business development -&amp;gt; sales cycle and org structure  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tag1 on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/tag1/</link>
+    <description>Recent content in tag1 on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 16 Aug 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Letter to Students: Math is the Basis for Competitive Edge in Every Field</title>
+      <link>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</link>
+      <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</guid>
+      <description>Math is the greatest tool humans have for solving problems. However, it is incredibly expensive to get the experience of using it in the real-world. This is magnified by most teachers, and many university professors, not having any experience applying math anyplace other than academic contexts. This post shows the author&amp;rsquo;s trying experiences with learning maths in school, as well as the excitement of applying them to solve actual industry problems.</description>
+    </item>
+    
+  </channel>
+</rss>

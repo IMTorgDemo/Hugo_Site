@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DataScience on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/categories/datascience/</link>
+    <description>Recent content in DataScience on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/categories/datascience/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Processing Natural Language with Python and Friends</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</guid>
+      <description>Python is a typical language chosen for Data Science work, and its strengths with strings make it especially useful for working with natural language. While the nltk library opened-up this work for python users, the newer spacy improves upon processing power by implementing Cython code. Tests display its power in production when compared with more traditional approaches, such as with Stanford&amp;rsquo;s CoreNLP. This post is an outline of examples from the spacy coursework and examples.</description>
+    </item>
+    
+    <item>
+      <title>Historical Background of NLP with Deep Learning</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-history_nlp_deep_learn/</link>
+      <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-history_nlp_deep_learn/</guid>
+      <description>The automated linguistic annotation of natural languages kept linguists and computer scientists hard at work for many decades. This work focused on the syntax of language as well as basic understanding and includes part-of-speech, named entity categorization, and syntatic dependency. Language meta-data tagging became much more accurate with the introduction of neural network and deep learning models. Because pairing meta-data with more powerful models is sure to allow for an explosion of new applications, it is important to understand the developments that allowed for the creation of this technology.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Groovy for Data Science on the JVM</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_java-groovy/</link>
+      <pubDate>Thu, 20 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_java-groovy/</guid>
+      <description>Groovy is a scripting language that compiles to the Java Virtual Machine. It would be more-aptly named JavaScript if that name were not already taken, but it has many similarities to Python. In fact, some of the libraries implemented for Groovy, such as TableSaw, attempt to take it in the same Data Science direction as Python.
+This post will provide an introduction to the Groovy language using Jupyter notebook with BeakerX, and provides specific applications to Data Science.</description>
+    </item>
+    
+    <item>
+      <title>Solving Textual Problems with Regular Expressions</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/</link>
+      <pubDate>Sun, 19 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/</guid>
+      <description>Regular Expressions provide an important foundation for learning systems. They are useful for quick and direct approaches to solving problems without creating mounds of training data, nor the infrastructure for deploying a model. While they are a common programming technique, and simple enough to employ, they tend to be used so infrequently that you must re-learn them each time you wish to apply. This post summarizes the basic regex syntax, strategies, and workflow in hopes it will decrease the time needed to implement.</description>
+    </item>
+    
+    <item>
+      <title>Generalizing the Machine Learning Process</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-machine_learning/</link>
+      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-machine_learning/</guid>
+      <description>This work describes a general approach to follow when performing machine learning (ML) manually, and when automating in a deployment setting. Unlike a classical statistical analysis, standard machine learning projects typically follow a general and repeatable process. While the practictioner should be aware of details for each of the steps and the reasons for choosing them, there is much less design-thinking and checking of assumptions that are necessary components of more mathematical modeling fields.</description>
+    </item>
+    
+  </channel>
+</rss>

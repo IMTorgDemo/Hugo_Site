@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solving Textual Problems with Regular Expressions // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Solving Textual Problems with Regular Expressions" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://imtorgdemo.github.io/">IMTorg Kbase</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/tags/">Tags</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Solving Textual Problems with Regular Expressions</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_nlp-regular_expressions_workflow/" class="article-date">
+                <time datetime='2019-05-19T00:00:00.000&#43;00:00' itemprop="datePublished">2019-05-19</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/process">Process</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/datascience">DataScience</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Regular Expressions provide an important foundation for learning systems.  They are useful for quick and direct approaches to solving problems without creating mounds of training data, nor the infrastructure for deploying a model.  While they are a common programming technique, and simple enough to employ, they tend to be used so infrequently that you must re-learn them each time you wish to apply.    This post summarizes the basic regex syntax, strategies, and workflow in hopes it will decrease the time needed to implement.  A few different languages are used in examples, for various scenario.  Happy re-learning!</p>
+
+<h2 id="regex-basics">Regex Basics</h2>
+
+<h3 id="operators">Operators</h3>
+
+<p><em>Character classes</em></p>
+
+<p><strong>abc</strong>, <strong>123</strong>, <strong>\d</strong>, <strong>\D</strong>: matches exact character, exact digit, any digit, any non-digit</p>
+
+<p><strong>\s</strong>, <strong>\S</strong>, <strong>\w</strong>, <strong>\W</strong> : matches white space, non-white space, alphanumeric word, non-alphanumeric word</p>
+
+<p><em>Boundaries</em></p>
+
+<p><strong>^</strong>, <strong>$</strong>, <strong>\b</strong>, <strong>\B</strong>: start of string, end of string, word boundary, not word boundary</p>
+
+<p><em>Quantifiers</em></p>
+
+<p><strong>x*</strong>: matches zero or multiple x</p>
+
+<p><strong>x+</strong>: matches one or multiple x</p>
+
+<p><strong>x{m,n}</strong>: matches x repeat m to n times. a{4} represent aaaa</p>
+
+<p><strong>x?</strong>: optional - matches one or zero x</p>
+
+<p><em>Groups, Ranges, and Capture</em></p>
+
+<p><strong>[xyz]</strong>, <strong>(x|y|z)</strong>: equals x or y or z</p>
+
+<p><strong>[^xyz]</strong>: not x or y or z</p>
+
+<p><strong>[x-z]</strong>: matches anyone between x and y</p>
+
+<p><strong>^x</strong>, <strong>[^xyz]</strong>: means any character that is not x, not any in group x|y|z</p>
+
+<p><strong>(xyz)</strong>, <strong>(xy(z))</strong>: capture group, capture group and sub-group</p>
+
+<h3 id="syntax-patterns">Syntax patterns</h3>
+
+<p>RegEx libraries typically provide functionality and components using similar patterns, such as the following:</p>
+
+<ul>
+<li><code>pattern</code> - encapsulate the expression that is sought using above syntax (mostly language agnostic)</li>
+<li><code>find</code> - apply a pattern, directly to text and return nothing, or a regex object</li>
+<li><code>match</code> - apply the pattern to text and return boolean whether a match, or exact match, exists</li>
+<li><code>sub</code> - substitute a pattern for a string</li>
+<li>convenience functionality</li>
+</ul>
+
+<h2 id="common-solution-approaches">Common Solution Approaches</h2>
+
+<h3 id="example-data">Example data</h3>
+
+<p>We will use the following file for example data.</p>
+
+<pre><code class="language-bash">%%bash
+ls Data/Bloomberg_Chat
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">example_chat.txt
+
+</code></pre>
+
+</div>
+
+
+<p>We will read-in and parse each line using a method similar to the following:</p>
+
+<pre><code class="language-Groovy">import java.io.InputStream
+new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { stream -&gt;
+    stream.eachLine { line -&gt;
+        println line
+    }}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Message#: 0
+
+Message Sent: 02/13/2019 08:42:15
+
+Subject: Instant Bloomberg  Persistent
+
+
+
+02/13/2019 08:42:15  User_01,has joined the room
+
+02/19/2019 00:56:29  User_105,Says   Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa. 
+
+02/19/2019 00:55:35  User_68,has left the room
+
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<h3 id="walking">Walking</h3>
+
+<p>Walking is one of the most direct approaches.  In the Walking method, you slowly move from the left to the right of your text, matching patterns along the way.  Your target text will everything at the end of the string.</p>
+
+<pre><code class="language-Groovy">import java.io.InputStream
+new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { stream -&gt;
+    stream.eachLine { line -&gt;
+        //find beginning
+        trgt = line =~ ~/^Message\sSent:\s(.*)$/
+        if(trgt){println trgt[0][1]}
+    }}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">02/13/2019 08:42:15
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<h3 id="bracketing">Bracketing</h3>
+
+<p>The Bracketing method is taken from the similar technique used in <a href="https://encyclopedia2.thefreedictionary.com/bracketing+method">field artillery</a> to range your inteded target.  First, pattern the string that begins just before your target text.  Next, pattern the string that ends just after your target text.  Your target text will be in the middle.</p>
+
+<pre><code class="language-Groovy">import java.io.InputStream
+new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { stream -&gt;
+    stream.eachLine { line -&gt;
+        //find beginning
+        tmp1 = line =~ ~/^Message\sSent:\s(.*)$/
+        if(tmp1){
+            //find end
+            trgt = tmp1[0][1] =~ ~/.+?(?=\s\d{2}:\d{2}:\d{2})/
+            if(trgt){
+                println trgt[0]
+            }
+        }
+    }}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">02/13/2019
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<h3 id="divide-and-conquer">Divide and conquer</h3>
+
+<p>Here, you have a few targets that you are interested in capturing.  Create nested capture groups within the original capture.</p>
+
+<pre><code class="language-Groovy">import java.io.InputStream
+new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { stream -&gt;
+    stream.eachLine { line -&gt;
+        trgt = line =~ ~/^((\d{2}\S\d{2}\S\d{4}\s\d{2}:\d{2}:\d{2})\s([^,]+))(.*)$/
+        if(trgt){
+            println (&quot;--------Begin line---------&quot;)
+            println trgt[0][2]                //dtv
+            println trgt[0][3]                //member
+            println trgt[0][4]                //content
+            println (&quot;---------End line----------&quot;)
+        }
+    }}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">--------Begin line---------
+02/13/2019 08:42:15
+ User_01
+,has joined the room
+---------End line----------
+--------Begin line---------
+02/19/2019 00:56:29
+ User_105
+,Says   Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa. 
+---------End line----------
+--------Begin line---------
+02/19/2019 00:55:35
+ User_68
+,has left the room
+---------End line----------
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<h3 id="parsing">Parsing</h3>
+
+<p>In this approach, you want to parse all pieces of a data into their respective fields.  This is often used when getting semi-structured data, such as log files, into a structured format, such as a table.  This is an example from pyspark.</p>
+
+<pre><code class="language-Groovy">%python #METHOD-1: RegEx
+from pyspark.sql import Row
+import re
+parts = [
+    r'(?P&lt;host&gt;\S+)',                   # host 
+    r'\S+',                             # indent (unused)
+    r'(?P&lt;user&gt;\S+)',                   # user 
+    r'\[(?P&lt;time&gt;.+)\]',                # time 
+    r'&quot;(?P&lt;request&gt;.*)&quot;',               # request 
+    r'(?P&lt;status&gt;[0-9]+)',              # status 
+    r'(?P&lt;size&gt;\S+)',                   # size 
+    r'&quot;(?P&lt;referrer&gt;.*)&quot;',              # referrer 
+    r'&quot;(?P&lt;agent&gt;.*)&quot;',                 # user agent 
+]
+pattern = re.compile(r'\s+'.join(parts)+r'\s*\Z')
+
+prs = logs.map(lambda x: pattern.match(x).groupdict() )
+rows = prs.map(lambda x: Row(**x))
+dfLogs = rows.toDF()
+dfLogs.show()
+</code></pre>
+
+<pre><code>+--------------------+-------------+--------------------+--------------------+-----+------+--------------------+----+
+|               agent|         host|            referrer|             request| size|status|                time|user|
++--------------------+-------------+--------------------+--------------------+-----+------+--------------------+----+
+|Mozilla/5.0 (comp...| 66.249.69.97|                   -|GET /071300/24215...|  514|   404|24/Sep/2014:22:25...|   -|
+|Mozilla/5.0 (X11;...|71.19.157.174|                   -| GET /error HTTP/1.1|  505|   404|24/Sep/2014:22:26...|   -|
+|Mozilla/5.0 (X11;...|71.19.157.174|                   -|GET /favicon.ico ...| 1713|   200|24/Sep/2014:22:26...|   -|
+|Mozilla/5.0 (X11;...|71.19.157.174|                   -|      GET / HTTP/1.1|18785|   200|24/Sep/2014:22:26...|   -|
+|Mozilla/5.0 (X11;...|71.19.157.174|http://www.holden...|GET /jobmineimg.p...|  222|   200|24/Sep/2014:22:26...|   -|
+|Mozilla/5.0 (X11;...|71.19.157.174|                   -|GET /error78978 H...|  505|   404|24/Sep/2014:22:26...|   -|
++--------------------+-------------+--------------------+--------------------+-----+------+--------------------+----+
+</code></pre>
+
+<h3 id="convenience-structures">Convenience structures</h3>
+
+<p>Languages can have sytax conveniences to make working with regex much easier.  This can include making patterns part of case statements, such as is done in groovy and scala, and allowing for raw string input, such as in groovy and python.</p>
+
+<p>In addition, programmers can make their life easier by creating specific data structures that can hold the output of target matches.</p>
+
+<h2 id="language-groovy">Language: Groovy</h2>
+
+<p>The following functionality is commonly used with groovy:</p>
+
+<ul>
+<li><code>~string</code> - pattern operator</li>
+<li><code>=~</code> - find pattern</li>
+<li><code>==~</code> - exact match operator</li>
+<li><code>switch-case</code> - convenience functionality</li>
+</ul>
+
+<h3 id="the-pattern-operator-string">The pattern operator (~string)</h3>
+
+<pre><code class="language-Groovy">import java.util.regex.Pattern
+
+def pattern = ~/([Gg])roovy/
+pattern.class == Pattern
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">true
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">//The slashy form of a Groovy string has a huge advantage over double (or single) quoted string - you don’t have to escape backslashes.
+( /Version \d+\.\d+\.\d+/ == 'Version \\d+\\.\\d+\\.\\d+' )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">true
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">p = ~/foo/
+p = ~'foo'                                                        
+p = ~&quot;foo&quot;                                                        
+p = ~$/dollar/slashy $ string/$                                   
+//p = ~&quot;${pattern}&quot;
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">dollar/slashy $ string
+</code></pre>
+
+</div>
+
+
+<h3 id="the-find-operator">The find operator (=~)</h3>
+
+<pre><code class="language-Groovy">import java.util.regex.Matcher
+
+def matcher = &quot;My code is groovier and better when I use Groovy there&quot; =~ /\S+er\b/ 
+println matcher.find()
+println matcher.size() == 2 
+matcher[0..-1] == [&quot;groovier&quot;, &quot;better&quot;] 
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">true
+true
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">true
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">if (&quot;My code is groovier and better when I use Groovy there&quot; =~ /\S+er\b/) {
+    &quot;At least one element matches the pattern&quot;
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">At least one element matches the pattern
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">def (first,second) = &quot;My code is groovier and better when I use Groovy there&quot; =~ /\S+er\b/
+first == &quot;groovier&quot; &amp; second == &quot;better&quot;
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">true
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">// With grouping we get a multidimensional array
+def group = ('groovy and grails, ruby and rails' =~ /(\w+) and (\w+)/)
+println group.hasGroup()
+println 2 == group.size()
+println ['groovy and grails', 'groovy', 'grails'] == group[0]
+println 'rails' == group[1][2]
+</code></pre>
+
+<h3 id="the-exact-match-operator">The exact match operator (==~)</h3>
+
+<pre><code class="language-Groovy">&quot;My code is groovier and better when I use Groovy there&quot; ==~ /\S+er\b/    //no exact match =&gt; only two words
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">false
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">&quot;My code is groovier and better when I use Groovy there&quot; ==~ /^My code .* there$/    //exact match of beginning and end of string
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">true
+</code></pre>
+
+</div>
+
+
+<h3 id="the-pattern-with-switch-case">The pattern with switch case</h3>
+
+<pre><code class="language-Groovy">def input = &quot;test&quot;
+
+switch (input) {
+    case ~/\d{3}/:
+        &quot;The number has 3 digits&quot;
+        break
+
+    case ~/\w{4}/:
+        &quot;The word has 4 letters&quot;
+        break
+
+    default:
+        &quot;Unrecognized...&quot;
+}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">The word has 4 letters
+</code></pre>
+
+</div>
+
+
+<h2 id="language-python">Language: Python</h2>
+
+<h3 id="reading-files">Reading files</h3>
+
+<p>You can read-in a file with the following:</p>
+
+<p><code>file_object  = open(“filename”, “mode”)</code></p>
+
+<p>The mode argument has a default value of <code>r</code> - read value, if omitted. The modes are:</p>
+
+<ul>
+<li><code>r</code> – Read mode which is used when the file is only being read</li>
+<li><code>w</code> – Write mode which is used to edit and write new information to the file (any existing files with the same name will be erased when this mode is activated)</li>
+<li><code>a</code> – Appending mode, which is used to add new data to the end of the file; that is new information is automatically amended to the end</li>
+<li><code>r+</code> – Special read and write mode, which is used to handle both actions when working with a file</li>
+</ul>
+
+<p>By using the <code>with</code> statement, you ensure proper handling of the file, including closing it when work is completed.</p>
+
+<pre><code class="language-Groovy">%%python
+with open(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;) as file:
+    data = file.read() 
+    print(data) 
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Message#: 0
+
+Message Sent: 02/13/2019 08:42:15
+
+Subject: Instant Bloomberg  Persistent
+
+
+
+02/13/2019 08:42:15  User_01,has joined the room
+
+02/19/2019 00:56:29  User_105,Says   Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa. 
+
+02/19/2019 00:55:35  User_68,has left the room
+
+
+</code></pre>
+
+</div>
+
+
+<h3 id="ordinary-string-manipulation">Ordinary string manipulation</h3>
+
+<p>Before moving straight to regular expressions, users should take advantage of Python&rsquo;s built-in string manipulation functionality.  <em>Bracketing</em> textual start/end anchors with simple tools can keep your code clean and readable.  The following is an example of adding all text as a string, then using string methods and list comprehensions to select targets.</p>
+
+<pre><code class="language-Groovy">%%python
+with open(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;) as file:
+    data = file.read()
+    content = (data.split(',has left the room')[0]).split('has joined the room')[1]
+    lines = content.replace('\n', ' ').split('.')
+    quote = [x.strip() for x in lines]
+quote  
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['02/19/2019 00:56:29  User_105,Says   Cupiditate voluptas sunt velit',
+ 'Accusantium aliquid expedita excepturi quis laborum autem',
+ 'Quas occaecati et atque est repellat dolores',
+ 'Laudantium in molestiae consequatur voluptate ipsa',
+ '02/19/2019 00:55:35  User_68']
+</code></pre>
+
+</div>
+
+
+<h3 id="using-regex">Using RegEx</h3>
+
+<p>Regualar expressions are more powerful not only for their patterns, but also because they can be compiled and used over large amounts of data.</p>
+
+<p>Use raw strings instead of regular Python strings. Raw strings begin with <code>r&quot;some text&quot;</code> and tell Python not to interpret backslashes and special metacharacters in the string.  This allows you to pass them to the regular expression engine, directly.</p>
+
+<p>An example is using <code>r&quot;\n\w&quot;</code> instead of <code>&quot;\\n\\w&quot;</code>.</p>
+
+<p>Below, we use the following methods from the <code>re</code> module:</p>
+
+<ul>
+<li><code>re.search()</code> - stop with first match</li>
+<li><code>re.findall() / re.finditer()</code> - search over entire string, returns a list (or iterator) of all captured data</li>
+<li><code>re.compile()</code> method to speed-up processing on larger data.  This is especially useful with a big data framework, such as Apache Spark</li>
+<li><code>re.sub()</code> - find and replace</li>
+</ul>
+
+<pre><code class="language-Groovy">%%python
+import re
+
+regexDate = re.compile(r&quot;Message#:\s(\d+)&quot;)
+
+with open(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;) as file:
+    data = file.read() 
+    grp = (re.search(regexDate, data)).group(0) 
+    print(grp)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Message#: 0
+</code></pre>
+
+</div>
+
+
+<h2 id="language-javascript">Language: JavaScript</h2>
+
+<ul>
+<li><code>/\w+\d+/</code> - match a string of alpha-numeric characters</li>
+<li><code>RegExp(&quot;\\w+\\d+&quot;)</code> - constructor notation</li>
+<li><code>RegExp.test()</code> - test for a match</li>
+<li><code>RegExp.exec()</code> - returns matching results</li>
+<li><code>inputStr.search()</code> - find a match</li>
+<li><code>inputStr.match()</code> - returns an index of matches</li>
+<li><code>inputStr.replace()</code> - substitute a match with a string</li>
+</ul>
+
+<p>The flags are either appended after the regular expression in the literal notation, or passed into the constructor in the normal notation.</p>
+
+<ul>
+<li><code>g</code> - allows you to run RegExp.exec() multiple times to find every match in the input string until the method returns null.</li>
+<li><code>i</code> - makes the pattern case insensitive so that it matches strings of different capitalizations</li>
+<li><code>m</code> - is necessary if your input string has newline characters (\n), this flag allows the start and end metacharacter (^ and $ respectively) to match at the beginning and end of each line instead of at the beginning and end of the whole input string</li>
+<li><code>u</code> - interpret the regular expression as unicode codepoints</li>
+</ul>
+
+<pre><code class="language-javascript">%%javascript
+var fs = require('fs');
+fs.readFile( __dirname + '/Data/Bloomberg_Chat/example_chat.txt', function (err, data) {
+  if (err) {
+    throw err; 
+  }
+  console.log(data.toString());
+});
+</code></pre>
+
+<pre><code class="language-javascript">%%javascript
+
+console.log('hi')
+//process.stdout.write(&quot;hello: &quot;);
+process.stdout.write(&quot;Downloading &quot;);
+</code></pre>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://e.printstacktrace.blog/groovy-regular-expressions-the-definitive-guide/">groovy regex operators</a></li>
+<li><a href="https://www.cheatography.com/davechild/cheat-sheets/regular-expressions/">thorough cheatsheet</a></li>
+<li><a href="https://regexone.com/">well-designed exercises</a></li>
+<li><a href="https://stackoverflow.com/questions/7124778/how-to-match-anything-up-until-this-sequence-of-characters-in-a-regular-expres">match until a pattern</a></li>
+</ul>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#regex-basics">Regex Basics</a>
+<ul>
+<li><a href="#operators">Operators</a></li>
+<li><a href="#syntax-patterns">Syntax patterns</a></li>
+</ul></li>
+<li><a href="#common-solution-approaches">Common Solution Approaches</a>
+<ul>
+<li><a href="#example-data">Example data</a></li>
+<li><a href="#walking">Walking</a></li>
+<li><a href="#bracketing">Bracketing</a></li>
+<li><a href="#divide-and-conquer">Divide and conquer</a></li>
+<li><a href="#parsing">Parsing</a></li>
+<li><a href="#convenience-structures">Convenience structures</a></li>
+</ul></li>
+<li><a href="#language-groovy">Language: Groovy</a>
+<ul>
+<li><a href="#the-pattern-operator-string">The pattern operator (~string)</a></li>
+<li><a href="#the-find-operator">The find operator (=~)</a></li>
+<li><a href="#the-exact-match-operator">The exact match operator (==~)</a></li>
+<li><a href="#the-pattern-with-switch-case">The pattern with switch case</a></li>
+</ul></li>
+<li><a href="#language-python">Language: Python</a>
+<ul>
+<li><a href="#reading-files">Reading files</a></li>
+<li><a href="#ordinary-string-manipulation">Ordinary string manipulation</a></li>
+<li><a href="#using-regex">Using RegEx</a></li>
+</ul></li>
+<li><a href="#language-javascript">Language: JavaScript</a></li>
+<li><a href="#references">References</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/nlp">NLP
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/regex">RegEx
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_datastore-elasticsearch/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Simple, Scalable, and Responsive Data Retrieval with ElasticSearch
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_models-machine_learning/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Generalizing the Machine Learning Process&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

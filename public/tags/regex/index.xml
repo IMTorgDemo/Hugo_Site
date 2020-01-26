@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RegEx on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/regex/</link>
+    <description>Recent content in RegEx on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 19 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/regex/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Solving Textual Problems with Regular Expressions</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/</link>
+      <pubDate>Sun, 19 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/</guid>
+      <description>Regular Expressions provide an important foundation for learning systems. They are useful for quick and direct approaches to solving problems without creating mounds of training data, nor the infrastructure for deploying a model. While they are a common programming technique, and simple enough to employ, they tend to be used so infrequently that you must re-learn them each time you wish to apply. This post summarizes the basic regex syntax, strategies, and workflow in hopes it will decrease the time needed to implement.</description>
+    </item>
+    
+  </channel>
+</rss>

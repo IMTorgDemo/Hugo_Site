@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/categories/blog/</link>
+    <description>Recent content in Blog on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Formatting for Jupyter (.ipynb) Notebooks</title>
+      <link>https://imtorgdemo.github.io/posts/blog_test-hugo_blog/</link>
+      <pubDate>Wed, 08 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_test-hugo_blog/</guid>
+      <description>This is a test post for formatting Jupyter Notebooks for Hugo. This workflow makes use of the code at repository nb2hugo, as well as the beakerx jupyter kernel.
+This is will test blog is a complicated workflow. Begin by running the newest version of JupyterLab. Run through the basic markdown sections. Next, try working with the R kernel by using rpy2 library. Run these cells to ensure functionality.
+Then close the notebook and re-open it in Beakerx with the beakerx Groovy kernel.</description>
+    </item>
+    
+    <item>
+      <title>Formatting a Markdown Post</title>
+      <link>https://imtorgdemo.github.io/posts/blog_test-my_first_post/</link>
+      <pubDate>Thu, 02 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_test-my_first_post/</guid>
+      <description>Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa.
+Nulla quia non qui sed. Voluptatem et enim nesciunt sunt pariatur. Libero eius excepturi voluptatibus reprehenderit. Facere enim neque dolorem sed ullam non. Dolor sit molestias repellendus.
+Awesome-1 Facilis maiores doloribus similique sint quaerat reiciendis quia. Autem nemo voluptas rerum. Eos odio aut omnis. Adipisci voluptas nihil autem recusandae.</description>
+    </item>
+    
+  </channel>
+</rss>

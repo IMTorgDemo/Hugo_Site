@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DataStore on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/categories/datastore/</link>
+    <description>Recent content in DataStore on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/categories/datastore/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simple, Scalable, and Responsive Data Retrieval with ElasticSearch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_datastore-elasticsearch/</link>
+      <pubDate>Fri, 24 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_datastore-elasticsearch/</guid>
+      <description>Distributed systems are very popular tools in the &amp;lsquo;big data&amp;rsquo; market space and ElasticSearch evolved to become one of the major players. It serves the niche role of scaling to store large amounts of data, then allows querying it quickly. It evolved greatly over the last ten years to provide a variety of functionality. While it serves its primary purpose well, teams should resist the urge to use it in other roles, such as advanced analytics.</description>
+    </item>
+    
+  </channel>
+</rss>

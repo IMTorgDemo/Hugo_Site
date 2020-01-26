@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/</link>
+    <description>Recent content on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Processing Natural Language with Python and Friends</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</guid>
+      <description>Python is a typical language chosen for Data Science work, and its strengths with strings make it especially useful for working with natural language. While the nltk library opened-up this work for python users, the newer spacy improves upon processing power by implementing Cython code. Tests display its power in production when compared with more traditional approaches, such as with Stanford&amp;rsquo;s CoreNLP. This post is an outline of examples from the spacy coursework and examples.</description>
+    </item>
+    
+    <item>
+      <title>Historical Background of NLP with Deep Learning</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-history_nlp_deep_learn/</link>
+      <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-history_nlp_deep_learn/</guid>
+      <description>The automated linguistic annotation of natural languages kept linguists and computer scientists hard at work for many decades. This work focused on the syntax of language as well as basic understanding and includes part-of-speech, named entity categorization, and syntatic dependency. Language meta-data tagging became much more accurate with the introduction of neural network and deep learning models. Because pairing meta-data with more powerful models is sure to allow for an explosion of new applications, it is important to understand the developments that allowed for the creation of this technology.</description>
+    </item>
+    
+    <item>
+      <title>Prototyping an Interactive Frontend with Vue</title>
+      <link>https://imtorgdemo.github.io/posts/blog_prototype-creating_frontend/</link>
+      <pubDate>Thu, 29 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_prototype-creating_frontend/</guid>
+      <description>Assumes you are comfortable with HTML, CSS, JS. This will cover creating SPAs with webpack and Vue basics. This will not cover mobile or advanced Vue. Improvements will make frontend development a more imperative programming approach as compared to the typical declarative methods found in more basic work.
+Introduction Once you understand the basics of browser languages, such as HTML, CSS, and JS, then you quickly desire to have more interactive elements.</description>
+    </item>
+    
+    <item>
+      <title>Explaining Difficult (Abstract) Subjects to Customers</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-explain_metrics/</link>
+      <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-explain_metrics/</guid>
+      <description>Stakeholders want to understand what you are selling and how your approach is different. However, the level of detail they want varies greatly among your different customers. A simple whitepaper can be useful enough, in most situations. But, occaisionally, a layman will want to know exactly what you are doing and will not be content until you very succinctly explain it to them. This post will explain two methods for approaching such obstacles.</description>
+    </item>
+    
+    <item>
+      <title>A Letter to Students: Math is the Basis for Competitive Edge in Every Field</title>
+      <link>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</link>
+      <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</guid>
+      <description>Math is the greatest tool humans have for solving problems. However, it is incredibly expensive to get the experience of using it in the real-world. This is magnified by most teachers, and many university professors, not having any experience applying math anyplace other than academic contexts. This post shows the author&amp;rsquo;s trying experiences with learning maths in school, as well as the excitement of applying them to solve actual industry problems.</description>
+    </item>
+    
+    <item>
+      <title>Building Math from the Ground-Up</title>
+      <link>https://imtorgdemo.github.io/posts/blog-logic_for_math/</link>
+      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog-logic_for_math/</guid>
+      <description>After completing basic high school mathematics, one might think that math stands on its own. To understand and know that 1+1=2 is obvious. But math can go much deeper. In fact, we can build new concepts from math as well as build a math, itself. This is important because it effects how we think about other subjects, and is especially useful in helping us think about language and abstract concepts, such as in programming.</description>
+    </item>
+    
+    <item>
+      <title>Communication Workflows with Hugo, Jupyter, and Friends</title>
+      <link>https://imtorgdemo.github.io/posts/blog-hugo_site_process/</link>
+      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog-hugo_site_process/</guid>
+      <description>Static Site Generators are quite popular replacements for traditional server-based methods of delivering HTML. One of the most popular is Hugo because of its compilation speed. Combining Hugo with Jupyter notebooks, and other tools, can provide for a speedy workflow for pushing your ideas to the web, books (online or pdf), and more. This post will discuss why you may want to do this and provides tools for doing it.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to LaTeX</title>
+      <link>https://imtorgdemo.github.io/posts/blog-intro_latex/</link>
+      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog-intro_latex/</guid>
+      <description>LaTeX is the document preparation and typesetting system used for scientific publications. LaTeX is based on the idea that &amp;lsquo;it is better to leave document design to document designers&amp;rsquo;, so the user can focus on the content. It requires a greater technical understanding than typical simple note-taking systems; however, because it is incredibly descriptive and produces aesthetically-appealing output, it is becoming more popular. This post provides a reference to configuration and syntax.</description>
+    </item>
+    
+    <item>
+      <title>A Data Scientist&#39;s Guide to Modern Java(8&#43;) and the JVM</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_java-modern_java/</link>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_java-modern_java/</guid>
+      <description>Most data scientists avoid the Java Virtual Machine (JVM) like the plague. The features that make developers and data engineers so productive as a team, such as access modifiers and powerful IDEs, feel slow, old, and cumbersome to individuals interacting with data and prototyping new algorithms. However, the JVM and its supporting system matured to an indominatble force since its inception. It is ubiquitous in the most popular open-source projects; espectially in Big Data and distributed systems, such as Hadoop and Kafka.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Groovy for Data Science on the JVM</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_java-groovy/</link>
+      <pubDate>Thu, 20 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_java-groovy/</guid>
+      <description>Groovy is a scripting language that compiles to the Java Virtual Machine. It would be more-aptly named JavaScript if that name were not already taken, but it has many similarities to Python. In fact, some of the libraries implemented for Groovy, such as TableSaw, attempt to take it in the same Data Science direction as Python.
+This post will provide an introduction to the Groovy language using Jupyter notebook with BeakerX, and provides specific applications to Data Science.</description>
+    </item>
+    
+    <item>
+      <title>The Cost of Internal Investment</title>
+      <link>https://imtorgdemo.github.io/posts/blog_econ-return_rate/</link>
+      <pubDate>Wed, 19 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_econ-return_rate/</guid>
+      <description>There is one question on every economist&amp;rsquo;s mind: Where has inflation gone? It is imperative to understanding how actors make decisions and allocate limited resources. The fact that the inflation rate is so low for so long is incredibly disconcerting for many reasons (with the fear of deflation being just one reason).
+Because of low growth and a lack of inflation the US government and Federal Reserve, as well as nearly every nations&amp;rsquo; central Bank, are pouring fuel onto the economy and getting a paltry return.</description>
+    </item>
+    
+    <item>
+      <title>The Linux Command Line with Fish Shell</title>
+      <link>https://imtorgdemo.github.io/posts/blog_cmdln-linux_fish/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_cmdln-linux_fish/</guid>
+      <description>The Linux terminal (typically implemented with the Bourne Again Shell Script, BASH) can be intimidating for beginners and annoying for experienced programmers. But, it is a necessity for most users of Linux; and, in many situations, it can also be a huge productivity enhancer over graphical interfaces.
+Fish is a commandline tool that is a great complement to BASH. It is highly configureable and provides nice features such as syntax coloring and TAB command completion, out-of-the-box.</description>
+    </item>
+    
+    <item>
+      <title>Simple, Scalable, and Responsive Data Retrieval with ElasticSearch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_datastore-elasticsearch/</link>
+      <pubDate>Fri, 24 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_datastore-elasticsearch/</guid>
+      <description>Distributed systems are very popular tools in the &amp;lsquo;big data&amp;rsquo; market space and ElasticSearch evolved to become one of the major players. It serves the niche role of scaling to store large amounts of data, then allows querying it quickly. It evolved greatly over the last ten years to provide a variety of functionality. While it serves its primary purpose well, teams should resist the urge to use it in other roles, such as advanced analytics.</description>
+    </item>
+    
+    <item>
+      <title>Solving Textual Problems with Regular Expressions</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/</link>
+      <pubDate>Sun, 19 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-regular_expressions_workflow/</guid>
+      <description>Regular Expressions provide an important foundation for learning systems. They are useful for quick and direct approaches to solving problems without creating mounds of training data, nor the infrastructure for deploying a model. While they are a common programming technique, and simple enough to employ, they tend to be used so infrequently that you must re-learn them each time you wish to apply. This post summarizes the basic regex syntax, strategies, and workflow in hopes it will decrease the time needed to implement.</description>
+    </item>
+    
+    <item>
+      <title>Generalizing the Machine Learning Process</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-machine_learning/</link>
+      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-machine_learning/</guid>
+      <description>This work describes a general approach to follow when performing machine learning (ML) manually, and when automating in a deployment setting. Unlike a classical statistical analysis, standard machine learning projects typically follow a general and repeatable process. While the practictioner should be aware of details for each of the steps and the reasons for choosing them, there is much less design-thinking and checking of assumptions that are necessary components of more mathematical modeling fields.</description>
+    </item>
+    
+    <item>
+      <title>Formatting for Jupyter (.ipynb) Notebooks</title>
+      <link>https://imtorgdemo.github.io/posts/blog_test-hugo_blog/</link>
+      <pubDate>Wed, 08 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_test-hugo_blog/</guid>
+      <description>This is a test post for formatting Jupyter Notebooks for Hugo. This workflow makes use of the code at repository nb2hugo, as well as the beakerx jupyter kernel.
+This is will test blog is a complicated workflow. Begin by running the newest version of JupyterLab. Run through the basic markdown sections. Next, try working with the R kernel by using rpy2 library. Run these cells to ensure functionality.
+Then close the notebook and re-open it in Beakerx with the beakerx Groovy kernel.</description>
+    </item>
+    
+    <item>
+      <title>Formatting a Markdown Post</title>
+      <link>https://imtorgdemo.github.io/posts/blog_test-my_first_post/</link>
+      <pubDate>Thu, 02 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_test-my_first_post/</guid>
+      <description>Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa.
+Nulla quia non qui sed. Voluptatem et enim nesciunt sunt pariatur. Libero eius excepturi voluptatibus reprehenderit. Facere enim neque dolorem sed ullam non. Dolor sit molestias repellendus.
+Awesome-1 Facilis maiores doloribus similique sint quaerat reiciendis quia. Autem nemo voluptas rerum. Eos odio aut omnis. Adipisci voluptas nihil autem recusandae.</description>
+    </item>
+    
+    <item>
+      <title>List of ToDo Posts</title>
+      <link>https://imtorgdemo.github.io/posts/blog_page-todo/</link>
+      <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_page-todo/</guid>
+      <description> This is a list of blog posts that are referenced, but not yet complete.
+List of Future Posts General Machine Learning
+ scoring metrics, model performance metrics, and graphs imbalanced data feature engineering models in-depth  Natural Language Processing
+ functional programming numpy nltk / spaCy gensim word2vec fasttext nlp overview  General Data Concepts
+ datawarehousing infrastructure architectures serverless deployments  Business and Sales
+ pricing pyramid matching problems and solutions marketing -&amp;gt; business development -&amp;gt; sales cycle and org structure  </description>
+    </item>
+    
+    <item>
+      <title>About IMTorg</title>
+      <link>https://imtorgdemo.github.io/about/</link>
+      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/about/</guid>
+      <description>This blog site is a knowledge base of various innovations produced by Information Management Technologies. If you would like to learn more, please contact us. We&amp;rsquo;ve helped many firms of all sizes, both commercial and public, including the following:
+ STG National Institutes of Health Global Association of Risk Proffesionals US Department of State Wisconsin Department of Transportation multiple start-ups  </description>
+    </item>
+    
+  </channel>
+</rss>

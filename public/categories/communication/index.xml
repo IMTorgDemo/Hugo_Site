@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Communication on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/categories/communication/</link>
+    <description>Recent content in Communication on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/categories/communication/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Communication Workflows with Hugo, Jupyter, and Friends</title>
+      <link>https://imtorgdemo.github.io/posts/blog-hugo_site_process/</link>
+      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog-hugo_site_process/</guid>
+      <description>Static Site Generators are quite popular replacements for traditional server-based methods of delivering HTML. One of the most popular is Hugo because of its compilation speed. Combining Hugo with Jupyter notebooks, and other tools, can provide for a speedy workflow for pushing your ideas to the web, books (online or pdf), and more. This post will discuss why you may want to do this and provides tools for doing it.</description>
+    </item>
+    
+  </channel>
+</rss>

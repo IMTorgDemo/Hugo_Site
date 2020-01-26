@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>category2 on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/categories/category2/</link>
+    <description>Recent content in category2 on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/categories/category2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Processing Natural Language with Python and Friends</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</guid>
+      <description>Python is a typical language chosen for Data Science work, and its strengths with strings make it especially useful for working with natural language. While the nltk library opened-up this work for python users, the newer spacy improves upon processing power by implementing Cython code. Tests display its power in production when compared with more traditional approaches, such as with Stanford&amp;rsquo;s CoreNLP. This post is an outline of examples from the spacy coursework and examples.</description>
+    </item>
+    
+    <item>
+      <title>Prototyping an Interactive Frontend with Vue</title>
+      <link>https://imtorgdemo.github.io/posts/blog_prototype-creating_frontend/</link>
+      <pubDate>Thu, 29 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_prototype-creating_frontend/</guid>
+      <description>Assumes you are comfortable with HTML, CSS, JS. This will cover creating SPAs with webpack and Vue basics. This will not cover mobile or advanced Vue. Improvements will make frontend development a more imperative programming approach as compared to the typical declarative methods found in more basic work.
+Introduction Once you understand the basics of browser languages, such as HTML, CSS, and JS, then you quickly desire to have more interactive elements.</description>
+    </item>
+    
+    <item>
+      <title>Explaining Difficult (Abstract) Subjects to Customers</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-explain_metrics/</link>
+      <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-explain_metrics/</guid>
+      <description>Stakeholders want to understand what you are selling and how your approach is different. However, the level of detail they want varies greatly among your different customers. A simple whitepaper can be useful enough, in most situations. But, occaisionally, a layman will want to know exactly what you are doing and will not be content until you very succinctly explain it to them. This post will explain two methods for approaching such obstacles.</description>
+    </item>
+    
+    <item>
+      <title>A Letter to Students: Math is the Basis for Competitive Edge in Every Field</title>
+      <link>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</link>
+      <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</guid>
+      <description>Math is the greatest tool humans have for solving problems. However, it is incredibly expensive to get the experience of using it in the real-world. This is magnified by most teachers, and many university professors, not having any experience applying math anyplace other than academic contexts. This post shows the author&amp;rsquo;s trying experiences with learning maths in school, as well as the excitement of applying them to solve actual industry problems.</description>
+    </item>
+    
+    <item>
+      <title>The Cost of Internal Investment</title>
+      <link>https://imtorgdemo.github.io/posts/blog_econ-return_rate/</link>
+      <pubDate>Wed, 19 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_econ-return_rate/</guid>
+      <description>There is one question on every economist&amp;rsquo;s mind: Where has inflation gone? It is imperative to understanding how actors make decisions and allocate limited resources. The fact that the inflation rate is so low for so long is incredibly disconcerting for many reasons (with the fear of deflation being just one reason).
+Because of low growth and a lack of inflation the US government and Federal Reserve, as well as nearly every nations&amp;rsquo; central Bank, are pouring fuel onto the economy and getting a paltry return.</description>
+    </item>
+    
+    <item>
+      <title>The Linux Command Line with Fish Shell</title>
+      <link>https://imtorgdemo.github.io/posts/blog_cmdln-linux_fish/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_cmdln-linux_fish/</guid>
+      <description>The Linux terminal (typically implemented with the Bourne Again Shell Script, BASH) can be intimidating for beginners and annoying for experienced programmers. But, it is a necessity for most users of Linux; and, in many situations, it can also be a huge productivity enhancer over graphical interfaces.
+Fish is a commandline tool that is a great complement to BASH. It is highly configureable and provides nice features such as syntax coloring and TAB command completion, out-of-the-box.</description>
+    </item>
+    
+    <item>
+      <title>List of ToDo Posts</title>
+      <link>https://imtorgdemo.github.io/posts/blog_page-todo/</link>
+      <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_page-todo/</guid>
+      <description> This is a list of blog posts that are referenced, but not yet complete.
+List of Future Posts General Machine Learning
+ scoring metrics, model performance metrics, and graphs imbalanced data feature engineering models in-depth  Natural Language Processing
+ functional programming numpy nltk / spaCy gensim word2vec fasttext nlp overview  General Data Concepts
+ datawarehousing infrastructure architectures serverless deployments  Business and Sales
+ pricing pyramid matching problems and solutions marketing -&amp;gt; business development -&amp;gt; sales cycle and org structure  </description>
+    </item>
+    
+  </channel>
+</rss>

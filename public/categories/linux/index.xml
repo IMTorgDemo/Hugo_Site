@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/categories/linux/</link>
+    <description>Recent content in Linux on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 18 Jun 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Linux Command Line with Fish Shell</title>
+      <link>https://imtorgdemo.github.io/posts/blog_cmdln-linux_fish/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_cmdln-linux_fish/</guid>
+      <description>The Linux terminal (typically implemented with the Bourne Again Shell Script, BASH) can be intimidating for beginners and annoying for experienced programmers. But, it is a necessity for most users of Linux; and, in many situations, it can also be a huge productivity enhancer over graphical interfaces.
+Fish is a commandline tool that is a great complement to BASH. It is highly configureable and provides nice features such as syntax coloring and TAB command completion, out-of-the-box.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prototyping an Interactive Frontend with Vue // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Prototyping an Interactive Frontend with Vue" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_prototype-creating_frontend/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://imtorgdemo.github.io/">IMTorg Kbase</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/tags/">Tags</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Prototyping an Interactive Frontend with Vue</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_prototype-creating_frontend/" class="article-date">
+                <time datetime='2019-08-29T00:00:00.000&#43;00:00' itemprop="datePublished">2019-08-29</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/frontend">Frontend</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/category2">category2</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Assumes you are comfortable with HTML, CSS, JS.  This will cover creating SPAs with webpack and Vue basics.  This will not cover mobile or advanced Vue.  Improvements will make frontend development a more imperative programming approach as compared to the typical declarative methods found in more basic work.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Once you understand the basics of browser languages, such as HTML, CSS, and JS, then you quickly desire to have more interactive elements.  The obvious evolution is jQuery, as you can directly perform imperative programming to manipulate elements.  That was a powerful web technology for about a decade, and it is still used today.  But, frontend programmers quickly learned that jQuery code became extremely crowded, untestable, and overly-complex.  There were limits to what could be practically built with jQuery.  The upper limit was Single Page Applications (SPAs).</p>
+
+<p>SPAs allow for much more dynamic and intuitive interfaces for users.  However, to build and maintain them, more powerful technologies needed to perform scoped logic on modular components.  The first two frameworks to support this were Angular and React.  Vue came slightly later and was able to capitalize on some of the mistakes learned from the first two.  This allowed for a powerful system and fast workflow.</p>
+
+<p>This post will explain how to prototype dynamic user interfaces as well as provide an understanding of more advanced technologies used by frontend programmers.</p>
+
+<h2 id="webpack-and-modular-programming">Webpack and Modular Programming</h2>
+
+<ul>
+<li><a href="https://webpack.js.org/concepts">ref: basic concepts</a></li>
+<li><a href="https://webpack.js.org/concepts/modules">ref: modules</a></li>
+<li><a href="https://webpack.js.org/guides/getting-started">ref: getting started</a></li>
+</ul>
+
+<p>Webpack builds a dependency graph and uses the graph to generate an optimized bundle where scripts will be executed in the correct order.  In a more opinionated manner, it bundles javascript applications that are built using a modular design.  Modular programming is used so that verification, debugging, and testing can be performed as an independent and isolated unit.  They can then be added to other modules using a simple ES2015 <code>import</code> or CommonJs <code>require</code> statement.</p>
+
+<p>There are a variety of different flavors of JS used for frontend development, including <a href="https://coffeescript.org/#overview">Coffescript</a>, <a href="https://www.typescriptlang.org/">TypeScript</a> and <a href="https://babeljs.io/">ESNext (Babel)</a>.  These can be compiled into JS, then used in browsers.  Webpack supports modules written in a variety of languages and preprocessors, via loaders. Loaders describe to webpack how to process non-JavaScript modules and include these dependencies into your bundles.</p>
+
+<p>There are a few concepts to know about how webpack works</p>
+
+<ul>
+<li>Entry - module to begin dependency graph (default: ./src/index.js)</li>
+<li>Output - where to emit bundles (default: ./dist/main.js)</li>
+<li>Loaders - default only JavaScript and JSON files. allow webpack to process, convert other files into valid modules</li>
+<li>Plugins - wider range of tasks like bundle optimization, asset management and injection of environment variables</li>
+<li>Mode - set to: development, production or none; enables built-in optimizations (default: production)</li>
+<li>Browser Compatibility - supports all browsers that are ES5-compliant</li>
+</ul>
+
+<h3 id="simple-usage">Simple usage</h3>
+
+<p>i. Install</p>
+
+<pre><code class="language-bash">#start project
+npm init
+#for development only
+npm install webpack --save-dev
+#instead of using `file:///` url
+npm install webpack-dev-server --save-dev
+</code></pre>
+
+<p>ii. Configure</p>
+
+<p>Used like: <code>webpack &lt;entry_point&gt; &lt;output_file&gt;</code></p>
+
+<pre><code class="language-js">//package.json
+&quot;scripts&quot;:{
+	&quot;build&quot;: &quot;webpack-dev-server --entry ./src/js/app.js --output-filename ./dist/bundle.js&quot;
+	&quot;build-prod&quot;: &quot;webpack /src/js/app.js dist/bundle.js -p&quot;	#minify for production
+}
+</code></pre>
+
+<p>iii. Implement</p>
+
+<p>What dependencies are determined by these only es6 syntax.</p>
+
+<pre><code class="language-js">//app.js
+import {name} from './domloader.js'
+</code></pre>
+
+<pre><code class="language-js">//domloader.js
+export var name = &lt;function&gt;
+</code></pre>
+
+<pre><code class="language-html">//index.html
+&lt;script src=&quot;dist/bundle.js&quot;&gt;
+</code></pre>
+
+<h3 id="simple-configuration">Simple configuration</h3>
+
+<ul>
+<li><a href="https://webpack.js.org/configuration/">ref: configuration</a></li>
+</ul>
+
+<pre><code class="language-js">//package.json
+&quot;scripts&quot;: {
+  &quot;build&quot;: &quot;webpack --config prod.config.js&quot;
+}
+</code></pre>
+
+<pre><code class="language-js">//webpack.config.js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist')
+  }
+};
+</code></pre>
+
+<h3 id="development">Development</h3>
+
+<ul>
+<li><a href="https://webpack.js.org/plugins/">ref: plugins</a></li>
+</ul>
+
+<p>Plugins can support your workflow.  These are three useful plugins:</p>
+
+<ul>
+<li>HtmlWebpackPlugin - generates new names in output</li>
+<li>clean-webpack-plugin - clean /dist folder before each output</li>
+</ul>
+
+<p>Automatically update webpage</p>
+
+<pre><code class="language-bash">npm start
+</code></pre>
+
+<pre><code class="language-js">//package.json
+  {
+    &quot;name&quot;: &quot;development&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;&quot;,
+    &quot;private&quot;: true,
+    &quot;scripts&quot;: {
+      &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
+      &quot;watch&quot;: &quot;webpack --watch&quot;,
+      &quot;start&quot;: &quot;webpack-dev-server --open&quot;,
+      &quot;build&quot;: &quot;webpack&quot;
+    },
+    &quot;keywords&quot;: [],
+    &quot;author&quot;: &quot;&quot;,
+    &quot;license&quot;: &quot;ISC&quot;,
+    &quot;devDependencies&quot;: {
+</code></pre>
+
+<pre><code class="language-js">//webpack.config.js
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+  module.exports = {
+    mode: 'development',
+    entry: {
+      app: './src/index.js',
+      print: './src/print.js'
+    },
+    devtool: 'inline-source-map',
+    devServer: {
+      contentBase: './dist'
+    },
+    plugins: [
+      // new CleanWebpackPlugin(['dist/*']) for &lt; v2 versions of CleanWebpackPlugin
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        title: 'Development'
+      })
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+  };
+</code></pre>
+
+<h3 id="advanced-topics">Advanced Topics</h3>
+
+<ul>
+<li><a href="https://webpack.js.org/guides/code-splitting/">code splitting and bundle analysis</a></li>
+<li><a href="https://webpack.js.org/guides/environment-variables/">env variables</a></li>
+<li><a href="https://webpack.js.org/guides/progressive-web-application/">progressive web apps</a></li>
+</ul>
+
+<h2 id="vue-ecosystem">Vue Ecosystem</h2>
+
+<p><em>Tooling</em></p>
+
+<ul>
+<li><a href="https://cli.vuejs.org/">Vue CLI</a> - interactive project scaffolding with zero config rapid prototyping, a runtime dependency (@vue/cli-service) and a full graphical user interface to create and manage Vue.js projects
+
+<ul>
+<li>vue-cli-service - built on top of webpack that loads other plugins</li>
+<li>@vue/cli-plugin- (for built-in plugins)</li>
+<li>vue-cli-plugin- (for community plugins)</li>
+</ul></li>
+<li><a href="https://medium.com/@nupoor_neha/starting-with-webpack-4-and-vuejs-a-quick-start-tutorial-4a244410d55e">Vue (Webpack) Loader</a> - allows you to author Vue components in a format called Single-File Components (SFCs)</li>
+<li><a href="https://github.com/vuejs/vue-devtools">Vue (browser) dev-tools Extension</a> - for in-browser development</li>
+</ul>
+
+<p><em>Libraries</em></p>
+
+<ul>
+<li>Testing: <a href="https://vue-test-utils.vuejs.org/guides/#getting-started">Vue-Test-Utils</a></li>
+<li>HTTP Client: Axios - requests for consuming API</li>
+<li>Router - official router support</li>
+<li>State Management: Vuex - an architecture for Vue applications and allows simple management of the application state.</li>
+<li>Pre-Render, Production: <a href="https://nuxtjs.org/">NuxtJs</a> - opinionated for spa</li>
+</ul>
+
+<p><em>Component Search</em></p>
+
+<ul>
+<li><a href="https://bit.dev/components?q=carousel">Bit</a></li>
+<li><a href="https://curated.vuejs.org/">curated Vue</a></li>
+<li><a href="https://vuecomponents.com/">Vue components</a></li>
+</ul>
+
+<p><em>Dev Env</em></p>
+
+<ul>
+<li><a href="https://www.learnstorybook.com/vue/en/get-started">Storybook</a> - build UIs like legos</li>
+
+<li><p><a href="https://www.overvue.io/">OverVue</a> - prototype-based dev</p></li>
+
+<li><p><a href="https://github.com/vuejs/awesome-vue#mobile">ref: awesome Vue</a></p></li>
+</ul>
+
+<h3 id="vue-cli-scaffolding">Vue CLI Scaffolding</h3>
+
+<ul>
+<li><a href="https://code.tutsplus.com/tutorials/boost-your-vuejs-workflow-with-vue-cli-3--cms-32232">ref: blog post</a></li>
+<li><a href="https://cli.vuejs.org/guide/">ref: guide docs</a></li>
+</ul>
+
+<p>Projects created by Vue CLI are pre-configured with most of the common development needs working out of the box, including Vue Loader.</p>
+
+<pre><code class="language-bash">#single component
+npm install -g @vue/cli-service-global
+vue serve
+(browser)localhost:8080
+</code></pre>
+
+<pre><code class="language-bash">#project
+npm install -g @vue/cli
+vue --version
+vue create my-project
+npm run serve
+(browser)localhost:8080
+#or with ui for dependency management
+vue ui
+#or directly access the binary
+npx vue-cli-service serve
+</code></pre>
+
+<p><strong>Project Structure</strong></p>
+
+<ul>
+<li>node_modules folder contains the packages that the app and development tools require.</li>
+<li>public folder contains static project assets, which will not be included in the bundling process.</li>
+<li>src folder contains the Vue.js application with all resources.
+
+<ul>
+<li>assets folder is used for static resources required by the app, which will be included in the bundling process.</li>
+<li>components folder is used for the application&rsquo;s components.</li>
+<li>views folder is used for components which will be displayed using the URL routing feature.</li>
+<li>App.vue is the root component.</li>
+<li>main.js is the JavaScript file that creates the Vue instance object.</li>
+<li>router.js is used to configure the Vue router.</li>
+<li>store.js is used to configure the data store created with Vuex.</li>
+</ul></li>
+<li>.gitignore contains a list of files and folders that are excluded from the Git version control.</li>
+<li>babel.config.js contains the configuration settings for the Babel compiler.</li>
+<li>package.json contains a list of the packages required for Vue.js development as well as the commands used for the development tools.</li>
+<li>package-lock.json contains a complete list of the packages required by the project and their dependencies.</li>
+<li>README.md contains general information about the project.</li>
+</ul>
+
+<pre><code class="language-bash">#install plugin
+vue add bootstrap-vue
+</code></pre>
+
+<p><code>src/plugins/&lt;new_plugin&gt;</code></p>
+
+<pre><code class="language-bash">#build production bundle of: app, library, or component
+npm run build --modern --target app
+</code></pre>
+
+<p><code>dist</code> folder created and two version with the browser-appropriate version selected automatically</p>
+
+<pre><code class="language-bash">#analyze the build
+npm run inspect
+</code></pre>
+
+<p>TODO: Guide &gt; Development</p>
+
+<h2 id="vue-basics">Vue Basics</h2>
+
+<p>Vue.js allows you to simply bind your data models to the representation layer. It also allows you to easily reuse components throughout the application.</p>
+
+<h3 id="useful-frontend-terms">Useful Frontend Terms</h3>
+
+<ul>
+<li>Declarative Views: These are the Views that provide a way of direct data binding between plain JavaScript data models and the representation.</li>
+<li>Directives: These are special HTML elements attributes prefixed with <code>v-</code> in Vue.js that allow data binding in different ways.  They apply special reactive behavior to the rendered DOM.</li>
+<li>Reactivity: In the Web, this is actually the immediate propagation of any changes of data to the View layer.</li>
+</ul>
+
+<h3 id="vue-foundations">Vue Foundations</h3>
+
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+  {{ message }}
+&lt;/div&gt;
+</code></pre>
+
+<pre><code class="language-js">var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
+</code></pre>
+
+<h3 id="directives">Directives</h3>
+
+<p>vue directive syntax:
+<code>&lt;div v-directive:argument of [dynamic argument].&lt;event_modifier or key_modifier&gt;=&quot; js expression | filter &quot;&gt;</code></p>
+
+<pre><code class="language-js">* data output
+ - {{}}
+	&lt;div&gt;{{ interpolated_data }}&lt;/div&gt;
+ - v-bind &lt;div v-bind:id=&quot;dynamicId&quot;&gt;&lt;/div&gt; or ':id'
+    :[attribName / null]=&quot;var&quot;
+    :id=&quot;elemId&quot;
+    :disabled=&quot;null&quot;
+    :href=&quot;url&quot;
+ - v-once
+ - v-html
+	&lt;p&gt;Using v-html directive: &lt;span v-html=&quot;rawHtml&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+* data input
+ - v-model
+* conditionals
+ - v-if
+ - v-else-if
+ - v-else
+ - v-show
+ - v-for=&quot;(item, index) in items&quot;&gt; 
+   v-for=&quot;(value, name, index) in object&quot;&gt;
+   v-for=&quot;todo in todos&quot; v-if=&quot;!todo.isComplete&quot;&gt;
+* event listener
+ - v-on or '@click'
+    :[eventName] 
+    :keyup.enter
+    :keyup.page-down
+    :click
+    :click=&quot;say('what')&quot;&gt;
+    :click.once 
+    :hover
+    :focus
+    :submit
+* style
+ - v-bind:class=&quot;{ active: isActive }&quot;&gt;&lt;/div&gt;
+ - v-bind:style=&quot;[base, { color: activeColor, fontSize: fontSize + 'px' }]&quot;&gt;&lt;/div&gt;
+</code></pre>
+
+<h3 id="data">Data</h3>
+
+<p>instance properties (prefixed by <code>$</code>) are different from user-defined (var data={} ) data</p>
+
+<h3 id="implementation-designs">Implementation designs</h3>
+
+<p>All js in HTML</p>
+
+<pre><code class="language-.html">&lt;script&gt;
+var vm = new Vue({
+  el: '#example',
+  data: {},
+  props: ['item'],
+  methods: {
+    name: function(){
+      return this.msg
+    },
+  computed:
+  &lt;hooks:created, mounted, updated, destroyed&gt;: function(){} 
+}) 
+&lt;/script&gt;
+</code></pre>
+
+<p>Split js into a globally-registered component</p>
+
+<pre><code class="language-js">&lt;div id='timer'&gt;
+&lt;Timer title='my timer'&gt;&lt;/Timer&gt;
+&lt;/div&gt;
+
+Vue.component('Timer',{
+	template: '&lt;div&gt;...&lt;/div&gt;',
+	props: ['title'],			//data passed to and maintained by instance
+	data: function () {			//data must be a function to maintain indep data copy
+		return {count: 0}
+	},
+	methods:
+})
+
+new Vue({
+  el: &quot;#timer&quot;,
+});
+
+</code></pre>
+
+<p>Use local registration of sub-component</p>
+
+<pre><code class="language-js">//ComponentA.vue
+
+</code></pre>
+
+<pre><code class="language-js">//ComponentB.vue
+import ComponentA from './ComponentA'
+export default {
+  components: {
+    ComponentA
+  }
+}
+</code></pre>
+
+<pre><code class="language-js">//main.js
+import Vue from 'vue'
+import upperFirst from 'lodash/upperFirst'
+
+</code></pre>
+
+<pre><code class="language-html">//index.html
+
+</code></pre>
+
+<p>Single-file component separation-of-layers</p>
+
+<pre><code class="language-js">//comp.vue
+&lt;template&gt;
+  &lt;div&gt;This will be pre-compiled&lt;/div&gt;
+&lt;/template&gt;
+&lt;script src=&quot;./my-component.js&quot;&gt;&lt;/script&gt;
+&lt;style src=&quot;./my-component.css&quot;&gt;&lt;/style&gt;
+</code></pre>
+
+<p>Typical single-file component</p>
+
+<ul>
+<li><a href="https://codesandbox.io/s/o29j95wx9">todo app</a></li>
+</ul>
+
+<p>This is advanced javascript and must understand</p>
+
+<ul>
+<li><a href="https://www.sitepoint.com/beginners-guide-node-package-manager/">npm intro </a></li>
+<li><a href="https://docs.npmjs.com/uninstalling-packages-and-dependencies">npm, up to uninstalling global packages</a></li>
+<li><a href="https://babeljs.io/docs/en/learn">learn es2015</a></li>
+</ul>
+
+<pre><code class="language-html">#index.html
+&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+</code></pre>
+
+<pre><code class="language-js">//index.js
+import Vue from 'vue'
+import App from './App'
+
+Vue.config.productionTip = false
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  template: '&lt;App/&gt;',
+  components: { App }
+})
+</code></pre>
+
+<pre><code class="language-js">//App.vue
+&lt;template&gt;
+	&lt;div id=&quot;app&quot;&gt;
+		&lt;h1&gt;My Todo App!&lt;/h1&gt;
+		&lt;TodoList/&gt;
+	&lt;/div&gt;
+&lt;/template
+&lt;script&gt;
+import TodoList from './components/TodoList.vue'
+
+export default {
+	components: {
+		TodoList
+	}
+}
+&lt;/script&gt;
+&lt;style&gt;&lt;/style&gt;
+</code></pre>
+
+<p>Unit-testing individual components</p>
+
+<ul>
+<li><a href="https://vuejs.org/v2/guide/unit-testing.html">ref: unit tests</a></li>
+</ul>
+
+<pre><code class="language-js">//Component.vue
+&lt;template&gt;
+  &lt;p&gt;{{ msg }}&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    props: ['msg']
+  }
+&lt;/script&gt;
+</code></pre>
+
+<pre><code class="language-js">//test.js
+import Vue from 'vue'
+import MyComponent from './MyComponent.vue'
+
+// helper function that mounts and returns the rendered text
+function getRenderedText (Component, propsData) {
+  const Constructor = Vue.extend(Component)
+  const vm = new Constructor({ propsData: propsData }).$mount()
+  return vm.$el.textContent
+}
+
+describe('MyComponent', () =&gt; {
+  it('renders correctly with different props', () =&gt; {
+    expect(getRenderedText(MyComponent, {
+      msg: 'Hello'
+    })).toBe('Hello')
+
+    expect(getRenderedText(MyComponent, {
+      msg: 'Bye'
+    })).toBe('Bye')
+  })
+})
+</code></pre>
+
+<p>TODO
+* <a href="https://www.telerik.com/blogs/how-to-emit-data-in-vue-beyond-the-vuejs-documentation">emit</a>
+* <a href="https://vuejs.org/v2/cookbook/client-side-storage.html">client-side storage</a>
+* <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">storage with indexdDb</a>
+* <a href="https://vuejs.org/v2/cookbook/debugging-in-vscode.html">debugging in vscode</a></p>
+
+<p>END</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#webpack-and-modular-programming">Webpack and Modular Programming</a>
+<ul>
+<li><a href="#simple-usage">Simple usage</a></li>
+<li><a href="#simple-configuration">Simple configuration</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#advanced-topics">Advanced Topics</a></li>
+</ul></li>
+<li><a href="#vue-ecosystem">Vue Ecosystem</a>
+<ul>
+<li><a href="#vue-cli-scaffolding">Vue CLI Scaffolding</a></li>
+</ul></li>
+<li><a href="#vue-basics">Vue Basics</a>
+<ul>
+<li><a href="#useful-frontend-terms">Useful Frontend Terms</a></li>
+<li><a href="#vue-foundations">Vue Foundations</a></li>
+<li><a href="#directives">Directives</a></li>
+<li><a href="#data">Data</a></li>
+<li><a href="#implementation-designs">Implementation designs</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/vue">vue
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/javascript">JavaScript
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/tag3">tag3
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_nlp-history_nlp_deep_learn/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Historical Background of NLP with Deep Learning
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_nlp-explain_metrics/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Explaining Difficult (Abstract) Subjects to Customers&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>
