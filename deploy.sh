@@ -2,23 +2,26 @@
 
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
+
 # Build the project.
 hugo -b "https://imtorgdemo.github.io/"    # if using a theme, replace with `hugo -t <YOURTHEME>`
 
-# Go To Public folder
-cd public
-# Add changes to git.
-git add .
+cd ..
+cp -r Hugo_IMTorgDemo/IMTorgDemo.github.io/.git Hugo_Site/public/
+sudo rm -r Hugo_IMTorgDemo/IMTorgDemo.github.io/
+cp -r Hugo_Site/public/ Hugo_IMTorgDemo/IMTorgDemo.github.io/
 
-# Commit changes.
+# Push and commit github.io
 msg="rebuilding site `date`"
-if [ $# -eq 1 ]
-  then msg="$1"
-fi
+ 
+cd Hugo_IMTorgDemo/IMTorgDemo.github.io/
+git add -A
 git commit -m "$msg"
-
-# Push source and build repos.
 git push origin master
 
-# Come Back up to the Project Root
-cd ..
+# Push and commit Hugo_Site
+cd ../../Hugo_Site
+sudo rm -r public/.git
+git add -A
+git commit -m "$msg"
+git push origin master

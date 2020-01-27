@@ -202,6 +202,13 @@ The code above is written in python.  Now, lets try R statistical language.
 %load_ext rpy2.ipython
 ```
 
+{{< output >}}
+```nb-output
+The rpy2.ipython extension is already loaded. To reload it, use:
+  %reload_ext rpy2.ipython
+```
+{{< /output >}}
+
 ```python
 %R require(ggplot2)
 ```
@@ -244,7 +251,16 @@ head(df, 3)
 ```r
 %%R -i df -w 400 -h 300
 options(repr.plot.width = 1, repr.plot.height = 0.75)
-ggplot(data = df) + geom_point(aes(x = X, y= Y, color = Letter, size = Z))
+thm <- theme(
+    #panel.background = element_rect(fill = "transparent"), # bg of the panel
+    plot.background = element_rect(fill = "transparent", color = NA), # bg of the plot
+    #panel.grid.major = element_blank(), # get rid of major grid
+    #panel.grid.minor = element_blank(), # get rid of minor grid
+    legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    legend.box.background = element_rect(fill = "transparent") # get rid of legend panel bg
+  )
+p <- ggplot(data = df) + geom_point(aes(x = X, y= Y, color = Letter, size = Z))
+p + thm
 ```
 
 
