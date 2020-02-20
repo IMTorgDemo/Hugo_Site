@@ -1,0 +1,16 @@
+{
+  "name": "ext_lunr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "index": "cd .. && hugo convert toTOML -o ./ext_lunr/converted && cd ext_lunr && hugo-lunr -i './converted/content/posts/*' -o '../static/js/lunr.json'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hugo-lunr": "0.0.4"
+  }
+}

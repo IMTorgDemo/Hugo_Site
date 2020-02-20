@@ -18,5 +18,4 @@ paginate = 10
     
 [[menu.main]]
     name = "About"
-    url = "/about/"
-
+    url = "/pages/about/"

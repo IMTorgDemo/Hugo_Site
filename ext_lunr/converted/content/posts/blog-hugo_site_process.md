@@ -1,0 +1,152 @@
++++
+author = "Jason Beach"
+categories = ["Web", "Communication"]
+date = "2019-07-05"
+tags = ["knowledgebase", "markdown", "tag3"]
+title = "Communication Workflows with Hugo, Jupyter, and Friends"
+
++++
+
+
+Static Site Generators are quite popular replacements for traditional server-based methods of delivering HTML.  One of the most popular is Hugo because of its compilation speed.  Combining Hugo with Jupyter notebooks, and other tools, can provide for a speedy workflow for pushing your ideas to the web, books (online or pdf), and more.  This post will discuss why you may want to do this and provides tools for doing it.
+
+## Creating and Sharing Ideas
+
+Creating and publishing content is an investment.  Even poorly-created content still takes time to put text to file and file to web.  I've seen many people get started with blogging only to quit after getting the site running.  They refine the site styling to a remarkable degree, then the posts end after two weeks.  
+
+Which begs the question: why blog?  A way to to have an online presence or to build a brand?  Rubbish.  No one will go to your site because you're nobody.  And why should they - you don't care about them, either.  Funny enough, people go to [Paul Graham's blog](http://paulgraham.com/articles.html), and I don't think he spent 10 minutes on his CSS.
+
+Another perspective is that you want to share ideas, with yourself, and, sometimes, others.  The content I create is a knowledge base.  I've learned a great deal of things.  I want to access, reference, and update those things as I refine skills and knowledge.  If someone asks me a question and I'm feeling selfish with my time, then I can point them to a post: it is researched, organized, and documented at times that I was interested in a topic.  I can't remember everything all of the time!
+
+Personally, I'm easily distracted by new ideas.  Creating content adds a little more time to the current work I'm doing, but it helps drive new ideas toward longer-term interests and goals.  The ideas are incorporated into a previous world view that is then updated.  Strategically, I can look over this past work and use it in future projects.  This is not so much to make things easier, in the future, as it is to see how perspectives change with the addition of new information.
+
+Better yet - prove to yourself that you understand some material.  You don't know something until you can teach to others, or teach it, simply... to a child... something like that.  This post is about creating this new habit, and sticking to it by not wasting your time with the boring stuff.
+
+
+## An Effective Workflow
+
+### Process overview
+
+I've tried multiple workflows and the following is by far the fastest and most effective.  Two key components are Jupyter nobooks and Hugo Static Site Generator (SSG).  The key components are separating your content (Jupyter) from the delivery (Hugo), and ensuring you use simple scripts for the plumbing in your workflow.  
+```
+Docker -> Jupyter -> Markdown -> Hugo -> SSG / Book (online) / Book (pdf) -> github pages
+```
+
+Jupyter allows you to succinctly place all of your content, together, even if it doesn't concern programming.  That way you can easily move to some new method of dissemination if SSG doesn't serve your purpose.  If you make programming a topic in your content, you are really helping yourself.  The code and output are maintained, together, and can easily be update, in the future.
+
+Using simple scripts (bash or python files) to automate your work ensures that plumbing can be created easily and quickly modified when you improve your process or make major changes to it.  This might seem like more overhead, and it is, in the short-term.  But, having the ability to direct your content to, and reuse it in, different sources, such as blog post, book, or a journal format, is incredibly powerful.
+
+### Detailed process
+
+To go into more detail, I start with a docker image with Jupyter installed.  The docker container shares volumes with the local space for saving .ipynb files.  These are maintained in a github repo, so all content is secure and easily reproducible.  The only concern is where to keep your accompanying data, which is mostly dependent on size.  An AWS S3 bucket is usually a safe bet.
+
+Once the content is ready, it can be prepared for dissemination using a simple script.  Jupyter notebook files (.ipynb) are json.  These should be converted to markdown (.md) and placed, with dependencies (images, media, etc.), into the appropriate Hugo directory structure.  A final review can be performed by running Hugo locally.  Changes can be made to the markdown files, the Hugo public directory (converted HTML SSG files), is commited and pushed to github repo for publication on github pages.  All of this can be done in less than 30 seconds.
+
+There are some similar, but less flexible, workflows.  If you are using [RStudio](https://www.rstudio.com/) and are only concerned with data science content using R or Python, then you can use [blogdown](https://bookdown.org/yihui/blogdown/).  This is a great workflow and really saves the user much time.  However, both RStudio and blogdown are opinionated and large.  If you want to change something, then you will either have to do it their way (if the option is present), or you will have to dig knee-deep into code (probably for several days) to modify things to how you want them.  This lack of control does not suite me.
+
+## Complete process code
+
+For docker images, I use one of the following:
+
+* all spark notebook - all the data science goodies you expect
+* beakerx - strong multi-language and prototyping support, including JVM languages, python, and javascript
+```bash
+#create your notebook repo
+\\( git clone <repo>
+(~/.bash\_profile) export NOTEBOOK\_HOME=/Users/jason.beach/Desktop/Projects/IMTorgDemo-Notebooks 
+
+#create container and share volume
+\\) docker run -d -p 8887:8888 \
+	-v \\(NOTEBOOK\_HOME:/home/beakerx/PROJECTS\_PERSONAL \\
+	-v \\)WORK_HOME:/home/beakerx/PROJECTS_WORK \
+	--name cntr_beakerx \
+	beakerx/beakerx 
+```
+
+Apply consistent formatting across notebooks.  Using a script to look for such formatting can be helpful.  The following are useful standards when running the [nb2hugo](https://github.com/IMTorgCustomSoln/nb2hugo) script for converting a notebook to markdown.
+
+* notebook-name_must_be_lowercase.ipynb
+* `#Title As Above (.ipynb) or part of metadata (.md)`
+* `## All Second Sections (to ensure proper smartToc)`
+* `### All third sections`
+* use opening paragraph beneath metadata
+* ensure either output, or markdown cell, between code cells
+* reference other posts with absolute url: `[my post]( {{< ref "/posts/blog_page-todo.md#List-of-Future-Posts" >}})`
+* add external references to documentation `[ref](http://domain.com)`
+* add image references `![description](images/<name.png>)`
+
+Convert the file to markdown and place files and dependencies into appropriate directory structure.
+```bash
+\\( nb2hugo <./directory/to/file.ipynb>   --site-dir <./Hugo\_Site/> --section posts
+```
+
+Take a quick look for final review.
+```bash
+\\) hugo server -D
+```
+
+Then commit and deploy to github pages.  Also, commit and push your notebook modifications to github repo.
+```
+$ ./deploy.sh "add new post" 
+```
+
+This is a simple process, once it is set-up.  The only difficulty is getting accustomed to the above formatting rules.
+
+
+### Jupyter for code and content
+
+Jupyter notebooks can be real productivity enhancers because they bring code, output, and mathematical notation all under one JSON-based HTML renderer.  The notebook can be shared, as HTML, or converted to other formats.
+
+While docker is not necessary, running Jupyter from docker can make costly installation and configuration changes both automated and portable.  Two of the best images are:
+
+* [all-spark-notebook](https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook) - all the data science goodies you expect
+* [beakerx](http://beakerx.com/) - strong multi-language and prototyping support, including JVM languages, python, and javascript
+
+The kernels of these two images cover almost every language you might want to use; except NodeJs.  I've tried a few of different set-ups, but haven't found any that are consistently maintained.
+
+Once you've completed some work in a notebook, you have a variety of different formats for which to convert it.  Converting it to markdown and diseminating files to Hugo is my chosen workflow, and the script [nb2hugo](https://github.com/IMTorgCustomSoln/nb2hugo) performans quite well by making use of the Jupyter API.  I'm slowly improving it with post-processing.
+
+
+### Hugo for static sites
+
+SSGs improved steadily over the last few years, and Hugo proclaims it is the fastest for compiling code.  The speed is quite impressive and allows users to see HTML updates while the underlying markdown is being modified, similar to how [nodemon](https://nodemon.io/) works, for Node developers.
+
+Hugo is also relatively simple to learn and customize.  The [basic tutorials](https://gohugo.io/documentation/) are quite good.  Installing the system with code-block language coloring (pygments) is straightforward.
+```
+\\( brew install hugo
+\\) pip3 install Pygments
+\\( pip3 install nb2hugo
+```
+
+Typically, a new user will get started with a theme chosen from the [Hugo Theme library](https://themes.gohugo.io/).  The actual theme repo is cloned within the Hugo directory structure.
+```
+\\) hugo new site quickstart
+\\( cd quickstart
+\\) git init
+\\( cd themes/
+\\) git clone --depth 1 https://github.com/carsonip/hugo-theme-minos
+hugo -t hugo-theme-minos
+```
+
+The final bit is to customize Hugo using the `config.toml` file.  This includes adding the url and other static site variables, the chosen theme and parameters associated with the theme, and static pages (like About or Tags).  Creating a new post from markdown, without Jupyter is simply: `$ hugo new posts/my-first-post.md`.
+
+Hugo has some very powerful themes to choose from, including:
+
+* [academic](https://themes.gohugo.io/)
+* [coder portfolio](https://themes.gohugo.io/hugo-coder-portfolio/)
+* [tufte style](https://github.com/shawnohare/hugo-tufte)
+* [book style](https://themes.gohugo.io/hugo-book/)
+
+Mathematical notation is supported through [Katex](https://katex.org/docs/supported.html).
+
+## Useful Tools
+
+To deploy Hugo, simply place the compiled `public/` directory to a server.  You have many options; however, deploying your site simply by pushing commits to your code repo is one of the easiest - enter [GithubPages](https://gohugo.io/hosting-and-deployment/hosting-on-github/).  The provided Hugo script is quite useful.  
+
+Later, you can create a custom domain name and point it at the `account.github.io` url, such as with [Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/9645/2208/how-do-i-link-my-domain-to-github-pages?utm_source=CJ&utm_medium=Affiliate&utm_campaign=8162476&ref=cj&affnetwork=cj&cjevent=3e815fa6a12a11e9816104bd0a24060b).
+
+Lastly, you may want to consider distributing your content using other means, such as book pdf.  [Pandoc](https://pandoc.org/) appears to cover all needs for markdown transformations.  The writer, [Thorsten Ball](https://thorstenball.com/blog/2018/09/04/the-tools-i-use-to-write-books/), appears to have good experience on this process, as well.
+
+## Conclusion
+
+There are many choices for distributing content to the web, but I find most are time-consuming in either overhead, process, or customization.  This is not the case with Jupyter and Hugo.  Overhead is only a few hours for set-up and getting accustomed to styling.  The process only takes a two commands and a localhost review.  Customization cannot be any easier because of the simplicity of the pipeline and scripts.  If fewer languages or less flexibility is acceptable, than RStudio and blogdown may be preferable, but this may be regretful, later.
