@@ -67,6 +67,12 @@
   </url>
   
   <url>
+    <loc>https://imtorgdemo.github.io/categories/math/</loc>
+    <lastmod>2019-11-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://imtorgdemo.github.io/categories/computerscience/</loc>
     <lastmod>2019-11-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -74,12 +80,6 @@
   
   <url>
     <loc>https://imtorgdemo.github.io/tags/deeplearning/</loc>
-    <lastmod>2019-11-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/math/</loc>
     <lastmod>2019-11-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -395,6 +395,11 @@
     <loc>https://imtorgdemo.github.io/pages/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/pages/search/</loc>
+    <lastmod>2018-06-01T00:00:00+00:00</lastmod>
   </url>
   
 </urlset>

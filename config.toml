@@ -13,8 +13,8 @@ paginate = 10
     url = "/categories/"
     
 [[menu.main]]
-    name = "Tags"
-    url = "/tags/"
+    name = "Search"
+    url = "/pages/search/"
     
 [[menu.main]]
     name = "About"

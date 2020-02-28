@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "index": "cd .. && hugo convert toTOML -o ./ext_lunr/converted && cd ext_lunr && hugo-lunr -i './converted/content/posts/*' -o '../static/js/lunr.json'",
+    "index": "cd .. && hugo2lunr -i ../content/posts -o ./external/converted && cd external && hugo-lunr -i './converted/content/**' -o '../static/js/lunr.json'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
