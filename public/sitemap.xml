@@ -9,6 +9,12 @@
   </url>
   
   <url>
+    <loc>https://imtorgdemo.github.io/categories/datascience/</loc>
+    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://imtorgdemo.github.io/</loc>
     <lastmod>2019-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -33,12 +39,6 @@
   
   <url>
     <loc>https://imtorgdemo.github.io/categories/category2/</loc>
-    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/datascience/</loc>
     <lastmod>2019-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
