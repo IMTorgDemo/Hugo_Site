@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>DataScience</title>
+      <link>https://imtorgdemo.github.io/categories/datascience/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/datascience/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>category2</title>
       <link>https://imtorgdemo.github.io/categories/category2/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
@@ -21,11 +30,11 @@
     </item>
     
     <item>
-      <title>datascience</title>
-      <link>https://imtorgdemo.github.io/categories/datascience/</link>
-      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      <title>Math</title>
+      <link>https://imtorgdemo.github.io/categories/math/</link>
+      <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://imtorgdemo.github.io/categories/datascience/</guid>
+      <guid>https://imtorgdemo.github.io/categories/math/</guid>
       <description></description>
     </item>
     
@@ -35,15 +44,6 @@
       <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/computerscience/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>math</title>
-      <link>https://imtorgdemo.github.io/categories/math/</link>
-      <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/math/</guid>
       <description></description>
     </item>
     

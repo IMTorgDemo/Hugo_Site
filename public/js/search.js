@@ -14,11 +14,14 @@ if ((window.location.pathname == "/pages/search/")) {
         this.field("title", {
           boost: 10
         });
+        this.field("content", {
+          boost: 7
+        });
         this.field("tags", {
           boost: 5
         });
 
-        // ref is the result item identifier (I chose the page URL)         
+        //ref is the result item identifier (I chose the page URL)         
         this.ref("uri");
         for (var i = 0; i < response.length; ++i) {
           this.add(response[i]);
