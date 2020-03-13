@@ -6,10 +6,39 @@
     <description>Recent content on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Spark Deployments</title>
+      <link>https://imtorgdemo.github.io/posts/blog_ds_spark_deployment/</link>
+      <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_ds_spark_deployment/</guid>
+      <description>Hadoop is seen as the staple of clusters and distributed management. Spark is ubiquitous data science tool. What if you combine Hadoop with Spark? We will explore that question and compare different deployment architectures in this post.
+Introduction As Storage you use HDFS. Analytics is done with Apache Spark and YARN is taking care of the resource management. Why does that work so well together?
+From a platform architecture perspective, Hadoop and Spark are usually managed on the same cluster.</description>
+    </item>
+    
+    <item>
+      <title>Ranking Text With Word Embeddings</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-rank_text_with_word_vector/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-rank_text_with_word_vector/</guid>
+      <description>I recently implemented search functionality for my Hugo site, which can be seen at: https://imtorgdemo.github.io/pages/search/. The search uses lunr.js, an implementation of Solr. While it works, sufficiently, the metadata used for ranking queries could be improved. It would also be nice to visually locate the results by where resulting posts fit into the three data science fundamental disciplines: mathematics, computer science, and business. This narrative provides a quick solution for ranking posts by each discipline, then reducing the dimensions to 3 axes in the xy-plane.</description>
+    </item>
+    
+    <item>
+      <title>Incorporating an Initial Training Sample into a Project</title>
+      <link>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</guid>
+      <description>During a data science project, data is often provided in an incremental manner. Some customer files are easier to obtain than others, such as when lengthy unarchiving processes are warranted. To ensure no time is wasted, available data can be put to use with initial analyses and model training as a Training Sample. The same data is incorporated with Training data when it is formally split into Training and Holdout sets.</description>
+    </item>
     
     <item>
       <title>Processing Natural Language with Python and Friends</title>
@@ -204,6 +233,15 @@ List of Future Posts General Machine Learning
       <guid>https://imtorgdemo.github.io/pages/search/</guid>
       <description>This will look through both internal and external sources to find pertinent information.
 Search Search     end of results</description>
+    </item>
+    
+    <item>
+      <title>The Insecurities of the &#39;Great Men&#39;</title>
+      <link>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</guid>
+      <description>While it may be tough to find the true nature of people, past their outward appearance, it can provide insight into all people, and to yourself. The &amp;lsquo;Great Man&amp;rsquo; theory that leaders are born and not made came about in the 19th century when British aristocrats attained powerful positions through nepotism. It was primarily concerned with explaining leaders such Walpole, Wellington, and Caesar. Much of what is learned in history is their propoganda - getting the reality is much more difficult.</description>
     </item>
     
   </channel>

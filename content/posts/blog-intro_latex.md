@@ -90,6 +90,7 @@ __Superscripts and Subscripts__, use ^ and _. For example
 __Groups, Superscripts, Subscripts, and other operations__ apply only to the next “group”. A “group” is either a single symbol, or any formula surrounded by curly braces {…}. If you do `10^10`, you will get a surprise: 1010
 
 But `10^{10}` gives what you probably wanted: \\(10^{10}\\). Use curly braces to delimit a formula to which a superscript or subscript applies: 
+
 * `x^5^6` is an error
 * `{x^y}^z` is \\({x^y}^z\\)
 * `x^{y^z}` is \\(x^{y^z}\\) 
@@ -102,7 +103,8 @@ These do not scale with the formula in between, so if you write `(\frac{\sqrt x}
 
 Using `\left`(…\right) will make the sizes adjust automatically to the formula they enclose: `\left(\frac{\sqrt x}{y^3}\right)` is \\(\\left(\\frac{\\sqrt x}{y^3}\\right)\\)
 
-`\left` and `\right` apply to all the following sorts of parentheses: 
+`\left` and `\right` apply to all the following sorts of parentheses:
+
 * `( )` \\((𝑥)\\)
 * `[ ]` \\([𝑥]\\)
 * `\{  \}` \\(\\{𝑥\\}\\)
@@ -371,6 +373,8 @@ MathJax does not implement LaTeX tables.
 
 \\[\\begin{matrix} a & b \\\\ c & d \\end{matrix}\\]
 
+%%latex
+
 \begin{pmatrix}
    a & b \\
    c & d
@@ -383,6 +387,7 @@ MathJax does not implement LaTeX tables.
 ### Geometry symbols
 
 %%latex
+
 \begin{array}{|c|c|}
 \hline
 \angle  & \measuredangle        \\\hline
@@ -405,7 +410,7 @@ MathJax does not implement LaTeX tables.
 
 \\[\\lim\_{x \\to a}\\]
 
-\\[f'(a) = \\lim\_{x \\to a} \\frac{f(x) - f(a)}{x - a}\\]
+\\[ f'(a) = \\lim\_{x \\to a} \\frac{f(x) - f(a)}{x - a}\\]
 
 \\[\\lim\_{x \\to a^-} f(x) = f(a) = \\lim\_{x \\to a^+} f(x)\\]
 

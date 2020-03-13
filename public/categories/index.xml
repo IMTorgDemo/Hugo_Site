@@ -6,10 +6,64 @@
     <description>Recent content in Categories on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>BestPractice</title>
+      <link>https://imtorgdemo.github.io/categories/bestpractice/</link>
+      <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/bestpractice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BigData</title>
+      <link>https://imtorgdemo.github.io/categories/bigdata/</link>
+      <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/bigdata/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DataScience</title>
+      <link>https://imtorgdemo.github.io/categories/datascience/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/datascience/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MachineLearning</title>
+      <link>https://imtorgdemo.github.io/categories/machinelearning/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/machinelearning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mathematics</title>
+      <link>https://imtorgdemo.github.io/categories/mathematics/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/mathematics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PrediveModeling</title>
+      <link>https://imtorgdemo.github.io/categories/predivemodeling/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/predivemodeling/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>category2</title>
@@ -21,16 +75,7 @@
     </item>
     
     <item>
-      <title>datascience</title>
-      <link>https://imtorgdemo.github.io/categories/datascience/</link>
-      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/datascience/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>computerscience</title>
+      <title>ComputerScience</title>
       <link>https://imtorgdemo.github.io/categories/computerscience/</link>
       <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
       
@@ -39,7 +84,7 @@
     </item>
     
     <item>
-      <title>math</title>
+      <title>Math</title>
       <link>https://imtorgdemo.github.io/categories/math/</link>
       <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
       
@@ -80,15 +125,6 @@
       <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/logic/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Mathematics</title>
-      <link>https://imtorgdemo.github.io/categories/mathematics/</link>
-      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/mathematics/</guid>
       <description></description>
     </item>
     
@@ -179,6 +215,24 @@
       <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/category1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>History</title>
+      <link>https://imtorgdemo.github.io/categories/history/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/history/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Leadership</title>
+      <link>https://imtorgdemo.github.io/categories/leadership/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/leadership/</guid>
       <description></description>
     </item>
     

@@ -1,3 +1,7 @@
+blog_ds_spark_deployment.ipynb
+blog_history-greatman_insecurity.ipynb
+blog_nlp-rank_text_with_word_vector.ipynb
+blog_math-reuse_tng_sample.ipynb
 blog_nlp-intro_spacy/
 blog_nlp-history_nlp_deep_learn/
 blog_prototype-creating_frontend/ => cp IMTorgDemo-Notebooks/blog_prototype-creating_frontend.md Hugo_Site/content/posts/

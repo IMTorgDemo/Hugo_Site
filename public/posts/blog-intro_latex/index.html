@@ -185,10 +185,13 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 
 <p><strong>Groups, Superscripts, Subscripts, and other operations</strong> apply only to the next “group”. A “group” is either a single symbol, or any formula surrounded by curly braces {…}. If you do <code>10^10</code>, you will get a surprise: 1010</p>
 
-<p>But <code>10^{10}</code> gives what you probably wanted: \(10^{10}\). Use curly braces to delimit a formula to which a superscript or subscript applies:
-* <code>x^5^6</code> is an error
-* <code>{x^y}^z</code> is \({x^y}^z\)
-* <code>x^{y^z}</code> is \(x^{y^z}\)</p>
+<p>But <code>10^{10}</code> gives what you probably wanted: \(10^{10}\). Use curly braces to delimit a formula to which a superscript or subscript applies:</p>
+
+<ul>
+<li><code>x^5^6</code> is an error</li>
+<li><code>{x^y}^z</code> is \({x^y}^z\)</li>
+<li><code>x^{y^z}</code> is \(x^{y^z}\)</li>
+</ul>
 
 <p>Observe the difference between <code>x_i^2</code> \(x_i^2\) and <code>x_{i^2}</code> \(x_{i^2}\)</p>
 
@@ -198,17 +201,20 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 
 <p>Using <code>\left</code>(…\right) will make the sizes adjust automatically to the formula they enclose: <code>\left(\frac{\sqrt x}{y^3}\right)</code> is \(\left(\frac{\sqrt x}{y^3}\right)\)</p>
 
-<p><code>\left</code> and <code>\right</code> apply to all the following sorts of parentheses:
-* <code>( )</code> \((𝑥)\)
-* <code>[ ]</code> \([𝑥]\)
-* <code>\{  \}</code> \(\{𝑥\}\)
-* <code>|</code> \(|𝑥|\)
-* <code>\vert</code> \(\vert x\vert\)
-* <code>\Vert</code> \(\Vert x\Vert\)
-* <code>\langle</code> and <code>\rangle</code> \(\langle x \rangle\)
-* <code>\lceil</code> and <code>\rceil</code> \(\lceil x \rceil\)
-* <code>\lfloor</code> and <code>\rfloor</code> \(\lfloor x \rfloor\)
-* <code>\middle</code> can be used to add additional dividers</p>
+<p><code>\left</code> and <code>\right</code> apply to all the following sorts of parentheses:</p>
+
+<ul>
+<li><code>( )</code> \((𝑥)\)</li>
+<li><code>[ ]</code> \([𝑥]\)</li>
+<li><code>\{  \}</code> \(\{𝑥\}\)</li>
+<li><code>|</code> \(|𝑥|\)</li>
+<li><code>\vert</code> \(\vert x\vert\)</li>
+<li><code>\Vert</code> \(\Vert x\Vert\)</li>
+<li><code>\langle</code> and <code>\rangle</code> \(\langle x \rangle\)</li>
+<li><code>\lceil</code> and <code>\rceil</code> \(\lceil x \rceil\)</li>
+<li><code>\lfloor</code> and <code>\rfloor</code> \(\lfloor x \rfloor\)</li>
+<li><code>\middle</code> can be used to add additional dividers</li>
+</ul>
 
 <p>There are also invisible parentheses, denoted by <code>.</code>: <code>\left.\frac12\right\rbrace</code> is \(\left.\frac12\right\rbrace\)</p>
 
@@ -468,6 +474,8 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 
 <p>\[\begin{matrix} a &amp; b \\ c &amp; d \end{matrix}\]</p>
 
+<p>%%latex</p>
+
 <p>\begin{pmatrix}
    a &amp; b <br />
    c &amp; d
@@ -479,8 +487,9 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 
 <h3 id="geometry-symbols">Geometry symbols</h3>
 
-<p>%%latex
-\begin{array}{|c|c|}
+<p>%%latex</p>
+
+<p>\begin{array}{|c|c|}
 \hline
 \angle  &amp; \measuredangle        \\hline
 \triangle &amp; \square         \\hline
@@ -502,7 +511,7 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 
 <p>\[\lim_{x \to a}\]</p>
 
-<p>\[f&rsquo;(a) = \lim_{x \to a} \frac{f(x) - f(a)}{x - a}\]</p>
+<p>\[ f&rsquo;(a) = \lim_{x \to a} \frac{f(x) - f(a)}{x - a}\]</p>
 
 <p>\[\lim_{x \to a^-} f(x) = f(a) = \lim_{x \to a^+} f(x)\]</p>
 

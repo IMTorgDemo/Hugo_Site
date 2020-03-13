@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ranking Text With Word Embeddings // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Ranking Text With Word Embeddings" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_nlp-rank_text_with_word_vector/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Ranking Text With Word Embeddings</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_nlp-rank_text_with_word_vector/" class="article-date">
+                <time datetime='2020-02-20T00:00:00.000&#43;00:00' itemprop="datePublished">2020-02-20</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/machinelearning">MachineLearning</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/datascience">DataScience</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/mathematics">Mathematics</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>I recently implemented search functionality for my Hugo site, which can be seen at: <a href="https://imtorgdemo.github.io/pages/search/">https://imtorgdemo.github.io/pages/search/</a>.  The search uses lunr.js, an implementation of Solr.   While it works, sufficiently, the metadata used for ranking queries could be improved.  It would also be nice to visually locate the results by where resulting posts fit into the three data science fundamental disciplines: mathematics, computer science, and business.  This narrative provides a quick solution for ranking posts by each discipline, then reducing the dimensions to 3 axes in the xy-plane.</p>
+
+<h2 id="environment">Environment</h2>
+
+<p>Lets setup the environment for the basic scientific and NLP work.</p>
+
+<pre><code class="language-python">import numpy as np
+import nltk
+import spacy
+
+nlp = spacy.load(&quot;en_core_web_lg&quot;)
+doc = nlp(&quot;This is a sentence.&quot;)
+</code></pre>
+
+<pre><code class="language-python">len(doc.vector)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">300
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">import os
+import sys
+
+os.chdir('./Data/markdown')
+os.listdir()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['blog_test-my_first_post.md', 'blog-logic_for_math.md']
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">os.chdir('/home/jovyan/PERSONAL/')
+</code></pre>
+
+<p>This is the basic metadata for each post.</p>
+
+<pre><code class="language-python">! head Data/markdown/blog-logic_for_math.md
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">
++++
+title = &quot;Building Math from the Ground-Up&quot;
+date = &quot;2019-07-05&quot;
+author = &quot;Jason Beach&quot;
+categories = [&quot;Mathematics&quot;, &quot;Logic&quot;]
+tags = [&quot;nlp&quot;, &quot;tag2&quot;, &quot;tag3&quot;]
++++
+
+
+</code></pre>
+
+</div>
+
+
+<h2 id="preprocessing">PreProcessing</h2>
+
+<p>We will use a post that focuses primarily on mathematics.  So, we expect the ranking results to align with mathematics more than the other two fields.</p>
+
+<pre><code class="language-python">file_path = &quot;/home/jovyan/PERSONAL/Data/markdown/blog-logic_for_math.md&quot;
+
+with open(file_path, 'r') as file:
+    lines = file.readlines()
+</code></pre>
+
+<pre><code class="language-python">metadata = lines[1:9]
+</code></pre>
+
+<pre><code class="language-python">content = '  '.join(data[9:])
+content = content.replace(&quot;\n&quot;,&quot;&quot;)
+</code></pre>
+
+<pre><code class="language-python">import re, string
+
+pattern = re.compile(r'([^\s\w]|_)+')
+content = pattern.sub('', content)
+</code></pre>
+
+<pre><code class="language-python">content = ' '.join(content.split())
+</code></pre>
+
+<p>Get word assocations from website.  This is performed manually.  In the future, scrape the site and get many more assocations.</p>
+
+<p>#TODO:scrape the website
+import requests</p>
+
+<p>url = &lsquo;<a href="https://wordassociations.net/en/words-associated-with/TARGET?button=Search'">https://wordassociations.net/en/words-associated-with/TARGET?button=Search'</a>
+url = url.replace(&lsquo;TARGET&rsquo;,&lsquo;computer&rsquo;)
+resp = requests.get(url)</p>
+
+<p>noun_loc = resp.text.find(&lsquo;Noun&rsquo;)
+resp.text.find(&lsquo;Adjective&rsquo;)</p>
+
+<pre><code class="language-python">#search: business
+word_assoc_biz = 'MbaEntrepreneurshipRetailEntrepreneurConsultancyStartupAccountingSectorMarketingBankingCateringGroceryInvestingWhartonEnterpriseLendingStakeholderCustomerEconomicFinanceConsumerCommerceConglomerateEconomicsBakeryInvestmentInsuranceManagementSupplierMarketplaceInvestorVentureFirmTelecomTradesmanPayrollManufacturingBrokerTransactionLumberRetailerProfitFinancingContractingSustainabilityPartnerInnovationHospitalityNetworkingAccountantExecutiveIncentivePartnershipProcurementShareholderEmployeeAssetUndergraduateIndustrialPhilanthropyEquityLiabilitySmallAdvertisingInformaticsSalesTourismRecessionLeisurePurchasingConsultantOwnerHaasAccreditationMercantileWholesaleProfitableLucrativeUnfinishedRetailThrivingRiskyConsultingCorporateMultinationalBoomingNonprofitGraduateAccreditedPhilanthropicFinancialSustainableAutomotiveBankruptUrgentDiversifyDivestInvestProsperRestructure'
+tmp = re.findall('[A-Z][^A-Z]*', word_assoc_biz)
+words_biz = ' '.join(tmp)
+</code></pre>
+
+<pre><code class="language-python">#search: software, programming
+word_assoc_cs = 'SimulcastOptimizationDualityIntegerSynthesizerApiSynthNewscastKeyboardCwProgrammerCompilerPythonBasicKeywordAiringAffiliateSyndicationDecompositionAlgorithmJavaUhfUnixSemanticsParadigmInterfaceRecourseConstraintArrangerAutomatonFccPascalSyntaxBroadcastingBroadcastCbcNickelodeonApproximationNetworkAffiliationPbsSemanticRelaxationInstrumentationLineupHdBrandingLanguagePercussionEmmyLogicFmIdeAbcChannelTelecastDrumCableForthBbQuadraticStochasticNonlinearWeekdayFractionalOrientedLinearConvexJavaOptimalDynamicSequentialDaytimeScriptedConcurrentConstrainedPrimalConcaveImperativeGraphicalRetroProceduralAiredObjectiveFuzzyAnalogPolynomialSyndicateAirNetworkProgrammeBroadcastGeneralizeStructureRelaunchMixnuHardwareLinuxCadPackageDeveloperMacintoshVendorWorkstationUnixAutomationProgrammerAmigaEncryptionFunctionalityServerVisualizationBrowserIbmAdobeCompatibilityComputerOsComputingAtariPcApiGuiInterfaceUserGraphicsNetworkingLicenseSimulationRepositoryModelingXpMidiModemUpdateVerificationRouterCompilerToolProcessorEditingSimulatorMultimediaApplicationProviderLaptopUpgradeCpuNokia3dMetadataMicroprocessorApacheStartupPiracyAppIntelValidationSuiteOptimizationCiscoKernelModellingDocumentationGraphicHackerImplementationConsultancyVulnerabilityTcpEmailGps'
+tmp = re.findall('[A-Z][^A-Z]*', word_assoc_cs)
+words_cs = ' '.join(tmp)
+</code></pre>
+
+<pre><code class="language-python">#search: mathematics
+word_assoc_math = 'PhysicAlgebraMathematicCalculusMathematicianPhysicsGeometryOlympiadAstronomyHilbertTopologyGraderPolynomialManifoldProficiencyInformaticsBscTheoremAxiomEulerMathMechanicPhdGeneralizationIntegralAptitudeProfessorshipGenealogyBsChemistryTextbookStatisticEmeritusComputationSpringerLogicDescartesDoctorateScienceMechanicsCurriculumMultiplicationBachelorProfessorUndergraduateSubgroupIntegerConjectureNeumannGraduateComputingLecturerSummaBiologySubsetAstrologyFourierExamPedagogyCantorTensorPhilosophyCalculatorPermutationMatriceAlgebraicMathematicalTopologicalProjectiveProficientEuclideanArithmeticAppliedDifferentialManifoldDiscreteOrthogonalComputationalAnalyticPolynomialInvariantNumericalGeometricFiniteQuadraticStochasticGradeGeometricalStudiedSymmetricBabylonianTheoreticalDegreeAbstractTextbookEmeritusGraduate'
+tmp = re.findall('[A-Z][^A-Z]*', word_assoc_math)
+words_math = ' '.join(tmp)
+</code></pre>
+
+<pre><code class="language-python">path = './Data/markdown/'
+file = path + 'word_assocation_ref.json'
+words = {&quot;math&quot;: words_math, &quot;cs&quot;: words_cs, &quot;biz&quot;: words_biz}
+
+import json
+with open(file, 'w') as fp:
+    json.dump(words, fp)
+</code></pre>
+
+<pre><code class="language-python">with open(file, 'r') as fp:
+    new_words = json.load(fp)
+</code></pre>
+
+<pre><code class="language-python">math = nlp(words_math)
+cs = nlp(words_cs)
+biz = nlp(words_biz)
+</code></pre>
+
+<h2 id="similarity">Similarity</h2>
+
+<p>These results use the cosine similarity between the fields and all the word-embeddings of terms in the document.  They are not what we expect to see because math is ranked lowest, despite the document using math as the primary subject.</p>
+
+<p>We can probably do better by removing unneccessary stop words and taking the most &lsquo;important&rsquo; words in the document.  The most important terms can be defined using the TF-IDF formula that is typical in &lsquo;bag-of-words&rsquo; NLP approaches.</p>
+
+<p>We will use the <code>sklearn</code> library for the simple calculations.</p>
+
+<pre><code class="language-python"># Compare two documents
+doc1 = nlp(content)
+print(doc1.similarity(biz))
+print(doc1.similarity(cs))
+print(doc1.similarity(math))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0.5729121134078637
+0.6058354478834562
+0.48928262314068244
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
+
+tfidf = TfidfVectorizer(min_df=3, analyzer='word', stop_words = 'english', sublinear_tf=True)
+tfidf.fit(content.split(' '))
+feature_names = tfidf.get_feature_names()
+
+def get_ifidf_for_words(text):
+    tfidf_matrix= tfidf.transform([text]).todense()
+    feature_index = tfidf_matrix[0,:].nonzero()[1]
+    tfidf_scores = zip([feature_names[i] for i in feature_index], [tfidf_matrix[0, x] for x in feature_index])
+    return dict(tfidf_scores)
+
+scores = get_ifidf_for_words(content)
+sorted_scores = {k: v for k, v in sorted(scores.items(), key=lambda item: item[1], reverse=True)}
+</code></pre>
+
+<pre><code class="language-python">from itertools import islice
+
+def take(n, iterable):
+    &quot;Return first n items of the iterable as a list&quot;
+    return list(islice(iterable, n))
+</code></pre>
+
+<p>The results of the choosing important words by TF-IDF look much more promising.  These are words you would expect to be associated with formal mathematics.</p>
+
+<pre><code class="language-python">take(10, sorted_scores.items())
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[('logic', 0.14527847977675443),
+ ('logical', 0.140443796477262),
+ ('form', 0.13793934097017202),
+ ('predicate', 0.13687559493415327),
+ ('use', 0.1342685066335781),
+ ('language', 0.13265636975548645),
+ ('symbols', 0.13265636975548645),
+ ('truth', 0.13265636975548645),
+ ('argument', 0.13077412529085744),
+ ('inference', 0.13077412529085744)]
+</code></pre>
+
+</div>
+
+
+<p>There are 82 words that are most important in describing the document.</p>
+
+<pre><code class="language-python">len(list(sorted_scores.keys()))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">82
+</code></pre>
+
+</div>
+
+
+<p>When we compare the document&rsquo;s most important words against the fields&rsquo; associations we find a much more compelling story.  Now, Math is ranked the highest.  Computer science is not far behind, but Business is rightfully quite different.</p>
+
+<pre><code class="language-python"># Compare documents
+words = ' '.join(list(sorted_scores.keys()))
+doc1 = nlp(words)
+print(doc1.similarity(biz))
+print(doc1.similarity(cs))
+print(doc1.similarity(math))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0.5238546677925497
+0.6606328549347019
+0.6888387753219556
+</code></pre>
+
+</div>
+
+
+<h2 id="visual-location">Visual Location</h2>
+
+<p>We want to visually locate the document within a svg image that can be seen, below.  This is quite unintuitive because the there are three axes within a 2D-plane.  We must reduce the three dimensions to two.</p>
+
+<p><img src="images/img-datascience_plain.svg" alt="datascience" width="400"/></p>
+
+<p>There is no correct answer to this.  In fact, there are approaches we could have taken, earlier, that would have completed this for us.  A supervised clustering approach could have ensured the three groups.</p>
+
+<p>But, we are keeping this simple and fast - no modeling.  Instead of justifying a best solution, let us find the simplest method to reduce dimensions which is NOT incorrect.  We can make the following assumptions:</p>
+
+<ul>
+<li>While the <code>similarity()</code> method returns cosine similarity with a range of 0-no similarity and 1-perfect similarity, the similarity in writing style leads us to expect an actual range of .50-.70</li>
+<li>x-dimension: Computer Science and Mathematics are antagonistic to each other (in a technical field perspective), but on a continuous scale between the two, so the two should be subtracted</li>
+<li>y-dimension: Business is discrete in it is addressed in the text, or not</li>
+</ul>
+
+<p>We can use the <a href="https://en.wikipedia.org/wiki/Generalised_logistic_function">generalized logistic function</a> with subtracting Computer Science from Math, and say 0 is completely a CS paper, while 1 is completely a Math paper.  We use an arbitrary B=25 to ensure a steep difference between the two.</p>
+
+<pre><code class="language-python">#formula: Y = A + (K-A)/(C+Q*np.exp(-B*t))^1/v
+# set A and B, with all other parameters set to 1
+
+def general_logistic(Beta, cs, math):
+    t = math - cs
+    return (1/(1+np.exp(-B*t)))
+
+xPt = general_logistic(25, .660, .688)
+print( xPt )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0.6681877721681656
+</code></pre>
+
+</div>
+
+
+<p>Because the actual range is closer to .50-.70, we can expect .60 to be decisive line with value greater than meaning applicability.  So, the y-axis will be 0-top and 1-bottom, with the top of the Business set at .60.  A similarity value lower than this number means the paper is not in this set.</p>
+
+<pre><code class="language-python">yPt = doc1.similarity(biz)
+print( yPt )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0.5238546677925497
+</code></pre>
+
+</div>
+
+
+<p><img src="images/img-datascience_drawing.png" alt="datascience" width="400"/></p>
+
+<h2 id="prototype">Prototype</h2>
+
+<p>Lets complete the prototype with some frontend work using D3js.</p>
+
+<pre><code class="language-python">BizPt = doc1.similarity(biz)
+CsPt = doc1.similarity(cs)
+MathPt = doc1.similarity(math)
+
+xPt = general_logistic(25, CsPt, MathPt)
+yPt = BizPt
+</code></pre>
+
+<pre><code class="language-python">metadata.insert(4, f&quot;location = [{xPt}, {yPt}]\n&quot;)
+</code></pre>
+
+<pre><code class="language-python">metadata
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['+++\n',
+ 'title = &quot;Building Math from the Ground-Up&quot;\n',
+ 'date = &quot;2019-07-05&quot;\n',
+ 'author = &quot;Jason Beach&quot;\n',
+ 'location = [0.6693281622812353, 0.5238546677925497]',
+ 'categories = [&quot;Mathematics&quot;, &quot;Logic&quot;]\n',
+ 'tags = [&quot;nlp&quot;, &quot;tag2&quot;, &quot;tag3&quot;]\n',
+ '+++\n',
+ '\n']
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">combined = ''.join(metadata) + content
+
+file_path = &quot;/home/jovyan/PERSONAL/Data/markdown/result.md&quot;
+with open(file_path, 'w') as file:
+    file.write(combined)
+</code></pre>
+
+<p>Once the transformed data exported to markdown files, it can be indexed by lunrJs.  The results of the search query can load both the post information, and the location can be used with the svg.</p>
+
+<pre><code class="language-python">beakerx.point = {&quot;xPt&quot;:xPt, &quot;yPt&quot;:yPt}
+</code></pre>
+
+<pre><code class="language-python">from beakerx.object import beakerx
+</code></pre>
+
+<pre><code class="language-javascript">%%javascript
+require.config({
+  paths: {
+      d3: '//cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min'
+  }});
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;IPython.core.display.Javascript object&gt;
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-javascript">%%javascript
+
+beakerx.displayHTML(this, '&lt;div id=&quot;fdg&quot;&gt;&lt;/div&gt;');
+
+var point = beakerx.point
+
+
+
+var d3 = require(['d3'], function (d3) {
+    
+    var width = 300,
+        height = 200;
+
+    var svg = d3.select(&quot;#fdg&quot;)
+                .append(&quot;svg&quot;)
+                .attr(&quot;width&quot;, width)
+                .attr(&quot;height&quot;, height)
+                .attr(&quot;transform&quot;, &quot;translate(&quot;+[100, 0]+&quot;)&quot;)
+
+    var node = svg
+          .append(&quot;circle&quot;)
+          .attr(&quot;class&quot;, &quot;dot&quot;)
+          .attr(&quot;r&quot;, 10)
+          .attr(&quot;cx&quot;, 150)
+          .attr(&quot;cy&quot;, 100) 
+          .style(&quot;fill&quot;, &quot;Blue&quot;); 
+    
+});   
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;IPython.core.display.Javascript object&gt;
+</code></pre>
+
+</div>
+
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The final result of the script and D3 can be at: <a href="https://imtorgdemo.github.io/pages/search/">https://imtorgdemo.github.io/pages/search/</a>.</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#environment">Environment</a></li>
+<li><a href="#preprocessing">PreProcessing</a></li>
+<li><a href="#similarity">Similarity</a></li>
+<li><a href="#visual-location">Visual Location</a></li>
+<li><a href="#prototype">Prototype</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/nlp">nlp
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/classification">classification
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_ds_spark_deployment/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Spark Deployments
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_math-reuse_tng_sample/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Incorporating an Initial Training Sample into a Project&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>
