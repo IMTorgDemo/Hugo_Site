@@ -6,10 +6,46 @@
     <description>Recent content in Tags on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>development</title>
+      <link>https://imtorgdemo.github.io/tags/development/</link>
+      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>functional</title>
+      <link>https://imtorgdemo.github.io/tags/functional/</link>
+      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/functional/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://imtorgdemo.github.io/tags/python/</link>
+      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>oop</title>
+      <link>https://imtorgdemo.github.io/tags/oop/</link>
+      <pubDate>Tue, 10 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/oop/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>deployment</title>
@@ -44,6 +80,24 @@
       <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/tags/nlp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>best-practice</title>
+      <link>https://imtorgdemo.github.io/tags/best-practice/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/best-practice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine-learning</title>
+      <link>https://imtorgdemo.github.io/tags/machine-learning/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/machine-learning/</guid>
       <description></description>
     </item>
     
@@ -233,24 +287,6 @@
       <pubDate>Sun, 19 May 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/tags/regex/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>best-practice</title>
-      <link>https://imtorgdemo.github.io/tags/best-practice/</link>
-      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/best-practice/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>machine-learning</title>
-      <link>https://imtorgdemo.github.io/tags/machine-learning/</link>
-      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/machine-learning/</guid>
       <description></description>
     </item>
     

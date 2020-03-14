@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python Functional Programming // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Python Functional Programming" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_programming-python_functional/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Python Functional Programming</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_programming-python_functional/" class="article-date">
+                <time datetime='2020-03-13T00:00:00.000&#43;00:00' itemprop="datePublished">2020-03-13</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/modeling">Modeling</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/bestpractice">BestPractice</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Most programming languages are procedural or are written in an imperative style: programs are lists of instructions that tell the computer what to do with the program’s input.  Even &lsquo;purely&rsquo; OOP languages, such as Java, are typically written in an imperative style with little thought give in actual OOP modeling.</p>
+
+<p>Functional code is characterised by one thing: the absence of side effects. It doesn’t rely on data outside the current function, and it doesn’t change data that exists outside the current function. Every other “functional” thing can be derived from this property.  Ideally, functions only take inputs and produce outputs, and don’t have any internal state that affects the output produced for a given input.</p>
+
+<p>Programming in this respect requires one to think in terms of data state.  Because of this and other attributes, functional programming is good at modeling processes, such as data ETL.</p>
+
+<h2 id="principles">Principles</h2>
+
+<p>Just three principles can provide guidance for programming in a functional manner.</p>
+
+<ul>
+<li>Pure and Higher-Order functions do not change external data, and they can accept other functions as parameters and can return functions as output.</li>
+<li>Immutability, all values are immutable by default. Any “mutating” operations copy the value, change it and pass back the changed copy. This eliminates bugs that arise from a programmer’s incomplete model of the possible states their program may enter.</li>
+<li>First class functions allow functions to be treated like any other value. This means they can be created, passed to functions, returned from functions and stored inside data structures.</li>
+</ul>
+
+<p>It is also helpful to keep in-mind a few unique aspects of functional languages.  Unfortunately, these are missing from Python, but are available in languages where functional characteristics are important, such as Scala:</p>
+
+<ul>
+<li>tail call optimisation is used for recursion</li>
+<li>currying is used for decomposing a function (that takes multiple arguments) into a function that takes the first argument, and returns a function that takes the next argument</li>
+<li>parallelization ensures running the same code concurrently without synchronization. These concurrent processes are often run on multiple processors</li>
+<li>lazy evaluation is a compiler technique that avoids running code until the result is needed</li>
+<li>a process is deterministic only if repetitions yield the same result every time</li>
+</ul>
+
+<h2 id="functional-methods">Functional Methods</h2>
+
+<p>These basic methods for not iterating over data use Higher Order Functions.  Developers with Hadoop or Spark experience should be familiar with these techniques.</p>
+
+<ul>
+<li>list comprehensions</li>
+<li>map</li>
+<li>filter</li>
+<li>reduce</li>
+</ul>
+
+<p>Try not thinking about the operations on the data. Think of the states the data will go through.  Change of state is a process.</p>
+
+<pre><code class="language-python">from functools import reduce
+from operator import add
+</code></pre>
+
+<pre><code class="language-python">people = [{'name': 'Mary', 'height': 160},
+          {'name': 'Isla', 'height': 80},
+          {'name': 'Sam'}]
+</code></pre>
+
+<pre><code class="language-python">heights = map(lambda x: x['height'],
+              filter(lambda x: 'height' in x, people))
+heights
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;map at 0x7ffafa47a1d0&gt;
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">lst = list(heights)
+</code></pre>
+
+<pre><code class="language-python">if len(lst) &gt; 0:
+    average_height = reduce(add, lst) / len(lst)
+    
+average_height 
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">120.0
+</code></pre>
+
+</div>
+
+
+<p>Here, map is a generator.  So, we must run it as a list in order to use the <code>len()</code> method.</p>
+
+<h2 id="declarative-approach">Declarative Approach</h2>
+
+<p>A functional version of code is declarative. It describes what to do, rather than how to do it.  Convert imperative to declarative by the following steps:</p>
+
+<ul>
+<li>bundle pieces of the code into functions -&gt;
+
+<ul>
+<li>accomplished: the code describes itself (no need for comments).  Splitting code into functions is a great, low brain power way to make code more readable.</li>
+<li>lacking: functions used as sub-routines, they affect the code around them by changing external variables, rather than by returning values.</li>
+</ul></li>
+<li>remove state -&gt;
+
+<ul>
+<li>accomplished:
+i) no shared state, everything performed on function parameters, then passed out
+ii) each function has parameters, those parameters are the system component state
+iii) no variables are instantiated inside functions, all data changes are done with return values</li>
+</ul></li>
+<li>structure
+
+<ul>
+<li>main functions call auxiliary functions</li>
+<li>pipeline of one function to another</li>
+</ul></li>
+</ul>
+
+<h2 id="sequences-into-pipelines">Sequences into Pipelines</h2>
+
+<p>Gets to the heart of what is needed in ETL.</p>
+
+<ul>
+<li><code>deepcopy()</code> - if the data must be worked inside the function</li>
+</ul>
+
+<h2 id="functional-elements-python-lacks">Functional Elements Python Lacks</h2>
+
+<p>Functional things I miss in Python:</p>
+
+<ul>
+<li>Pattern matching</li>
+<li>Tail recursion</li>
+<li>Large library of list functions</li>
+<li>Functional dictionary class</li>
+<li>Automatic currying</li>
+<li>Concise way to compose functions</li>
+<li>Lazy lists</li>
+<li>Simple, powerful expression syntax (Python&rsquo;s simple block syntax prevents Guido from adding it)</li>
+</ul>
+
+<p>Reasons why these are important:</p>
+
+<ul>
+<li>No pattern matching and no tail recursion mean your basic algorithms have to be written imperatively. Recursion is ugly and slow in Python.</li>
+<li>A small list library and no functional dictionaries mean that you have to write a lot of stuff yourself.</li>
+<li>No syntax for currying or composition means that point-free style is about as full of punctuation as explicitly passing arguments.</li>
+<li>Iterators instead of lazy lists means that you have to know whether you want efficiency or persistence, and to scatter calls to list around if you want persistence. (Iterators are use-once)</li>
+<li>Python&rsquo;s simple imperative syntax, along with its simple LL1 parser, mean that a better syntax for if-expressions and lambda-expressions is basically impossible. Guido likes it this way, and I think he&rsquo;s right.</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming">non-functional vs functional examples </a></li>
+<li><a href="https://docs.python.org/3/howto/functional.html">docs: python3&rsquo;s functools and itertools </a></li>
+<li><a href="https://realpython.com/courses/functional-programming-python/">video tutorial series on python functional programming </a></li>
+</ul>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#principles">Principles</a></li>
+<li><a href="#functional-methods">Functional Methods</a></li>
+<li><a href="#declarative-approach">Declarative Approach</a></li>
+<li><a href="#sequences-into-pipelines">Sequences into Pipelines</a></li>
+<li><a href="#functional-elements-python-lacks">Functional Elements Python Lacks</a></li>
+<li><a href="#references">References</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/development">development
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/functional">functional
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    
+    <a href="/posts/blog_programming-python_oop/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Object Oriented Programming with Python&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

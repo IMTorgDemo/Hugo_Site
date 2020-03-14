@@ -6,10 +6,20 @@
     <description>Recent content in Process on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/categories/process/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Syntax Comparisons Across Languages</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-language_syntax_comparison/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-language_syntax_comparison/</guid>
+      <description>Scripting languages are quite popular for effectively getting work done. But, their similarities lead to mental difficulties when remembering syntax and common idioms. This post is used as a cheatsheet describing fundamental differences in how the languages are used.
+Introduction In any one day, I may program in five or six different languages. This is enjoyable when the syntax is different enough that there is no confusion. Domain Specific Languages, including R, SQL, Bash, and HTML, are orthogonal in their approach to being productive.</description>
+    </item>
     
     <item>
       <title>Solving Textual Problems with Regular Expressions</title>

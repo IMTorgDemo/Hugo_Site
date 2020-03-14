@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Working through a Progressive Python Application // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Working through a Progressive Python Application" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_programming_python-develop_and_deploy/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Working through a Progressive Python Application</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_programming_python-develop_and_deploy/" class="article-date">
+                <time datetime='2020-03-01T00:00:00.000&#43;00:00' itemprop="datePublished">2020-03-01</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/progressive">Progressive</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/bestpractice">BestPractice</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>This post walks the developer through a python application as it progresses in development.  It uses linux, docker, vscode, pyenv, pipenv and other tools for developing, building, and deploying an application.</p>
+
+<h2 id="environment">Environment</h2>
+
+<p>Two tools can help you setup your local development environment: pyenv and pipenv.  Pyenv is good for getting the correct python version.  Pipenv is quite good at setting your virtual environment so that your versions of python and dependencies are separate from your actual machine.  It is the next best thing to a docker container</p>
+
+<pre><code class="language-bash">%%bash
+pyenv install 3.7.0
+pyenv local 3.7.0
+
+pipenv --three
+pipenv install &lt;module&gt;
+pipenv shell
+</code></pre>
+
+<p>Not to get ahead of ourselves, but when you want to install your package to your machine</p>
+
+<pre><code class="language-bash">%%bash
+pip3 install .
+</code></pre>
+
+<h2 id="local-vscode">Local VSCode</h2>
+
+<ul>
+<li><a href="https://code.visualstudio.com/docs/python/python-tutorial">doc: python</a></li>
+</ul>
+
+<h3 id="interpreter">Interpreter</h3>
+
+<p>Python is an interpreted language, and in order to run Python code and get Python IntelliSense, you must tell VS Code which interpreter to use.</p>
+
+<pre><code class="language-bash">%%bash
+pipenv --where
+pipenv --venv
+</code></pre>
+
+<p>Within the UI:
+View &gt; CommandPallete &gt; Python: Select Interpretor</p>
+
+<pre><code class="language-bash">#settings.json
+&quot;python.pythonPath&quot;: &quot;&lt;path/to/venv&gt;&quot;
+</code></pre>
+
+<h3 id="debugger">Debugger</h3>
+
+<p>Linting is done with <a href="https://www.pylint.org/">PyLint</a>.  Linting runs automatically when you save a file.  PyLint messages fall into specific <a href="https://code.visualstudio.com/docs/python/linting#_pylint">categories</a>.</p>
+
+<p>Within the UI:
+View &gt; CommandPallete &gt; Python: Enable Linting</p>
+
+<pre><code class="language-bash">#settings.json
+&quot;python.linting.enabled&quot;: true
+</code></pre>
+
+<p>Debugger uses the Run button in the left-side pane.  There are two standard configurations that run the active file in the editor in either the <code>integratedTerminal</code> (inside VS Code) or the <code>externalTerminal</code> (outside of VS Code).</p>
+
+<p>The <code>pythonPath</code> configuration defaults to the interpreter identified in the <code>python.pythonPath</code> setting, which is equivalent to using the value <code>${config:python.pythonPath}</code>.</p>
+
+<p>Within the UI, open the entrypoint file:
+Run &gt; Debug Configuration &gt; Python File &gt; <code>launch.json</code> is created</p>
+
+<p>Provide specific startup file and arguments</p>
+
+<pre><code class="language-bash">#launch.json
+	&quot;name&quot;: &quot;Python: startup.py&quot;,
+	...
+    &quot;request&quot;: &quot;launch&quot;,
+    &quot;program&quot;: &quot;${workspaceFolder}/startup.py&quot;,
+    &quot;args&quot; : [&quot;--port&quot;, &quot;1593&quot;]
+</code></pre>
+
+<p>In the upper-left corner of Debugger, select the correct configuration (Name) and &lsquo;Run&rsquo;.</p>
+
+<h2 id="remote-vscode">Remote VSCode</h2>
+
+<ul>
+<li><a href="https://code.visualstudio.com/docs/remote/remote-overview">doc: remote</a></li>
+</ul>
+
+<h3 id="jupyter-notebook">Jupyter notebook</h3>
+
+<p>TODO:notebook</p>
+
+<h3 id="remote-server">Remote server</h3>
+
+<p>TODO:remote</p>
+
+<h3 id="docker-container">Docker container</h3>
+
+<p><a href="https://code.visualstudio.com/docs/remote/containers">https://code.visualstudio.com/docs/remote/containers</a></p>
+
+<h3 id="spark-remote-server">Spark remote server</h3>
+
+<p>TODO:spark</p>
+
+<h2 id="configure">Configure</h2>
+
+<h3 id="env-variables">Env Variables</h3>
+
+<p>Environment variables can be loaded within VSCode, or using a module.</p>
+
+<h3 id="logging">Logging</h3>
+
+<h3 id="testing">Testing</h3>
+
+<p><a href="https://code.visualstudio.com/docs/python/testing">doc: vscode python testing</a></p>
+
+<h2 id="development">Development</h2>
+
+<h3 id="commandline-arguments">Commandline arguments</h3>
+
+<p>Some important commandline arguments are subcommands and choices</p>
+
+<p>Subcommands are implicitly mutually exclusive.  In this example, there are only two ways the main command can be run, using <code>generate_text</code> or <code>check_annotations</code>.  The <code>defaults</code> allow for setting an associated function with the subcommand.</p>
+
+<pre><code>parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers()    
+
+add_gen = subparsers.add_parser('generate_text')
+add_gen.set_defaults(func = run)
+
+add_check = subparsers.add_parser('check_annotations')
+add_check.set_defaults(func = check_annotations)
+</code></pre>
+
+<p>Choices ensure the user has only a finite selection from which to choose.  The default is only used in conjunction with <code>nargs=&quot;?&quot;</code>.</p>
+
+<pre><code>parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers()    
+
+add_gen = subparsers.add_parser('generate_text')
+add_gen.set_defaults(func = run)
+add_gen.add_argument(&quot;--output&quot;,
+                        choices=(&quot;drsc_prep&quot;,&quot;mgen&quot;),
+                        help=&quot;desired output format, check: `./io/rsc/` to see formats&quot;,
+                        nargs=&quot;?&quot;,
+                        default=&quot;drsc_prep&quot;)
+</code></pre>
+
+<h3 id="comments-and-documentation">Comments and documentation</h3>
+
+<p>Create docstrings like:</p>
+
+<pre><code class="language-python">&quot;&quot;&quot;
+docstrings for:
+* purpose
+* parameters
+* return values
+* exceptions
+
+&quot;&quot;&quot;
+</code></pre>
+
+<h3 id="directory-structure">Directory structure</h3>
+
+<p>Some languages, such as Java and C#, require an implementation to be forced into a particular structure.  That is unfortunate because not every nail requires an enterprise-ready hammer.</p>
+
+<p>Python is different in that it allows for very flexible file arrangement and folder structure.  Python can be used as just a simple linear script.</p>
+
+<blockquote>
+<p>script.py</p>
+</blockquote>
+
+<h2 id="deployment">Deployment</h2>
+
+<h3 id="build-egg">Build egg</h3>
+
+<pre><code class="language-bash">%%bash
+#(MANIFEST.in)include hugo2lunr/data/word_association_ref.json
+#(setup.py)package_data={'': ['hugo2lunr/data/word_association_ref.json']},
+rm -rf build *.egg-info
+python3 setup.py install --force
+pip3 install .
+hugo2lunr ./test/input ./test/output    #input_dir and output_dir
+</code></pre>
+
+<h3 id="build-bdist-wheel-whl">Build bdist_wheel (.whl)</h3>
+
+<p>Building a wheel (bdist_wheel) and installing as commandline utility. If you are building a wheel (bdist_wheel), then include_package_data and MANIFEST.in are ignored and you must use package_data and data_files.</p>
+
+<pre><code class="language-bash">%%bash
+#(setup.py)data_files=[('',['hugo2lunr/data/word_association_ref.json'])],
+pip3 install spacy
+python3 -m spacy download en_core_web_lg
+
+pipenv install
+pipenv shell
+rm -rf ./dist/*.whl
+pip wheel -w dist --verbose .
+exit
+
+pip3 uninstall hugo2lunr
+#pip3 install -e .    #&lt;&lt;&lt;FAIL
+pip3 install . --user
+hugo2lunr  -h
+hugo2lunr ./test/input ./test/output    #input_dir and output_dir
+</code></pre>
+
+<h3 id="build-for-specific-linux-distribution">Build for specific linux distribution</h3>
+
+<p>Build with</p>
+
+<pre><code class="language-bash">%%bash
+(venv)$ pip wheel -w dist --verbose .
+</code></pre>
+
+<p>Build for linux</p>
+
+<pre><code class="language-bash">%%bash
+#create dockcross manylinux bash driver script
+docker run --rm dockcross/manylinux-x64 &gt; ./dockcross-manylinux-x64
+chmod +x ./dockcross-manylinux-x64
+#build a distributable Python 2.7 Python wheel
+./dockcross-manylinux-x64 /opt/python/cp27-cp27m/bin/pip wheel -w dist .
+</code></pre>
+
+<p>Use on linux</p>
+
+<pre><code class="language-bash">%%bash
+$ unzip sample-0.1.0-py2-none-any.whl
+$ pwd
+$ python
+python&gt;&gt;&gt; import sys
+python&gt;&gt;&gt; sys.path.append(&lt;pwd&gt;)
+python&gt;&gt;&gt; import sample
+</code></pre>
+
+<h3 id="docker-image">Docker image</h3>
+
+<p>TODO:docker image</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#environment">Environment</a></li>
+<li><a href="#local-vscode">Local VSCode</a>
+<ul>
+<li><a href="#interpreter">Interpreter</a></li>
+<li><a href="#debugger">Debugger</a></li>
+</ul></li>
+<li><a href="#remote-vscode">Remote VSCode</a>
+<ul>
+<li><a href="#jupyter-notebook">Jupyter notebook</a></li>
+<li><a href="#remote-server">Remote server</a></li>
+<li><a href="#docker-container">Docker container</a></li>
+<li><a href="#spark-remote-server">Spark remote server</a></li>
+</ul></li>
+<li><a href="#configure">Configure</a>
+<ul>
+<li><a href="#env-variables">Env Variables</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#testing">Testing</a></li>
+</ul></li>
+<li><a href="#development">Development</a>
+<ul>
+<li><a href="#commandline-arguments">Commandline arguments</a></li>
+<li><a href="#comments-and-documentation">Comments and documentation</a></li>
+<li><a href="#directory-structure">Directory structure</a></li>
+</ul></li>
+<li><a href="#deployment">Deployment</a>
+<ul>
+<li><a href="#build-egg">Build egg</a></li>
+<li><a href="#build-bdist-wheel-whl">Build bdist_wheel (.whl)</a></li>
+<li><a href="#build-for-specific-linux-distribution">Build for specific linux distribution</a></li>
+<li><a href="#docker-image">Docker image</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/development">development
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/deployment">deployment
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_ds_spark_deployment/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Spark Deployments
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_nlp-rank_text_with_word_vector/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Ranking Text With Word Embeddings&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

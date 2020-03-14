@@ -22,5 +22,15 @@ Introduction As Storage you use HDFS. Analytics is done with Apache Spark and YA
 From a platform architecture perspective, Hadoop and Spark are usually managed on the same cluster.</description>
     </item>
     
+    <item>
+      <title>Working through a Progressive Python Application</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_python-develop_and_deploy/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_python-develop_and_deploy/</guid>
+      <description>This post walks the developer through a python application as it progresses in development. It uses linux, docker, vscode, pyenv, pipenv and other tools for developing, building, and deploying an application.
+Environment Two tools can help you setup your local development environment: pyenv and pipenv. Pyenv is good for getting the correct python version. Pipenv is quite good at setting your virtual environment so that your versions of python and dependencies are separate from your actual machine.</description>
+    </item>
+    
   </channel>
 </rss>

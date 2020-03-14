@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/python/</link>
+    <description>Recent content in python on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python Functional Programming</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-python_functional/</link>
+      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-python_functional/</guid>
+      <description>Introduction Most programming languages are procedural or are written in an imperative style: programs are lists of instructions that tell the computer what to do with the program’s input. Even &amp;lsquo;purely&amp;rsquo; OOP languages, such as Java, are typically written in an imperative style with little thought give in actual OOP modeling.
+Functional code is characterised by one thing: the absence of side effects. It doesn’t rely on data outside the current function, and it doesn’t change data that exists outside the current function.</description>
+    </item>
+    
+    <item>
+      <title>Object Oriented Programming with Python</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-python_oop/</link>
+      <pubDate>Tue, 10 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-python_oop/</guid>
+      <description>Object Oriented Programming (OOP) programming became popular with Java. Microsoft quickly followed-up with the C# language. Now, OOP concepts are available in many languages. Python inherits alot of these OOP attributes, but performs it in its usual pythonic minimalism. The concepts are the same, but much of the cruft, such as accessor modifiers, are limited, leaving an succinct and enjoyable object modeling experience.
+Introduction OOP deals with classes (blueprints) and objects (instances of blueprint).</description>
+    </item>
+    
+    <item>
+      <title>Working through a Progressive Python Application</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_python-develop_and_deploy/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_python-develop_and_deploy/</guid>
+      <description>This post walks the developer through a python application as it progresses in development. It uses linux, docker, vscode, pyenv, pipenv and other tools for developing, building, and deploying an application.
+Environment Two tools can help you setup your local development environment: pyenv and pipenv. Pyenv is good for getting the correct python version. Pipenv is quite good at setting your virtual environment so that your versions of python and dependencies are separate from your actual machine.</description>
+    </item>
+    
+  </channel>
+</rss>

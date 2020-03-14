@@ -4,7 +4,71 @@
   
   <url>
     <loc>https://imtorgdemo.github.io/categories/bestpractice/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/categories/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/categories/modeling/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming-python_functional/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/development/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/functional/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/python/</loc>
+    <lastmod>2020-03-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming-python_oop/</loc>
+    <lastmod>2020-03-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/oop/</loc>
+    <lastmod>2020-03-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -15,32 +79,8 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/categories/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/posts/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://imtorgdemo.github.io/posts/blog_ds_spark_deployment/</loc>
     <lastmod>2020-03-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/tags/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -56,9 +96,14 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/categories/datascience/</loc>
-    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <loc>https://imtorgdemo.github.io/categories/progressive/</loc>
+    <lastmod>2020-03-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming_python-develop_and_deploy/</loc>
+    <lastmod>2020-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -85,6 +130,12 @@
   </url>
   
   <url>
+    <loc>https://imtorgdemo.github.io/categories/datascience/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://imtorgdemo.github.io/tags/nlp/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -97,6 +148,29 @@
   
   <url>
     <loc>https://imtorgdemo.github.io/categories/predivemodeling/</loc>
+    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/categories/process/</loc>
+    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming-language_syntax_comparison/</loc>
+    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/best-practice/</loc>
+    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/machine-learning/</loc>
     <lastmod>2020-01-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -143,18 +217,18 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/categories/computerscience/</loc>
-    <lastmod>2019-11-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://imtorgdemo.github.io/posts/blog_nlp-history_nlp_deep_learn/</loc>
     <lastmod>2019-11-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://imtorgdemo.github.io/categories/math/</loc>
+    <lastmod>2019-11-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/categories/computerscience/</loc>
     <lastmod>2019-11-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -371,12 +445,6 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/categories/process/</loc>
-    <lastmod>2019-05-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://imtorgdemo.github.io/tags/regex/</loc>
     <lastmod>2019-05-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -390,18 +458,6 @@
   <url>
     <loc>https://imtorgdemo.github.io/posts/blog_models-machine_learning/</loc>
     <lastmod>2019-05-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/tags/best-practice/</loc>
-    <lastmod>2019-05-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/tags/machine-learning/</loc>
-    <lastmod>2019-05-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

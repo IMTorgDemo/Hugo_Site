@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Syntax Comparisons Across Languages // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Syntax Comparisons Across Languages" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_programming-language_syntax_comparison/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Syntax Comparisons Across Languages</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_programming-language_syntax_comparison/" class="article-date">
+                <time datetime='2020-01-09T00:00:00.000&#43;00:00' itemprop="datePublished">2020-01-09</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/process">Process</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/datascience">DataScience</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Scripting languages are quite popular for effectively getting work done.  But, their similarities lead to mental difficulties when remembering syntax and common idioms.  This post is used as a cheatsheet describing fundamental differences in how the languages are used.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In any one day, I may program in five or six different languages.  This is enjoyable when the syntax is different enough that there is no confusion.  Domain Specific Languages, including R, SQL, Bash, and HTML, are orthogonal in their approach to being productive.  But, the &lsquo;Big Three&rsquo; language families of Python, Javascript, and JVM variety (Java, Groovy, Scala) are so similar that they are easily confused.</p>
+
+<h2 id="common-themes">Common Themes</h2>
+
+<p>Python is a dynamically-typed language, and this feature is an important reason why programmers can be more productive with Python; they don’t have to deal with the overhead of Java’s static typing. So the debates about Java/Python productivity inevitably turn into debates about the comparative advantages and drawbacks of static typing versus dynamic typing — or strong typing versus weak typing — in programming languages.</p>
+
+<p>Dynamic typing is concise, which can lead to smaller source code and fewer errors.  But, this can also be exemplary of fewer features.  To compensate, python uses protocols and other means to provision classes; rather than solely through object-oriented class hierarchies.  It is VERY instructive to look at dynamic-typed language from the perspective of static-typed to understand what problems may occur from the differences.</p>
+
+<p>Static typing can better ensure certainty of data in IO operations among applications and distributed environments.  Its greater standardization also lends to more automation of code and functionality in specific frameworks, such as Spring.  While less concise, this standardization and straight-forward approach lend Java to large code bases that require many contributors, such as Apache open-source projects.</p>
+
+<p>We will provide examples of how that is demonstrated in practice.</p>
+
+<h3 id="closures-groovy">Closures (Groovy)</h3>
+
+<p>Closures, operator overloading and meta programming are the key tools to adding Grooviness to existing libraries. Even many features that may look like being built into the core syntax are just clever library design. Appending to a list with &lt;&lt; is an overloaded operator while looping over its entries with .each is an added method that takes a closure as its parameter.</p>
+
+<pre><code class="language-Groovy">def myClosure = { x, y -&gt; x + y }		// scala uses =&gt;
+[1, 2, 3, 4].each{ println it*2 } 		// it is assumed
+[&lt;list&gt;].&lt;iterator&gt;{&lt;param&gt; -&gt; &lt;statment&gt;}
+for(&lt;condition&gt;){&lt;logic&gt;} 				// loops can be faster than `.each`
+</code></pre>
+
+<h3 id="list-dict-comprehensions-py">List, dict comprehensions (Py)</h3>
+
+<p>Python list comprehensions provide a concise way to create lists.  If this syntax was implemented in Java, it would be unreadable from all of the associated data types.  Comprehensions use the following syntax:</p>
+
+<p>%%python
+ result   = [ expression for item in list if conditional ]
+<em>result</em>  = [<em>transform</em>    <em>iteration</em>         <em>filter</em>     ]</p>
+
+<p>#the * operator is used to repeat. The filter part answers the question if theitem should be transformed.</p>
+
+<p>Which corresponds to</p>
+
+<p>%%python
+for item in list:
+    if conditional:
+        expression</p>
+
+<pre><code class="language-Groovy">%%python
+string = &quot;Hello 12345 World&quot;
+numbers = [x for x in string if x.isdigit()]
+numbers
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['1', '2', '3', '4', '5']
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+def double(x):
+  return x*2
+[double(x) for x in range(10)]
+[double(x) for x in range(10) if x%2==0]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[0, 4, 8, 12, 16]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+[x+y for x in [10,30,50] for y in [20,40,60]]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[30, 50, 70, 50, 70, 90, 70, 90, 110]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#dict comprehensions are just as good as list comprehensions
+my_phrase = [&quot;No&quot;, &quot;one&quot;, &quot;expects&quot;, &quot;the&quot;, &quot;Spanish&quot;, &quot;Inquisition&quot;]
+my_dict = {key: value for value, key in enumerate(my_phrase)}
+reversed_dict = {value: key for key, value in my_dict.items()}
+reversed_dict
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{0: 'No', 1: 'one', 2: 'expects', 3: 'the', 4: 'Spanish', 5: 'Inquisition'}
+</code></pre>
+
+</div>
+
+
+<h3 id="callback-js">Callback (Js)</h3>
+
+<ul>
+<li><a href="http://softwareloop.com/2015/02/09/javascript-idioms-for-java-developers/">js idioms for java devs</a></li>
+</ul>
+
+<h2 id="data-structures-and-collections">Data Structures and Collections</h2>
+
+<p>These are some of the most commonly-used objects within a language.  The data structure describes the underlying principles of how the class works with hardware, and the various collection interfaces describe how to interact with the object.</p>
+
+<h3 id="arraylist-linkedlist-jvm-iterables-sequences-py-array-js">ArrayList / LinkedList (JVM), iterables / sequences (Py), array (Js)</h3>
+
+<p>ArrayList ???</p>
+
+<p>LinkedHashMap is just like HashMap with an additional feature of maintaining an order of elements inserted into it, <a href="https://www.geeksforgeeks.org/linkedhashmap-class-java-examples/">ref</a>.  Like arrays, Linked List is a linear data structure. Unlike arrays, linked list elements are not stored at a contiguous location; the elements are linked using pointers, <a href="https://www.geeksforgeeks.org/linked-list-set-1-introduction/">ref: java linked lists</a>.</p>
+
+<p>There are two <code>remove</code> methods available: One that takes an integer and removes an element by its index, and another that will remove the first element that matches the passed value.  If we have a list of integers, use <code>removeAt</code> to remove an element by its index, and <code>removeElement</code> to remove the first element that matches a value.</p>
+
+<pre><code class="language-Groovy">//ArrayList
+list = [5, 6, 7, 8]
+list.add(9)
+list &lt;&lt; 10
+assert list  == [5, 6, 7, 8, 9, 10]
+assert list.get(2) == 7
+
+list.remove(5)    
+assert list.max() == 9
+assert ['a','b','c','b','b'] - 'c' == ['a','b','b','b']  //remove elements from list by value
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">assert [1, 2, 3, 4, 5][-1] == 5             //use negative indices to count from the end
+
+assert list.size() == 5
+assert list.getClass() == ArrayList     //the specific kind of list being used
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">assert [1, 2, 3] * 3 == [1, 2, 3, 1, 2, 3, 1, 2, 3]
+assert [1, 2, 3].multiply(2) == [1, 2, 3, 1, 2, 3]
+
+assert Collections.nCopies(3, 'b') == ['b', 'b', 'b']
+assert Collections.nCopies(2, [1, 2]) == [[1, 2], [1, 2]] //not [1,2,1,2]; nCopies from the JDK has different semantics than multiply for lists
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">def list2 = new ArrayList&lt;String&gt;(list)
+assert list2 == list   //== checks that each corresponding element is the same
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">def list3 = list.clone()
+assert list3 == list   //clone() can also be called
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Iterating on elements of a list is usually done calling the <code>each</code> and <code>eachWithIndex</code> methods, which execute code on each item of a list.</p>
+
+<p>Mapping is creating a new list by transforming each of its elements into something else, using the <code>collect</code> method.</p>
+
+<pre><code class="language-Groovy">['a', 'b', 'c'].eachWithIndex { it, i -&gt; println &quot;$i: $it&quot;} //`it` is the current element, while `i` is the index
+    
+assert [1, 2, 3].collect { it * 2 } == [2, 4, 6]
+assert [1, 2, 3]*.multiply(2) == [1, 2, 3].collect { it.multiply(2) }  //shortcut syntax instead of collect
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0: a
+1: b
+2: c
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">assert [1, 2, 3].find { it &gt; 1 } == 2           //find 1st element matching criteria
+assert [1, 2, 3].findAll { it &gt; 1 } == [2, 3]   //find all elements matching critieria
+
+assert ['a', 'b', 'c', 'd', 'e'].findIndexOf { it in ['c', 'e', 'g'] } == 2     //find index of 1st element matching criteria
+assert ['a', 'b', 'c', 'd', 'c'].indexOf('c') == 2                              //first index returned
+assert ['a', 'b', 'c', 'd', 'c'].findIndexValues{it=='c'} == [2,4]              //all indices returned
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">assert [1, 2, 3].every { it &lt; 5 }               // returns true if all elements match the predicate
+assert ![1, 2, 3].every { it &lt; 3 }              // negation
+assert [1, 2, 3].any { it &gt; 2 }                 // returns true if any element matches the predicate
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">assert [1, 2, 3].join('-') == '1-2-3'           // String joining
+assert [1, 2, 3].inject('counting: ') { str, item -&gt; str + item } == 'counting: 123'     // reduce operation
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">Comparator mc = { a, b -&gt; a == b ? 0 : (a &lt; b ? -1 : 1) }
+def list = [7, 4, 9, -6, -1, 11, 2, 3, -9, 5, -13]
+assert list.max(mc) == 11
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Sorting is a common list operation.</p>
+
+<pre><code class="language-Groovy">assert [6, 3, 9, 2, 7, 1, 5].sort() == [1, 2, 3, 5, 6, 7, 9]
+
+def list = ['abc', 'z', 'xyzuvw', 'Hello', '321']
+assert list.sort { it.size() } == ['z', 'abc', '321', 'Hello', 'xyzuvw']
+
+def list2 = [7, 4, -6, -1, 11, 2, 3, -9, 5, -13]
+assert list2.sort { a, b -&gt; a == b ? 0 : Math.abs(a) &lt; Math.abs(b) ? -1 : 1 } == [-1, 2, 3, 4, 5, -6, 7, -9, 11, -13]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">//Groovy Iterables???
+</code></pre>
+
+<p>Python provides iterables (the iterator protocol) for the implementation of lists, generators, and other classes that require returning its members one by one.  An iterator is an object representing a stream of data.</p>
+
+<p>Sequences (list, tuple, string) are a type of iterable that support efficient element access using integer indices via the <code>__getitem()__</code> special method (indexing) and define a <code>__length()__</code> method that returns the length of the sequence.</p>
+
+<p>Many things in Python are iterables, but not all of them are sequences.</p>
+
+<pre><code class="language-Groovy">%%python
+def Sort(sub_li): 
+    # reverse = None (Sorts in Ascending order) 
+    # key is set to sort using second element of  
+    # sublist lambda has been used 
+    sub_li.sort(key = lambda x: x[1]) 
+    return sub_li
+ 
+sub_li =[['rishav', 10], ['akash', 5], ['ram', 20], ['gaurav', 15]] 
+print(Sort(sub_li)) 
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[['akash', 5], ['rishav', 10], ['gaurav', 15], ['ram', 20]]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#you can iterate over a list and get its index
+mylist = [&quot;It's&quot;, 'only', 'a', 'model']
+for index, item in enumerate(mylist):
+    print(index, item)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0 It's
+1 only
+2 a
+3 model
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-javascript">%%javascript
+arr = []
+</code></pre>
+
+<h3 id="hash-map-jvm-collection-py-js">Hash map (JVM), collection (py), ??? (Js)</h3>
+
+<ul>
+<li><a href="https://www.baeldung.com/groovy-maps">ref: groovy maps</a></li>
+<li><a href="https://www.geeksforgeeks.org/arraylist-vs-hashmap-in-java/">ref: arraylist vs hashmap</a></li>
+</ul>
+
+<pre><code class="language-Groovy">map = [name: 'Gromit', likes: 'cheese', id: 1234, &quot;city&quot;:&quot;New York&quot;]
+map.put('foo', 'bar')
+assert map.get('name') == 'Gromit'
+assert map.containsKey('city') == true
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">assert map.size() == 5
+assert map instanceof java.util.Map
+assert map.getClass() == LinkedHashMap     // this is probably what you want
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Map keys are strings by default.  You must &lsquo;escape&rsquo; a key (parenthesis) if you want to use a variable&rsquo;s value as key.</p>
+
+<pre><code class="language-Groovy">def a = 'Bob'
+def ages = [a: 43]
+assert ages['Bob'] == null //`Bob` is not found
+assert ages['a'] == 43     //because `a` is a literal!
+
+ages = [(a): 43]            //now we escape `a` by using parenthesis
+assert ages['Bob'] == 43   //and the value is found!
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">null
+</code></pre>
+
+</div>
+
+
+<p>Maps also act like beans so you can use the property notation to get/set items inside the Map.</p>
+
+<pre><code class="language-Groovy">assert map.name == 'Gromit'     //can be used instead of map.get('name')
+assert map.id == 1234
+map.bar = 'foo'
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">foo
+</code></pre>
+
+</div>
+
+
+<p>Maps created using the map literal notation are ordered, that is to say that if you iterate on map entries, it is guaranteed that the entries will be returned in the same order they were added in the map.</p>
+
+<pre><code class="language-Groovy">map.eachWithIndex{entry, i -&gt; println &quot;$i $entry.key: $entry.value&quot;}
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0 name: Gromit
+1 likes: cheese
+2 id: 1234
+3 city: New York
+4 foo: bar
+5 bar: foo
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">map.sort()																// sort on key
+</code></pre>
+
+<pre><code class="language-Groovy">map.find{it.value == &quot;New York&quot;}.key == &quot;city&quot;							// returns the first Entry that matches
+map.findAll{it.value == &quot;New York&quot;} == [city : &quot;New York&quot;]				// returns all matches to a map
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">true
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">map.grep{it.value == &quot;New York&quot;}.each{it -&gt; assertTrue(it.key == &quot;city&quot; &amp;&amp; it.value == &quot;New York&quot;)}			// returns a list instead of a map
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">groovy.lang.MissingMethodException: No signature of method: script1579053864497.assertTrue() is applicable for argument types: (java.lang.Boolean) values: [true]
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at script1579053864497$_run_closure2.doCall(script1579053864497:1)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at this cell line 1
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">map.every{it -&gt; it.value instanceof String} == false					// returns a boolean
+map.collect{entry -&gt; entry.value.name}									// collect entries into a list
+map.findAll{it.value.age &lt; 30}.collect{key, value -&gt; value.name}		// query and collect into new map
+map.groupBy{it.value % 2}												// subgroup
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">groovy.lang.MissingPropertyException: No such property: name for class: java.lang.String
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at script1579053917761$_run_closure2.doCall(script1579053917761:2)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at this cell line 2
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+</code></pre>
+
+</div>
+
+
+<p>Python defines a collection (dictionary, set, frozenset) as not having a deterministic ordering.</p>
+
+<pre><code class="language-Groovy">%%python
+#dict
+#open an append file when given a file with the following
+#a 5
+#b 6
+#d 7
+#a 2
+#c 1
+
+d = {}
+for line in file('data/keyvalue.txt'):
+    key, value = line.split()
+    l = d.get(key, [])
+    l.append(int(value))
+    d[key] = l
+    
+def sort_by_sum_value(a, b):
+...    sum_a = sum(a[1])
+...    sum_b = sum(b[1])
+...    return cmp(sum_a, sum_b)
+
+items = d.items()
+items    #[('a', [5, 2]), ('c', [1]), ('b', [6]), ('d', [7])]
+items.sort(sort_by_sum_value)
+
+
+#iterate over items
+my_dict = {'name': 'Lancelot', 'quest': 'Holy Grail', 'favourite_color': 'blue'}
+print(my_dict.get('airspeed velocity of an unladen swallow', 'African or European?\n'))
+for key, value in my_dict.iteritems():
+    print(key, value, sep=&quot;: &quot;)
+</code></pre>
+
+<h3 id="set-and-operations">Set and operations</h3>
+
+<p>Set operations can be performed on Groovy lists.</p>
+
+<pre><code class="language-Groovy">assert 'a' in ['a','b','c']             // returns true if an element belongs to the list
+assert ['a','b','c'].contains('a')      // equivalent to the `contains` method in Java
+assert [1,3,4].containsAll([1,4])       // `containsAll` will check that all elements are found
+
+assert [1,2,3,3,3,3,4,5].count(3) == 4  // count the number of elements which have some value
+
+assert [1,2,4,6,8,10,12].intersect([1,3,6,9,12]) == [1,6,12]
+
+assert [1,2,3].disjoint( [4,6,9] )
+assert ![1,2,3].disjoint( [2,4,6] )
+</code></pre>
+
+<p>Python has its own builtin <code>set</code> collection.</p>
+
+<pre><code class="language-Groovy">%%python
+s = set((1, 2, 3, 4, 5))
+t = set((4, 5, 6))
+print( s.union(t) )
+
+set([1, 2, 3, 4, 5, 6])
+print( s.intersection(t) )
+
+u = set((4, 5, 6, 7))
+print( t.issubset(u) )
+print( u.issubset(t) )
+
+sl = list(s)
+ss = set(sl)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{1, 2, 3, 4, 5, 6}
+{4, 5}
+True
+False
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-javascript">%%javascript
+//just JSON???
+</code></pre>
+
+<h3 id="iterators">Iterators</h3>
+
+<p>Python doesn&rsquo;t have <code>for()</code> loops: <code>for(initializer; condition; iterator){</code>.  It has something more akin to a <code>foreach</code> loop: <code>for number in numbers:</code>.  Python’s for loop is using iterators.</p>
+
+<p>An iterable is an object capable of returning its members one by one - you can apply a <code>for</code> loop to it.  Sequences are a common type of iterable.  They support efficient element access using integer indices via the <code>__getitem()__</code> special method (indexing), so slicing can be performed on them.</p>
+
+<p>Dictionaries, file objects, sets, and generators are all iterables, but none of them is a sequence.</p>
+
+<p>An iterator is an object representing a stream of data. You can create an iterator object by applying the <code>iter()</code> built-in function to an iterable.  You can use an iterator to manually loop over the iterable it came from. A repeated passing of iterator to the built-in function next()returns successive items in the stream.</p>
+
+<pre><code class="language-Groovy">%%python
+numbers = [10, 12, 15, 18, 20]   #create iterable
+print(iter(numbers))
+
+iterator = iter(numbers)         #create iterator
+print(next(iterator))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;list_iterator object at 0x7f568f83b0f0&gt;
+10
+</code></pre>
+
+</div>
+
+
+<p>In Python, the iterators are also iterables which act as their own iterators.  However, the difference is that iterators don’t have some of the features that iterables have. They don’t have length <code>len()</code> and can’t be indexed <code>iterartor[0]</code>.</p>
+
+<p>Common iterators include: enumerate, reverse, zip, map, filter, and the File object.</p>
+
+<pre><code class="language-Groovy">%%python
+numbers = [10, 12, 15, 18, 20]
+iterator = enumerate(numbers)
+print(next(iterator))             #index, value
+
+squared = map(lambda x: x**2, numbers)
+print(next(squared))              #applied function
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">(0, 10)
+100
+</code></pre>
+
+</div>
+
+
+<p>Because of their laziness, the iterators can help us to deal with infinitely long iterables. Iterators can save us a lot of memory and CPU time.  We can use <code>itertools.repeat</code> to create an iterable that provides 100 million 4’s to us.  This iterator takes up 56 bytes of memory on my machine versus the 800 megabytes of a list.</p>
+
+<pre><code class="language-Groovy">%%python
+from itertools import repeat
+lots_of_fours = repeat(4, times=100_000_000)
+
+import sys
+size_in_bytes = sys.getsizeof(lots_of_fours)
+print(size_in_bytes)
+
+lots_of_fours = [4] * 100_000_000
+size_in_bytes = sys.getsizeof(lots_of_fours)
+print(size_in_bytes)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">56
+800000064
+</code></pre>
+
+</div>
+
+
+<p>Python iterators are more general versions of the sequence protocol.  Here, <code>__iter__</code> just returns <code>self</code>, an object that has the function <code>next()</code>, which (when called) either returns a value or raises a <code>StopIteration</code> exception.</p>
+
+<pre><code class="language-Groovy">%%python
+class SillyIter:
+    i = 0
+    n = 5
+    def __iter__(self):
+        return self
+    def __next__(self):
+        self.i += 1
+        if self.i &gt; self.n:
+            raise StopIteration
+        return self.i
+
+si = SillyIter()
+for i in si:
+    print(i)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1
+2
+3
+4
+5
+</code></pre>
+
+</div>
+
+
+<p>It is much easier to use a generator function or generator expression to create a custom iterator.  A generator function from the Python docs.  A function which returns a generator iterator. It looks like a normal function except that it contains <code>yield</code> expressions for producing a series of values one at a time with the <code>next()</code>.  <code>yield</code> temporarily suspends processing, remembering the location execution state (including local variables and pending try-statements). When the generator iterator resumes, it picks up where it left off (in contrast to functions which start fresh on every invocation).</p>
+
+<pre><code class="language-Groovy">%%python
+def SillyIter():
+    i = 0
+    n = 5
+    while i &lt; n:
+        i+=1
+        yield i
+
+si = SillyIter()
+for i in si:
+    print(i)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1
+2
+3
+4
+5
+</code></pre>
+
+</div>
+
+
+<p>A generator expression is similar to a list comprehension.</p>
+
+<pre><code class="language-Groovy">%%python
+squares = (number**2 for number in numbers if number % 2 == 0)
+print(next(squares))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">100
+</code></pre>
+
+</div>
+
+
+<p>We’ve actually already met several iterators in disguise; in particular, <code>enumerate</code> is an iterator. To drive home the point, here’s a simple reimplementation of enumerate:</p>
+
+<pre><code class="language-Groovy">%%python
+class my_enumerate:
+    def __init__(self, some_iter):
+        self.some_iter = iter(some_iter)
+        self.count = -1
+    def __iter__(self):
+        return self
+    def __next__(self):
+        val = self.some_iter.__next__()
+        self.count += 1
+        return self.count, val
+    
+for n, val in my_enumerate(['a', 'b', 'c']):
+    print(n, val)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0 a
+1 b
+2 c
+</code></pre>
+
+</div>
+
+
+<p>Generators are a Python implementation of coroutines. Essentially, they’re functions that let you suspend execution and return a result:</p>
+
+<pre><code class="language-Groovy">%%python
+def g():
+    for i in range(0, 5):
+        yield i**2
+for i in g():
+    print(i)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0
+1
+4
+9
+16
+</code></pre>
+
+</div>
+
+
+<h3 id="tuple-jvm-groovy-py">Tuple (JVM, Groovy, Py)</h3>
+
+<ul>
+<li><a href="https://mrhaki.blogspot.com/2016/03/groovy-goodness-using-tuples.html">groovy tuples</a></li>
+<li><a href="https://oli.me.uk/tuples-in-javascript/">tuples in js</a></li>
+</ul>
+
+<pre><code class="language-Groovy">%%python
+#tuple unpacking
+a = 'Spam'
+b = 'Eggs'
+print(a, b)
+a, b = b, a
+print(a, b)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Spam Eggs
+Eggs Spam
+</code></pre>
+
+</div>
+
+
+<h3 id="other-collections">Other collections</h3>
+
+<p>The Python collections library is great.</p>
+
+<pre><code class="language-Groovy">%%python
+from collections import Counter
+from random import randrange
+import pprint
+mycounter = Counter()
+for i in range(100):
+    random_number = randrange(10)
+    mycounter[random_number] += 1
+for i in range(10):
+    print(i, mycounter[i])
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0 12
+1 10
+2 13
+3 8
+4 12
+5 7
+6 7
+7 14
+8 8
+9 9
+</code></pre>
+
+</div>
+
+
+<h2 id="data-types-with-classes">Data Types with Classes</h2>
+
+<p>With a protocol, Python agrees to respect anything that supports a particular set of methods as if it were a builtin type. (These protocols appear everywhere in Python; we are taking advantage of the mapping and sequence protocols below, to define <code>__getitem__</code> and <code>__len__</code>, respectively.)</p>
+
+<pre><code class="language-Groovy">%%python
+class Binner:
+    def __init__(self, binwidth, binmax):
+        self.binwidth, self.binmax = binwidth, binmax
+        nbins = int(binmax / float(binwidth) + 1)
+        self.bins = [0] * nbins
+    def add(self, value):
+        bin = value / self.binwidth
+        self.bins[bin] += 1
+    def __getitem__(self, index):
+        return self.bins[index]
+    def __len__(self):
+        return len(self.bins)
+
+binner = Binner(5, 20)
+for i in range(0, 20):
+    binner.add(i)
+for i in range(0, len(binner)):
+    print( i, binner[i] )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">---------------------------------------------------------------------------
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">TypeError                                 Traceback (most recent call last)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;ipython-input-32-c3e2c25ca8fa&gt; in &lt;module&gt;()
+     14 binner = Binner(5, 20)
+     15 for i in range(0, 20):
+---&gt; 16     binner.add(i)
+     17 for i in range(0, len(binner)):
+     18     print( i, binner[i] )
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;ipython-input-32-c3e2c25ca8fa&gt; in add(self, value)
+      6     def add(self, value):
+      7         bin = value / self.binwidth
+----&gt; 8         self.bins[bin] += 1
+      9     def __getitem__(self, index):
+     10         return self.bins[index]
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">TypeError: list indices must be integers or slices, not float
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#enums in python
+class           Color : pass
+class Red      (Color): pass
+class Yellow   (Color): pass
+class Blue     (Color): pass
+
+class Toy: pass
+myToy = Toy()
+myToy.color = &quot;blue&quot;  # note we assign a string, not an enum
+if myToy.color is Color:
+    pass
+else:
+    print(&quot;My toy has no color!!!&quot;)    # produces:  My toy has no color!!!
+ 
+myToy.color = Blue   # note we use an enum
+print(&quot;myToy.color is&quot;, myToy.color.__name__)  # produces: myToy.color is Blue
+print(&quot;myToy.color is&quot;, myToy.color)           # produces: myToy.color is &lt;class '__main__.Blue'&gt;
+if myToy.color is Blue:
+    myToy.color = Red
+if myToy.color is Red:
+    print(&quot;my toy is red&quot;)   # produces: my toy is red
+else:
+    print(&quot;I don't know what color my toy is.&quot;)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">My toy has no color!!!
+myToy.color is Blue
+myToy.color is &lt;class '__main__.Blue'&gt;
+my toy is red
+</code></pre>
+
+</div>
+
+
+<h2 id="io-operations">IO Operations</h2>
+
+<ul>
+<li><a href="http://eddelbuettel.net/groovy/groovy-io.html">groovy with java streams</a></li>
+</ul>
+
+<pre><code class="language-Groovy">//`with` closes the file automatically
+new File(baseDir,'haiku.txt').withWriter('utf-8') { writer -&gt;
+    writer.writeLine 'Hello World'
+}
+</code></pre>
+
+<pre><code class="language-Groovy">//But for such a simple example, using the &lt;&lt; operator would have been enough:
+new File(baseDir,'haiku.txt') &lt;&lt; '''Hello World'''
+</code></pre>
+
+<pre><code class="language-Groovy">new File(baseDir, 'haiku.txt').eachLine { line -&gt;
+    println line
+}
+
+//collect the lines of a text file into a list, you can do:
+def list = new File(baseDir, 'haiku.txt').collect {it}
+</code></pre>
+
+<pre><code class="language-Groovy">//output stream
+new File(baseDir,'data.bin').withOutputStream { stream -&gt;
+    // do something ...
+}
+
+//withInputStream idiom that will take care of closing file connection:
+new File(baseDir,'haiku.txt').withInputStream { stream -&gt;
+    // do something ...
+}
+</code></pre>
+
+<pre><code class="language-Groovy">boolean b = true
+String message = 'Hello from Groovy'
+// Serialize data into a file
+file.withDataOutputStream { out -&gt;
+    out.writeBoolean(b)
+    out.writeUTF(message)
+}
+// ...
+// Then read it back
+file.withDataInputStream { input -&gt;
+    assert input.readBoolean() == b
+    assert input.readUTF() == message
+}
+</code></pre>
+
+<pre><code class="language-Groovy">//find files that match the regex, or just use `.eachFile` for each file, or `eachFileRecurse` to search deeper into subdirectories
+dir.eachFileMatch(~/.*\.txt/) { file -&gt;     
+    println file.name
+}
+</code></pre>
+
+<pre><code class="language-Groovy">//execute external process
+def process = &quot;ls -l&quot;.execute()             
+println &quot;Found text ${process.text}&quot;   
+</code></pre>
+
+<p>Python display directory tree, open files, and execute sub processes.</p>
+
+<pre><code class="language-Groovy">%%python
+import os
+os.listdir(path)
+</code></pre>
+
+<pre><code class="language-Groovy">%%python
+file = open(&quot;testfile.txt&quot;,&quot;w&quot;) 
+file.write(&quot;Hello World&quot;) 
+file.close() 
+
+with open(&quot;testfile.txt&quot;, &quot;r&quot;) as f:
+    data = f.readlines()
+    
+for line in data:
+    words = line.split()
+    print( words )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['Hello', 'World']
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+import subprocess
+output = subprocess.check_output('head', shell=True)
+print(output)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">b''
+</code></pre>
+
+</div>
+
+
+<h2 id="random-useful-bits">Random useful bits</h2>
+
+<pre><code class="language-Groovy">%%python
+assert False, &quot;you can't do that here!&quot;
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">---------------------------------------------------------------------------
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">AssertionError                            Traceback (most recent call last)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;ipython-input-44-1335db417df4&gt; in &lt;module&gt;()
+----&gt; 1 assert False, &quot;you can't do that here!&quot;
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">AssertionError: you can't do that here!
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#Worried that you’re getting an empty list? 
+x = []
+assert len(x)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">---------------------------------------------------------------------------
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">AssertionError                            Traceback (most recent call last)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;ipython-input-43-6aa249c95d4b&gt; in &lt;module&gt;()
+      1 #Worried that you’re getting an empty list?
+      2 x = []
+----&gt; 3 assert len(x)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">AssertionError: 
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#any and all
+x = [ True, False ]
+print( any(x))
+print( all(x))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">True
+False
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#Here, *args assigns all of the positional arguments to a tuple ‘args’, and ‘**kwargs’ assigns all of the keyword arguments to a dictionary ‘kwargs’:
+def print_me(*args, **kwargs):
+    print_me(5, 6, 7, test='me', arg2=None)
+#When a function is called with this notation, the args and kwargs are unpacked appropriately and passed into the function. For example, the function test_call
+#can be called with a tuple of three args (matching ‘a’, ‘b’, ‘c’):
+def test_call(a, b, c, x=1, y=2, z=3): print( a, b, c, x, y, z)
+tuple_in = (5, 6, 7)
+test_call(*tuple_in)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">5 6 7 1 2 3
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#catch exceptions
+x=[0,2,4,6]
+try:
+    y = x[10]
+except IndexError:
+    y = None
+y
+</code></pre>
+
+<pre><code class="language-Groovy">%%python
+#The purpose of try/finally is to ensure that something is done, whether or not an exception is raised:
+x = [0, 1, 2]
+try:
+    y = x[5]
+finally:
+    x.append('something')
+    print( x)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[0, 1, 2, 'something']
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">---------------------------------------------------------------------------
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">IndexError                                Traceback (most recent call last)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;ipython-input-54-07bd9b959038&gt; in &lt;module&gt;()
+      2 x = [0, 1, 2]
+      3 try:
+----&gt; 4     y = x[5]
+      5 finally:
+      6     x.append('something')
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">IndexError: list index out of range
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#semantically equivalent to this
+#but it’s a bit cleaner, because the exception doesn’t have to be re-raised and you don’t have to catch a specific exception type
+try:
+    y = x[5]
+except IndexError:
+    x.append('something')
+    raise
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">---------------------------------------------------------------------------
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">IndexError                                Traceback (most recent call last)
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;ipython-input-55-c1a571ecce91&gt; in &lt;module&gt;()
+      2 #but it’s a bit cleaner, because the exception doesn’t have to be re-raised and you don’t have to catch a specific exception type
+      3 try:
+----&gt; 4     y = x[5]
+      5 except IndexError:
+      6     x.append('something')
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">IndexError: list index out of range
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+x
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[0, 1, 2, 'something', 'something']
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#Exceptions are just classes that derive from Exception, and you can catch exceptions based on their base classes. So, for example, you can catch most standard errors by catching the StandardError exception, from which e.g. IndexError inherits:
+print issubclass(IndexError, StandardError)
+try:
+    y = x[10]
+except StandardError:
+    print( 'CAUGHT EXCEPTION!', str(e))
+    y = None
+</code></pre>
+
+<pre><code class="language-Groovy">%%python
+#define your own exceptions and exception hierarchies:
+class MyFavoriteException(Exception):
+    pass
+raise MyFavoriteException
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">  File &quot;&lt;ipython-input-57-4b118fdb119a&gt;&quot;, line 2
+    print issubclass(IndexError, StandardError)
+                   ^
+SyntaxError: invalid syntax
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#function decorators are functions that take functions as arguments, and return other functions. 
+def my_decorator(fn):
+    def new_fn(*args, **kwargs):
+        if 'something' in kwargs:
+            print( 'REMOVING', kwargs['something'])
+            del kwargs['something']
+        return fn(*args, **kwargs)
+    return new_fn
+#To apply this decorator, use this funny @ syntax:
+@my_decorator
+def some_function(a=5, b=6, something=None, c=7):
+    print( a, b, something, c)
+#OK, now some_function has been invisibly replaced with the result of my_decorator, which is going to be new_fn. Let’s see the result:
+some_function(something='MADE IT')
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">REMOVING MADE IT
+5 6 None 7
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#add attributes to functions. (This is why I use them in my testing code sometimes.)
+def attrs(**kwds):
+    def decorate(f):
+        for k in kwds:
+            setattr(f, k, kwds[k])
+        return f
+    return decorate
+
+@attrs(versionadded=&quot;2.2&quot;, author=&quot;Guido van Rossum&quot;)
+def mymethod(f):
+    pass
+print( mymethod.versionadded)
+print( mymethod.author)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2.2
+Guido van Rossum
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-Groovy">%%python
+#memoize/caching of results
+def simple_cache(fn):
+    cache = {}
+    def new_fn(n):
+        if n in cache:
+            print( 'FOUND IN CACHE; RETURNING')
+            return cache[n]
+        #otherwise, call function &amp; record value
+        val = fn(n)
+        cache[n] = val
+        return val
+    return new_fn
+
+#Then use this as a decorator to wrap the expensive function:
+@simple_cache
+def expensive(n):
+    print( 'IN THE EXPENSIVE FN:', n)
+    return n**2
+#Now, when you call this function twice with the same argument, if will only do the calculation once; the second time, the function call will be intercepted and the cached value will be returned.
+expensive(55)
+expensive(55)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">IN THE EXPENSIVE FN: 55
+FOUND IN CACHE; RETURNING
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">3025
+</code></pre>
+
+</div>
+
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://groovy-lang.org/groovy-dev-kit.html#Collections-Maps">docs: groovy</a></li>
+<li><a href="https://intermediate-and-advanced-software-carpentry.readthedocs.io/en/latest/index.html">python idioms</a></li>
+</ul>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#common-themes">Common Themes</a>
+<ul>
+<li><a href="#closures-groovy">Closures (Groovy)</a></li>
+<li><a href="#list-dict-comprehensions-py">List, dict comprehensions (Py)</a></li>
+<li><a href="#callback-js">Callback (Js)</a></li>
+</ul></li>
+<li><a href="#data-structures-and-collections">Data Structures and Collections</a>
+<ul>
+<li><a href="#arraylist-linkedlist-jvm-iterables-sequences-py-array-js">ArrayList / LinkedList (JVM), iterables / sequences (Py), array (Js)</a></li>
+<li><a href="#hash-map-jvm-collection-py-js">Hash map (JVM), collection (py), ??? (Js)</a></li>
+<li><a href="#set-and-operations">Set and operations</a></li>
+<li><a href="#iterators">Iterators</a></li>
+<li><a href="#tuple-jvm-groovy-py">Tuple (JVM, Groovy, Py)</a></li>
+<li><a href="#other-collections">Other collections</a></li>
+</ul></li>
+<li><a href="#data-types-with-classes">Data Types with Classes</a></li>
+<li><a href="#io-operations">IO Operations</a></li>
+<li><a href="#random-useful-bits">Random useful bits</a></li>
+<li><a href="#references">References</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/machine-learning">machine-learning
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/best-practice">best-practice
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_math-reuse_tng_sample/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Incorporating an Initial Training Sample into a Project
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_nlp-intro_spacy/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Processing Natural Language with Python and Friends&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

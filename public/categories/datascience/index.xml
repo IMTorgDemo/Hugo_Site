@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>DataScience on IMTorg Kbase</title>
+    <title>datascience on IMTorg Kbase</title>
     <link>https://imtorgdemo.github.io/categories/datascience/</link>
-    <description>Recent content in DataScience on IMTorg Kbase</description>
+    <description>Recent content in datascience on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 20 Feb 2020 00:00:00 +0000</lastBuildDate>
@@ -27,6 +27,16 @@
       
       <guid>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</guid>
       <description>During a data science project, data is often provided in an incremental manner. Some customer files are easier to obtain than others, such as when lengthy unarchiving processes are warranted. To ensure no time is wasted, available data can be put to use with initial analyses and model training as a Training Sample. The same data is incorporated with Training data when it is formally split into Training and Holdout sets.</description>
+    </item>
+    
+    <item>
+      <title>Syntax Comparisons Across Languages</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-language_syntax_comparison/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-language_syntax_comparison/</guid>
+      <description>Scripting languages are quite popular for effectively getting work done. But, their similarities lead to mental difficulties when remembering syntax and common idioms. This post is used as a cheatsheet describing fundamental differences in how the languages are used.
+Introduction In any one day, I may program in five or six different languages. This is enjoyable when the syntax is different enough that there is no confusion. Domain Specific Languages, including R, SQL, Bash, and HTML, are orthogonal in their approach to being productive.</description>
     </item>
     
     <item>
