@@ -43,6 +43,16 @@ From a platform architecture perspective, Hadoop and Spark are usually managed o
     </item>
     
     <item>
+      <title>The R and Pandas Dataframe</title>
+      <link>https://imtorgdemo.github.io/posts/blog_ds-dataframe_r_and_pandas/</link>
+      <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_ds-dataframe_r_and_pandas/</guid>
+      <description>Although Pandas uses the Dataframe as its primary data structure, just as R does, the Pandas syntax and underlying fundamentals can be disorienting for R users. This post will describe some basic comparisons and inconsistencies between the two languages. It will also provide some examples of very non-intuitive solutions to common problems.
+Introduction In the Datascience R versus Pandas debate, it is really an apples and oranges comparison. R is a domain specific language in the field of statistics, analytics, and data visualization.</description>
+    </item>
+    
+    <item>
       <title>Working through a Progressive Python Application</title>
       <link>https://imtorgdemo.github.io/posts/blog_programming_python-develop_and_deploy/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>

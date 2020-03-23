@@ -1,3 +1,7 @@
+blog_programming-python_functional.ipynb
+blog_programming-python_oop.ipynb
+blog_programming_python-develop_and_deploy.ipynb
+blog_programming-language_syntax_comparison.ipynb 
 blog_ds_spark_deployment.ipynb
 blog_history-greatman_insecurity.ipynb
 blog_nlp-rank_text_with_word_vector.ipynb

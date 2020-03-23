@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pandas on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/pandas/</link>
+    <description>Recent content in pandas on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 02 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/pandas/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The R and Pandas Dataframe</title>
+      <link>https://imtorgdemo.github.io/posts/blog_ds-dataframe_r_and_pandas/</link>
+      <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_ds-dataframe_r_and_pandas/</guid>
+      <description>Although Pandas uses the Dataframe as its primary data structure, just as R does, the Pandas syntax and underlying fundamentals can be disorienting for R users. This post will describe some basic comparisons and inconsistencies between the two languages. It will also provide some examples of very non-intuitive solutions to common problems.
+Introduction In the Datascience R versus Pandas debate, it is really an apples and oranges comparison. R is a domain specific language in the field of statistics, analytics, and data visualization.</description>
+    </item>
+    
+  </channel>
+</rss>
