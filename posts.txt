@@ -1,3 +1,7 @@
+blog_ds-intro_numpy_pandas.ipynb
+blog_models-matrix_tensor_operations.ipynb
+blog_programming_py-distributing_code.ipynb
+blog_ds-dataframe_r_and_pandas.ipynb
 blog_programming-python_functional.ipynb
 blog_programming-python_oop.ipynb
 blog_programming_python-develop_and_deploy.ipynb

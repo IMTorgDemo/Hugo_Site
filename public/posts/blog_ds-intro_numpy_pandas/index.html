@@ -1,0 +1,4025 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>An Introduction to Numpy and Pandas // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="An Introduction to Numpy and Pandas" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_ds-intro_numpy_pandas/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">An Introduction to Numpy and Pandas</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_ds-intro_numpy_pandas/" class="article-date">
+                <time datetime='2020-03-22T00:00:00.000&#43;00:00' itemprop="datePublished">2020-03-22</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/introduction_tutorial">Introduction_Tutorial</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/data_science">Data_Science</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Numpy and Pandas are the basic data science tools in the Python environment.  Having a good understanding of their capabilities and how they process data is imperative to writing optimal code.  This post provides an introductory overview and a refresher for those who might come back to the libraries after taking a break.  The end of the post explains external interfaces for increasing code execution and performing more sophisticated matrix operations.</p>
+
+<h2 id="pandas-series-and-dataframe">Pandas Series and Dataframe</h2>
+
+<p>These are the basic data structures used by Pandas.  Pandas derives its name from Pan(el) da(ta)s. Panel data is an econometrics term for data recorded over time.  Pandas author, Wes McKinney, was working in the finanical industry when he began writing it.</p>
+
+<ul>
+<li>Series objects: 1D array, similar to a column in a spreadsheet</li>
+<li>DataFrame objects: 2D table, similar to a spreadsheet, dictionary of Series</li>
+<li><del>Panel objects: Dictionary of DataFrames, similar to sheet in MS Excel</del>removed in 0.25.0</li>
+</ul>
+
+<h3 id="config">Config</h3>
+
+<p>Let&rsquo;s load our modules.  Numpy is always used with Pandas because it is an underlying dependency.</p>
+
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+</code></pre>
+
+<p>We will create a few DataFrames to work with throughout the post.</p>
+
+<p>Series are similar to R&rsquo;s vector <code>c()</code>, and is a column within a Pandas Dataframe.</p>
+
+<pre><code class="language-python">import pandas as pd
+s = pd.Series([1,3,5,np.nan,6,8])
+dates = pd.date_range('20130101', periods=6)
+df1 = pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD'))
+df1
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df2 = pd.DataFrame({ 'E' : 1.,
+   ....:                      'F' : pd.Timestamp('20130102'),
+   ....:                      'G' : pd.Series(1,index=list(range(4)),dtype='float32'),
+   ....:                      'H' : np.array([3] * 4,dtype='int32'),
+   ....:                      'I' : pd.Categorical([&quot;test&quot;,&quot;train&quot;,&quot;test&quot;,&quot;train&quot;]),
+   ....:                      'J' : 'foo' })
+df2
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>E</th>
+      <th>F</th>
+      <th>G</th>
+      <th>H</th>
+      <th>I</th>
+      <th>J</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>test</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>train</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>test</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>train</td>
+      <td>foo</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">tmpdf2 = df2.copy(deep=True)
+tmpdf2.set_index(tmpdf2.F, inplace=True)
+df3 = df1.join(tmpdf2, how='outer')
+#or: df3 = pd.merge(df1, tmpdf2, how='outer', left_index=True, right_index=True)
+df3
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>E</th>
+      <th>F</th>
+      <th>G</th>
+      <th>H</th>
+      <th>I</th>
+      <th>J</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>test</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>train</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>test</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>train</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df4 = pd.DataFrame({'A': ['foo', 'bar', 'foo', 'bar',
+   ....:                          'foo', 'bar', 'foo', 'foo'],
+   ....:                    'B': ['one', 'one', 'two', 'three',
+   ....:                          'two', 'two', 'one', 'three'],
+   ....:                    'C': np.random.randn(8),
+   ....:                    'D': np.random.randn(8)})
+df4
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.870843</td>
+      <td>1.255164</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>bar</td>
+      <td>one</td>
+      <td>-0.678605</td>
+      <td>0.569444</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.270890</td>
+      <td>0.692131</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>bar</td>
+      <td>three</td>
+      <td>-1.008900</td>
+      <td>1.841500</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.381278</td>
+      <td>0.918376</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>bar</td>
+      <td>two</td>
+      <td>-0.666534</td>
+      <td>-0.483262</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.132010</td>
+      <td>1.949751</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>foo</td>
+      <td>three</td>
+      <td>1.517630</td>
+      <td>-0.458782</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="index-and-axes">Index and axes</h3>
+
+<pre><code class="language-python">c = df1.columns.tolist()
+c
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['A', 'B', 'C', 'D']
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">n = df1.index.tolist()
+n
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[Timestamp('2013-01-01 00:00:00', freq='D'),
+ Timestamp('2013-01-02 00:00:00', freq='D'),
+ Timestamp('2013-01-03 00:00:00', freq='D'),
+ Timestamp('2013-01-04 00:00:00', freq='D'),
+ Timestamp('2013-01-05 00:00:00', freq='D'),
+ Timestamp('2013-01-06 00:00:00', freq='D')]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#calculate sum (across rows) for each column
+df1.sum(axis=0)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">A   -5.885887
+B   -0.973229
+C   -3.602993
+D   -1.248308
+dtype: float64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">pd.concat([df1,df3], axis=0, sort=False).head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>E</th>
+      <th>F</th>
+      <th>G</th>
+      <th>H</th>
+      <th>I</th>
+      <th>J</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="data-types">Data types</h3>
+
+<p>NumPy arrays have one dtype for the entire array, while pandas DataFrames have one dtype per column. When you call <code>DataFrame.to_numpy()</code>, pandas will find the NumPy dtype that can hold all of the dtypes in the DataFrame. This may end up being object, which requires casting every value to a Python object.</p>
+
+<pre><code class="language-python">arr = np.array([1,2,3])
+pd.Series(arr).values
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([1, 2, 3])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">arr.dtype
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">dtype('int64')
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df1.A.to_numpy()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([-1.36082656, -0.2104261 , -1.82932214, -1.32563421, -1.18457701,
+        0.024899  ])
+</code></pre>
+
+</div>
+
+
+<h3 id="locate-by-column-label-index">Locate by column label, index</h3>
+
+<pre><code class="language-python">n[0]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Timestamp('2013-01-01 00:00:00', freq='D')
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df1.loc[n[0],]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">A   -1.360827
+B   -0.871347
+C   -1.603602
+D    0.073078
+Name: 2013-01-01 00:00:00, dtype: float64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df1.loc[:,[c[0],c[1]] ]
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df1.loc[n[0],c[0]]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">-1.3608265619610327
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df1[c[0]][:5]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2013-01-01   -1.360827
+2013-01-02   -0.210426
+2013-01-03   -1.829322
+2013-01-04   -1.325634
+2013-01-05   -1.184577
+Freq: D, Name: A, dtype: float64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df1.iloc[0,]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">A   -1.360827
+B   -0.871347
+C   -1.603602
+D    0.073078
+Name: 2013-01-01 00:00:00, dtype: float64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df1.iloc[:,0]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2013-01-01   -1.360827
+2013-01-02   -0.210426
+2013-01-03   -1.829322
+2013-01-04   -1.325634
+2013-01-05   -1.184577
+2013-01-06    0.024899
+Freq: D, Name: A, dtype: float64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df1.iloc[0,0]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">-1.3608265619610327
+</code></pre>
+
+</div>
+
+
+<h3 id="locate-by-boolean">Locate by boolean</h3>
+
+<pre><code class="language-python">df1.A &gt; 0
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2013-01-01    False
+2013-01-02    False
+2013-01-03    False
+2013-01-04    False
+2013-01-05    False
+2013-01-06     True
+Freq: D, Name: A, dtype: bool
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df1[df1.A &gt; 0]
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df5 = df1.copy()
+df5['K'] = ['one', 'one','two','three','four','three']
+df5['K']
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2013-01-01      one
+2013-01-02      one
+2013-01-03      two
+2013-01-04    three
+2013-01-05     four
+2013-01-06    three
+Freq: D, Name: K, dtype: object
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df5[df5['K'].isin(['two','four'])]
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>K</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>two</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>four</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="sort-values">Sort values</h3>
+
+<pre><code class="language-python">#sort
+df1.sort_values([c[0]], ascending=False)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+    </tr>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="subset">Subset</h3>
+
+<pre><code class="language-python">df1.query('A &gt; 0')
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df1[ (df1['A'] &gt; 0) ]
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="setting-values">Setting values</h3>
+
+<pre><code class="language-python">s1 = pd.Series([1,2,3,4,5,6], index=pd.date_range('20130102', periods=6))
+df1['F'] = s1
+df1
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+      <td>5.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df5 = df1.copy()
+df5[df5 &gt; 0] = -df5
+df5
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>-0.073078</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>-0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>-0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>-2.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>-0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>-3.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>-0.798301</td>
+      <td>-0.913562</td>
+      <td>-4.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>-0.024899</td>
+      <td>-0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+      <td>-5.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df5.index.to_series().apply(pd.to_datetime)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2013-01-01   2013-01-01
+2013-01-02   2013-01-02
+2013-01-03   2013-01-03
+2013-01-04   2013-01-04
+2013-01-05   2013-01-05
+2013-01-06   2013-01-06
+Freq: D, dtype: datetime64[ns]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df5.index.to_series().dt.year
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2013-01-01    2013
+2013-01-02    2013
+2013-01-03    2013
+2013-01-04    2013
+2013-01-05    2013
+2013-01-06    2013
+Freq: D, dtype: int64
+</code></pre>
+
+</div>
+
+
+<h3 id="calculations">Calculations</h3>
+
+<pre><code class="language-python">df1.apply(np.cumsum)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-1.571253</td>
+      <td>-0.359628</td>
+      <td>-2.641412</td>
+      <td>-0.673604</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-3.400575</td>
+      <td>-0.016067</td>
+      <td>-2.646715</td>
+      <td>-1.986209</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-4.726209</td>
+      <td>0.158169</td>
+      <td>-3.567816</td>
+      <td>-2.052103</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-5.910786</td>
+      <td>-1.225748</td>
+      <td>-2.769514</td>
+      <td>-1.138541</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>-5.885887</td>
+      <td>-0.973229</td>
+      <td>-3.602993</td>
+      <td>-1.248308</td>
+      <td>15.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df1.apply(lambda x: x.max() - x.min())
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">A    1.854221
+B    1.895637
+C    2.401903
+D    2.226167
+F    4.000000
+dtype: float64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># string ops - vectorized
+df1.iloc[:,1].astype('str').str.lower()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2013-01-01    -0.8713474062085093
+2013-01-02     0.5117196166006319
+2013-01-03     0.3435604532681823
+2013-01-04    0.17423665911328937
+2013-01-05    -1.3839171647406576
+2013-01-06     0.2525192847352602
+Freq: D, Name: B, dtype: object
+</code></pre>
+
+</div>
+
+
+<h3 id="missing-values">Missing values</h3>
+
+<pre><code class="language-python"># missing data
+df1.dropna(how='any')
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+      <td>5.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df1.dropna(subset=['F'], how='all')
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+      <td>5.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df1.fillna(value=5)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>0.024899</td>
+      <td>0.252519</td>
+      <td>-0.833479</td>
+      <td>-0.109767</td>
+      <td>5.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">pd.isnull(df1)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2013-01-06</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="merge-and-shape">Merge and shape</h3>
+
+<pre><code class="language-python">df1.append(df2, ignore_index=True, sort=True).head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>E</th>
+      <th>F</th>
+      <th>G</th>
+      <th>H</th>
+      <th>I</th>
+      <th>J</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>NaN</td>
+      <td>3</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>NaN</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">pieces = [df1[:3], df1[3:7], df1[7:]]
+pd.concat(pieces).head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-01-01</th>
+      <td>-1.360827</td>
+      <td>-0.871347</td>
+      <td>-1.603602</td>
+      <td>0.073078</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>-0.210426</td>
+      <td>0.511720</td>
+      <td>-1.037810</td>
+      <td>-0.746683</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>-1.829322</td>
+      <td>0.343560</td>
+      <td>-0.005303</td>
+      <td>-1.312605</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-04</th>
+      <td>-1.325634</td>
+      <td>0.174237</td>
+      <td>-0.921101</td>
+      <td>-0.065894</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-05</th>
+      <td>-1.184577</td>
+      <td>-1.383917</td>
+      <td>0.798301</td>
+      <td>0.913562</td>
+      <td>4.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="groupby">GroupBy</h3>
+
+<pre><code class="language-python">df4.groupby(['A','B']).sum()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">bar</th>
+      <th>one</th>
+      <td>-0.678605</td>
+      <td>0.569444</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>-1.008900</td>
+      <td>1.841500</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>-0.666534</td>
+      <td>-0.483262</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">foo</th>
+      <th>one</th>
+      <td>-1.002854</td>
+      <td>3.204916</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>1.517630</td>
+      <td>-0.458782</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>0.652168</td>
+      <td>1.610507</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="stacked">Stacked</h3>
+
+<pre><code class="language-python">stacked = df4.stack()
+stacked.index[:4]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">MultiIndex([(0, 'A'),
+            (0, 'B'),
+            (0, 'C'),
+            (0, 'D')],
+           )
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">stacked.head()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0  A         foo
+   B         one
+   C   -0.870843
+   D     1.25516
+1  A         bar
+dtype: object
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">stacked.unstack().head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.870843</td>
+      <td>1.25516</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>bar</td>
+      <td>one</td>
+      <td>-0.678605</td>
+      <td>0.569444</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.27089</td>
+      <td>0.692131</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>bar</td>
+      <td>three</td>
+      <td>-1.0089</td>
+      <td>1.8415</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.381278</td>
+      <td>0.918376</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="pivot-table">Pivot table</h3>
+
+<pre><code class="language-python">df4
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.870843</td>
+      <td>1.255164</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>bar</td>
+      <td>one</td>
+      <td>-0.678605</td>
+      <td>0.569444</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.270890</td>
+      <td>0.692131</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>bar</td>
+      <td>three</td>
+      <td>-1.008900</td>
+      <td>1.841500</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.381278</td>
+      <td>0.918376</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>bar</td>
+      <td>two</td>
+      <td>-0.666534</td>
+      <td>-0.483262</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.132010</td>
+      <td>1.949751</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>foo</td>
+      <td>three</td>
+      <td>1.517630</td>
+      <td>-0.458782</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python"># pivot tables (http://pbpython.com/pandas-pivot-table-explained.html)
+df4[&quot;A&quot;] = df4[&quot;A&quot;].astype(&quot;category&quot;)
+df4[&quot;A&quot;].cat.set_categories([&quot;foo&quot;, &quot;bar&quot;],inplace=True)
+</code></pre>
+
+<pre><code class="language-python">pd.pivot_table(df4,index=['A','B'])	#same as:
+df4.groupby(['A','B']).mean()
+df4.groupby(['A','B'])['D'].agg([np.sum,np.std])
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>sum</th>
+      <th>std</th>
+    </tr>
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">foo</th>
+      <th>one</th>
+      <td>3.204916</td>
+      <td>0.491147</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>-0.458782</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>1.610507</td>
+      <td>0.159980</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">bar</th>
+      <th>one</th>
+      <td>0.569444</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>1.841500</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>-0.483262</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">pd.pivot_table(df4,index=['A','B'], values=['D'], aggfunc=np.sum)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>D</th>
+    </tr>
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">foo</th>
+      <th>one</th>
+      <td>3.204916</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>-0.458782</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>1.610507</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">bar</th>
+      <th>one</th>
+      <td>0.569444</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>1.841500</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>-0.483262</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">pd.pivot_table(df4,index=['A'], columns=['B'], values=['D'], aggfunc=np.sum)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">D</th>
+    </tr>
+    <tr>
+      <th>B</th>
+      <th>one</th>
+      <th>three</th>
+      <th>two</th>
+    </tr>
+    <tr>
+      <th>A</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>foo</th>
+      <td>3.204916</td>
+      <td>-0.458782</td>
+      <td>1.610507</td>
+    </tr>
+    <tr>
+      <th>bar</th>
+      <td>0.569444</td>
+      <td>1.841500</td>
+      <td>-0.483262</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">pd.pivot_table(df4,index=['A'], columns=['B'], values=['D'], aggfunc=np.sum, fill_value=0,margins=True)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="4" halign="left">D</th>
+    </tr>
+    <tr>
+      <th>B</th>
+      <th>one</th>
+      <th>three</th>
+      <th>two</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>A</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>foo</th>
+      <td>3.204916</td>
+      <td>-0.458782</td>
+      <td>1.610507</td>
+      <td>4.356641</td>
+    </tr>
+    <tr>
+      <th>bar</th>
+      <td>0.569444</td>
+      <td>1.841500</td>
+      <td>-0.483262</td>
+      <td>1.927682</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>3.774359</td>
+      <td>1.382718</td>
+      <td>1.127246</td>
+      <td>6.284323</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">pd.pivot_table(df4, index=['A', 'B'], columns=['C'], values='D')
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>C</th>
+      <th>-1.008900</th>
+      <th>-0.870843</th>
+      <th>-0.678605</th>
+      <th>-0.666534</th>
+      <th>-0.132010</th>
+      <th>0.270890</th>
+      <th>0.381278</th>
+      <th>1.517630</th>
+    </tr>
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">foo</th>
+      <th>one</th>
+      <td>NaN</td>
+      <td>1.255164</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.949751</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-0.458782</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.692131</td>
+      <td>0.918376</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">bar</th>
+      <th>one</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.569444</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>1.8415</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-0.483262</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">pd.pivot_table(df4, index=['A'], columns=['B','C'], values='D')
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>B</th>
+      <th colspan="3" halign="left">one</th>
+      <th colspan="2" halign="left">three</th>
+      <th colspan="3" halign="left">two</th>
+    </tr>
+    <tr>
+      <th>C</th>
+      <th>-0.870843</th>
+      <th>-0.678605</th>
+      <th>-0.132010</th>
+      <th>-1.008900</th>
+      <th>1.517630</th>
+      <th>-0.666534</th>
+      <th>0.270890</th>
+      <th>0.381278</th>
+    </tr>
+    <tr>
+      <th>A</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>foo</th>
+      <td>1.255164</td>
+      <td>NaN</td>
+      <td>1.949751</td>
+      <td>NaN</td>
+      <td>-0.458782</td>
+      <td>NaN</td>
+      <td>0.692131</td>
+      <td>0.918376</td>
+    </tr>
+    <tr>
+      <th>bar</th>
+      <td>NaN</td>
+      <td>0.569444</td>
+      <td>NaN</td>
+      <td>1.8415</td>
+      <td>NaN</td>
+      <td>-0.483262</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="timeseries">Timeseries</h3>
+
+<pre><code class="language-python">rng = pd.date_range('1/1/2012', periods=100, freq='S')
+ts = pd.Series(np.random.randint(0, 500, len(rng)), index=rng)
+ts.head()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2012-01-01 00:00:00    114
+2012-01-01 00:00:01    279
+2012-01-01 00:00:02     32
+2012-01-01 00:00:03    495
+2012-01-01 00:00:04    433
+Freq: S, dtype: int64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">## frequency conversion (e.g., converting secondly data into 5-minutely data)
+ts.resample('5Min').sum()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2012-01-01    24652
+Freq: 5T, dtype: int64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">## time zones
+ts_utc = ts.tz_localize('UTC')
+ts_utc.tz_convert('US/Eastern').head()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2011-12-31 19:00:00-05:00    114
+2011-12-31 19:00:01-05:00    279
+2011-12-31 19:00:02-05:00     32
+2011-12-31 19:00:03-05:00    495
+2011-12-31 19:00:04-05:00    433
+Freq: S, dtype: int64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">## format
+rng = pd.date_range('1/1/2012', periods=5, freq='M')
+ts = pd.Series(np.random.randn(len(rng)), index=rng)
+ps = ts.to_period()
+ps.to_timestamp()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2012-01-01    2.490119
+2012-02-01    0.237758
+2012-03-01    0.249177
+2012-04-01   -0.015938
+2012-05-01   -0.314638
+Freq: MS, dtype: float64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">## timestamp conversion
+prng = pd.period_range('1990Q1', '2000Q4', freq='Q-NOV')
+ts = pd.Series(np.random.randn(len(prng)), prng)
+ts.index = (prng.asfreq('M', 'e') + 1).asfreq('H', 's') + 9
+ts.head()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1990-03-01 09:00   -0.546684
+1990-06-01 09:00    0.091767
+1990-09-01 09:00   -1.180808
+1990-12-01 09:00    0.929530
+1991-03-01 09:00    1.646660
+Freq: H, dtype: float64
+</code></pre>
+
+</div>
+
+
+<h3 id="categorical-data">Categorical data</h3>
+
+<pre><code class="language-python">df5 = df4.copy(deep=True)
+</code></pre>
+
+<pre><code class="language-python">## create categories
+df5['incomeranges'] = pd.cut(df5['C'], 14)
+df5[&quot;A&quot;] = df5[&quot;A&quot;].astype('category')
+df5.head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>incomeranges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.870843</td>
+      <td>1.255164</td>
+      <td>(-1.011, -0.828]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>bar</td>
+      <td>one</td>
+      <td>-0.678605</td>
+      <td>0.569444</td>
+      <td>(-0.828, -0.648]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.270890</td>
+      <td>0.692131</td>
+      <td>(0.254, 0.435]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>bar</td>
+      <td>three</td>
+      <td>-1.008900</td>
+      <td>1.841500</td>
+      <td>(-1.011, -0.828]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.381278</td>
+      <td>0.918376</td>
+      <td>(0.254, 0.435]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df5.A
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">0    foo
+1    bar
+2    foo
+3    bar
+4    foo
+5    bar
+6    foo
+7    foo
+Name: A, dtype: category
+Categories (2, object): [foo, bar]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#rename to more meaningful
+df5[&quot;A&quot;].cat.categories = [&quot;foo&quot;, &quot;bar&quot;]
+df5.head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>incomeranges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.870843</td>
+      <td>1.255164</td>
+      <td>(-1.011, -0.828]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>bar</td>
+      <td>one</td>
+      <td>-0.678605</td>
+      <td>0.569444</td>
+      <td>(-0.828, -0.648]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.270890</td>
+      <td>0.692131</td>
+      <td>(0.254, 0.435]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>bar</td>
+      <td>three</td>
+      <td>-1.008900</td>
+      <td>1.841500</td>
+      <td>(-1.011, -0.828]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.381278</td>
+      <td>0.918376</td>
+      <td>(0.254, 0.435]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python"># domain of categories
+df5[&quot;A&quot;] = df5[&quot;A&quot;].cat.set_categories([&quot;very bad&quot;, &quot;bar&quot;, &quot;medium&quot;, &quot;foo&quot;, &quot;very good&quot;])
+df5.sort_values(by=&quot;A&quot;).head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>incomeranges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>bar</td>
+      <td>one</td>
+      <td>-0.678605</td>
+      <td>0.569444</td>
+      <td>(-0.828, -0.648]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>bar</td>
+      <td>three</td>
+      <td>-1.008900</td>
+      <td>1.841500</td>
+      <td>(-1.011, -0.828]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>bar</td>
+      <td>two</td>
+      <td>-0.666534</td>
+      <td>-0.483262</td>
+      <td>(-0.828, -0.648]</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.870843</td>
+      <td>1.255164</td>
+      <td>(-1.011, -0.828]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.270890</td>
+      <td>0.692131</td>
+      <td>(0.254, 0.435]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df5['A'].value_counts()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">foo          5
+bar          3
+very good    0
+medium       0
+very bad     0
+Name: A, dtype: int64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">## subset on category
+tmp = df5[df5['A'] == &quot;foo&quot;]
+tmp
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>incomeranges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.870843</td>
+      <td>1.255164</td>
+      <td>(-1.011, -0.828]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.270890</td>
+      <td>0.692131</td>
+      <td>(0.254, 0.435]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>foo</td>
+      <td>two</td>
+      <td>0.381278</td>
+      <td>0.918376</td>
+      <td>(0.254, 0.435]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>foo</td>
+      <td>one</td>
+      <td>-0.132010</td>
+      <td>1.949751</td>
+      <td>(-0.287, -0.107]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>foo</td>
+      <td>three</td>
+      <td>1.517630</td>
+      <td>-0.458782</td>
+      <td>(1.337, 1.518]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">##TODO:subset with limited column
+df5[A &amp; B][['C', 'D']][:10]
+</code></pre>
+
+<pre><code class="language-python">#TODO:Plotting
+## options
+### Make the graphs a bit prettier, and bigger
+pd.set_option('display.mpl_style', 'default') 
+### Always display all the columns
+pd.set_option('display.line_width', 5000) 
+pd.set_option('display.max_columns', 60) 
+figsize(15, 5)
+</code></pre>
+
+<h3 id="series-calculations">Series calculations</h3>
+
+<pre><code class="language-python">df2
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>E</th>
+      <th>F</th>
+      <th>G</th>
+      <th>H</th>
+      <th>I</th>
+      <th>J</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>test</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>train</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>test</td>
+      <td>foo</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>2013-01-02</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>train</td>
+      <td>foo</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">df2.H.values
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([3, 3, 3, 3], dtype=int32)
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df2.H.abs().tolist()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[3, 3, 3, 3]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df2.H.mean().tolist()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">3.0
+</code></pre>
+
+</div>
+
+
+<h2 id="numpy">Numpy</h2>
+
+<p>Pandas uses Numpy&rsquo;s ndarray for many of its underlying operations.  For example, you can use the DataFrame attribute <code>.values</code> to represent a DataFrame df as a NumPy array. You can also pass pandas data structures to NumPy methods.</p>
+
+<p>Now that we&rsquo;ve looked into Pandas columns (Series), lets take at what is driving these operations.  This low-level perspective will help us understand strengths and weeknesses, as well as give us a much better look into how to improve our code.</p>
+
+<p><em>References</em></p>
+
+<ul>
+<li><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">doc: numpy</a></li>
+<li><a href="https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html">doc: ndarray</a></li>
+</ul>
+
+<h3 id="introduction">Introduction</h3>
+
+<p>NumPy&rsquo;s arrays are more compact than Python lists &ndash; a list of lists as you describe, in Python, would take at least 20 MB or so, while a NumPy 3D array with single-precision floats in the cells would fit in 4 MB. Access in reading and writing items is also faster with NumPy.</p>
+
+<p>The difference is mostly due to &ldquo;indirectness&rdquo; &ndash; a Python list is an array of pointers to Python objects, at least 4 bytes per pointer plus 16 bytes for even the smallest Python object (4 for type pointer, 4 for reference count, 4 for value &ndash; and the memory allocators rounds up to 16). A NumPy array is an array of uniform values &ndash; single-precision numbers takes 4 bytes each, double-precision ones, 8 bytes. Less flexible, but you pay substantially for the flexibility of standard Python lists!</p>
+
+<p>Because Numpy&rsquo;s popularity is based on optimization, lets focus work on memory and speed during our discussion.</p>
+
+<p><strong>Memory layout</strong></p>
+
+<p>The following attributes contain information about the memory layout of the array:</p>
+
+<ul>
+<li><code>ndarray.flags</code>   Information about the memory layout of the array.</li>
+<li><code>ndarray.shape</code>   Tuple of array dimensions.</li>
+<li><code>ndarray.ndim</code>  Number of array dimensions.</li>
+<li><code>ndarray.strides</code>   Tuple of bytes to step in each dimension when traversing an array.</li>
+<li><code>ndarray.data</code>  Python buffer object pointing to the start of the array’s data</li>
+<li><code>ndarray.size</code>  Number of elements in the array.</li>
+<li><code>ndarray.itemsize</code>  Length of one array element in bytes.</li>
+<li><code>ndarray.Dtype</code> Type of elements in the array, i.e., int64, character</li>
+<li><code>ndarray.nbytes</code>  Total bytes consumed by the elements of the array.</li>
+<li><code>ndarray.base</code>  Base object if memory is from some other object.</li>
+</ul>
+
+<p><code>ndarray.__sizeof__()</code> is somewhat bigger (includes the object overhead), than <code>ndarray.nbytes</code>, which is the number of bytes in the allocated array.</p>
+
+<pre><code class="language-python">import sys
+</code></pre>
+
+<pre><code class="language-python">arr = np.random.randn(10**3)
+lst = list(arr)
+arr2d = arr.reshape(20,50)
+</code></pre>
+
+<pre><code class="language-python">print( len(lst) )
+print( arr.shape )
+print( arr2d.shape )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1000
+(1000,)
+(20, 50)
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( type(lst) )
+print( type(arr) )
+print( type(arr2d) )
+
+print( type(lst[0]) )
+print( arr.dtype )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;class 'list'&gt;
+&lt;class 'numpy.ndarray'&gt;
+&lt;class 'numpy.ndarray'&gt;
+&lt;class 'numpy.float64'&gt;
+float64
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#item
+print( sys.getsizeof( lst[0] ) )
+print( arr.itemsize )
+
+#total
+print( sys.getsizeof( lst ) )
+print( sys.getsizeof( arr ) )
+print( sys.getsizeof( arr2d ) )
+
+print( arr.nbytes )
+print( arr2d.nbytes )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">32
+8
+9112
+8096
+112
+8000
+8000
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( arr.tobytes()[:100] )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">b',!1\xcdk\\\xf0?\x8b\x0f\x93\x19)\xf0\xe7?v\xec3\xcb}e\xbf?\x89\x92\x0b\xac\xc4_\xb7?\x1d\xdb\\*\xdaG\xe2?}\x16\xf8n\x99\xcd\xd7\xbfc\xf3\xf9g\x87\xb5\x03\xc0\x04&amp;\x86\xc7\x08*\xf4?\xb8j\xd6\x03}\xed\xef\xbf\xe6\xcf\xb0\x0e\x90\xe1\xd8\xbf{\xa2\x1dn\xe1\xef\xe1\xbfF\x90{\xfd\xf2\x14\xde\xbf\\\xb8pv'
+</code></pre>
+
+</div>
+
+
+<h3 id="comparison-of-ndarry-to-list">Comparison of ndarry to list</h3>
+
+<p>Numpy array is easier to assign values than a list.</p>
+
+<pre><code class="language-python">a = np.array([1, 2, 5, 7, 8])
+a[1:3] = -1
+a
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ 1, -1, -1,  7,  8])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">b = [1, 2, 5, 7, 8]
+try:
+    b[1:3] = -1
+except:
+    print(&quot;TypeError: can only assign an iterable&quot;)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">TypeError: can only assign an iterable
+</code></pre>
+
+</div>
+
+
+<p>ndarray slices are actually views on the same data buffer. If you modify it, it is going to modify the original ndarray as well.</p>
+
+<pre><code class="language-python">a=[1,2,5,7,8]
+b=a[1:5]
+b[1]=3
+print(a)
+print(b)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[1, 2, 5, 7, 8]
+[2, 3, 7, 8]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">a = np.array([1, 2, 5, 7, 8])
+a_slice = a[1:5]
+a_slice[1] = 1000
+print( a )
+print( a_slice)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[   1    2 1000    7    8]
+[   2 1000    7    8]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">a = np.array([1, 2, 5, 7, 8])
+a_slice = a[1:5].copy()
+a_slice[1] = 1000
+print( a )
+print( a_slice)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[1 2 5 7 8]
+[   2 1000    7    8]
+</code></pre>
+
+</div>
+
+
+<p>ndarray slicing is different.  It uses: <code>arr[row_start:row_end, col_start:col_end]</code></p>
+
+<p>ndarray also allows boolean indexing.</p>
+
+<pre><code class="language-python">a = np.array([0, 1, 2, 5, 7, 8]).reshape(3,2)
+a
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[0, 1],
+       [2, 5],
+       [7, 8]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">rows_on = np.array([True, False, True])
+a[rows_on,:]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[0, 1],
+       [7, 8]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">(arr != 2)[:10]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">arr[arr != 2] [:10]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ 1.02256375,  0.74806647,  0.12264239,  0.09130506,  0.57127102,
+       -0.37192379, -2.46363717,  1.26026228, -0.99774028, -0.38876726])
+</code></pre>
+
+</div>
+
+
+<p>A comparison test of speed.</p>
+
+<pre><code class="language-python">from numpy import arange
+from timeit import Timer
+
+Nelements = 10000
+Ntimeits = 10000
+
+x = arange(Nelements)
+y = range(Nelements)
+
+t_numpy = Timer(&quot;x.sum()&quot;, &quot;from __main__ import x&quot;)
+t_list = Timer(&quot;sum(y)&quot;, &quot;from __main__ import y&quot;)
+print(&quot;numpy: %.3e&quot; % (t_numpy.timeit(Ntimeits)/Ntimeits,))
+print(&quot;list:  %.3e&quot; % (t_list.timeit(Ntimeits)/Ntimeits,))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">numpy: 1.171e-05
+list:  1.768e-04
+</code></pre>
+
+</div>
+
+
+<h3 id="creating-matrices">Creating matrices</h3>
+
+<p>Your typical arrays of random initializers are always useful.</p>
+
+<pre><code class="language-python">print( np.random.randint(1,10, 5) )
+print( np.arange(1,10) )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[8 8 7 4 3]
+[1 2 3 4 5 6 7 8 9]
+</code></pre>
+
+</div>
+
+
+<p>A matrix of random numbers.</p>
+
+<pre><code class="language-python">print( np.random.rand(3,3) )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[[0.24273703 0.4428199  0.51066964]
+ [0.66546027 0.83538717 0.92546135]
+ [0.63670416 0.83450213 0.57655533]]
+</code></pre>
+
+</div>
+
+
+<p>A matrix of zeros.</p>
+
+<pre><code class="language-python">np.zeros((4,3))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[0., 0., 0.],
+       [0., 0., 0.],
+       [0., 0., 0.],
+       [0., 0., 0.]])
+</code></pre>
+
+</div>
+
+
+<p>The identity matrix.</p>
+
+<pre><code class="language-python">np.eye(4)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[1., 0., 0., 0.],
+       [0., 1., 0., 0.],
+       [0., 0., 1., 0.],
+       [0., 0., 0., 1.]])
+</code></pre>
+
+</div>
+
+
+<h3 id="scalar-operations">Scalar operations</h3>
+
+<pre><code class="language-python">arr = np.arange(1,10)
+np.append(arr, 12)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 12])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( arr.size )
+print( arr.mean() )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">9
+5.0
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( arr.min() )
+print( arr.max() )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1
+9
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( type(arr.tolist()) )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;class 'list'&gt;
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( arr.astype('str') )
+print( arr.astype('int') )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['1' '2' '3' '4' '5' '6' '7' '8' '9']
+[1 2 3 4 5 6 7 8 9]
+</code></pre>
+
+</div>
+
+
+<h3 id="matrix-operations">Matrix operations</h3>
+
+<pre><code class="language-python">arr = np.arange(1,10)
+np.append(arr, 12)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 12])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( arr + arr )
+print( arr - arr )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[ 2  4  6  8 10 12 14 16 18]
+[0 0 0 0 0 0 0 0 0]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#A[n+1]-A[n]
+np.diff(arr, n=1)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([1, 1, 1, 1, 1, 1, 1, 1])
+</code></pre>
+
+</div>
+
+
+<p>Broadcasting provides a means of vectorizing array operations so that looping occurs in an implementation of C, instead of in Python.  The term refers how numpy treats arrays with different shapes during arithmetic operations.  The smaller array is repeated so that it matches the size of the larger array.</p>
+
+<ul>
+<li><a href="https://docs.scipy.org/doc/numpy-1.10.0/user/basics.broadcasting.html">doc: broadcasting</a></li>
+</ul>
+
+<pre><code class="language-python">arr * 2
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ 2,  4,  6,  8, 10, 12, 14, 16, 18])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">arr + 4
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ 5,  6,  7,  8,  9, 10, 11, 12, 13])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">%%timeit 
+arr * 2
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1.36 µs ± 22 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">twos = np.ones(9) * 2
+</code></pre>
+
+<pre><code class="language-python">%%timeit
+arr * twos
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">1.45 µs ± 153 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">M = np.arange(1,10).reshape(3,3)
+M
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">M.T
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[1, 4, 7],
+       [2, 5, 8],
+       [3, 6, 9]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">M.diagonal()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([1, 5, 9])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">np.dot(M, M)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[ 30,  36,  42],
+       [ 66,  81,  96],
+       [102, 126, 150]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">np.sum( M )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">45
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">np.sum(M, axis=1)    #sum along rows, use `axis=0` for columns
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ 6, 15, 24])
+</code></pre>
+
+</div>
+
+
+<h2 id="external-interfaces">External Interfaces</h2>
+
+<h3 id="using-cuda-with-numba">Using CUDA with Numba</h3>
+
+<ul>
+<li><a href="https://devblogs.nvidia.com/numba-python-cuda-acceleration/">doc: nividia</a></li>
+<li><a href="https://nyu-cds.github.io/python-numba/05-cuda/">ref: nyu intro to numba</a></li>
+<li><a href="https://code-maven.com/showing-speed-improvement-with-gpu-cuda-numpy">ref: code-maven</a></li>
+</ul>
+
+<h3 id="basic-c">Basic C++</h3>
+
+<ul>
+<li><a href="https://blog.esciencecenter.nl/irregular-data-in-pandas-using-c-88ce311cb9ef">ref: using C++ with pandas</a></li>
+</ul>
+
+<h3 id="working-with-eigen">Working with Eigen</h3>
+
+<ul>
+<li><a href="https://github.com/jrl-umi3218/Eigen3ToPython">ref: eigen3topython</a></li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Pandas provides fast and thorough means of manipulating data in Python.  It is powered by the operations in Numpy.  While Pandas is useful for preparing data, actual analysis and computations are typically performed on the Numpy set.  This is part of the reason Numpy is adopted by so many important libraries, such as SciKitLearn, PyTorch, and many others.</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#pandas-series-and-dataframe">Pandas Series and Dataframe</a>
+<ul>
+<li><a href="#config">Config</a></li>
+<li><a href="#index-and-axes">Index and axes</a></li>
+<li><a href="#data-types">Data types</a></li>
+<li><a href="#locate-by-column-label-index">Locate by column label, index</a></li>
+<li><a href="#locate-by-boolean">Locate by boolean</a></li>
+<li><a href="#sort-values">Sort values</a></li>
+<li><a href="#subset">Subset</a></li>
+<li><a href="#setting-values">Setting values</a></li>
+<li><a href="#calculations">Calculations</a></li>
+<li><a href="#missing-values">Missing values</a></li>
+<li><a href="#merge-and-shape">Merge and shape</a></li>
+<li><a href="#groupby">GroupBy</a></li>
+<li><a href="#stacked">Stacked</a></li>
+<li><a href="#pivot-table">Pivot table</a></li>
+<li><a href="#timeseries">Timeseries</a></li>
+<li><a href="#categorical-data">Categorical data</a></li>
+<li><a href="#series-calculations">Series calculations</a></li>
+</ul></li>
+<li><a href="#numpy">Numpy</a>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#comparison-of-ndarry-to-list">Comparison of ndarry to list</a></li>
+<li><a href="#creating-matrices">Creating matrices</a></li>
+<li><a href="#scalar-operations">Scalar operations</a></li>
+<li><a href="#matrix-operations">Matrix operations</a></li>
+</ul></li>
+<li><a href="#external-interfaces">External Interfaces</a>
+<ul>
+<li><a href="#using-cuda-with-numba">Using CUDA with Numba</a></li>
+<li><a href="#basic-c">Basic C++</a></li>
+<li><a href="#working-with-eigen">Working with Eigen</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/numpy">numpy
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/pandas">pandas
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    
+    <a href="/posts/blog_programming-python_functional/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Python Functional Programming&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

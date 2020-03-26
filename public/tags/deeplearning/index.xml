@@ -20,5 +20,14 @@
       <description>The automated linguistic annotation of natural languages kept linguists and computer scientists hard at work for many decades. This work focused on the syntax of language as well as basic understanding and includes part-of-speech, named entity categorization, and syntatic dependency. Language meta-data tagging became much more accurate with the introduction of neural network and deep learning models. Because pairing meta-data with more powerful models is sure to allow for an explosion of new applications, it is important to understand the developments that allowed for the creation of this technology.</description>
     </item>
     
+    <item>
+      <title>Working with Matrices and Tensors in PyTorch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-matrix_tensor_operations/</link>
+      <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-matrix_tensor_operations/</guid>
+      <description>The Artificial Intelligence field is moving from single-function libraries to frameworks for building different network models. TensorFlow was one of the first, and has strong production capabilities, such as process optimizations. However, its syntax is unintuitive, and the library has a reputation for being difficult for testing new models. This led to many organizations adopting PyTorch, with underlying Numpy, for designing network models. This post describes the basic data structures for working with Matrices and Tensors in PyTorch.</description>
+    </item>
+    
   </channel>
 </rss>

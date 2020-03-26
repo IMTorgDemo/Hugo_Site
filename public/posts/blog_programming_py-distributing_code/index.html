@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Distributing Code in Python // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Distributing Code in Python" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Distributing Code in Python</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_programming_py-distributing_code/" class="article-date">
+                <time datetime='0001-01-01T00:00:00.000&#43;00:00' itemprop="datePublished">0001-01-01</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/best_practice">Best_Practice</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/computer_science_and_programming">Computer_Science_and_Programming</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Distributing and deploying products is a necessary step in the solution development process, and an imperative in business.  Each solution must be thoughtfully analyzed for strengths and weaknesses, especially from the perspective of security.  The decisons you make are largely based on the language employed to create the solution.  This post will describe steps taken in distributing a Python solution.</p>
+
+<h2 id="introduction-to-bytecode">Introduction to Bytecode</h2>
+
+<p>Simple python scripts are a terrific approach to getting work done, quickly.  However, in more professional environments, the ease of use can make distribution tricky.  Python is a &lsquo;bytecode interpreted language&rsquo; so that it is disseminated as scripts.  Compilation is unique to the machine that runs the code.  Providing users with the bytecode (.pyc) is possible, but must be run, by the python interpreter, on the same version of virutal machine.</p>
+
+<p>Compiled Python bytecode files are architecture-independent, but VM-dependent. A .pyc file will only work on a specific set of Python versions determined by the magic number stored in the file, using the following:</p>
+
+<pre><code class="language-python">! python -V
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Python 3.7.3
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#testfile.py
+import imp
+magic_num = imp.get_magic()
+print( magic_num )
+print( magic_num.hex() )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">b'B\r\r\n'
+420d0d0a
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">! python testfile.py
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">testfile.py:1: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+  import imp
+b'B\r\r\n'
+420d0d0a
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">! python -m py_compile testfile.py
+</code></pre>
+
+<pre><code class="language-python">! ls __pycache__
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">testfile.cpython-37.pyc
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#python
+f = open('./__pycache__/testfile.cpython-37.pyc')
+magic = f.read(4)       #read first 'n' characters
+magic.encode('hex')     #output:'b3f20d0a' &gt; not compatible
+</code></pre>
+
+<p>Bytecode is architecture- / platform-independent, so bytecodes compiled by a compiler running in windows will still run in linux/unix/mac.  Machine code is platform-specific, if it is compiled in windows x86, it will run ONLY in windows x86.</p>
+
+<p>This is different from other popular languages, such as Java, which is compiled to a Java Archive (.jar) file, then run using the Java Virtual Machine (jvm).  That was the original popularity of java: it was a <em>portable</em> language.  All you needed was the correct JVM.</p>
+
+<p>Bytecodes are the machine language of the Java Virtual Machine (JVM). When a JVM loads a class file, it gets one stream of bytecodes for each method in the class. The bytecodes&rsquo; streams are stored in the method area of the JVM. The bytecodes for a method are executed when that method is invoked during the course of running the program. They can be executed by intepretation, just-in-time compiling, or any other technique that was chosen by the designer of a particular JVM.</p>
+
+<p>A method&rsquo;s bytecode stream is a sequence of instructions for the JVM. Each instruction consists of a one-byte opcode followed by zero or more operands. The opcode indicates the action to take. If more information is required before the JVM can take the action, that information is encoded into one or more operands that immediately follow the opcode.</p>
+
+<h2 id="distribution-methods">Distribution Methods</h2>
+
+<p>The typical method of disseminating Python solutions is to maintain sourece code in a repository, such as Github, then package and upload the solution distributions (sdist, bdist_wheel) to PyPi, the <a href="https://pypi.org/">Python Package Index</a>.  PyPi allows projects and dependencies to be imported with a simple <code>pip install &lt;package&gt;</code>.</p>
+
+<p>What&rsquo;s more, the packaging process is quite a bit easier than that of more demanding communities, such as R libraries&rsquo; <a href="https://cran.r-project.org/"> Comprehensive R Archive Network(CRAN)</a>.  This comes at a cost in that PyPi is known to have had imposters (viruses) to popular packages which may have one character different than the actual, desired package.  So, some care should be taken.</p>
+
+<p>Some terminology:</p>
+
+<ul>
+<li>file - containing random python code</li>
+<li>module - usually a single python script (<code>name.py</code>), use with <code>import my_module</code></li>
+<li>package - a module with other modules, and other packages, included; use with <code>from big.package import specific_function</code></li>
+</ul>
+
+<p>The egg and wheel are install artifacts that don’t require building or compilation.  The Egg format was introduced by setuptools in 2004, whereas the Wheel format was introduced by PEP 427 in 2012.  Wheel is currently considered the standard for built and binary packaging for Python.</p>
+
+<ul>
+<li>egg (.egg) - deprecated built distribution</li>
+<li>setup.py - python file which tells system it has been packaged and distributed using Distutils to create sdist or bdist</li>
+<li>source distribution (sdist) archive - an archive that can then be used to recompile everything on any OS platform; contains .py files, or .c/.cpp for binary modules, and setup.py</li>
+<li>binary distribution (bdist) wheel (.whl) - a built distribution that is specific to OS-platform and Python version, but can be installed and then used directly by extracting it; includes .pyc files(python bytecode), .so/.dll/.dylib for binary modules, but does not include setup.py</li>
+<li>wheel - a package format designed to ship built libraries (.pyc) with compiled artifacts, such as from C, C++, Rust, etc.  In contrast to the source archive, the wheel includes any extensions ready to use.</li>
+<li>executable (.exe) - binary file that includes both the built code with the python interpreter in a self-contained distribution.</li>
+</ul>
+
+<p>While providing the source code is preferred when working in a collaborative environment, it is not ideal when distributing to end-users who are uninterested in the internals.  In addition, providing source code might present security concerns, especially if the python developer is trying to create a closed-source product.  Source code obfuscators exist, but this approach was an after-thought in python&rsquo;s development.</p>
+
+<p>Typically, operating systems provide a format for an &lsquo;executable&rsquo;.  Python can be create an executable by building with the Python interpreter through the process of &lsquo;freezing&rsquo;.  There are many approaches to freezing.</p>
+
+<h2 id="packaging">Packaging</h2>
+
+<p>Now that we know the different types of distributions, let&rsquo;s package a wheel for use.  We will use <a href="https://github.com/IMTorgDemo/Boilerplate-Python">this boilerplate repo</a> as an example.</p>
+
+<p>Build with the following command, and the archive will appear in <code>/dist</code> folder.</p>
+
+<pre><code class="language-python">! (venv)$ pip wheel -w dist --verbose .
+</code></pre>
+
+<p>Perhaps you want to build your distribution for a specific environment, Python version, or over many combinations of the two.  The <a href="https://github.com/dockcross/dockcross">dockcross</a> project allows you to do this by building your distribution from different docker images.</p>
+
+<pre><code class="language-python">#create dockcross manylinux bash driver script
+docker run --rm dockcross/manylinux-x64 &gt; ./dockcross-manylinux-x64
+chmod +x ./dockcross-manylinux-x64
+#build a distributable Python 2.7 Python wheel
+./dockcross-manylinux-x64 /opt/python/cp27-cp27m/bin/pip wheel -w dist .
+</code></pre>
+
+<p>Once you have your specific distribution, move it to the target environment and install.</p>
+
+<pre><code class="language-python">pip install .
+</code></pre>
+
+<p>Or, instead of installing, simply use directly from the working directory.</p>
+
+<p>\( unzip sample-0.1.0-py2-none-any.whl
+\) pwd
+$ python
+python&gt;&gt;&gt; import sys
+python&gt;&gt;&gt; sys.path.append(<pwd>)
+python&gt;&gt;&gt; import sample</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This post prepares users with some of the basic terminology to understand different approaches to distributing Python code.  It also provides a small, opinionated example for effectivly building a wheel and installing it on the target machine.  There are many choices in distributing Python code, and the process is still evolving.  Users should consult a variety of sources to better understand the latest fashions and pertinent details.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://python-packaging-tutorial.readthedocs.io/en/latest/setup_py.html">nice discussion on packaging</a></li>
+<li><a href="https://packaging.python.org/guides/distributing-packages-using-setuptools/">distributing a package</a></li>
+</ul>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#introduction-to-bytecode">Introduction to Bytecode</a></li>
+<li><a href="#distribution-methods">Distribution Methods</a></li>
+<li><a href="#packaging">Packaging</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#references">References</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/setuptools">setuptools
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/pip">pip
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/deployment">deployment
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/pages/search/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Search the KnowledgeBase
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_history-greatman_insecurity/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">The Insecurities of the &#39;Great Men&#39;&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

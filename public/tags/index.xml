@@ -6,10 +6,37 @@
     <description>Recent content in Tags on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>numpy</title>
+      <link>https://imtorgdemo.github.io/tags/numpy/</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/numpy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pandas</title>
+      <link>https://imtorgdemo.github.io/tags/pandas/</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/pandas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://imtorgdemo.github.io/tags/python/</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>development</title>
@@ -26,15 +53,6 @@
       <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/tags/functional/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>python</title>
-      <link>https://imtorgdemo.github.io/tags/python/</link>
-      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/python/</guid>
       <description></description>
     </item>
     
@@ -71,15 +89,6 @@
       <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/tags/dataframe/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>pandas</title>
-      <link>https://imtorgdemo.github.io/tags/pandas/</link>
-      <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/pandas/</guid>
       <description></description>
     </item>
     
@@ -219,6 +228,15 @@
     </item>
     
     <item>
+      <title>pytorch</title>
+      <link>https://imtorgdemo.github.io/tags/pytorch/</link>
+      <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/pytorch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>knowledgebase</title>
       <link>https://imtorgdemo.github.io/tags/knowledgebase/</link>
       <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
@@ -341,6 +359,24 @@
       <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pip</title>
+      <link>https://imtorgdemo.github.io/tags/pip/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/pip/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>setuptools</title>
+      <link>https://imtorgdemo.github.io/tags/setuptools/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/setuptools/</guid>
       <description></description>
     </item>
     

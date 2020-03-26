@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Working with Matrices and Tensors in PyTorch // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Working with Matrices and Tensors in PyTorch" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_models-matrix_tensor_operations/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Working with Matrices and Tensors in PyTorch</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_models-matrix_tensor_operations/" class="article-date">
+                <time datetime='2019-08-26T00:00:00.000&#43;00:00' itemprop="datePublished">2019-08-26</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/introduction_tutorial">Introduction_Tutorial</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/data_science">Data_Science</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>The Artificial Intelligence field is moving from single-function libraries to frameworks for building different network models.  TensorFlow was one of the first, and has strong production capabilities, such as process optimizations.  However, its syntax is unintuitive, and the library has a reputation for being difficult for testing new models.  This led to many organizations adopting PyTorch, with underlying Numpy, for designing network models.  This post describes the basic data structures for working with Matrices and Tensors in PyTorch.</p>
+
+<h2 id="basics-of-tensors-and-matrices">Basics of Tensors and Matrices</h2>
+
+<h3 id="basic-terminology">Basic terminology</h3>
+
+<p>Before we begin performing opertions, we need to have a shared vocabulary on the of the three main data structures using in Artificial Intelligence (AI).</p>
+
+<ul>
+<li>scalar is a single number</li>
+<li>vector is just one row or column</li>
+<li>matrix is just a 2-D grid of numbers</li>
+<li>tensor is a &lsquo;placeholder&rsquo; for the a multi-dimensional array (vector, matrix, etc.)</li>
+</ul>
+
+<p>We should discuss tensor in more detail because a &lsquo;placeholder&rsquo; is not a very mathematical definition, and it is often confused with a matrix. A tensor is often thought of as a generalized matrix. That is, it could be a 1-D matrix (a vector is actually such a tensor), a 3-D matrix (something like a cube of numbers), even a 0-D matrix (a single number), or a higher dimensional structure that is harder to visualize. The dimension of the tensor is called its rank.</p>
+
+<p>A tensor is a mathematical entity that lives in a structure and interacts with other mathematical entities. If one transforms the other entities in the structure in a regular way, then the tensor must obey a related transformation rule.</p>
+
+<p>This “dynamical” property of a tensor is the key that distinguishes it from a mere matrix. It’s a team player whose numerical values shift around along with those of its teammates when a transformation is introduced that affects all of them.</p>
+
+<p>Any rank-2 tensor can be represented as a matrix, but not every matrix is really a rank-2 tensor. The numerical values of a tensor’s matrix representation depend on what transformation rules have been applied to the entire system.</p>
+
+<p>Indeed, speaking of a rank-2 tensor is not really accurate. The rank of a tensor has to be given by two numbers. The vector to vector mapping is given by a rank-(1,1) tensor, while the quadratic form is given by a rank-(0,2) tensor. There&rsquo;s also the type (2,0) which also corresponds to a matrix, but which maps two covectors to a number, and which again transforms differently.</p>
+
+<p>So, succinctly, a tensor is different from a matrix in that a tensor can be:</p>
+
+<ul>
+<li>rank (dimension) greater than 2</li>
+<li>part of a system, such as a neural network, that accounts for inter-related entities</li>
+<li>dynamic, such that, just as a random variable X can have an actualized value, x, a tensor can be a container for actualized values of an array</li>
+</ul>
+
+<p>The bottom line of this is:</p>
+
+<ul>
+<li>components of a rank-2 tensor can be written in a matrix.</li>
+<li>the tensor is not that matrix, because different types of tensors can correspond to the same matrix.</li>
+<li>the differences between those tensor types are uncovered by the basis transformations (hence the physicist&rsquo;s definition: &ldquo;A tensor is what transforms like a tensor&rdquo;).</li>
+</ul>
+
+<h3 id="the-need-for-the-tensor-construct">The need for the Tensor construct</h3>
+
+<p>You can specify a linear transformation 𝑎 between vectors by a matrix. Let&rsquo;s call that matrix 𝐴. Now if you do a basis transformation, this can also be written as a linear transformation, so that if the vector in the old basis is 𝑣, the vector in the new basis is \(T^{-1}𝑣\) (where v is a column vector). Now you can ask what matrix describes the transformation 𝑎 in the new basis. Well, it&rsquo;s the matrix \(T^{-1}AT\).</p>
+
+<p>Well, so far, so good. What I memorized back then is that under basis change a matrix transforms as \(T^{-1}AT\).</p>
+
+<p>But then, we learned about quadratic forms. Those are calculated using a matrix 𝐴 as \(u^TAv\). Still no problem, until we learned about how to do basis changes. Now, suddenly the matrix did not transform as \(T^{-1}AT\), but rather as \(T^TAT\). Which confused me like hell: How could one and the same object transform differently when used in different contexts?</p>
+
+<p>Well, the solution is: Because we are actually talking about different objects! In the first case, we are talking about a tensor which takes vectors to vectors. In the second case, we are talking about a tensor which takes two vectors into a scalar, or equivalently, which takes a vector to a covector.</p>
+
+<p>Proof basis change rule for quadratic form, with 𝑃 being the change of basis matrix between 𝑥,𝑦,𝑧 and 𝑢,𝑣,𝑤</p>
+
+<p>\begin{align}q&amp;= \begin{bmatrix}x&amp;y&amp;z\end{bmatrix}\begin{bmatrix}\text A\end{bmatrix}\begin{bmatrix}x\y\z\end{bmatrix}\ &amp;=\begin{bmatrix}x\y\z\end{bmatrix}^\top\begin{bmatrix}\text A\end{bmatrix}\begin{bmatrix}x\y\z\end{bmatrix}\ &amp;=\left(P\begin{bmatrix}u\v\w\end{bmatrix}\right)^\top \begin{bmatrix}\text A\end{bmatrix}P\begin{bmatrix}u\v\w\end{bmatrix}\ &amp;=\begin{bmatrix}u&amp;v&amp;w\end{bmatrix}P^\top\begin{bmatrix}\text A\end{bmatrix}P\begin{bmatrix}u\v\w\end{bmatrix} \end{align}</p>
+
+<p>This concludes our discussion of tensors.</p>
+
+<h2 id="numpy-ndarray">Numpy ndarray</h2>
+
+<p>PyTorch is &lsquo;A replacement for Numpy to use the power of GPUs.&rsquo;  PyTorch provides both matrices and tensors.  Let&rsquo;s dive into Numpy to see what PyTorch is replacing.</p>
+
+<h3 id="configure-environment">Configure environment</h3>
+
+<pre><code class="language-python">import torch
+import numpy as np
+</code></pre>
+
+<h3 id="background">Background</h3>
+
+<p>At the core, numpy provides the excellent ndarray objects, short for n-dimensional arrays.</p>
+
+<p>In a ‘ndarray’ object, aka ‘array’, you can store multiple items of the same data type. It is the facilities around the array object that makes numpy so convenient for performing math and data manipulations.</p>
+
+<ul>
+<li>arrays are designed to handle vectorized operations while a python list is not</li>
+<li>array size cannot be increased (unlike list), so a new array must be created</li>
+<li>array memory size is much smaller than list</li>
+<li>an array must have all items be of the same data type, unlike lists</li>
+</ul>
+
+<pre><code class="language-python">list1 = [0,1,2,3,4]
+arr1d = np.array(list1)
+
+try:
+    list1 + 2
+except:
+    print(&quot;lack of vectorization on base lists makes this operation impossible&quot;)
+    
+print( arr1d + 2 )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">lack of vectorization makes this impossible
+</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([2, 3, 4, 5, 6])
+</code></pre>
+
+</div>
+
+
+<p>The most commonly used numpy dtypes are:</p>
+
+<ul>
+<li><code>float</code></li>
+<li><code>int</code></li>
+<li><code>bool</code></li>
+<li><code>str</code></li>
+<li><code>object</code></li>
+</ul>
+
+<pre><code class="language-python"># Create a 2d array from a list of lists
+list2 = [[0,1,2], [3,4,5], [6,7,8]]
+arr2d = np.array(list2, dtype='float')
+arr2d
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[0., 1., 2.],
+       [3., 4., 5.],
+       [6., 7., 8.]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">arr2d.astype('str')
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([['0.0', '1.0', '2.0'],
+       ['3.0', '4.0', '5.0'],
+       ['6.0', '7.0', '8.0']], dtype='&lt;U32')
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">arr2d.tolist()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># memory address
+print('Memory: ', arr2d.data)
+# shape
+print('Shape: ', arr2d.shape)
+# dtype
+print('Datatype: ', arr2d.dtype)
+# size
+print('Size: ', arr2d.size)
+# ndim
+print('Num Dimensions: ', arr2d.ndim)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Shape:  (3, 3)
+Datatype:  float64
+Size:  9
+Num Dimensions:  2
+</code></pre>
+
+</div>
+
+
+<h3 id="operations">Operations</h3>
+
+<pre><code class="language-python">np.identity(3)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[1., 0., 0.],
+       [0., 1., 0.],
+       [0., 0., 1.]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">np.concatenate(arr2d)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([ 0.,  1.,  2.,  3., -1., -1.,  6.,  7.,  8.])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#transpose
+arr2d.T
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[ 0.,  3.,  6.],
+       [ 1., -1.,  7.],
+       [ 2., -1.,  8.]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#matrix inversion
+linalg.inv(arr2d)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[-0.04166667,  0.25      ,  0.04166667],
+       [-1.25      , -0.5       ,  0.25      ],
+       [ 1.125     ,  0.25      , -0.125     ]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#norm
+linalg.norm(arr2d)
+</code></pre>
+
+<pre><code class="language-python">#determinent
+linalg.det(arr2d)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">24.000000000000004
+</code></pre>
+
+</div>
+
+
+<h3 id="selection">Selection</h3>
+
+<pre><code class="language-python">#slicing
+arr2d[:2,:2]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[0., 1.],
+       [3., 4.]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#boolean indexing
+arr2d &gt; 4
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[False, False, False],
+       [False, False,  True],
+       [ True,  True,  True]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#reverse the array on one dimen (rows)
+arr2d[::-1,]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">array([[6., 7., 8.],
+       [3., 4., 5.],
+       [0., 1., 2.]])
+</code></pre>
+
+</div>
+
+
+<h3 id="creation">Creation</h3>
+
+<pre><code class="language-python">#deep copy of array
+tmp = arr2d.copy()
+
+#NaN or Infinity
+arr2d[1,1] = np.nan  # not a number
+arr2d[1,2] = np.inf  # infinite
+print( arr2d )
+print()
+
+# Replace nan and inf with -1. Don't use arr2 == np.nan
+missing_bool = np.isnan(arr2d) | np.isinf(arr2d)
+arr2d[missing_bool] = -1  
+print( arr2d )
+print()
+
+print( tmp )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[[ 0.  1.  2.]
+ [ 3. nan inf]
+ [ 6.  7.  8.]]
+
+[[ 0.  1.  2.]
+ [ 3. -1. -1.]
+ [ 6.  7.  8.]]
+
+[[0. 1. 2.]
+ [3. 4. 5.]
+ [6. 7. 8.]]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#reshape
+print( (arr2d.reshape(9, 1)).transpose())
+
+#flatten
+print( arr2d.flatten())
+
+#ravel - new array is reference to the parent array, no copy()
+print( arr2d.ravel())
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[[ 0.  1.  2.  3. -1. -1.  6.  7.  8.]]
+[ 0.  1.  2.  3. -1. -1.  6.  7.  8.]
+[ 0.  1.  2.  3. -1. -1.  6.  7.  8.]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Lower limit is 0 by default
+print(np.arange(5))  
+
+# 0 to 9
+print(np.arange(0, 10))  
+
+# 0 to 9 with step of 2
+print(np.arange(0, 10, 2))  
+
+# 10 to 1, decreasing order
+print(np.arange(10, 0, -1))
+
+# Exactly 10 numbers, Start at 1 and end at 50 (not equally spaced because of the int rounding)
+print( np.linspace(start=1, stop=50, num=10, dtype=int))
+
+
+# LogSpace - start value is actually base^start and ends with base^stop (default base 10)
+# Limit the number of digits after the decimal to 2
+np.set_printoptions(precision=2)  
+# Start at 10^1 and end at 10^50
+print( np.logspace(start=1, stop=50, num=10, base=10)) 
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[0 1 2 3 4]
+[0 1 2 3 4 5 6 7 8 9]
+[0 2 4 6 8]
+[10  9  8  7  6  5  4  3  2  1]
+[ 1  6 11 17 22 28 33 39 44 50]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">#zeros
+print( np.zeros([2,2]))
+
+#ones
+print( np.ones([2,2]))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[[0. 0.]
+ [0. 0.]]
+[[1. 1.]
+ [1. 1.]]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">a = [1,2,3] 
+# Repeat whole of 'a' two times
+print('Tile:   ', np.tile(a, 2))
+
+# Repeat each element of 'a' two times
+print('Repeat: ', np.repeat(a, 2))
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Tile:    [1 2 3 1 2 3]
+Repeat:  [1 1 2 2 3 3]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Create random integers of size 10 between [0,10)
+np.random.seed(100)
+arr_rand = np.random.randint(0, 10, size=10)
+print(arr_rand)
+
+# Get the unique items and their counts
+uniqs, counts = np.unique(arr_rand, return_counts=True)
+print(&quot;Unique items : &quot;, uniqs)
+print(&quot;Counts       : &quot;, counts)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[8 8 3 7 7 0 4 2 5 2]
+Unique items :  [0 2 3 4 5 7 8]
+Counts       :  [1 2 1 1 1 2 2]
+</code></pre>
+
+</div>
+
+
+<p>Now that we have a good understanding how to work with Numpy, lets see how the PyTorch Tensor may be a &lsquo;replacement&rsquo; as it states in its purpose.</p>
+
+<h2 id="pytorch-tensor">PyTorch Tensor</h2>
+
+<p>Let&rsquo;s forget our original discussion of a Tensor, for a moment, and focus on the concrete PyTorch implementation.  A <code>torch.Tensor</code> is a multi-dimensional matrix containing elements of a single data type.  When an uninitialized matrix is created, whatever values were in the allocated memory at the time will appear as the initial values.  <code>torch.Tensor</code> is an alias for the default tensor type, <code>torch.FloatTensor</code>.</p>
+
+<h3 id="creation-1">Creation</h3>
+
+<p>Since the <code>torch.Tensor</code> attempts to be a replacement for <code>ndarray</code>, we expect to see a similar class API.</p>
+
+<pre><code class="language-python">x = torch.empty(5, 3)    #construct a 5x3 matrix, uninitialized
+x = torch.rand(5, 3)     #randomly initialized matrix
+x = torch.zeros(5, 3, dtype=torch.long)    #matrix filled zeros and of dtype long
+</code></pre>
+
+<pre><code class="language-python">type(x)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">torch.Tensor
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( x.type() )
+
+print( x.shape )
+print( x.size() )
+print( x.dim() )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">torch.LongTensor
+torch.Size([5, 3])
+torch.Size([5, 3])
+2
+</code></pre>
+
+</div>
+
+
+<p>A tensor can be constructed from a Python list or sequence using the torch.tensor() constructor.</p>
+
+<p><code>torch.tensor()</code> always copies data. If you have a Tensor data and just want to change its <code>requires_grad</code> flag, use <code>requires_grad_()</code> or <code>detach()</code> to avoid a copy. If you have a numpy array and want to avoid a copy, use <code>torch.as_tensor()</code>.</p>
+
+<pre><code class="language-python">x = torch.tensor([5.5, 3])    #create a tensor from data
+</code></pre>
+
+<pre><code class="language-python"># create a tensor
+new_tensor = torch.Tensor([[1, 2], [3, 4]])    # create a 2 x 3 tensor with random values
+empty_tensor = torch.Tensor(2, 3)    # create a 2 x 3 tensor with random values between -1and 1
+uniform_tensor = torch.Tensor(2, 3).uniform_(-1, 1)    # create a 2 x 3 tensor with random values from a uniform distribution on the interval [0, 1)
+rand_tensor = torch.rand(2, 3)    # create a 2 x 3 tensor of zeros
+zero_tensor = torch.zeros(2, 3)
+</code></pre>
+
+<h3 id="selection-and-reshaping">Selection and reshaping</h3>
+
+<pre><code class="language-python">## slicing examples
+slice_tensor = torch.Tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]])    # elements from every row, first column
+</code></pre>
+
+<pre><code class="language-python">print( slice_tensor[1][0] )
+print( slice_tensor[1][0].item() )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor(4.)
+4.0
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print(slice_tensor[:, 0])         # tensor([ 1.,  4.,  7.])# elements from every row, last column
+print(slice_tensor[:, -1])        # tensor([ 3.,  6.,  9.])# all elements on the second row
+print(slice_tensor[2, :])         # tensor([ 4.,  5.,  6.])# all elements from first two rows
+print(slice_tensor[:2, :])        # tensor([[ 1.,  2.,  3.],
+                                  #         [ 4.,  5.,  6.]])
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([1., 4., 7.])
+tensor([3., 6., 9.])
+tensor([7., 8., 9.])
+tensor([[1., 2., 3.],
+        [4., 5., 6.]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">reshape_tensor = torch.Tensor([[1, 2], [3, 4]])
+
+print( reshape_tensor.view(1,4) ) 
+print( reshape_tensor.view(4,1) )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[1., 2., 3., 4.]])
+tensor([[1.],
+        [2.],
+        [3.],
+        [4.]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">my_tensor = torch.rand(2,3)
+print(my_tensor)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[0.7329, 0.2473, 0.8068],
+        [0.5935, 0.4460, 0.9787]])
+</code></pre>
+
+</div>
+
+
+<h3 id="operations-1">Operations</h3>
+
+<p>There are multiple syntaxes for operations.  Any operation that mutates a tensor in-place is post-fixed with an underscore, <code>_</code>. For example: <code>x.copy_(y)</code>, <code>x.t_()</code>, will change x.  While this is a convenient syntax, as opposed to Pandas <code>inplace=True</code> argument, take care to shun this mutability if you prefer the functional programming style.</p>
+
+<p>The documentation for all operations is <a href="https://pytorch.org/docs/stable/torch.html">here</a>.</p>
+
+<pre><code class="language-python">x = x.new_ones(5, 3, dtype=torch.double)      # new_* methods take in sizes
+print(x)
+x = torch.randn_like(x, dtype=torch.float)    # override dtype!
+print(x)   
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[1., 1., 1.],
+        [1., 1., 1.],
+        [1., 1., 1.],
+        [1., 1., 1.],
+        [1., 1., 1.]], dtype=torch.float64)
+tensor([[-0.2641,  0.1227,  0.8318],
+        [-0.8145, -0.3912,  0.3452],
+        [-0.9334, -1.3681,  0.3499],
+        [-1.9163, -0.0799, -0.7764],
+        [ 0.7414,  1.4728,  0.0776]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">y = torch.rand(5, 3)
+</code></pre>
+
+<pre><code class="language-python">#method
+print(torch.add(x, y))
+
+#output tensor as argument
+result = torch.empty(5, 3)
+torch.add(x, y, out=result)
+print(result)
+
+#Addition: in-place
+y.add_(x)
+print(y)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[ 0.2509,  0.9078,  0.9634],
+        [-0.5009,  0.2014,  0.7240],
+        [-0.5479, -0.4745,  0.5204],
+        [-1.4827,  0.4353, -0.4762],
+        [ 1.0552,  1.4836,  0.3999]])
+tensor([[ 0.2509,  0.9078,  0.9634],
+        [-0.5009,  0.2014,  0.7240],
+        [-0.5479, -0.4745,  0.5204],
+        [-1.4827,  0.4353, -0.4762],
+        [ 1.0552,  1.4836,  0.3999]])
+tensor([[ 0.2509,  0.9078,  0.9634],
+        [-0.5009,  0.2014,  0.7240],
+        [-0.5479, -0.4745,  0.5204],
+        [-1.4827,  0.4353, -0.4762],
+        [ 1.0552,  1.4836,  0.3999]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">print( my_tensor.t() )             # regular transpose function
+print( my_tensor.permute(-1,0) )   # transpose via permute function
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[0.7329, 0.5935],
+        [0.2473, 0.4460],
+        [0.8068, 0.9787]])
+tensor([[0.7329, 0.5935],
+        [0.2473, 0.4460],
+        [0.8068, 0.9787]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">cross_prod = my_tensor.cross(my_tensor)
+print( cross_prod )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[ 4.3144e-09,  8.3869e-09,  3.0715e-09],
+        [ 4.7199e-09,  6.7144e-09, -7.1207e-09]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">maxtrix_prod = my_tensor.mm( my_tensor.t() )
+print( maxtrix_prod )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[1.2493, 1.3350],
+        [1.3350, 1.5091]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">element_mult = my_tensor.mul(my_tensor)
+print( element_mult )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[0.5371, 0.0612, 0.6510],
+        [0.3523, 0.1989, 0.9579]])
+</code></pre>
+
+</div>
+
+
+<h3 id="operations-on-the-gpu">Operations on the GPU</h3>
+
+<p>The crux of the <code>torch.Tensor</code> is application to the GPU for faster use in network-based modeling.</p>
+
+<pre><code class="language-python">if torch.cuda.is_available():
+    my_tensor.cuda(True)
+</code></pre>
+
+<pre><code class="language-python">my_tensor.is_cuda
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">False
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Create a numpy array
+x = np.array([[1, 2], [3, 4]])
+print(x)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[[1 2]
+ [3 4]]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Convert the numpy array to a torch tensor
+y = torch.from_numpy(x)
+print(y)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">tensor([[1, 2],
+        [3, 4]])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Convert the torch tensor to a numpy array
+z = y.numpy()
+print(z)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[[1 2]
+ [3 4]]
+</code></pre>
+
+</div>
+
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This post explains the basic operations of the <code>ndarray</code> and how <code>Tensor</code> adds value.  Later posts will explore how the <code>Tensor</code> is used in PyTorch and network modeling.</p>
+
+<h3 id="references-framemworks">References: framemworks</h3>
+
+<p><strong>Numpy</strong></p>
+
+<ul>
+<li><a href="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Numpy_Python_Cheat_Sheet.pdf">ref: datacamp numpy cheatsheet</a></li>
+<li><a href="https://docs.scipy.org/doc/numpy/user/quickstart.html">docs: numpy quickstart</a></li>
+<li><a href="https://docs.scipy.org/doc/numpy/reference/">docs: numpy api</a></li>
+</ul>
+
+<p><strong>PyTorch</strong></p>
+
+<ul>
+<li><a href="https://pytorch.org/tutorials/beginner/ptcheat.html">docs: pytorch cheatsheet</a></li>
+<li><a href="https://pytorch.org/docs/stable/index.html">docs: pytorch api</a></li>
+<li><a href="https://www.kdnuggets.com/2019/08/pytorch-cheat-sheet-beginners.html">ref: kdnuggets pytorch</a></li>
+<li><a href="https://github.com/Tgaaly/pytorch-cheatsheet/blob/master/README.md">ref: pytorch cheat</a></li>
+<li><a href="https://github.com/bfortuner/pytorch-kaggle-starter">ref: kaggle pytorch starter with helper functions</a></li>
+</ul>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#basics-of-tensors-and-matrices">Basics of Tensors and Matrices</a>
+<ul>
+<li><a href="#basic-terminology">Basic terminology</a></li>
+<li><a href="#the-need-for-the-tensor-construct">The need for the Tensor construct</a></li>
+</ul></li>
+<li><a href="#numpy-ndarray">Numpy ndarray</a>
+<ul>
+<li><a href="#configure-environment">Configure environment</a></li>
+<li><a href="#background">Background</a></li>
+<li><a href="#operations">Operations</a></li>
+<li><a href="#selection">Selection</a></li>
+<li><a href="#creation">Creation</a></li>
+</ul></li>
+<li><a href="#pytorch-tensor">PyTorch Tensor</a>
+<ul>
+<li><a href="#creation-1">Creation</a></li>
+<li><a href="#selection-and-reshaping">Selection and reshaping</a></li>
+<li><a href="#operations-1">Operations</a></li>
+<li><a href="#operations-on-the-gpu">Operations on the GPU</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#references-framemworks">References: framemworks</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/numpy">numpy
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/pytorch">pytorch
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/deeplearning">deeplearning
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_nlp-explain_metrics/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Explaining Difficult (Abstract) Subjects to Customers
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_math-competitive_edge/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">A Letter to Students: Math is the Basis for Competitive Edge in Every Field&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

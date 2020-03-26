@@ -6,10 +6,19 @@
     <description>Recent content in Data_Science on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/categories/data_science/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>An Introduction to Numpy and Pandas</title>
+      <link>https://imtorgdemo.github.io/posts/blog_ds-intro_numpy_pandas/</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_ds-intro_numpy_pandas/</guid>
+      <description>Numpy and Pandas are the basic data science tools in the Python environment. Having a good understanding of their capabilities and how they process data is imperative to writing optimal code. This post provides an introductory overview and a refresher for those who might come back to the libraries after taking a break. The end of the post explains external interfaces for increasing code execution and performing more sophisticated matrix operations.</description>
+    </item>
     
     <item>
       <title>The R and Pandas Dataframe</title>
@@ -19,6 +28,15 @@
       <guid>https://imtorgdemo.github.io/posts/blog_ds-dataframe_r_and_pandas/</guid>
       <description>Although Pandas uses the Dataframe as its primary data structure, just as R does, the Pandas syntax and underlying fundamentals can be disorienting for R users. This post will describe some basic comparisons and inconsistencies between the two languages. It will also provide some examples of very non-intuitive solutions to common problems.
 Introduction In the Datascience R versus Pandas debate, it is really an apples and oranges comparison. R is a domain specific language in the field of statistics, analytics, and data visualization.</description>
+    </item>
+    
+    <item>
+      <title>Working with Matrices and Tensors in PyTorch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-matrix_tensor_operations/</link>
+      <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-matrix_tensor_operations/</guid>
+      <description>The Artificial Intelligence field is moving from single-function libraries to frameworks for building different network models. TensorFlow was one of the first, and has strong production capabilities, such as process optimizations. However, its syntax is unintuitive, and the library has a reputation for being difficult for testing new models. This led to many organizations adopting PyTorch, with underlying Numpy, for designing network models. This post describes the basic data structures for working with Matrices and Tensors in PyTorch.</description>
     </item>
     
   </channel>

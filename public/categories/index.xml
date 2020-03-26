@@ -6,10 +6,28 @@
     <description>Recent content in Categories on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Data_Science</title>
+      <link>https://imtorgdemo.github.io/categories/data_science/</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/data_science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Introduction_Tutorial</title>
+      <link>https://imtorgdemo.github.io/categories/introduction_tutorial/</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/introduction_tutorial/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>BestPractice</title>
@@ -44,15 +62,6 @@
       <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/comparison/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Data_Science</title>
-      <link>https://imtorgdemo.github.io/categories/data_science/</link>
-      <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/data_science/</guid>
       <description></description>
     </item>
     
@@ -251,6 +260,24 @@
       <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/category1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Best_Practice</title>
+      <link>https://imtorgdemo.github.io/categories/best_practice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/best_practice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Computer_Science_and_Programming</title>
+      <link>https://imtorgdemo.github.io/categories/computer_science_and_programming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/computer_science_and_programming/</guid>
       <description></description>
     </item>
     
