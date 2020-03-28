@@ -6,10 +6,28 @@
     <description>Recent content in Categories on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Data_Engineering_and_Storage</title>
+      <link>https://imtorgdemo.github.io/categories/data_engineering_and_storage/</link>
+      <pubDate>Thu, 26 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/data_engineering_and_storage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Introduction_Tutorial</title>
+      <link>https://imtorgdemo.github.io/categories/introduction_tutorial/</link>
+      <pubDate>Thu, 26 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/introduction_tutorial/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Data_Science</title>
@@ -17,15 +35,6 @@
       <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/data_science/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Introduction_Tutorial</title>
-      <link>https://imtorgdemo.github.io/categories/introduction_tutorial/</link>
-      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/introduction_tutorial/</guid>
       <description></description>
     </item>
     

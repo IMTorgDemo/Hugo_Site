@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Working with XML Data Using Python // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Working with XML Data Using Python" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_datastore-xml_elementtree/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Working with XML Data Using Python</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_datastore-xml_elementtree/" class="article-date">
+                <time datetime='2020-03-26T00:00:00.000&#43;00:00' itemprop="datePublished">2020-03-26</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/introduction_tutorial">Introduction_Tutorial</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/data_engineering_and_storage">Data_Engineering_and_Storage</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Together with JSON, the XML format is the most popular structure for data on the web.  It is not only used for data storage, but also for websites, in the form of HTML.  XML was seen as the ubiquitous data format, but with the ascent of Javascript, JSON became more popular for web applications.  Still, XML is an effective format, and learning to parse and work with it is necessary for anyone who works with a variety of data sources.</p>
+
+<h2 id="introduction-to-elementtree">Introduction to ElementTree</h2>
+
+<p>ElementTree is written in C (formerly cElementTree), and is part of the Python stdlib.  While the API may not be as easy as some other modules, such as minidom and beautifulsoup, ElementTree is quite fast and efficient.  Below are the results of tests performed by the ElementTree maintainers:</p>
+
+<pre><code>Library                         Time    Space
+xml.dom.minidom (Python 2.1)    6.3 s   80000K
+gnosis.objectify                2.0 s   22000k
+xml.dom.minidom (Python 2.4)    1.4 s   53000k
+ElementTree 1.2                 1.6 s   14500k  
+ElementTree 1.2.4/1.3           1.1 s   14500k  
+cDomlette (C extension)         0.540 s 20500k
+PyRXPU (C extension)            0.175 s 10850k
+libxml2 (C extension)           0.098 s 16000k
+readlines (read as utf-8)       0.093 s 8850k
+cElementTree (C extension)  --&gt; 0.047 s 4900K &lt;--
+readlines (read as ascii)       0.032 s 5050k  
+</code></pre>
+
+<h2 id="config">Config</h2>
+
+<p>Begin by ensuring that your xml file is well-formed.  You can get a sense of this by visual inspection.  If the XML is not valid, then you will not be able to load the file.</p>
+
+<pre><code class="language-python">! ls Data/example/
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">example.xml
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">! head -n3 Data/example/example.xml
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;collection&gt;
+    &lt;genre category=&quot;Action&quot;&gt;
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">! tail -n3 Data/example/example.xml
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">        &lt;/decade&gt;
+    &lt;/genre&gt;
+&lt;/collection&gt;
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">import xml.etree.ElementTree as ET
+</code></pre>
+
+<pre><code class="language-python">file_path = './Data/example/example.xml'
+tree = ET.parse(file_path)
+</code></pre>
+
+<h2 id="explore">Explore</h2>
+
+<p>Continue exploring the structure of the xml.  There is typically a level of the branch where there are many leaves.  These leaves are often the data you are most interested in examining.</p>
+
+<pre><code class="language-python">root = tree.getroot()
+</code></pre>
+
+<pre><code class="language-python">print( root )
+print( root.tag )
+print( root.attrib )
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;Element 'collection' at 0x7fc18cd36db8&gt;
+collection
+{}
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">[(x.tag, x.attrib) for x in root]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[('genre', {'category': 'Action'}), ('genre', {'category': 'Thriller'})]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">[(x.tag, x.attrib) for idx,x in enumerate(root.iter()) if idx &lt; 10]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[('collection', {}),
+ ('genre', {'category': 'Action'}),
+ ('decade', {'years': '1980s'}),
+ ('movie',
+  {'favorite': 'True', 'title': 'Indiana Jones: The raiders of the lost Ark'}),
+ ('format', {'multiple': 'No'}),
+ ('year', {}),
+ ('rating', {}),
+ ('description', {}),
+ ('movie', {'favorite': 'True', 'title': 'THE KARATE KID'}),
+ ('format', {'multiple': 'Yes'})]
+</code></pre>
+
+</div>
+
+
+<p>It looks like a path of branches gets us to our <code>movie</code> leaf.  To get there we must follow: <code>/genre/decade/movie</code>.</p>
+
+<pre><code class="language-python">print(ET.tostring(root, encoding='utf8').decode('utf8')[:700])
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;?xml version='1.0' encoding='utf8'?&gt;
+&lt;collection&gt;
+    &lt;genre category=&quot;Action&quot;&gt;
+        &lt;decade years=&quot;1980s&quot;&gt;
+            &lt;movie favorite=&quot;True&quot; title=&quot;Indiana Jones: The raiders of the lost Ark&quot;&gt;
+                &lt;format multiple=&quot;No&quot;&gt;DVD&lt;/format&gt;
+                &lt;year&gt;1981&lt;/year&gt;
+                &lt;rating&gt;PG&lt;/rating&gt;
+                &lt;description&gt;
+                'Archaeologist and adventurer Indiana Jones 
+                is hired by the U.S. government to find the Ark of the 
+                Covenant before the Nazis.'
+                &lt;/description&gt;
+            &lt;/movie&gt;
+               &lt;movie favorite=&quot;True&quot; title=&quot;THE KARATE KID&quot;&gt;
+               &lt;format multiple=&quot;Yes&quot;&gt;DVD,Online&lt;/format&gt;
+ 
+</code></pre>
+
+</div>
+
+
+<h2 id="xpath-expressions">XPath Expressions</h2>
+
+<p>XPath is a query language used to search through an XML quickly and easily. XPath is a &ldquo;path like&rdquo; syntax to identify and navigate nodes in an XML document.</p>
+
+<p>ElementTree has a <code>.findall()</code> function that will traverse the immediate children of the referenced element. You can use XPath expressions to specify more useful searches.</p>
+
+<pre><code class="language-python">for movie in root.findall(&quot;./genre/decade/movie&quot;):
+    print(movie.attrib)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'favorite': 'True', 'title': 'Indiana Jones: The raiders of the lost Ark'}
+{'favorite': 'True', 'title': 'THE KARATE KID'}
+{'favorite': 'False', 'title': 'Back 2 the Future'}
+{'favorite': 'False', 'title': 'X-Men'}
+{'favorite': 'True', 'title': 'Batman Returns'}
+{'favorite': 'False', 'title': 'Reservoir Dogs'}
+{'favorite': 'False', 'title': 'ALIEN'}
+{'favorite': 'True', 'title': &quot;Ferris Bueller's Day Off&quot;}
+{'favorite': 'FALSE', 'title': 'American Psycho'}
+</code></pre>
+
+</div>
+
+
+<p>Search on child tag.</p>
+
+<pre><code class="language-python">for leaf in root.findall(&quot;./genre/decade/movie/[year='1992']&quot;):
+    print(leaf.attrib)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'favorite': 'True', 'title': 'Batman Returns'}
+{'favorite': 'False', 'title': 'Reservoir Dogs'}
+</code></pre>
+
+</div>
+
+
+<p>Search on child tag&rsquo;s attribute</p>
+
+<pre><code class="language-python">for leaf in root.findall(&quot;./genre/decade/movie/format/[@multiple='Yes']&quot;):
+    print(leaf)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;Element 'format' at 0x7fc18c4e6138&gt;
+&lt;Element 'format' at 0x7fc18c4e64a8&gt;
+&lt;Element 'format' at 0x7fc18c4e69f8&gt;
+</code></pre>
+
+</div>
+
+
+<p>use <code>...</code> inside of XPath to return the parent element of the current element.</p>
+
+<pre><code class="language-python">for leaf in root.findall(&quot;./genre/decade/movie/format/[@multiple='Yes']...&quot;):
+    print(leaf.attrib)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'favorite': 'True', 'title': 'THE KARATE KID'}
+{'favorite': 'False', 'title': 'X-Men'}
+{'favorite': 'False', 'title': 'ALIEN'}
+</code></pre>
+
+</div>
+
+
+<h2 id="modifying-xml">Modifying XML</h2>
+
+<h3 id="single-element">Single element</h3>
+
+<p>Obtain a single element of the tree and assign it to a variable.</p>
+
+<pre><code class="language-python">b2tf = root.find(&quot;./genre/decade/movie[@title='Back 2 the Future']&quot;)
+print(b2tf)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;Element 'movie' at 0x7fc18c4e6278&gt;
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">b2tf.attrib
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'favorite': 'False', 'title': 'Back 2 the Future'}
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">b2tf.attrib[&quot;title&quot;] = &quot;Back to the Future&quot;
+print(b2tf.attrib)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'favorite': 'False', 'title': 'Back to the Future'}
+</code></pre>
+
+</div>
+
+
+<p>Because the assignment is not a deep copy, the change is made, in-place.  Now, we can write the corrected tree to file.</p>
+
+<pre><code class="language-python">for movie in root.findall(&quot;./genre/decade/movie&quot;):
+    print(movie.attrib)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'favorite': 'True', 'title': 'Indiana Jones: The raiders of the lost Ark'}
+{'favorite': 'True', 'title': 'THE KARATE KID'}
+{'favorite': 'False', 'title': 'Back to the Future'}
+{'favorite': 'False', 'title': 'X-Men'}
+{'favorite': 'True', 'title': 'Batman Returns'}
+{'favorite': 'False', 'title': 'Reservoir Dogs'}
+{'favorite': 'False', 'title': 'ALIEN'}
+{'favorite': 'True', 'title': &quot;Ferris Bueller's Day Off&quot;}
+{'favorite': 'FALSE', 'title': 'American Psycho'}
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">import os
+path = os.path.dirname(file_path)
+corr_file = os.path.join(path,&quot;example_corr.xml&quot;)
+tree.write(corr_file)
+</code></pre>
+
+<pre><code class="language-python">! ls Data/example
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">example_corr.xml  example.xml
+</code></pre>
+
+</div>
+
+
+<h3 id="multiple-elements">Multiple elements</h3>
+
+<p>You can use regex to find commas - that will tell whether the multiple attribute should be &ldquo;Yes&rdquo; or &ldquo;No&rdquo;. Adding and modifying attributes can be done easily with the .set() method.</p>
+
+<pre><code class="language-python">for form in root.findall(&quot;./genre/decade/movie/format&quot;):
+    print(form.attrib, form.text)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'multiple': 'No'} DVD
+{'multiple': 'Yes'} DVD,Online
+{'multiple': 'False'} Blu-ray
+{'multiple': 'Yes'} dvd, digital
+{'multiple': 'No'} VHS
+{'multiple': 'No'} Online
+{'multiple': 'Yes'} DVD
+{'multiple': 'No'} DVD
+{'multiple': 'No'} blue-ray
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">import re
+for form in root.findall(&quot;./genre/decade/movie/format&quot;):
+    # Search for the commas in the format text
+    match = re.search(',',form.text)
+    if match:
+        form.set('multiple','Yes')
+    else:
+        form.set('multiple','No')
+</code></pre>
+
+<pre><code class="language-python">for form in root.findall(&quot;./genre/decade/movie/format&quot;):
+    print(form.attrib, form.text)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'multiple': 'No'} DVD
+{'multiple': 'Yes'} DVD,Online
+{'multiple': 'No'} Blu-ray
+{'multiple': 'Yes'} dvd, digital
+{'multiple': 'No'} VHS
+{'multiple': 'No'} Online
+{'multiple': 'No'} DVD
+{'multiple': 'No'} DVD
+{'multiple': 'No'} blue-ray
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">import os
+path = os.path.dirname(file_path)
+corr_file = os.path.join(path,&quot;example_corr.xml&quot;)
+tree.write(corr_file)
+</code></pre>
+
+<h3 id="move-elements">Move elements</h3>
+
+<p>Check if movies are correctly categorized by year, and fix them if not.</p>
+
+<pre><code class="language-python">for decade in root.findall(&quot;./genre/decade&quot;):
+    print(decade.attrib)
+    for year in decade.findall(&quot;./movie/year&quot;):
+        print(year.text, '\n')
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'years': '1980s'}
+1981 
+
+1984 
+
+1985 
+
+{'years': '1990s'}
+2000 
+
+1992 
+
+1992 
+
+{'years': '1970s'}
+1979 
+
+{'years': '1980s'}
+1986 
+
+2000 
+
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">for movie in root.findall(&quot;./genre/decade/movie/[year='2000']&quot;):
+    print(movie.attrib)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">{'favorite': 'False', 'title': 'X-Men'}
+{'favorite': 'FALSE', 'title': 'American Psycho'}
+</code></pre>
+
+</div>
+
+
+<p>Add a new decade tag to the end of the XML using the <code>.SubElement()</code> method.</p>
+
+<pre><code class="language-python">action = root.find(&quot;./genre[@category='Action']&quot;)
+new_dec = ET.SubElement(action, 'decade')
+new_dec.attrib[&quot;years&quot;] = '2000s'
+
+print(ET.tostring(action, encoding='utf8').decode('utf8')[:500])
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;?xml version='1.0' encoding='utf8'?&gt;
+&lt;genre category=&quot;Action&quot;&gt;
+        &lt;decade years=&quot;1980s&quot;&gt;
+            &lt;movie favorite=&quot;True&quot; title=&quot;Indiana Jones: The raiders of the lost Ark&quot;&gt;
+                &lt;format multiple=&quot;No&quot;&gt;DVD&lt;/format&gt;
+                &lt;year&gt;1981&lt;/year&gt;
+                &lt;rating&gt;PG&lt;/rating&gt;
+                &lt;description&gt;
+                'Archaeologist and adventurer Indiana Jones 
+                is hired by the U.S. government to find the Ark of the 
+                Covenant before th
+</code></pre>
+
+</div>
+
+
+<p>Use <code>.append()</code> and <code>.remove()</code> to move the element.</p>
+
+<pre><code class="language-python">xmen = root.find(&quot;./genre/decade/movie[@title='X-Men']&quot;)
+dec2000s = root.find(&quot;./genre[@category='Action']/decade[@years='2000s']&quot;)
+dec2000s.append(xmen)
+dec1990s = root.find(&quot;./genre[@category='Action']/decade[@years='1990s']&quot;)
+dec1990s.remove(xmen)
+</code></pre>
+
+<pre><code class="language-python">print(ET.tostring(action, encoding='utf8').decode('utf8')[:500])
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">&lt;?xml version='1.0' encoding='utf8'?&gt;
+&lt;genre category=&quot;Action&quot;&gt;
+        &lt;decade years=&quot;1980s&quot;&gt;
+            &lt;movie favorite=&quot;True&quot; title=&quot;Indiana Jones: The raiders of the lost Ark&quot;&gt;
+                &lt;format multiple=&quot;No&quot;&gt;DVD&lt;/format&gt;
+                &lt;year&gt;1981&lt;/year&gt;
+                &lt;rating&gt;PG&lt;/rating&gt;
+                &lt;description&gt;
+                'Archaeologist and adventurer Indiana Jones 
+                is hired by the U.S. government to find the Ark of the 
+                Covenant before th
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">import os
+path = os.path.dirname(file_path)
+corr_file = os.path.join(path,&quot;example_corr.xml&quot;)
+tree.write(corr_file)
+</code></pre>
+
+<h2 id="xml-schema-xsd">XML schema (.xsd)</h2>
+
+<p>ElementTree does not have support for XML schema.  However, lxml library is based on ElementTree, and it does have support for schemas.  If you have access to external libraries and need the functionality, then lxml may solve your problems.</p>
+
+<p>With a <code>XMLSchema</code> you can enforce the schema standards.</p>
+
+<pre><code class="language-python">from lxml import etree
+
+# Create the schema object
+with open(xsd_file) as f:
+    xmlschema_doc = etree.parse(f)
+xmlschema = etree.XMLSchema(xmlschema_doc)
+
+# Create a tree for the XML document
+doc = etree.parse(xml_text)
+
+# Validate the XML document using the schema
+return xmlschema.validate(doc)
+
+# Or if you want a exception to be raised
+xmlschema.assertValid(doc)
+</code></pre>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Working with XML is an important skill, and Python stdlib&rsquo;s ElementTree library is invaluable for getting things done fast.  With a little knowledge of the ElementTree API and XPath expressions, you&rsquo;re fully capable of most functionality needed for XML CRUD operations.</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#introduction-to-elementtree">Introduction to ElementTree</a></li>
+<li><a href="#config">Config</a></li>
+<li><a href="#explore">Explore</a></li>
+<li><a href="#xpath-expressions">XPath Expressions</a></li>
+<li><a href="#modifying-xml">Modifying XML</a>
+<ul>
+<li><a href="#single-element">Single element</a></li>
+<li><a href="#multiple-elements">Multiple elements</a></li>
+<li><a href="#move-elements">Move elements</a></li>
+</ul></li>
+<li><a href="#xml-schema-xsd">XML schema (.xsd)</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/xml">xml
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    
+    <a href="/posts/blog_ds-intro_numpy_pandas/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">An Introduction to Numpy and Pandas&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

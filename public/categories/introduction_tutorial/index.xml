@@ -6,10 +6,19 @@
     <description>Recent content in Introduction_Tutorial on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/categories/introduction_tutorial/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Working with XML Data Using Python</title>
+      <link>https://imtorgdemo.github.io/posts/blog_datastore-xml_elementtree/</link>
+      <pubDate>Thu, 26 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_datastore-xml_elementtree/</guid>
+      <description>Together with JSON, the XML format is the most popular structure for data on the web. It is not only used for data storage, but also for websites, in the form of HTML. XML was seen as the ubiquitous data format, but with the ascent of Javascript, JSON became more popular for web applications. Still, XML is an effective format, and learning to parse and work with it is necessary for anyone who works with a variety of data sources.</description>
+    </item>
     
     <item>
       <title>An Introduction to Numpy and Pandas</title>
