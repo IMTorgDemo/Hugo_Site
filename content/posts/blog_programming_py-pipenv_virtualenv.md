@@ -1,0 +1,229 @@
+
++++
+title = "A Cheatsheet for Python's Pipenv"
+date = "2020-03-29"
+author = "Jason Beach"
+categories = ["Cheatsheet", "Computer_Science_and_Programming"]
+tags = ["python", "pipenv", "virtual_environment"]
++++
+
+
+Python's Pipenv and Pyenv make a strong team for creating a cosistent development environment for exact specifications.  Pyenv allows you to choose from any Python version for your project.  Pipenv attempts to improve upon the original virtual environment (venv) and requirements.txt file.  It does some things well, including integration of virtual environment with dependecy management, and is straight-forward to use.  Unfortunately, it doesn't always live up to the originally-planned, ambitious, goals.  This cheatsheet provides commands for functionality that works, and some work-arounds when it doesn't.
+
+## Getting Started
+
+__Pyenv__ takes care of the python binary and all related tools. It stores everything under $PYENV_ROOT.
+
+__Pipenv__ takes care of:
+
+* calculating the complete set of dependencies;
+* (in installation mode) telling virtualenv and pip where to install the dependencies;
+* (in runtime mode) making available an environment with the right version of the Python interpreter (via pyenv) and the right set of packages (via virtualenv).
+
+Pipenv creates a directory that maintains your dependencies.  From the repo listed functionality, it has interesting interaction:
+
+* Enables truly deterministic builds, while easily specifying only what you want.
+* Generates and checks file hashes for locked dependencies.
+* Automatically install required Pythons, if pyenv is available.
+* Automatically finds your project home, recursively, by looking for a Pipfile.
+* Automatically generates a Pipfile, if one doesn't exist.
+* Automatically creates a virtualenv in a standard location.
+* Automatically adds/removes packages to a Pipfile when they are un/installed.
+* Automatically loads .env files, if they exist.
+
+You may hear some harping over non-deterministic builds.  This is because Python's requirement.txt file does not include versioning of required modules.  This can cause big problems during automated deployments.
+
+## Prepare Python
+
+### Install pyenv
+
+```python
+brew uninstall pyenv
+```
+
+### Install Python version
+
+```python
+pyenv install <version>    #such as, 3.7.2
+```
+
+### Available versions
+
+```python
+pyenv install --list
+```
+
+### Change global / local (dir) versions
+
+```python
+pyenv global <version>   #such as, 3.6.6
+```
+
+```python
+pyenv local <version>   #such as, 3.6.6
+```
+
+## Prepare Development Environment
+
+### Install pipenv
+
+```python
+pip3 install pipenv
+```
+
+### Initiate directory
+
+```python
+mkdir project; cd project;
+pipenv --three   #or --two
+```
+
+### Activate
+
+```python
+pipenv shell
+```
+
+### Locate Venv
+
+```python
+pipenv --where          #output project home information.
+```
+
+```python
+pipenv --venv           #output virtualenv information.
+```
+
+```python
+whereis python
+```
+
+### Check python version
+
+```python
+python --version
+```
+
+### Check path
+
+```python
+python
+>>> import sys
+>>> sys.executable
+quit()
+```
+
+### Run with pipenv
+
+```python
+pipenv run <command>    #such as, `python manage.py runserver`
+```
+
+### Add scripts to pipfile
+```
+#pipfile
+[scripts]
+server = "python manage.py runserver"
+```
+
+And run with the following
+
+```python
+pipenv run server
+```
+
+## Managing Dependencies
+
+Pipenv generates the file Pipfile.lock, which is used to produce deterministic builds.  Issues can occur with Pipfile.lock, so it is best to create a requirements.txt file from your Pipenv, as a backup.
+
+### Install from requirements.txt
+
+```python
+pipenv install -r ./requirements.txt
+```
+
+### Create requirements.txt
+
+Generate requirements.txt file from existing Pipfile.lock without locking?  When you run `pipenv lock -r` it ignores existing Pipfile.lock and does locking process again.   There are issues around running this that are documented in this github [issue](https://github.com/pypa/pipenv/issues/3493).
+
+```python
+pipenv run pip freeze > requirements.txt
+```
+
+Another approach is to use:
+
+```python
+pipenv lock --keep-outdated -d -r > requirements.txt
+```
+
+### Install and uninstall a package
+
+```python
+pipenv install <module>    #such as, camelcase
+```
+
+```python
+pipenv uninstall <module>    #such as, camelcase
+```
+
+```python
+pipenv install <module> --dev    #only for development, such as, nose
+```
+
+### Check local packages
+
+```python
+pipenv lock -r
+```
+
+### Check dependency graph
+
+```python
+pipenv graph
+```
+
+### Ignore pipfile
+
+```python
+pipenv install --ignore-pipfile
+```
+
+## Prepare Deployment
+
+### Set lockfile - before deployment
+
+```python
+pipenv lock
+```
+
+### Install module's into virtual environment 
+
+```python
+pipenv install -e .
+```
+
+### Install module onto machine
+
+```python
+pip install .
+```
+
+### Check security vulnerabilities
+
+```python
+pipenv check
+```
+
+## Wrapping Up
+
+### Exiting the virtualenv
+
+```python
+exit
+```
+
+### Remove the virtualenv
+
+```python
+pipenv --rm             #remove the virtualenv
+```

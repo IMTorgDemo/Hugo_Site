@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A Cheatsheet for Python&#39;s Pipenv // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="A Cheatsheet for Python&#39;s Pipenv" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_programming_py-pipenv_virtualenv/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">A Cheatsheet for Python&#39;s Pipenv</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_programming_py-pipenv_virtualenv/" class="article-date">
+                <time datetime='2020-03-29T00:00:00.000&#43;00:00' itemprop="datePublished">2020-03-29</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/cheatsheet">Cheatsheet</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/computer_science_and_programming">Computer_Science_and_Programming</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Python&rsquo;s Pipenv and Pyenv make a strong team for creating a cosistent development environment for exact specifications.  Pyenv allows you to choose from any Python version for your project.  Pipenv attempts to improve upon the original virtual environment (venv) and requirements.txt file.  It does some things well, including integration of virtual environment with dependecy management, and is straight-forward to use.  Unfortunately, it doesn&rsquo;t always live up to the originally-planned, ambitious, goals.  This cheatsheet provides commands for functionality that works, and some work-arounds when it doesn&rsquo;t.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p><strong>Pyenv</strong> takes care of the python binary and all related tools. It stores everything under $PYENV_ROOT.</p>
+
+<p><strong>Pipenv</strong> takes care of:</p>
+
+<ul>
+<li>calculating the complete set of dependencies;</li>
+<li>(in installation mode) telling virtualenv and pip where to install the dependencies;</li>
+<li>(in runtime mode) making available an environment with the right version of the Python interpreter (via pyenv) and the right set of packages (via virtualenv).</li>
+</ul>
+
+<p>Pipenv creates a directory that maintains your dependencies.  From the repo listed functionality, it has interesting interaction:</p>
+
+<ul>
+<li>Enables truly deterministic builds, while easily specifying only what you want.</li>
+<li>Generates and checks file hashes for locked dependencies.</li>
+<li>Automatically install required Pythons, if pyenv is available.</li>
+<li>Automatically finds your project home, recursively, by looking for a Pipfile.</li>
+<li>Automatically generates a Pipfile, if one doesn&rsquo;t exist.</li>
+<li>Automatically creates a virtualenv in a standard location.</li>
+<li>Automatically adds/removes packages to a Pipfile when they are un/installed.</li>
+<li>Automatically loads .env files, if they exist.</li>
+</ul>
+
+<p>You may hear some harping over non-deterministic builds.  This is because Python&rsquo;s requirement.txt file does not include versioning of required modules.  This can cause big problems during automated deployments.</p>
+
+<h2 id="prepare-python">Prepare Python</h2>
+
+<h3 id="install-pyenv">Install pyenv</h3>
+
+<pre><code class="language-python">brew uninstall pyenv
+</code></pre>
+
+<h3 id="install-python-version">Install Python version</h3>
+
+<pre><code class="language-python">pyenv install &lt;version&gt;    #such as, 3.7.2
+</code></pre>
+
+<h3 id="available-versions">Available versions</h3>
+
+<pre><code class="language-python">pyenv install --list
+</code></pre>
+
+<h3 id="change-global-local-dir-versions">Change global / local (dir) versions</h3>
+
+<pre><code class="language-python">pyenv global &lt;version&gt;   #such as, 3.6.6
+</code></pre>
+
+<pre><code class="language-python">pyenv local &lt;version&gt;   #such as, 3.6.6
+</code></pre>
+
+<h2 id="prepare-development-environment">Prepare Development Environment</h2>
+
+<h3 id="install-pipenv">Install pipenv</h3>
+
+<pre><code class="language-python">pip3 install pipenv
+</code></pre>
+
+<h3 id="initiate-directory">Initiate directory</h3>
+
+<pre><code class="language-python">mkdir project; cd project;
+pipenv --three   #or --two
+</code></pre>
+
+<h3 id="activate">Activate</h3>
+
+<pre><code class="language-python">pipenv shell
+</code></pre>
+
+<h3 id="locate-venv">Locate Venv</h3>
+
+<pre><code class="language-python">pipenv --where          #output project home information.
+</code></pre>
+
+<pre><code class="language-python">pipenv --venv           #output virtualenv information.
+</code></pre>
+
+<pre><code class="language-python">whereis python
+</code></pre>
+
+<h3 id="check-python-version">Check python version</h3>
+
+<pre><code class="language-python">python --version
+</code></pre>
+
+<h3 id="check-path">Check path</h3>
+
+<pre><code class="language-python">python
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.executable
+quit()
+</code></pre>
+
+<h3 id="run-with-pipenv">Run with pipenv</h3>
+
+<pre><code class="language-python">pipenv run &lt;command&gt;    #such as, `python manage.py runserver`
+</code></pre>
+
+<h3 id="add-scripts-to-pipfile">Add scripts to pipfile</h3>
+
+<pre><code>#pipfile
+[scripts]
+server = &quot;python manage.py runserver&quot;
+</code></pre>
+
+<p>And run with the following</p>
+
+<pre><code class="language-python">pipenv run server
+</code></pre>
+
+<h2 id="managing-dependencies">Managing Dependencies</h2>
+
+<p>Pipenv generates the file Pipfile.lock, which is used to produce deterministic builds.  Issues can occur with Pipfile.lock, so it is best to create a requirements.txt file from your Pipenv, as a backup.</p>
+
+<h3 id="install-from-requirements-txt">Install from requirements.txt</h3>
+
+<pre><code class="language-python">pipenv install -r ./requirements.txt
+</code></pre>
+
+<h3 id="create-requirements-txt">Create requirements.txt</h3>
+
+<p>Generate requirements.txt file from existing Pipfile.lock without locking?  When you run <code>pipenv lock -r</code> it ignores existing Pipfile.lock and does locking process again.   There are issues around running this that are documented in this github <a href="https://github.com/pypa/pipenv/issues/3493">issue</a>.</p>
+
+<pre><code class="language-python">pipenv run pip freeze &gt; requirements.txt
+</code></pre>
+
+<p>Another approach is to use:</p>
+
+<pre><code class="language-python">pipenv lock --keep-outdated -d -r &gt; requirements.txt
+</code></pre>
+
+<h3 id="install-and-uninstall-a-package">Install and uninstall a package</h3>
+
+<pre><code class="language-python">pipenv install &lt;module&gt;    #such as, camelcase
+</code></pre>
+
+<pre><code class="language-python">pipenv uninstall &lt;module&gt;    #such as, camelcase
+</code></pre>
+
+<pre><code class="language-python">pipenv install &lt;module&gt; --dev    #only for development, such as, nose
+</code></pre>
+
+<h3 id="check-local-packages">Check local packages</h3>
+
+<pre><code class="language-python">pipenv lock -r
+</code></pre>
+
+<h3 id="check-dependency-graph">Check dependency graph</h3>
+
+<pre><code class="language-python">pipenv graph
+</code></pre>
+
+<h3 id="ignore-pipfile">Ignore pipfile</h3>
+
+<pre><code class="language-python">pipenv install --ignore-pipfile
+</code></pre>
+
+<h2 id="prepare-deployment">Prepare Deployment</h2>
+
+<h3 id="set-lockfile-before-deployment">Set lockfile - before deployment</h3>
+
+<pre><code class="language-python">pipenv lock
+</code></pre>
+
+<h3 id="install-module-s-into-virtual-environment">Install module&rsquo;s into virtual environment</h3>
+
+<pre><code class="language-python">pipenv install -e .
+</code></pre>
+
+<h3 id="install-module-onto-machine">Install module onto machine</h3>
+
+<pre><code class="language-python">pip install .
+</code></pre>
+
+<h3 id="check-security-vulnerabilities">Check security vulnerabilities</h3>
+
+<pre><code class="language-python">pipenv check
+</code></pre>
+
+<h2 id="wrapping-up">Wrapping Up</h2>
+
+<h3 id="exiting-the-virtualenv">Exiting the virtualenv</h3>
+
+<pre><code class="language-python">exit
+</code></pre>
+
+<h3 id="remove-the-virtualenv">Remove the virtualenv</h3>
+
+<pre><code class="language-python">pipenv --rm             #remove the virtualenv
+</code></pre>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#prepare-python">Prepare Python</a>
+<ul>
+<li><a href="#install-pyenv">Install pyenv</a></li>
+<li><a href="#install-python-version">Install Python version</a></li>
+<li><a href="#available-versions">Available versions</a></li>
+<li><a href="#change-global-local-dir-versions">Change global / local (dir) versions</a></li>
+</ul></li>
+<li><a href="#prepare-development-environment">Prepare Development Environment</a>
+<ul>
+<li><a href="#install-pipenv">Install pipenv</a></li>
+<li><a href="#initiate-directory">Initiate directory</a></li>
+<li><a href="#activate">Activate</a></li>
+<li><a href="#locate-venv">Locate Venv</a></li>
+<li><a href="#check-python-version">Check python version</a></li>
+<li><a href="#check-path">Check path</a></li>
+<li><a href="#run-with-pipenv">Run with pipenv</a></li>
+<li><a href="#add-scripts-to-pipfile">Add scripts to pipfile</a></li>
+</ul></li>
+<li><a href="#managing-dependencies">Managing Dependencies</a>
+<ul>
+<li><a href="#install-from-requirements-txt">Install from requirements.txt</a></li>
+<li><a href="#create-requirements-txt">Create requirements.txt</a></li>
+<li><a href="#install-and-uninstall-a-package">Install and uninstall a package</a></li>
+<li><a href="#check-local-packages">Check local packages</a></li>
+<li><a href="#check-dependency-graph">Check dependency graph</a></li>
+<li><a href="#ignore-pipfile">Ignore pipfile</a></li>
+</ul></li>
+<li><a href="#prepare-deployment">Prepare Deployment</a>
+<ul>
+<li><a href="#set-lockfile-before-deployment">Set lockfile - before deployment</a></li>
+<li><a href="#install-module-s-into-virtual-environment">Install module&rsquo;s into virtual environment</a></li>
+<li><a href="#install-module-onto-machine">Install module onto machine</a></li>
+<li><a href="#check-security-vulnerabilities">Check security vulnerabilities</a></li>
+</ul></li>
+<li><a href="#wrapping-up">Wrapping Up</a>
+<ul>
+<li><a href="#exiting-the-virtualenv">Exiting the virtualenv</a></li>
+<li><a href="#remove-the-virtualenv">Remove the virtualenv</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/pipenv">pipenv
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/virtual_environment">virtual_environment
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    
+    <a href="/posts/blog_datastore-xml_elementtree/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Working with XML Data Using Python&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

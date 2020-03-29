@@ -6,10 +6,19 @@
     <description>Recent content in python on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Cheatsheet for Python&#39;s Pipenv</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_py-pipenv_virtualenv/</link>
+      <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_py-pipenv_virtualenv/</guid>
+      <description>Python&amp;rsquo;s Pipenv and Pyenv make a strong team for creating a cosistent development environment for exact specifications. Pyenv allows you to choose from any Python version for your project. Pipenv attempts to improve upon the original virtual environment (venv) and requirements.txt file. It does some things well, including integration of virtual environment with dependecy management, and is straight-forward to use. Unfortunately, it doesn&amp;rsquo;t always live up to the originally-planned, ambitious, goals.</description>
+    </item>
     
     <item>
       <title>Working with XML Data Using Python</title>
