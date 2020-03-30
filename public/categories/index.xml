@@ -102,15 +102,6 @@
     </item>
     
     <item>
-      <title>DataScience</title>
-      <link>https://imtorgdemo.github.io/categories/datascience/</link>
-      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/datascience/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>MachineLearning</title>
       <link>https://imtorgdemo.github.io/categories/machinelearning/</link>
       <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
@@ -125,6 +116,15 @@
       <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/mathematics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>datascience</title>
+      <link>https://imtorgdemo.github.io/categories/datascience/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/datascience/</guid>
       <description></description>
     </item>
     
@@ -156,20 +156,20 @@
     </item>
     
     <item>
-      <title>Math</title>
-      <link>https://imtorgdemo.github.io/categories/math/</link>
-      <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/math/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>computerscience</title>
       <link>https://imtorgdemo.github.io/categories/computerscience/</link>
       <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/computerscience/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>math</title>
+      <link>https://imtorgdemo.github.io/categories/math/</link>
+      <pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/math/</guid>
       <description></description>
     </item>
     

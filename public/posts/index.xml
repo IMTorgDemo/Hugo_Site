@@ -17,7 +17,7 @@
       <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/posts/blog_programming_py-pipenv_virtualenv/</guid>
-      <description>Python&amp;rsquo;s Pipenv and Pyenv make a strong team for creating a cosistent development environment for exact specifications. Pyenv allows you to choose from any Python version for your project. Pipenv attempts to improve upon the original virtual environment (venv) and requirements.txt file. It does some things well, including integration of virtual environment with dependecy management, and is straight-forward to use. Unfortunately, it doesn&amp;rsquo;t always live up to the originally-planned, ambitious, goals.</description>
+      <description>Python&amp;rsquo;s Pipenv and Pyenv make a strong team for creating a consistent development environment for exact specifications. Pyenv allows you to choose from any Python version for your project. Pipenv attempts to improve upon the original virtual environment (venv) and requirements.txt file. It does some things well, including integration of virtual environment with dependecy management, and is straight-forward to use. Unfortunately, it doesn&amp;rsquo;t always live up to the originally-planned, ambitious, goals.</description>
     </item>
     
     <item>
