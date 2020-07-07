@@ -3,20 +3,101 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://imtorgdemo.github.io/posts/blog_programming_py-pipenv_virtualenv/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://imtorgdemo.github.io/categories/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://imtorgdemo.github.io/categories/cheatsheet/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</loc>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/categories/data_science/</loc>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/</loc>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/</loc>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/</loc>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/classification/</loc>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/python/</loc>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/pytorch/</loc>
+    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/categories/introduction_tutorial/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_models-neuralnet_pytorch_intro/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/regression/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_bigdata_pyspark-refresher/</loc>
+    <lastmod>2020-06-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/pyspark/</loc>
+    <lastmod>2020-06-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/spark/</loc>
+    <lastmod>2020-06-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming_py-pipenv_virtualenv/</loc>
+    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -26,31 +107,7 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/posts/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/tags/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://imtorgdemo.github.io/tags/pipenv/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/tags/python/</loc>
     <lastmod>2020-03-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -63,12 +120,6 @@
   
   <url>
     <loc>https://imtorgdemo.github.io/categories/data_engineering_and_storage/</loc>
-    <lastmod>2020-03-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/introduction_tutorial/</loc>
     <lastmod>2020-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -87,12 +138,6 @@
   <url>
     <loc>https://imtorgdemo.github.io/posts/blog_ds-intro_numpy_pandas/</loc>
     <lastmod>2020-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/data_science/</loc>
-    <lastmod>2020-03-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -165,12 +210,6 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/tags/spark/</loc>
-    <lastmod>2020-03-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://imtorgdemo.github.io/categories/comparison/</loc>
     <lastmod>2020-03-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -205,6 +244,12 @@
   </url>
   
   <url>
+    <loc>https://imtorgdemo.github.io/categories/datascience/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://imtorgdemo.github.io/categories/machinelearning/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -222,20 +267,54 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/tags/classification/</loc>
-    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/datascience/</loc>
-    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://imtorgdemo.github.io/tags/nlp/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/categories/history_arts/</loc>
+    <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</loc>
+    <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/leadership/</loc>
+    <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/tag2/</loc>
+    <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/categories/best_practice/</loc>
+    <lastmod>2020-01-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</loc>
+    <lastmod>2020-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/pip/</loc>
+    <lastmod>2020-01-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://imtorgdemo.github.io/tags/setuptools/</loc>
+    <lastmod>2020-01-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -245,7 +324,7 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/categories/predivemodeling/</loc>
+    <loc>https://imtorgdemo.github.io/categories/innovation/</loc>
     <lastmod>2020-01-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -280,13 +359,7 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/tags/tag1/</loc>
-    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/tags/tag2/</loc>
+    <loc>https://imtorgdemo.github.io/tags/poc/</loc>
     <lastmod>2020-01-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -320,6 +393,12 @@
   </url>
   
   <url>
+    <loc>https://imtorgdemo.github.io/categories/math/</loc>
+    <lastmod>2019-11-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://imtorgdemo.github.io/categories/computerscience/</loc>
     <lastmod>2019-11-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -327,12 +406,6 @@
   
   <url>
     <loc>https://imtorgdemo.github.io/tags/deeplearning/</loc>
-    <lastmod>2019-11-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/math/</loc>
     <lastmod>2019-11-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -389,14 +462,14 @@
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/tags/pytorch/</loc>
-    <lastmod>2019-08-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <loc>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</loc>
+    <lastmod>2019-08-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://imtorgdemo.github.io/posts/blog_math-competitive_edge/</loc>
+    <loc>https://imtorgdemo.github.io/tags/tag1/</loc>
     <lastmod>2019-08-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -628,39 +701,6 @@
   <url>
     <loc>https://imtorgdemo.github.io/pages/search/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/best_practice/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</loc>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/history/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/categories/leadership/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</loc>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/tags/pip/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://imtorgdemo.github.io/tags/setuptools/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>

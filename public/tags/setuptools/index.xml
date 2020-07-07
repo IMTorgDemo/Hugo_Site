@@ -6,6 +6,7 @@
     <description>Recent content in setuptools on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Tue, 28 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/tags/setuptools/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +14,7 @@
     <item>
       <title>Distributing Code in Python</title>
       <link>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 28 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</guid>
       <description>Distributing and deploying products is a necessary step in the solution development process, and an imperative in business. Each solution must be thoughtfully analyzed for strengths and weaknesses, especially from the perspective of security. The decisons you make are largely based on the language employed to create the solution. This post will describe steps taken in distributing a Python solution.

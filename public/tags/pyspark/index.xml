@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pyspark on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/pyspark/</link>
+    <description>Recent content in pyspark on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 15 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://imtorgdemo.github.io/tags/pyspark/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PySpark Refresher Tutorial</title>
+      <link>https://imtorgdemo.github.io/posts/blog_bigdata_pyspark-refresher/</link>
+      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_bigdata_pyspark-refresher/</guid>
+      <description>Spark is the primier BigData tool for data science, and PySpark supports a natural move from the local machine to cluster computing. In fact, you can use PySpark on your local machine in standalone mode just as you would on a cluster. In this post, we provide a refresher for those working on legacy or other systems, and want to quickly transition back to Spark.
+Environment When using the pyspark-shell, the spark.</description>
+    </item>
+    
+  </channel>
+</rss>

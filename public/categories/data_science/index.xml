@@ -6,10 +6,39 @@
     <description>Recent content in Data_Science on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/categories/data_science/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Vision Using PyTorch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</link>
+      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</guid>
+      <description>The deep learning movement began by applying neural networks to image classification. PyTorch became a leading framework for work in this field. This post provides a cheatsheet to some of the basic methods used for computer vision, using PyTorch.
+Configuration This is a typical environment setup. Seed the Random Number Generator for all devices (both CPU and CUDA) using manual_seed() so that work can be reproduced. Computations are deterministic only on your specific problem, platform, and PyTorch release.</description>
+    </item>
+    
+    <item>
+      <title>Neural Network Basics: Linear Regression with PyTorch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-neuralnet_pytorch_intro/</link>
+      <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-neuralnet_pytorch_intro/</guid>
+      <description>In just a few short years, PyTorch took the crown for most popular deep learning framework. Its concise and straightforward API allows for custom changes to popular networks and layers. While some of the descriptions may some foreign to mathematicians, the concepts are familiar to anyone with a little experience in machine learning. This post will walk the user from a simple linear regression to an (overkill) neural network model, with thousands of parameters, which provides a good base for future learning.</description>
+    </item>
+    
+    <item>
+      <title>PySpark Refresher Tutorial</title>
+      <link>https://imtorgdemo.github.io/posts/blog_bigdata_pyspark-refresher/</link>
+      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_bigdata_pyspark-refresher/</guid>
+      <description>Spark is the primier BigData tool for data science, and PySpark supports a natural move from the local machine to cluster computing. In fact, you can use PySpark on your local machine in standalone mode just as you would on a cluster. In this post, we provide a refresher for those working on legacy or other systems, and want to quickly transition back to Spark.
+Environment When using the pyspark-shell, the spark.</description>
+    </item>
     
     <item>
       <title>An Introduction to Numpy and Pandas</title>
@@ -28,6 +57,15 @@
       <guid>https://imtorgdemo.github.io/posts/blog_ds-dataframe_r_and_pandas/</guid>
       <description>Although Pandas uses the Dataframe as its primary data structure, just as R does, the Pandas syntax and underlying fundamentals can be disorienting for R users. This post will describe some basic comparisons and inconsistencies between the two languages. It will also provide some examples of very non-intuitive solutions to common problems.
 Introduction In the Datascience R versus Pandas debate, it is really an apples and oranges comparison. R is a domain specific language in the field of statistics, analytics, and data visualization.</description>
+    </item>
+    
+    <item>
+      <title>Incorporating an Initial Training Sample into a Project</title>
+      <link>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</guid>
+      <description>During a data science project, data is often provided in an incremental manner. Some customer files are easier to obtain than others, such as when lengthy unarchiving processes are warranted. To ensure no time is wasted, available data can be put to use with initial analyses and model training as a Training Sample. The same data is incorporated with Training data when it is formally split into Training and Holdout sets.</description>
     </item>
     
     <item>

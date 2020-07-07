@@ -6,18 +6,18 @@
     <description>Recent content in tag2 on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/tags/tag2/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Incorporating an Initial Training Sample into a Project</title>
-      <link>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</link>
-      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      <title>The Insecurities of the &#39;Great Men&#39;</title>
+      <link>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</link>
+      <pubDate>Wed, 29 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</guid>
-      <description>During a data science project, data is often provided in an incremental manner. Some customer files are easier to obtain than others, such as when lengthy unarchiving processes are warranted. To ensure no time is wasted, available data can be put to use with initial analyses and model training as a Training Sample. The same data is incorporated with Training data when it is formally split into Training and Holdout sets.</description>
+      <guid>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</guid>
+      <description>While it may be tough to find the true nature of people, past their outward appearance, it can provide insight into all people, and to yourself. The &amp;lsquo;Great Man&amp;rsquo; theory that leaders are born and not made came about in the 19th century when British aristocrats attained powerful positions through nepotism. It was primarily concerned with explaining leaders such Walpole, Wellington, and Caesar. Much of what is learned in history is their propoganda - getting the reality is much more difficult.</description>
     </item>
     
     <item>
@@ -87,15 +87,6 @@ List of Future Posts General Machine Learning
  functional programming numpy nltk / spaCy gensim word2vec fasttext nlp overview  General Data Concepts
  datawarehousing infrastructure architectures serverless deployments  Business and Sales
  pricing pyramid matching problems and solutions marketing -&amp;gt; business development -&amp;gt; sales cycle and org structure  </description>
-    </item>
-    
-    <item>
-      <title>The Insecurities of the &#39;Great Men&#39;</title>
-      <link>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</guid>
-      <description>While it may be tough to find the true nature of people, past their outward appearance, it can provide insight into all people, and to yourself. The &amp;lsquo;Great Man&amp;rsquo; theory that leaders are born and not made came about in the 19th century when British aristocrats attained powerful positions through nepotism. It was primarily concerned with explaining leaders such Walpole, Wellington, and Caesar. Much of what is learned in history is their propoganda - getting the reality is much more difficult.</description>
     </item>
     
   </channel>

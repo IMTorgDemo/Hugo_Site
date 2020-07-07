@@ -1,6 +1,6 @@
 +++
 title = "Distributing Code in Python"
-date = "2020-28-01"
+date = "2020-01-28"
 author = "Jason Beach"
 location = [2.8417874347526234e-05, 0.44117098204541144]
 categories = ["Best_Practice", "Computer_Science_and_Programming"]

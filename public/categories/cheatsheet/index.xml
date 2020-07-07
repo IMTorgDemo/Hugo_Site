@@ -6,10 +6,20 @@
     <description>Recent content in Cheatsheet on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/categories/cheatsheet/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Vision Using PyTorch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</link>
+      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</guid>
+      <description>The deep learning movement began by applying neural networks to image classification. PyTorch became a leading framework for work in this field. This post provides a cheatsheet to some of the basic methods used for computer vision, using PyTorch.
+Configuration This is a typical environment setup. Seed the Random Number Generator for all devices (both CPU and CUDA) using manual_seed() so that work can be reproduced. Computations are deterministic only on your specific problem, platform, and PyTorch release.</description>
+    </item>
     
     <item>
       <title>A Cheatsheet for Python&#39;s Pipenv</title>

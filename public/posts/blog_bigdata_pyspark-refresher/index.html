@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PySpark Refresher Tutorial // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="PySpark Refresher Tutorial" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_bigdata_pyspark-refresher/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.55.5" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">PySpark Refresher Tutorial</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_bigdata_pyspark-refresher/" class="article-date">
+                <time datetime='2020-06-15T00:00:00.000&#43;00:00' itemprop="datePublished">2020-06-15</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/introduction_tutorial">Introduction_Tutorial</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/data_science">Data_Science</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>Spark is the primier BigData tool for data science, and PySpark supports a natural move from the local machine to cluster computing.  In fact, you can use PySpark on your local machine in standalone mode just as you would on a cluster.  In this post, we provide a refresher for those working on legacy or other systems, and want to quickly transition back to Spark.</p>
+
+<h2 id="environment">Environment</h2>
+
+<p>When using the pyspark-shell, the <code>spark.sparkContext</code> is available via <code>sc</code> environment variable.  However, in Jupyter, we will have to create our own session.  Take note of the version, Spark v3.0 had some big changes.</p>
+
+<pre><code class="language-python">from pyspark.sql import SparkSession
+spark = SparkSession.builder \
+          .appName(&quot;app.name&quot;) \
+          .config(&quot;spark.some.config.option&quot;, &quot;some-value&quot;) \
+          .getOrCreate()
+</code></pre>
+
+<pre><code class="language-python">spark.sparkContext
+</code></pre>
+
+<pre><code>    &lt;div&gt;
+        &lt;p&gt;&lt;b&gt;SparkContext&lt;/b&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href=&quot;http://7ffeadb3f712:4040&quot;&gt;Spark UI&lt;/a&gt;&lt;/p&gt;
+
+        &lt;dl&gt;
+          &lt;dt&gt;Version&lt;/dt&gt;
+            &lt;dd&gt;&lt;code&gt;v2.4.4&lt;/code&gt;&lt;/dd&gt;
+          &lt;dt&gt;Master&lt;/dt&gt;
+            &lt;dd&gt;&lt;code&gt;local[*]&lt;/code&gt;&lt;/dd&gt;
+          &lt;dt&gt;AppName&lt;/dt&gt;
+            &lt;dd&gt;&lt;code&gt;app.name&lt;/code&gt;&lt;/dd&gt;
+        &lt;/dl&gt;
+    &lt;/div&gt;
+</code></pre>
+
+<pre><code class="language-python">sc = spark.sparkContext
+sc.version
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">'2.4.4'
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+</code></pre>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Always get a sense of the raw data.  Typically, this can only be done via commandline.  Here, we see there is some metadata as a header, before the actual data.  This would cause some problems if we were loading the data with a simple dataframe command.</p>
+
+<pre><code class="language-python">! head -n 15 ./Data/spark_Houses/cadata.txt
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">S&amp;P Letters Data
+We collected information on the variables using all the block groups in California from the 1990 Census. In this sample a block group on average includes 1425.5 individuals living in a geographically compact area. Naturally, the geographical area included varies inversely with the population density. We computed distances among the centroids of each block group as measured in latitude and longitude. We excluded all the block groups reporting zero entries for the independent and dependent variables. The final data contained 20,640 observations on 9 variables. The dependent variable is ln(median house value).
+
+		Bols	tols
+INTERCEPT		11.4939	275.7518
+MEDIAN INCOME		0.4790	45.7768
+MEDIAN INCOME2		-0.0166	-9.4841
+MEDIAN INCOME3		-0.0002	-1.9157
+ln(MEDIAN AGE)		0.1570	33.6123
+ln(TOTAL ROOMS/ POPULATION)	-0.8582	-56.1280
+ln(BEDROOMS/ POPULATION)	0.8043	38.0685
+ln(POPULATION/ HOUSEHOLDS)	-0.4077	-20.8762
+ln(HOUSEHOLDS)		0.0477	13.0792
+
+The file cadata.txt contains all the the variables. Specifically, it contains median house value, median income, housing median age, total rooms, total bedrooms, population, households, latitude, and longitude in that order. 
+</code></pre>
+
+</div>
+
+
+<h2 id="resilient-distributed-datasets">Resilient Distributed Datasets</h2>
+
+<p>The Resilient Distributed Dataset (RDD) is a really fun way for tackling string data.  It has strong support for functional programming, so you can get initial processing completed in a very clean manner.</p>
+
+<p>Its important to note that if you perform operations that require shuffling data among the different Tasks, that your Job will be slowed, considerably.</p>
+
+<pre><code class="language-python">textFile = sc.textFile(&quot;./Data/spark_Houses/cadata.txt&quot;)    #&quot;hdfs://&lt;HDFS loc&gt;/data/*.zip&quot;)
+</code></pre>
+
+<pre><code class="language-python">notes = textFile.take(27)
+</code></pre>
+
+<pre><code class="language-python">#this is incorrect, but a fun exercise
+#also possible to use .lookup(1), in-place of filter(lambda x: x[0]&gt;4)
+headers = textFile.zipWithIndex().\
+    map(lambda x: (x[1],x[0]) ).\
+    filter(lambda x: x[0]&gt;4).\
+    filter(lambda x: x[0]&lt;13).\
+    map(lambda x: (x[1].split(&quot;\t&quot;))[0] ).\
+    collect()
+</code></pre>
+
+<pre><code class="language-python">col_names = [u'longitude: continuous.', u'latitude: continuous.', u'housingMedianAge: continuous. ', u'totalRooms: continuous. ', u'totalBedrooms: continuous. ', u'population: continuous. ', u'households: continuous. ', u'medianIncome: continuous. ', u'medianHouseValue: continuous. ']
+header = [x.split(&quot;: &quot;)[0] for x in col_names]
+header
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['longitude',
+ 'latitude',
+ 'housingMedianAge',
+ 'totalRooms',
+ 'totalBedrooms',
+ 'population',
+ 'households',
+ 'medianIncome',
+ 'medianHouseValue']
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">rdd = textFile.zipWithIndex().filter(lambda x: x[1]&gt;27)
+</code></pre>
+
+<pre><code class="language-python">ln = rdd.sample(0, .0001)
+</code></pre>
+
+<pre><code class="language-python">import re 
+ptrn = re.compile(&quot;\s+&quot;)
+line = (ln.take(1)[0])[0]
+re.split(ptrn, line)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">['',
+ '4.8900000000000000e+004',
+ '1.7197000000000000e+000',
+ '3.4000000000000000e+001',
+ '1.3790000000000000e+003',
+ '3.3300000000000000e+002',
+ '1.1560000000000000e+003',
+ '3.1500000000000000e+002',
+ '3.5369999999999997e+001',
+ '-1.1897000000000000e+002']
+</code></pre>
+
+</div>
+
+
+<p>Once the data is prepared, use the Row class to get it into a schema and format that will make import to Spark clean and reproducible.</p>
+
+<pre><code class="language-python">from pyspark.sql import Row
+</code></pre>
+
+<pre><code class="language-python">#DO NOT fix dtypes before conversion to DF: 
+#   TypeError: not supported type: &lt;class 'numpy.float64'&gt;
+rows = rdd.map(lambda x: re.split(ptrn, x[0])).map(lambda x:
+                                    Row(longitude= np.float64(x[1]),
+                                        latitude= np.float64(x[2]),
+                                        housingMedianAge=x[3],
+                                        totalRooms=x[4],
+                                        totalBedRooms=x[5],
+                                        population=x[6],
+                                        households=x[7],
+                                        medianIncome=x[8],
+                                        medianHouseValue=x[9]
+                                    ))
+</code></pre>
+
+<pre><code class="language-python">rows = rdd.map(lambda x: re.split(ptrn, x[0])).map(lambda x:
+                                    Row(longitude= x[1],
+                                        latitude= x[2],
+                                        housingMedianAge=x[3],
+                                        totalRooms=x[4],
+                                        totalBedRooms=x[5],
+                                        population=x[6],
+                                        households=x[7],
+                                        medianIncome=x[8],
+                                        medianHouseValue=x[9]
+                                    ))
+</code></pre>
+
+<h2 id="dataframe">Dataframe</h2>
+
+<p>The Spark DataFrame is the workhorse tool for data scientists.  Operations on DataFrames are optimized, so it is better to provide simple instructions to it, than it is to create your own, in say, a User Defined Function (UDF), or some other manner.</p>
+
+<p>Ensure your types are correct - if you&rsquo;re coming from a RDD, then they will all be strings!</p>
+
+<pre><code class="language-python">df_raw = rows.toDF()
+</code></pre>
+
+<pre><code class="language-python">df_raw.dtypes
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[('households', 'string'),
+ ('housingMedianAge', 'string'),
+ ('latitude', 'string'),
+ ('longitude', 'string'),
+ ('medianHouseValue', 'string'),
+ ('medianIncome', 'string'),
+ ('population', 'string'),
+ ('totalBedRooms', 'string'),
+ ('totalRooms', 'string')]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">from pyspark.sql.types import *
+
+df = df_raw.withColumn(&quot;longitude&quot;, df_raw[&quot;longitude&quot;].cast(FloatType()) ) \
+   .withColumn(&quot;latitude&quot;, df_raw[&quot;latitude&quot;].cast(FloatType()) ) \
+   .withColumn(&quot;housingMedianAge&quot;, df_raw[&quot;housingMedianAge&quot;].cast(FloatType()) ) \
+   .withColumn(&quot;totalRooms&quot;, df_raw[&quot;totalRooms&quot;].cast(FloatType()) ) \
+   .withColumn(&quot;totalBedRooms&quot;, df_raw[&quot;totalBedRooms&quot;].cast(FloatType()) ) \
+   .withColumn(&quot;population&quot;, df_raw[&quot;population&quot;].cast(FloatType()) ) \
+   .withColumn(&quot;households&quot;, df_raw[&quot;households&quot;].cast(FloatType()) ) \
+   .withColumn(&quot;medianIncome&quot;, df_raw[&quot;medianIncome&quot;].cast(FloatType()) ) \
+   .withColumn(&quot;medianHouseValue&quot;, df_raw[&quot;medianHouseValue&quot;].cast(FloatType()) )
+</code></pre>
+
+<pre><code class="language-python">#automate column
+from pyspark.sql.types import *
+
+# Write a custom function to convert the data type of DataFrame columns
+def convertColumn(df, names, newType):
+    for name in names:
+        df = df.withColumn(name, df[name].cast(newType))
+    return df 
+
+# Assign all column names to `columns`
+columns = df_raw.columns
+
+# Conver the `df` columns to `FloatType()`
+df = convertColumn(df_raw, columns, FloatType())
+</code></pre>
+
+<pre><code class="language-python">df.dtypes
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[('households', 'float'),
+ ('housingMedianAge', 'float'),
+ ('latitude', 'float'),
+ ('longitude', 'float'),
+ ('medianHouseValue', 'float'),
+ ('medianIncome', 'float'),
+ ('population', 'float'),
+ ('totalBedRooms', 'float'),
+ ('totalRooms', 'float')]
+</code></pre>
+
+</div>
+
+
+<p>Once the data starts looking complete, you can begin executing SQL-like commands against the DataFrame.</p>
+
+<pre><code class="language-python">df.groupBy(&quot;housingMedianAge&quot;).count().sort(&quot;housingMedianAge&quot;, ascending=False).show(5)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">+----------------+-----+
+|housingMedianAge|count|
++----------------+-----+
+|            52.0| 1273|
+|            51.0|   48|
+|            50.0|  136|
+|            49.0|  134|
+|            48.0|  177|
++----------------+-----+
+only showing top 5 rows
+
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">df.select('MedianHouseValue').describe().show()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">+-------+-------------------+
+|summary|   MedianHouseValue|
++-------+-------------------+
+|  count|              20639|
+|   mean|-119.56957555201876|
+| stddev|  2.003494699348379|
+|    min|            -124.35|
+|    max|            -114.31|
++-------+-------------------+
+
+</code></pre>
+
+</div>
+
+
+<h2 id="data-preparation">Data Preparation</h2>
+
+<p>Preparing data for models can be more involved than in libraries specific to your local machine.  These are a few of the steps that will need to be completed.  Some of these methods look similar to those of SKLearn.</p>
+
+<h3 id="add-columns">Add columns</h3>
+
+<p>We will add a few more columns using the <code>.withColumn()</code> method.</p>
+
+<pre><code class="language-python">df_prep1 = df
+</code></pre>
+
+<pre><code class="language-python">from pyspark.sql.functions import *
+
+# Adjust the values of `medianHouseValue`
+df = df.withColumn(&quot;medianHouseValue&quot;, col(&quot;medianHouseValue&quot;)/100000)
+</code></pre>
+
+<pre><code class="language-python">df.select('MedianHouseValue').describe().show()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">+-------+--------------------+
+|summary|    MedianHouseValue|
++-------+--------------------+
+|  count|               20639|
+|   mean|-0.00119569575552...|
+| stddev|2.003494699348537...|
+|    min|-0.00124349998474...|
+|    max|-0.00114309997558...|
++-------+--------------------+
+
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python">from pyspark.sql.functions import *
+
+# Add the new columns to `df`
+df = df.withColumn(&quot;roomsPerHousehold&quot;, col(&quot;totalRooms&quot;)/col(&quot;households&quot;)) \
+   .withColumn(&quot;populationPerHousehold&quot;, col(&quot;population&quot;)/col(&quot;households&quot;)) \
+   .withColumn(&quot;bedroomsPerRoom&quot;, col(&quot;totalBedRooms&quot;)/col(&quot;totalRooms&quot;))
+
+df.select(&quot;roomsPerHousehold&quot;, &quot;populationPerHousehold&quot;, &quot;bedroomsPerRoom&quot;).first()
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">Row(roomsPerHousehold=6.238137082601054, populationPerHousehold=2.109841827768014, bedroomsPerRoom=0.15579659106916466)
+</code></pre>
+
+</div>
+
+
+<h3 id="create-a-densevector">Create a DenseVector</h3>
+
+<p>Spark uses <a href="https://github.com/scalanlp/breeze">breeze</a> under the hood for high performance Linear Algebra in Scala.</p>
+
+<p>In Spark MLlib and ML some algorithms depends on <code>org.apache.spark.mllib.libalg.Vector</code> type which is rather dense (<code>DenseVector</code>) or sparse (<code>SparseVector</code>).</p>
+
+<p>Their is no implicit conversion between a scala Vector or array into a dense Vector from mllib, so you must ensure this is complete before feeding it to a model.</p>
+
+<pre><code class="language-python">df_prep2 = df
+</code></pre>
+
+<pre><code class="language-python"># Re-order and select columns
+df = df.select(&quot;medianHouseValue&quot;, 
+              &quot;totalBedRooms&quot;, 
+              &quot;population&quot;, 
+              &quot;households&quot;, 
+              &quot;medianIncome&quot;, 
+              &quot;roomsPerHousehold&quot;, 
+              &quot;populationPerHousehold&quot;, 
+              &quot;bedroomsPerRoom&quot;)
+</code></pre>
+
+<pre><code class="language-python">from pyspark.ml.linalg import DenseVector
+
+# Define the `input_data` 
+input_data = df.rdd.map(lambda x: (x[0], DenseVector(x[1:])))
+</code></pre>
+
+<pre><code class="language-python">input_data.take(3)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[(-0.0012222000122070313,
+  DenseVector([1106.0, 2401.0, 1138.0, 37.86, 6.2381, 2.1098, 0.1558])),
+ (-0.0012223999786376953,
+  DenseVector([190.0, 496.0, 177.0, 37.85, 8.2881, 2.8023, 0.1295])),
+ (-0.0012225,
+  DenseVector([235.0, 558.0, 219.0, 37.85, 5.8174, 2.5479, 0.1845]))]
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Replace `df` with the new DataFrame
+df = spark.createDataFrame(input_data, [&quot;label&quot;, &quot;features&quot;])
+</code></pre>
+
+<pre><code class="language-python">df.take(3)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[Row(label=-0.0012222000122070313, features=DenseVector([1106.0, 2401.0, 1138.0, 37.86, 6.2381, 2.1098, 0.1558])),
+ Row(label=-0.0012223999786376953, features=DenseVector([190.0, 496.0, 177.0, 37.85, 8.2881, 2.8023, 0.1295])),
+ Row(label=-0.0012225, features=DenseVector([235.0, 558.0, 219.0, 37.85, 5.8174, 2.5479, 0.1845]))]
+</code></pre>
+
+</div>
+
+
+<h3 id="standardize-columns">Standardize columns</h3>
+
+<p>The <code>StandardScaler</code> is used to transform a column to zero mean and a standard deviation of 1.</p>
+
+<pre><code class="language-python"># Import `StandardScaler` 
+from pyspark.ml.feature import StandardScaler
+
+standardScaler = StandardScaler(inputCol=&quot;features&quot;, outputCol=&quot;features_scaled&quot;)   #initialize
+scaler = standardScaler.fit(df)    #fit
+scaled_df = scaler.transform(df)   #scale
+</code></pre>
+
+<pre><code class="language-python"># Inspect the result
+scaled_df.select(&quot;features_scaled&quot;).take(2)
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[Row(features_scaled=DenseVector([2.6255, 2.1202, 2.9765, 17.7252, 2.5213, 0.2031, 2.6851])),
+ Row(features_scaled=DenseVector([0.451, 0.438, 0.463, 17.7205, 3.3498, 0.2698, 2.2321]))]
+</code></pre>
+
+</div>
+
+
+<h2 id="model">Model</h2>
+
+<p>Once the data is prepared, we can choose from a number of different models to apply to the data.</p>
+
+<h3 id="split-and-train">Split and Train</h3>
+
+<pre><code class="language-python">train_data, test_data = scaled_df.randomSplit([.8,.2],seed=1234)
+</code></pre>
+
+<pre><code class="language-python">from pyspark.ml.regression import LinearRegression
+
+# Initialize `lr`
+lr = LinearRegression(labelCol=&quot;label&quot;, maxIter=10, regParam=0.3, elasticNetParam=0.8)
+linearModel = lr.fit(train_data)
+</code></pre>
+
+<h3 id="predict">Predict</h3>
+
+<pre><code class="language-python"># Generate predictions
+predicted = linearModel.transform(test_data)
+
+# Extract the predictions and the &quot;known&quot; correct labels
+predictions = predicted.select(&quot;prediction&quot;).rdd.map(lambda x: x[0])
+labels = predicted.select(&quot;label&quot;).rdd.map(lambda x: x[0])
+</code></pre>
+
+<pre><code class="language-python"># Zip `predictions` and `labels` into a list
+predictionAndLabel = predictions.zip(labels).collect()
+</code></pre>
+
+<pre><code class="language-python"># Print out first 5 instances of `predictionAndLabel` 
+predictionAndLabel[:5]
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">[(-0.0011958166787652167, -0.001243499984741211),
+ (-0.0011958166787652167, -0.0012430000305175782),
+ (-0.0011958166787652167, -0.0012430000305175782),
+ (-0.0011958166787652167, -0.0012419000244140626),
+ (-0.0011958166787652167, -0.0012416999816894532)]
+</code></pre>
+
+</div>
+
+
+<h3 id="model-results">Model results</h3>
+
+<pre><code class="language-python"># Coefficients for the model
+linearModel.coefficients
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">DenseVector([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Intercept for the model
+linearModel.intercept
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">-0.0011958166787652167
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Get the RMSE
+linearModel.summary.rootMeanSquaredError
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">2.004643282977487e-05
+</code></pre>
+
+</div>
+
+
+<pre><code class="language-python"># Get the R2
+linearModel.summary.r2
+</code></pre>
+
+<div class="output">
+
+<pre><code class="language-nb-output">-1.3034018309099338e-13
+</code></pre>
+
+</div>
+
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>These are the basic steps taken in every Spark machine learning application.</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#environment">Environment</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#resilient-distributed-datasets">Resilient Distributed Datasets</a></li>
+<li><a href="#dataframe">Dataframe</a></li>
+<li><a href="#data-preparation">Data Preparation</a>
+<ul>
+<li><a href="#add-columns">Add columns</a></li>
+<li><a href="#create-a-densevector">Create a DenseVector</a></li>
+<li><a href="#standardize-columns">Standardize columns</a></li>
+</ul></li>
+<li><a href="#model">Model</a>
+<ul>
+<li><a href="#split-and-train">Split and Train</a></li>
+<li><a href="#predict">Predict</a></li>
+<li><a href="#model-results">Model results</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/pyspark">pyspark
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/spark">spark
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_models-neuralnet_pytorch_intro/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Neural Network Basics: Linear Regression with PyTorch
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_programming_py-pipenv_virtualenv/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">A Cheatsheet for Python&#39;s Pipenv&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

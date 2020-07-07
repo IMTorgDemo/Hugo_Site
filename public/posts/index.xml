@@ -6,10 +6,39 @@
     <description>Recent content in Posts on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://imtorgdemo.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Vision Using PyTorch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</link>
+      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</guid>
+      <description>The deep learning movement began by applying neural networks to image classification. PyTorch became a leading framework for work in this field. This post provides a cheatsheet to some of the basic methods used for computer vision, using PyTorch.
+Configuration This is a typical environment setup. Seed the Random Number Generator for all devices (both CPU and CUDA) using manual_seed() so that work can be reproduced. Computations are deterministic only on your specific problem, platform, and PyTorch release.</description>
+    </item>
+    
+    <item>
+      <title>Neural Network Basics: Linear Regression with PyTorch</title>
+      <link>https://imtorgdemo.github.io/posts/blog_models-neuralnet_pytorch_intro/</link>
+      <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_models-neuralnet_pytorch_intro/</guid>
+      <description>In just a few short years, PyTorch took the crown for most popular deep learning framework. Its concise and straightforward API allows for custom changes to popular networks and layers. While some of the descriptions may some foreign to mathematicians, the concepts are familiar to anyone with a little experience in machine learning. This post will walk the user from a simple linear regression to an (overkill) neural network model, with thousands of parameters, which provides a good base for future learning.</description>
+    </item>
+    
+    <item>
+      <title>PySpark Refresher Tutorial</title>
+      <link>https://imtorgdemo.github.io/posts/blog_bigdata_pyspark-refresher/</link>
+      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_bigdata_pyspark-refresher/</guid>
+      <description>Spark is the primier BigData tool for data science, and PySpark supports a natural move from the local machine to cluster computing. In fact, you can use PySpark on your local machine in standalone mode just as you would on a cluster. In this post, we provide a refresher for those working on legacy or other systems, and want to quickly transition back to Spark.
+Environment When using the pyspark-shell, the spark.</description>
+    </item>
     
     <item>
       <title>A Cheatsheet for Python&#39;s Pipenv</title>
@@ -96,6 +125,25 @@ Environment Two tools can help you setup your local development environment: pye
       
       <guid>https://imtorgdemo.github.io/posts/blog_nlp-rank_text_with_word_vector/</guid>
       <description>I recently implemented search functionality for my Hugo site, which can be seen at: https://imtorgdemo.github.io/pages/search/. The search uses lunr.js, an implementation of Solr. While it works, sufficiently, the metadata used for ranking queries could be improved. It would also be nice to visually locate the results by where resulting posts fit into the three data science fundamental disciplines: mathematics, computer science, and business. This narrative provides a quick solution for ranking posts by each discipline, then reducing the dimensions to 3 axes in the xy-plane.</description>
+    </item>
+    
+    <item>
+      <title>The Insecurities of the &#39;Great Men&#39;</title>
+      <link>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</link>
+      <pubDate>Wed, 29 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</guid>
+      <description>While it may be tough to find the true nature of people, past their outward appearance, it can provide insight into all people, and to yourself. The &amp;lsquo;Great Man&amp;rsquo; theory that leaders are born and not made came about in the 19th century when British aristocrats attained powerful positions through nepotism. It was primarily concerned with explaining leaders such Walpole, Wellington, and Caesar. Much of what is learned in history is their propoganda - getting the reality is much more difficult.</description>
+    </item>
+    
+    <item>
+      <title>Distributing Code in Python</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</link>
+      <pubDate>Tue, 28 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</guid>
+      <description>Distributing and deploying products is a necessary step in the solution development process, and an imperative in business. Each solution must be thoughtfully analyzed for strengths and weaknesses, especially from the perspective of security. The decisons you make are largely based on the language employed to create the solution. This post will describe steps taken in distributing a Python solution.
+Introduction to Bytecode Simple python scripts are a terrific approach to getting work done, quickly.</description>
     </item>
     
     <item>
@@ -299,25 +347,6 @@ List of Future Posts General Machine Learning
  functional programming numpy nltk / spaCy gensim word2vec fasttext nlp overview  General Data Concepts
  datawarehousing infrastructure architectures serverless deployments  Business and Sales
  pricing pyramid matching problems and solutions marketing -&amp;gt; business development -&amp;gt; sales cycle and org structure  </description>
-    </item>
-    
-    <item>
-      <title>Distributing Code in Python</title>
-      <link>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</guid>
-      <description>Distributing and deploying products is a necessary step in the solution development process, and an imperative in business. Each solution must be thoughtfully analyzed for strengths and weaknesses, especially from the perspective of security. The decisons you make are largely based on the language employed to create the solution. This post will describe steps taken in distributing a Python solution.
-Introduction to Bytecode Simple python scripts are a terrific approach to getting work done, quickly.</description>
-    </item>
-    
-    <item>
-      <title>The Insecurities of the &#39;Great Men&#39;</title>
-      <link>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</guid>
-      <description>While it may be tough to find the true nature of people, past their outward appearance, it can provide insight into all people, and to yourself. The &amp;lsquo;Great Man&amp;rsquo; theory that leaders are born and not made came about in the 19th century when British aristocrats attained powerful positions through nepotism. It was primarily concerned with explaining leaders such Walpole, Wellington, and Caesar. Much of what is learned in history is their propoganda - getting the reality is much more difficult.</description>
     </item>
     
   </channel>

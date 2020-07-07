@@ -1,10 +1,10 @@
 
 +++
 title = "The Insecurities of the 'Great Men'"
-date = "2020-29-01"
+date = "2020-01-29"
 author = "Jason Beach"
-categories = ["History", "Leadership"]
-tags = ["tag1", "tag2"]
+categories = ["Comparison", "History_Arts"]
+tags = ["leadership", "tag2"]
 +++
 
 

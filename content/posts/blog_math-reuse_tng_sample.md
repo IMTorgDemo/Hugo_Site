@@ -3,8 +3,8 @@
 title = "Incorporating an Initial Training Sample into a Project"
 date = "2020-01-09"
 author = "Jason Beach"
-categories = ["DataScience", "PrediveModeling"]
-tags = ["machinelearning", "tag1", "tag2"]
+categories = ["Innovation", "Data_Science"]
+tags = ["machinelearning", "nlp", "poc"]
 +++
 
 
