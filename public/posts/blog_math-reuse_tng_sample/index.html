@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,193 +106,143 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>During a data science project, data is often provided in an incremental manner.  Some customer files are easier to obtain than others, such as when lengthy unarchiving processes are warranted.  To ensure no time is wasted, available data can be put to use with initial analyses and model training as a Training Sample.  The same data is incorporated with Training data when it is formally split into Training and Holdout sets.  Care must be taken to ensure there is not a systematic difference between the Training Sample and the greater Training Data.  While this arrangement is not ideal (it breaks the principal of data randomization), it is sometimes necessary in order to maintain a schedule.  This post simulates various different scenarios for this process and discusses the outcomes.</p>
-
+            <p>During a data science project, data is often provided in an incremental manner.  Some customer files are easier to obtain than others, such as when lengthy unarchiving processes are warranted.  To ensure no time is wasted, available data can be put to use with initial analyses and model training as a Training Sample.  The same data is incorporated with Training data when it is formally split into Training and Holdout sets.  Care must be taken to ensure there is not a systematic difference between the Training Sample and the greater Training Data.  While this arrangement is not ideal (it breaks the principal of data randomization), it is sometimes necessary in order to maintain a schedule.  This post simulates various different scenarios for this process and discusses the outcomes.</p>
 <p>This will review the fundamental concepts and then demonstrate the general case, using the R statistical language.  We will use a uniform distribution sampling with a percentile cut-off to simulate a bernoulli random variable.  The sums of these variables creates a binomial distribution.</p>
-
 <h2 id="fundamentals-of-randomness">Fundamentals of Randomness</h2>
-
 <p>The initial code that is sampling from a uniform distribution is easily implementable in most languages, so we will proceed with it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#a6e22e">options</span>(repr.plot.width<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, repr.plot.height<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#75715e">#bernoulli by sampling from uniform</span>
+</span></span><span style="display:flex;"><span>rbern <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(n,p){
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#a6e22e">vector</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">for</span>(i in <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n){  
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">if</span>( <span style="color:#a6e22e">runif</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>) <span style="color:#f92672">&lt;</span> p ){ 
+</span></span><span style="display:flex;"><span>            result[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        }else{ 
+</span></span><span style="display:flex;"><span>            result[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        n<span style="color:#f92672">=</span>n<span style="color:#ae81ff">-1</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">return</span>(result)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>rand <span style="color:#f92672">=</span> <span style="color:#a6e22e">rbern</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">.5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>( <span style="color:#a6e22e">t</span>(rand))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-R">options(repr.plot.width=4, repr.plot.height=3)
-</code></pre>
-
-<pre><code class="language-R">#bernoulli by sampling from uniform
-rbern &lt;- function(n,p){
-    result = vector()
-    for(i in 1:n){  
-        if( runif(1,0,1) &lt; p ){ 
-            result[i] = 1
-        }else{ 
-            result[i] = 0
-        }
-        n=n-1;
-    }
-    return(result)
-}
-rand = rbern(10, .5)
-print( t(rand))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
 [1,]    0    0    0    0    1    0    0    0    0     1
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-R"># bernoulli distribution using binom()
-bern = rbinom(10, 1,.5)
-t(bern)
-</code></pre>
-
-<table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#75715e"># bernoulli distribution using binom()</span>
+</span></span><span style="display:flex;"><span>bern <span style="color:#f92672">=</span> <span style="color:#a6e22e">rbinom</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">.5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">t</span>(bern)
+</span></span></code></pre></div><table>
 <tbody>
-    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+	<tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
 </tbody>
 </table>
-
-<pre><code class="language-R"># binomial distribution
-rand = rbinom(1, 100, .5)
-rand
-</code></pre>
-
-<p>51</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#75715e"># binomial distribution</span>
+</span></span><span style="display:flex;"><span>rand <span style="color:#f92672">=</span> <span style="color:#a6e22e">rbinom</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">.5</span>)
+</span></span><span style="display:flex;"><span>rand
+</span></span></code></pre></div><p>51</p>
 <h2 id="simulation-of-process">Simulation of Process</h2>
-
 <p>This is a simulation of the Training-Holdout set data splitting process.  We say there are 100 records total, and 5 of them are provided to us, and used in an initial analysis.  We assume a typical 80%-20%, Training-Holdout, split.</p>
-
-<pre><code class="language-R">SAMPLE_TNG = 5
-TOTAL_RECORDS = 100
-PCT_ORIG = 0.8
-</code></pre>
-
-<p>This will give us an expected 80 Training set records by using the expected value of the binomial pmf.</p>
-
-<p>\begin{align<em>}
-k\binom{n}k=\frac{kn!}{k!(n-k)!}=\frac{n!}{(k-1)!(n-k)!}=\frac{n(n-1)!}{(k-1)!(n-k)!}=n\binom{n-1}{k-1}\;:
-\end{align</em>}</p>
-
-<p>\begin{align<em>}
-\sum^n<em>{k=0}k\binom nkp^k(1-p)^{n-k}&amp;=\sum</em>{k=0}^nn\binom{n-1}{k-1}p^k(1-p)^{n-k}<br />
-&amp;=n\sum<em>{k=0}^n\binom{n-1}{k-1}p^k(1-p)^{n-k}<br />
-&amp;=n\sum</em>{k=0}^{n-1}\binom{n-1}kp^{k+1}(1-p)^{n-k-1}<br />
-&amp;=np\sum_{k=0}^{n-1}\binom{n-1}kp^k(1-p)^{n-k-1}<br />
-&amp;=np\Big(p+(1-p)\Big)^{n-1}&amp;&amp;\text{using the binomial theorem}<br />
-&amp;=np\;
-\end{align</em>}</p>
-
-<pre><code class="language-R">SPLIT_TNG = 80
-</code></pre>
-
-<p>We modify the simulation percentage so that it is corrected for the reduced number of training records.</p>
-
-<p>\begin{align<em>}
-TotalRecords + TrainingSample = TrainingData<br />
-Binomial(100,p) = TrainingData - Training Sample<br />
-np = TrainingData - Training Sample<br />
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>SAMPLE_TNG <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>TOTAL_RECORDS <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>PCT_ORIG <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.8</span>
+</span></span></code></pre></div><p>This will give us an expected 80 Training set records by using the expected value of the binomial pmf.</p>
+<p>\begin{align*}
+k\binom{n}k=\frac{kn!}{k!(n-k)!}=\frac{n!}{(k-1)!(n-k)!}=\frac{n(n-1)!}{(k-1)!(n-k)!}=n\binom{n-1}{k-1};:
+\end{align*}</p>
+<p>\begin{align*}
+\sum^n_{k=0}k\binom nkp^k(1-p)^{n-k}&amp;=\sum_{k=0}^nn\binom{n-1}{k-1}p^k(1-p)^{n-k}\
+&amp;=n\sum_{k=0}^n\binom{n-1}{k-1}p^k(1-p)^{n-k}\
+&amp;=n\sum_{k=0}^{n-1}\binom{n-1}kp^{k+1}(1-p)^{n-k-1}\
+&amp;=np\sum_{k=0}^{n-1}\binom{n-1}kp^k(1-p)^{n-k-1}\
+&amp;=np\Big(p+(1-p)\Big)^{n-1}&amp;&amp;\text{using the binomial theorem}\
+&amp;=np;
+\end{align*}</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>SPLIT_TNG <span style="color:#f92672">=</span> <span style="color:#ae81ff">80</span>
+</span></span></code></pre></div><p>We modify the simulation percentage so that it is corrected for the reduced number of training records.</p>
+<p>\begin{align*}
+TotalRecords + TrainingSample = TrainingData\
+Binomial(100,p) = TrainingData - Training Sample\
+np = TrainingData - Training Sample\
 p = (TrainingData - Training Sample) / n
-\end{align</em>}</p>
-
-<pre><code class="language-R">PCT_MOD = (SPLIT_TNG - SAMPLE_TNG) / TOTAL_RECORDS 
-PCT_MOD
-</code></pre>
-
-<p>0.75</p>
-
+\end{align*}</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>PCT_MOD <span style="color:#f92672">=</span> (SPLIT_TNG <span style="color:#f92672">-</span> SAMPLE_TNG) <span style="color:#f92672">/</span> TOTAL_RECORDS 
+</span></span><span style="display:flex;"><span>PCT_MOD
+</span></span></code></pre></div><p>0.75</p>
 <p>We will run the simulation 1,000 times to receive a nice distribution of results.</p>
-
-<pre><code class="language-R">SAMPLE_TNG = 5
-TOTAL_RECORDS = 100
-PCT_ORIG = 0.8
-SPLIT_TNG = 80
-PCT_MOD = (SPLIT_TNG - SAMPLE_TNG) / TOTAL_RECORDS 
-
-sim &lt;- function(x){
-    rand = rbern(x, PCT_MOD)
-    tng = sum(rand) + SAMPLE_TNG
-    return( tng )
-    }
-
-samples &lt;- replicate(1000, sim(100))
-hist(samples)
-</code></pre>
-
-<p><img src="output_15_0.png" alt="png" /></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>SAMPLE_TNG <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>TOTAL_RECORDS <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>PCT_ORIG <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.8</span>
+</span></span><span style="display:flex;"><span>SPLIT_TNG <span style="color:#f92672">=</span> <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>PCT_MOD <span style="color:#f92672">=</span> (SPLIT_TNG <span style="color:#f92672">-</span> SAMPLE_TNG) <span style="color:#f92672">/</span> TOTAL_RECORDS 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sim <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x){
+</span></span><span style="display:flex;"><span>    rand <span style="color:#f92672">=</span> <span style="color:#a6e22e">rbern</span>(x, PCT_MOD)
+</span></span><span style="display:flex;"><span>    tng <span style="color:#f92672">=</span> <span style="color:#a6e22e">sum</span>(rand) <span style="color:#f92672">+</span> SAMPLE_TNG
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">return</span>( tng )
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>samples <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">replicate</span>(<span style="color:#ae81ff">1000</span>, <span style="color:#a6e22e">sim</span>(<span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hist</span>(samples)
+</span></span></code></pre></div><p><img src="output_15_0.png" alt="png"></p>
 <h2 id="realistic-example">Realistic Example</h2>
-
 <p>Let us add some more reasonable values for clarity.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>SAMPLE_TNG <span style="color:#f92672">=</span> <span style="color:#ae81ff">143994</span>
+</span></span><span style="display:flex;"><span>TOTAL_RECORDS <span style="color:#f92672">=</span> (<span style="color:#ae81ff">385</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">490</span>
+</span></span><span style="display:flex;"><span>PCT_ORIG <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.8</span>
+</span></span><span style="display:flex;"><span>SPLIT_TNG <span style="color:#f92672">=</span> TOTAL_RECORDS <span style="color:#f92672">*</span> PCT_ORIG
+</span></span><span style="display:flex;"><span>PCT_MOD <span style="color:#f92672">=</span> (SPLIT_TNG <span style="color:#f92672">-</span> SAMPLE_TNG) <span style="color:#f92672">/</span> TOTAL_RECORDS 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sim <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x){
+</span></span><span style="display:flex;"><span>    rand <span style="color:#f92672">=</span> <span style="color:#a6e22e">rbern</span>(x, PCT_MOD)
+</span></span><span style="display:flex;"><span>    tng <span style="color:#f92672">=</span> <span style="color:#a6e22e">sum</span>(rand) <span style="color:#f92672">+</span> SAMPLE_TNG
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">return</span>( tng )
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>samples <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">replicate</span>(<span style="color:#ae81ff">1000</span>, <span style="color:#a6e22e">sim</span>(<span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(PCT_MOD<span style="color:#f92672">*</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hist</span>(samples)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-R">SAMPLE_TNG = 143994
-TOTAL_RECORDS = (385 * 1000) + 490
-PCT_ORIG = 0.8
-SPLIT_TNG = TOTAL_RECORDS * PCT_ORIG
-PCT_MOD = (SPLIT_TNG - SAMPLE_TNG) / TOTAL_RECORDS 
-
-sim &lt;- function(x){
-    rand = rbern(x, PCT_MOD)
-    tng = sum(rand) + SAMPLE_TNG
-    return( tng )
-    }
-
-samples &lt;- replicate(1000, sim(100))
-print(PCT_MOD*100)
-hist(samples)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[1] 42.6465
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[1] 42.6465
 </code></pre>
 
 </div>
 
-
-<p><img src="output_17_1.png" alt="png" /></p>
-
+<p><img src="output_17_1.png" alt="png"></p>
 <h2 id="possible-errors">Possible Errors</h2>
-
 <p>In the real-world the problem was that the record Ids (&ldquo;Stream ID&rdquo; and &ldquo;File Generation Date&rdquo;) were not unique, so there was a bad count of sample size.  This didn&rsquo;t adversely effect the splitting because the records were not sent to the Holdout set, and the quantity of miss-matched records was negligible.</p>
-
 <p>However, it did cause error in the calculation of dataset sizes.  If the quantity was greater, then this could cause confusion, as well as inefficiently allocating the split datasets.  A small simulation of the error can provide insight to the incorrect results.</p>
-
-<pre><code class="language-R">sim &lt;- function(x, SAMPLE_TNG){
-    rand = rbern(x, PCT_MOD)
-    tng = sum(rand) + SAMPLE_TNG
-    return( tng )
-    }
-
-ITER=100
-SAMPLE_TNG_SEQ = seq(5, 15, length.out=ITER)
-result = vector()
-i = 1
-
-for(sample_size in SAMPLE_TNG_SEQ){
-    SAMPLE_TNG = sample_size
-    TOTAL_RECORDS = 100
-    PCT_ORIG = 0.8
-    SPLIT_TNG = 80
-    PCT_MOD = (SPLIT_TNG - SAMPLE_TNG) / TOTAL_RECORDS 
-
-    tmp &lt;- replicate(100, sim(100, SAMPLE_TNG))
-    result[i] &lt;- median(tmp)
-    i=i+1
-    }
-</code></pre>
-
-<pre><code class="language-R">plot(result ~ SAMPLE_TNG_SEQ)
-</code></pre>
-
-<p><img src="output_21_0.png" alt="png" /></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>sim <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x, SAMPLE_TNG){
+</span></span><span style="display:flex;"><span>    rand <span style="color:#f92672">=</span> <span style="color:#a6e22e">rbern</span>(x, PCT_MOD)
+</span></span><span style="display:flex;"><span>    tng <span style="color:#f92672">=</span> <span style="color:#a6e22e">sum</span>(rand) <span style="color:#f92672">+</span> SAMPLE_TNG
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">return</span>( tng )
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ITER<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>SAMPLE_TNG_SEQ <span style="color:#f92672">=</span> <span style="color:#a6e22e">seq</span>(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">15</span>, length.out<span style="color:#f92672">=</span>ITER)
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> <span style="color:#a6e22e">vector</span>()
+</span></span><span style="display:flex;"><span>i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for</span>(sample_size in SAMPLE_TNG_SEQ){
+</span></span><span style="display:flex;"><span>    SAMPLE_TNG <span style="color:#f92672">=</span> sample_size
+</span></span><span style="display:flex;"><span>    TOTAL_RECORDS <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>    PCT_ORIG <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.8</span>
+</span></span><span style="display:flex;"><span>    SPLIT_TNG <span style="color:#f92672">=</span> <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    PCT_MOD <span style="color:#f92672">=</span> (SPLIT_TNG <span style="color:#f92672">-</span> SAMPLE_TNG) <span style="color:#f92672">/</span> TOTAL_RECORDS 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">replicate</span>(<span style="color:#ae81ff">100</span>, <span style="color:#a6e22e">sim</span>(<span style="color:#ae81ff">100</span>, SAMPLE_TNG))
+</span></span><span style="display:flex;"><span>    result[i] <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">median</span>(tmp)
+</span></span><span style="display:flex;"><span>    i<span style="color:#f92672">=</span>i<span style="color:#ae81ff">+1</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#a6e22e">plot</span>(result <span style="color:#f92672">~</span> SAMPLE_TNG_SEQ)
+</span></span></code></pre></div><p><img src="output_21_0.png" alt="png"></p>
 <h2 id="conclusion">Conclusion</h2>
-
 <p>Seemingly small problems can occur that may have large effects on a project schedule.  Working around those problems is imperative.  Some off-the-cuff calculations and a little stochastic simulation script, such as what you see here, may be just enough to keep a small problem from becoming a game-changer.</p>
 
         </div>
@@ -302,16 +252,13 @@ for(sample_size in SAMPLE_TNG_SEQ){
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#fundamentals-of-randomness">Fundamentals of Randomness</a></li>
-<li><a href="#simulation-of-process">Simulation of Process</a></li>
-<li><a href="#realistic-example">Realistic Example</a></li>
-<li><a href="#possible-errors">Possible Errors</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#fundamentals-of-randomness">Fundamentals of Randomness</a></li>
+    <li><a href="#simulation-of-process">Simulation of Process</a></li>
+    <li><a href="#realistic-example">Realistic Example</a></li>
+    <li><a href="#possible-errors">Possible Errors</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -403,7 +350,7 @@ for(sample_size in SAMPLE_TNG_SEQ){
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

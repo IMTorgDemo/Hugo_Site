@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,103 +106,68 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>LaTeX is the document preparation and typesetting system used for scientific publications.  LaTeX is based on the idea that &lsquo;it is better to leave document design to document designers&rsquo;, so the user can focus on the content. It requires a greater technical understanding than typical simple note-taking systems; however, because it is incredibly descriptive and produces aesthetically-appealing output, it is becoming more popular.  This post provides a reference to configuration and syntax.</p>
-
+            <p>LaTeX is the document preparation and typesetting system used for scientific publications.  LaTeX is based on the idea that &lsquo;it is better to leave document design to document designers&rsquo;, so the user can focus on the content. It requires a greater technical understanding than typical simple note-taking systems; however, because it is incredibly descriptive and produces aesthetically-appealing output, it is becoming more popular.  This post provides a reference to configuration and syntax.</p>
 <h2 id="latex-beginnings">LaTeX Beginnings</h2>
-
 <p>Tex is the actual low-level language created by Donald Knuth in 1978.  Leslie Lamport created an alternative, high-level, macro file called lplain (“l” for Lamport), with a set of much-easier-to-use commands.  The latex script ran the macros, first, then compiled the Tex language and outputs to a PostScript file that another program converts to a document.  This evolved into the LaTeX program.</p>
-
 <p>The <a href="https://www.latex-project.org/">LaTeX site</a> provides the open source software distribution that compiles your LaTeX markup.  Getting this set-up and using it can be quite involved and most workflows don&rsquo;t allow for such complexities.</p>
-
-<p>Also, most users don&rsquo;t have to worry about becoming comfortable with the LaTeX markup.  There are many templates available, including:
-* <a href="http://mrzool.cc/tex-boilerplates/">free boilerplates</a>
-* <a href="http://www.latextemplates.com/">free templates</a>
-* <a href="https://www.overleaf.com/gallery/tagged/book">some commercial</a>.</p>
-
+<p>Also, most users don&rsquo;t have to worry about becoming comfortable with the LaTeX markup.  There are many templates available, including:</p>
+<ul>
+<li><a href="http://mrzool.cc/tex-boilerplates/">free boilerplates</a></li>
+<li><a href="http://www.latextemplates.com/">free templates</a></li>
+<li><a href="https://www.overleaf.com/gallery/tagged/book">some commercial</a>.</li>
+</ul>
 <p>Large journal publications provide their own templates for document preparation, such as <a href="http://www.latextemplates.com/template/ieee">IEEE</a>.  However, some users may want to customize their own output.  An example document could include the following.</p>
-
-<pre><code>\begin{document}
+<pre tabindex="0"><code>\begin{document}
   \begin{environment1}
     \begin{environment2}
     \end{environment2}
   \end{environment1}
 \end{document}
-</code></pre>
-
-<p>There is an interesting <a href="https://olivierpieters.be/blog/2017/02/11/designing-a-business-card-in-latex">post</a> describing how to create a business card in LaTeX.  This is ridiculous!  For more graphic-intensive work there are much better options, such Photoshop or even PowerPoint.  For more information, look into <a href="https://www.latex-tutorial.com/">latex tutorial</a>.</p>
-
+</code></pre><p>There is an interesting <a href="https://olivierpieters.be/blog/2017/02/11/designing-a-business-card-in-latex">post</a> describing how to create a business card in LaTeX.  This is ridiculous!  For more graphic-intensive work there are much better options, such Photoshop or even PowerPoint.  For more information, look into <a href="https://www.latex-tutorial.com/">latex tutorial</a>.</p>
 <h2 id="typical-usage">Typical Usage</h2>
-
 <h3 id="jupyter">Jupyter</h3>
-
 <p>More commonly, simple snippets or blocks of LaTeX are used within common markdown or HTML to display mathematical text or special symbols.  <a href="https://pandoc.org/">Pandoc</a> can be used to convert simple markdown into other formats, including a PDF file with LaTeX.</p>
-
 <p>Jupyter notebook uses <a href="https://www.mathjax.org/">MathJax</a> to render LaTeX inside html/markdown. Just put your LaTeX math inside <code>\\(</code>.</p>
-
 <p>The inline notation <code>\\)c = \sqrt{a^2 + b^2}\\(</code> becomes: \)c = \sqrt{a^2 + b^2}$</p>
-
 <p>The display mode notation <code>\\[c = \\sqrt{a^2 + b^2}\\]</code> becomes:</p>
-
 <p>\[c = \sqrt{a^2 + b^2}\]</p>
-
 <p>Or place it in an individual cell.</p>
-
-<pre><code class="language-python">from IPython.display import Math
-Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
-</code></pre>
-
-<p>$\displaystyle F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx$</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> Math
+</span></span><span style="display:flex;"><span>Math(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx&#39;</span>)
+</span></span></code></pre></div><p>$\displaystyle F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx$</p>
 <p>You can enter latex directly with the %%latex cell magic, within a Markdown cell:</p>
-
-<pre><code>%%latex
+<pre tabindex="0"><code>%%latex
 \begin{aligned}
 \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp; = \frac{4\pi}{c}\vec{\mathbf{j}} \\
 \nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho \\
 \nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} \\
 \nabla \cdot \vec{\mathbf{B}} &amp; = 0
 \end{aligned}
-</code></pre>
-
-<p>%%latex
+</code></pre><p>%%latex
 \begin{aligned}
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp; = \frac{4\pi}{c}\vec{\mathbf{j}} <br />
-\nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho <br />
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} <br />
+\nabla \times \vec{\mathbf{B}} -, \frac1c, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp; = \frac{4\pi}{c}\vec{\mathbf{j}} \
+\nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho \
+\nabla \times \vec{\mathbf{E}}, +, \frac1c, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} \
 \nabla \cdot \vec{\mathbf{B}} &amp; = 0
 \end{aligned}</p>
-
 <h3 id="mathjax">MathJax</h3>
-
 <p><strong>Superscripts and Subscripts</strong>, use ^ and _. For example</p>
-
 <ul>
 <li><code>x_i^2</code>: \(x_i^2\)</li>
 <li><code>\log_2 x</code>: \(\log_2 x\)</li>
 </ul>
-
 <p><strong>Groups, Superscripts, Subscripts, and other operations</strong> apply only to the next “group”. A “group” is either a single symbol, or any formula surrounded by curly braces {…}. If you do <code>10^10</code>, you will get a surprise: 1010</p>
-
 <p>But <code>10^{10}</code> gives what you probably wanted: \(10^{10}\). Use curly braces to delimit a formula to which a superscript or subscript applies:</p>
-
 <ul>
 <li><code>x^5^6</code> is an error</li>
 <li><code>{x^y}^z</code> is \({x^y}^z\)</li>
 <li><code>x^{y^z}</code> is \(x^{y^z}\)</li>
 </ul>
-
 <p>Observe the difference between <code>x_i^2</code> \(x_i^2\) and <code>x_{i^2}</code> \(x_{i^2}\)</p>
-
 <p><strong>Parentheses and Ordinary symbols</strong> ()[] make parentheses and brackets \((2+3)[4+4]\) Use <code>\{</code> and <code>\}</code> for curly braces \(\{\}\)</p>
-
 <p>These do not scale with the formula in between, so if you write <code>(\frac{\sqrt x}{y^3})</code> the parentheses will be too small: \((\frac{\sqrt x}{y^3})\)</p>
-
 <p>Using <code>\left</code>(…\right) will make the sizes adjust automatically to the formula they enclose: <code>\left(\frac{\sqrt x}{y^3}\right)</code> is \(\left(\frac{\sqrt x}{y^3}\right)\)</p>
-
 <p><code>\left</code> and <code>\right</code> apply to all the following sorts of parentheses:</p>
-
 <ul>
 <li><code>( )</code> \((𝑥)\)</li>
 <li><code>[ ]</code> \([𝑥]\)</li>
@@ -215,63 +180,34 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 <li><code>\lfloor</code> and <code>\rfloor</code> \(\lfloor x \rfloor\)</li>
 <li><code>\middle</code> can be used to add additional dividers</li>
 </ul>
-
 <p>There are also invisible parentheses, denoted by <code>.</code>: <code>\left.\frac12\right\rbrace</code> is \(\left.\frac12\right\rbrace\)</p>
-
 <p>If manual size adjustments are required: <code>\Biggl(\biggl(\Bigl(\bigl((x)\bigr)\Bigr)\biggr)\Biggr)</code> gives \(\Biggl(\biggl(\Bigl(\bigl((x)\bigr)\Bigr)\biggr)\Biggr)\)</p>
-
 <p><strong>Sums and integrals</strong> <code>\sum</code> and <code>\int</code>; the subscript is the lower limit and the superscript is the upper limit, so for example <code>\sum_1^n</code>  \(\sum_1^n\). Don&rsquo;t forget <code>{…}</code> if the limits are more than a single symbol. For example, <code>\sum_{i=0}^\infty i^2</code> is \(\sum_{i=0}^\infty i^2\). Similarly, <code>\prod</code> \(\prod\), <code>\int</code> \(\int\), <code>\bigcup</code> \(\bigcup\), <code>\bigcap</code> \(\bigcap\), <code>\iint</code> \(\iint\), <code>\iiint</code> \(\iiint\), <code>\idotsint</code> \(\idotsint\)</p>
-
 <p><strong>Fractions</strong> There are three ways to make these. <code>\frac ab</code> applies to the next two groups, and produces \(\frac ab\); for more complicated numerators and denominators use <code>{…}</code>: <code>\frac{a+1}{b+1}</code> is \(\frac{a+1}{b+1}\). If the numerator and denominator are complicated, you may prefer <code>\over</code>, which splits up the group that it is in: <code>{a+1\over b+1}</code> is \({a+1\over b+1}\). Using <code>\cfrac{a}{b}</code> command is useful for continued fractions \(\cfrac{a}{b}\), more details for which are given in this sub-article.</p>
-
-<p><strong>Radical signs</strong> use <code>sqrt</code>, which adjusts to the size of its argument: <code>\sqrt{x^3}</code> \(\sqrt{x^3}\); <code>\sqrt[3]{\frac xy}</code> \(\sqrt[3]{\frac xy}\). For complicated expressions, consider using <code>{...}^{1/2}</code> \({&hellip;}^{<sup>1</sup>&frasl;<sub>2</sub>}\) instead.</p>
-
+<p><strong>Radical signs</strong> use <code>sqrt</code>, which adjusts to the size of its argument: <code>\sqrt{x^3}</code> \(\sqrt{x^3}\); <code>\sqrt[3]{\frac xy}</code> \(\sqrt[3]{\frac xy}\). For complicated expressions, consider using <code>{...}^{1/2}</code> \({&hellip;}^{1/2}\) instead.</p>
 <p><strong>Special functions</strong>, such as &ldquo;lim&rdquo;, &ldquo;sin&rdquo;, &ldquo;max&rdquo;, &ldquo;ln&rdquo;, and so on are normally set in roman font instead of italic font. Use <code>\lim</code> \(\lim\), <code>\sin</code> \(\sin\), etc. to make these: <code>\sin x</code> \(\sin x\), not <code>sin x</code> \(sin x\). Use subscripts to attach a notation to <code>\lim</code>: <code>\lim_{x\to 0}</code> \(\lim_{x\to 0}\).</p>
-
 <p>There are a very large number of special symbols and notations, too many to list here; see this <a href="https://pic.plover.com/MISC/symbols.pdf">shorter listing</a>, or this <a href="http://mirrors.ibiblio.org/CTAN/info/symbols/comprehensive/symbols-a4.pdf">exhaustive listing</a>. Some of the most common include:</p>
-
 <p><code>\lt \gt \le \leq \leqq \leqslant</code> \(\lt \gt \le \leq \leqq \leqslant\)</p>
-
 <p><code>\ge \geq \geqq \geqslant \neq</code> \(\ge \geq \geqq \geqslant \neq\)</p>
-
 <p>You can use <code>\not</code> to put a slash through almost anything: <code>\not\lt</code> \(\not\lt\), but it often looks bad.</p>
-
 <p><code>\times \div \pm \mp</code> \(\times \div \pm \mp\)</p>
-
 <p><code>\cup \cap \setminus \subset \subseteq \subsetneq \supset</code> \(\cup \cap \setminus \subset \subseteq \subsetneq \supset\)</p>
-
 <p><code>\in \notin \emptyset \varnothing</code> \(\in \notin \emptyset \varnothing\)</p>
-
 <p><code>\cdot</code> is a centered dot: \(x \cdot y\)</p>
-
 <p><code>{n+1 \choose 2k}</code> \({n+1 \choose 2k}\) or <code>\binom{n+1}{2k}</code> \(\binom{n+1}{2k}\)</p>
-
 <p><code>\to \rightarrow \leftarrow \Rightarrow \Leftarrow \mapsto</code> \(\to \rightarrow \leftarrow \Rightarrow \Leftarrow \mapsto\)</p>
-
 <p><code>\land \lor \lnot \forall \exists \top \bot \vdash \vDash</code> \(\land \lor \lnot \forall \exists \top \bot \vdash \vDash\)</p>
-
 <p><code>\star \ast \oplus \circ \bullet</code> \(\star \ast \oplus \circ \bullet\)</p>
-
 <p><code>\approx \sim \simeq \cong \equiv \prec \lhd \therefore</code> \(\approx \sim \simeq \cong \equiv \prec \lhd \therefore\)</p>
-
 <p><code>\infty \aleph_0</code> \(\infty \aleph_0\)</p>
-
 <p><code>\nabla \partial</code> \(\nabla \partial\) <code>\Im \Re</code> \(\Im \Re\)</p>
-
 <p>For modular equivalence, use <code>\pmod</code> like this: <code>a\equiv b\pmod n</code> \(a\equiv b\pmod n\)</p>
-
 <p><code>\ldots</code> is the dots in \(a1,a2,\ldots,an\)</p>
-
 <p><code>\cdots</code> is the dots in \(a1+a2+\cdots+an\)</p>
-
 <p>Some Greek letters have variant forms: <code>\epsilon \varepsilon</code> \(\epsilon\) \(\varepsilon\) and <code>\phi</code> <code>\varphi</code> \(\phi \varphi\) and others</p>
-
 <p>Script lowercase <code>l</code> is \(\ell\)</p>
-
 <p><strong>Formula to code</strong> can be done with <a href="http://detexify.kirelabs.org/classify.html">Detexify</a> which lets you draw a symbol on a web page and then lists the 𝑇𝐸𝑋 symbols that seem to resemble it. These are not guaranteed to work in MathJax but are a good place to start. To check that a command is supported, note that MathJax.org maintains a list of currently supported 𝐿𝐴𝑇𝐸𝑋 commands, and one can also check Dr. Carol JVF Burns&rsquo;s page of 𝑇𝐸𝑋</p>
-
 <p><strong>Spaces</strong> MathJax usually decides for itself how to space formulas, using a complex set of rules. Putting extra literal spaces into formulas will not change the amount of space MathJax puts in: <code>a b</code> and <code>a    b</code> are both <code>ab</code></p>
-
 <ul>
 <li>To add more space: use <code>\,</code> for a thin space \(a\,b\); and use<code>\;</code> for a wider space \(a\;b\). <code>\quad</code> and <code>\qquad</code> are large spaces: \(a \quad b\) adn \(a \qquad b\)</li>
 <li>To set plain text, use <code>\text{…}</code>: \(\{x\in s\mid x\text{ is extra large}\}\).  You can nest <code>\\(…\\)</code> inside of <code>\text{…}</code>.</li>
@@ -279,32 +215,23 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 <li>Special characters used for MathJax interpreting can be escaped using the <code>\</code> character: <code>\$</code> \(
 , <code>\\{</code> {, <code>\\_</code> _, etc. If you want <code>\\</code> itself, you should use <code>\\backslash</code> \)∖$, because <code>\\</code> is for a new line.</li>
 </ul>
-
 <h2 id="references">References</h2>
-
 <p>To see how any formula was written in any question or answer, including this one, right-click on the expression it and choose &ldquo;Show Math As &gt; TeX Commands&rdquo;.</p>
-
 <p>This <a href="https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">small mathjax post</a> on stackexchange provided the best mathjax examples I&rsquo;ve seen.  The <a href="https://docs.mathjax.org/en/latest/mathjax.html">docs</a> are useful, but a bit wordy.</p>
-
 <p>The <a href="https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols">wikipedia page</a> provides some nice LaTeX references.</p>
-
 <h3 id="tables">Tables</h3>
-
 <p>MathJax does not implement LaTeX tables.</p>
-
 <p>%%latex
 \begin{array}{|c|c|}
 \hline X &amp; P(X = i) \\hline
-  1 &amp; <sup>1</sup>&frasl;<sub>6</sub> \\hline
-  2 &amp; <sup>1</sup>&frasl;<sub>6</sub> \\hline
-  3 &amp; <sup>1</sup>&frasl;<sub>6</sub> \\hline
-  4 &amp; <sup>1</sup>&frasl;<sub>6</sub> \\hline
-  5 &amp; <sup>1</sup>&frasl;<sub>6</sub> \\hline
-  6 &amp; <sup>1</sup>&frasl;<sub>6</sub> \\hline
+1 &amp; 1/6 \\hline
+2 &amp; 1/6 \\hline
+3 &amp; 1/6 \\hline
+4 &amp; 1/6 \\hline
+5 &amp; 1/6 \\hline
+6 &amp; 1/6 \\hline
 \end{array}</p>
-
 <h3 id="greek-letters">Greek letters</h3>
-
 <p>%%latex
 \begin{array}{|c|c|c|c|}
 \hline
@@ -315,57 +242,49 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 \epsilon  &amp;  \lambda  &amp;   \varrho  &amp;   \chi    \\hline
 \varepsilon  &amp;  \mu  &amp;  \sigma   &amp;   \psi      \\hline
 \zeta  &amp;  \nu  &amp;  \varsigma  &amp;  \omega      \\hline
-\eta   &amp;   \xi  &amp;  &amp;   \\hline<br />
+\eta   &amp;   \xi  &amp;  &amp;   \\hline                                  <br>
 \end{array}</p>
-
 <p>%%latex
 \begin{array}{|c|c|c|c|}
 \hline
 \Gamma        &amp;         \Lambda       &amp;        \Sigma       &amp;        \Psi          \\hline
- \Delta        &amp;         \Xi           &amp;        \Upsilon      &amp;        \Omega        \\hline
- \Theta        &amp;         \Pi           &amp;        \Phi    &amp; - \\hline
+\Delta        &amp;         \Xi           &amp;        \Upsilon      &amp;        \Omega        \\hline
+\Theta        &amp;         \Pi           &amp;        \Phi    &amp; - \\hline
 \end{array}</p>
-
 <h3 id="notation">Notation</h3>
-
 <p>%%latex
 \begin{array}{|c|c|c|c|c|}
 \hline
- \hat{a}    &amp;        \acute{a}     &amp;     \bar{a}     &amp;       \dot{a}     &amp;       \breve{a}    \\hline
- \check{a}   &amp;        \grave{a}     &amp;     \vec{a}     &amp;       \ddot{a}    &amp;       \tilde{a}    \\hline
+\hat{a}    &amp;        \acute{a}     &amp;     \bar{a}     &amp;       \dot{a}     &amp;       \breve{a}    \\hline
+\check{a}   &amp;        \grave{a}     &amp;     \vec{a}     &amp;       \ddot{a}    &amp;       \tilde{a}    \\hline
 \end{array}</p>
-
 <p>%%latex
 \begin{array}{|c|c|}
 \hline
 \widetilde{abc}    &amp;                 \widehat{abc}    \\hline
- \overleftarrow{abc}   &amp;              \overrightarrow{abc}    \\hline
- \overline{abc}    &amp;                  \underline{abc}    \\hline
- \overbrace{abc}   &amp;                  \underbrace{abc}    \\hline
- \sqrt{abc}      &amp;                    \sqrt[n]{abc}    \\hline
- f&rsquo;      &amp;                          \frac{abc}{xyz}    \\hline
- \end{array}</p>
-
+\overleftarrow{abc}   &amp;              \overrightarrow{abc}    \\hline
+\overline{abc}    &amp;                  \underline{abc}    \\hline
+\overbrace{abc}   &amp;                  \underbrace{abc}    \\hline
+\sqrt{abc}      &amp;                    \sqrt[n]{abc}    \\hline
+f&rsquo;      &amp;                          \frac{abc}{xyz}    \\hline
+\end{array}</p>
 <h3 id="basic-arrows-and-symbols">Basic arrows and symbols</h3>
-
 <p>%%latex
 \begin{array}{|c|c|c|}
 \hline
- \leftarrow    &amp;               \longleftarrow       &amp;        \uparrow      \\hline
- \Leftarrow    &amp;                \Longleftarrow      &amp;         \Uparrow      \\hline<br />
- \rightarrow   &amp;                \longrightarrow     &amp;         \downarrow      \\hline<br />
- \Rightarrow   &amp;                \Longrightarrow     &amp;         \Downarrow      \\hline<br />
- \leftrightarrow  &amp;             \longleftrightarrow   &amp;       \updownarrow      \\hline<br />
- \Leftrightarrow   &amp;            \Longleftrightarrow   &amp;       \Updownarrow      \\hline<br />
- \mapsto         &amp;              \longmapsto         &amp;         \nearrow       \\hline<br />
- \hookleftarrow   &amp;             \hookrightarrow      &amp;        \searrow       \\hline<br />
- \leftharpoonup    &amp;            \rightharpoonup      &amp;        \swarrow       \\hline<br />
- \leftharpoondown    &amp;          \rightharpoondown    &amp;        \nwarrow       \\hline<br />
- \rightleftharpoons  &amp;          \leadsto    &amp;                           \\hline
+\leftarrow    &amp;               \longleftarrow       &amp;        \uparrow      \\hline
+\Leftarrow    &amp;                \Longleftarrow      &amp;         \Uparrow      \\hline   <br>
+\rightarrow   &amp;                \longrightarrow     &amp;         \downarrow      \\hline <br>
+\Rightarrow   &amp;                \Longrightarrow     &amp;         \Downarrow      \\hline <br>
+\leftrightarrow  &amp;             \longleftrightarrow   &amp;       \updownarrow      \\hline<br>
+\Leftrightarrow   &amp;            \Longleftrightarrow   &amp;       \Updownarrow      \\hline<br>
+\mapsto         &amp;              \longmapsto         &amp;         \nearrow       \\hline  <br>
+\hookleftarrow   &amp;             \hookrightarrow      &amp;        \searrow       \\hline  <br>
+\leftharpoonup    &amp;            \rightharpoonup      &amp;        \swarrow       \\hline  <br>
+\leftharpoondown    &amp;          \rightharpoondown    &amp;        \nwarrow       \\hline  <br>
+\rightleftharpoons  &amp;          \leadsto    &amp;                           \\hline
 \end{array}</p>
-
 <h3 id="logic-set-and-operator-symbols">Logic, set, and operator symbols</h3>
-
 <p>%%latex
 \begin{array}{|c|c|c|c|}
 \hline
@@ -377,118 +296,103 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 \isin  &amp;  \lor  &amp;  \leftrightarrow  &amp;  \iff    \\hline
 \notin  &amp;  \ni  &amp;  \notni  &amp;  \neg or \lnot    \\hline
 \end{array}</p>
-
 <p>%%latex
 \begin{array}{|c|c|c|c|}
 \hline
-\pm         &amp;         \cap       &amp;         \diamond           &amp;         \oplus    \\hline<br />
-\mp         &amp;        \cup        &amp;        \bigtriangleup      &amp;        \ominus    \\hline<br />
-\times      &amp;         \uplus     &amp;         \bigtriangledown   &amp;         \otimes    \\hline<br />
-\div        &amp;          \sqcap    &amp;          \triangleleft     &amp;          \oslash    \\hline<br />
-\ast        &amp;         \sqcup     &amp;         \triangleright     &amp;         \odot       \\hline<br />
-\star       &amp;         \vee       &amp;         \lhd\(^b\)           &amp;         \bigcirc    \\hline<br />
-\circ       &amp;         \wedge     &amp;         \rhd\(^b\)           &amp;         \dagger    \\hline<br />
-\bullet     &amp;         \setminus  &amp;         \unlhd\(^b\)         &amp;         \ddagger    \\hline<br />
-\cdot       &amp;         \wr        &amp;         \unrhd\(^b\)         &amp;         \amalg     \\hline<br />
-+           &amp;         -          &amp;                              &amp;                \\hline
-\end{array}</p>
-
+\pm         &amp;         \cap       &amp;         \diamond           &amp;         \oplus    \\hline   <br>
+\mp         &amp;        \cup        &amp;        \bigtriangleup      &amp;        \ominus    \\hline  <br>
+\times      &amp;         \uplus     &amp;         \bigtriangledown   &amp;         \otimes    \\hline  <br>
+\div        &amp;          \sqcap    &amp;          \triangleleft     &amp;          \oslash    \\hline  <br>
+\ast        &amp;         \sqcup     &amp;         \triangleright     &amp;         \odot       \\hline    <br>
+\star       &amp;         \vee       &amp;         \lhd\(^b\)           &amp;         \bigcirc    \\hline <br>
+\circ       &amp;         \wedge     &amp;         \rhd\(^b\)           &amp;         \dagger    \\hline  <br>
+\bullet     &amp;         \setminus  &amp;         \unlhd\(^b\)         &amp;         \ddagger    \\hline <br>
+\cdot       &amp;         \wr        &amp;         \unrhd\(^b\)         &amp;         \amalg     \\hline</p>
+<ul>
+<li>
+<pre><code>      &amp;         -          &amp;                              &amp;                \\\hline
+</code></pre>
+</li>
+</ul>
+<p>\end{array}</p>
 <h3 id="relation-symbols">Relation symbols</h3>
-
 <p>%%latex
 \begin{array}{|c|c|c|c|}
 \hline
- \leq         &amp;        \geq         &amp;       \equiv      &amp;        \models    \\hline<br />
- \prec        &amp;        \succ        &amp;       \sim        &amp;        \perp    \\hline<br />
- \preceq      &amp;        \succeq      &amp;       \simeq      &amp;        \mid    \\hline<br />
- \ll          &amp;        \gg          &amp;       \asymp      &amp;        \parallel    \\hline<br />
- \subset      &amp;        \supset      &amp;       \approx     &amp;        \bowtie    \\hline<br />
- \subseteq    &amp;        \supseteq      &amp;     \cong       &amp;        \Join\(^b\)    \\hline<br />
- \sqsubset\(^b\)    &amp;    \sqsupset\(^b\)  &amp;     \neq        &amp;        \smile    \\hline<br />
- \sqsubseteq      &amp;    \sqsupseteq    &amp;     \doteq      &amp;        \frown    \\hline<br />
- \in              &amp;    \ni           &amp;      \propto     &amp;        =         \\hline<br />
- \vdash           &amp;    \dashv        &amp;      &lt;           &amp;        &gt;         \\hline<br />
- :       &amp;            &amp;                &amp;               \\hline
+\leq         &amp;        \geq         &amp;       \equiv      &amp;        \models    \\hline    <br>
+\prec        &amp;        \succ        &amp;       \sim        &amp;        \perp    \\hline      <br>
+\preceq      &amp;        \succeq      &amp;       \simeq      &amp;        \mid    \\hline       <br>
+\ll          &amp;        \gg          &amp;       \asymp      &amp;        \parallel    \\hline  <br>
+\subset      &amp;        \supset      &amp;       \approx     &amp;        \bowtie    \\hline    <br>
+\subseteq    &amp;        \supseteq      &amp;     \cong       &amp;        \Join\(^b\)    \\hline  <br>
+\sqsubset\(^b\)    &amp;    \sqsupset\(^b\)  &amp;     \neq        &amp;        \smile    \\hline     <br>
+\sqsubseteq      &amp;    \sqsupseteq    &amp;     \doteq      &amp;        \frown    \\hline     <br>
+\in              &amp;    \ni           &amp;      \propto     &amp;        =         \\hline     <br>
+\vdash           &amp;    \dashv        &amp;      &lt;           &amp;        &gt;         \\hline     <br>
+:       &amp;            &amp;                &amp;               \\hline
 \end{array}</p>
-
 <h3 id="miscellaneous-symbols">Miscellaneous symbols</h3>
-
 <p>%%latex
 \begin{array}{|c|c|c|c|}
 \hline
-\ldots       &amp;         \cdots       &amp;       \vdots       &amp;       \ddots         \\hline<br />
-\ldots       &amp;         \cdots       &amp;       \vdots       &amp;       \ddots         \\hline<br />
- \aleph      &amp;          \prime      &amp;        \forall     &amp;        \infty         \\hline<br />
- \hbar       &amp;          \emptyset   &amp;        \exists     &amp;        \Box\(^b\)         \\hline<br />
- \imath      &amp;          \nabla      &amp;        \neg        &amp;        \Diamond\(^b\)         \\hline<br />
- \jmath      &amp;          \surd       &amp;        \flat       &amp;        \triangle         \\hline<br />
- \ell        &amp;          \top        &amp;        \natural    &amp;        \clubsuit         \\hline<br />
- \wp         &amp;         \bot         &amp;       \sharp       &amp;       \diamondsuit         \\hline<br />
- \Re         &amp;         |           &amp;       \backslash   &amp;       \heartsuit          \\hline<br />
- \Im         &amp;         \angle       &amp;       \partial     &amp;       \spadesuit         \\hline<br />
- \mho\(^b\)    &amp;         .            &amp;       |      &amp;                  \\hline
- \end{array}</p>
-
+\ldots       &amp;         \cdots       &amp;       \vdots       &amp;       \ddots         \\hline     <br>
+\ldots       &amp;         \cdots       &amp;       \vdots       &amp;       \ddots         \\hline     <br>
+\aleph      &amp;          \prime      &amp;        \forall     &amp;        \infty         \\hline     <br>
+\hbar       &amp;          \emptyset   &amp;        \exists     &amp;        \Box\(^b\)         \\hline   <br>
+\imath      &amp;          \nabla      &amp;        \neg        &amp;        \Diamond\(^b\)         \\hline<br>
+\jmath      &amp;          \surd       &amp;        \flat       &amp;        \triangle         \\hline  <br>
+\ell        &amp;          \top        &amp;        \natural    &amp;        \clubsuit         \\hline  <br>
+\wp         &amp;         \bot         &amp;       \sharp       &amp;       \diamondsuit         \\hline<br>
+\Re         &amp;         |           &amp;       \backslash   &amp;       \heartsuit          \\hline<br>
+\Im         &amp;         \angle       &amp;       \partial     &amp;       \spadesuit         \\hline <br>
+\mho\(^b\)    &amp;         .            &amp;       |      &amp;                  \\hline
+\end{array}</p>
 <p>%%latex
 \begin{array}{|c|c|c|c|c|c|c|}
 \hline
-\arccos   &amp;  \cos    &amp;   \csc   &amp;   \exp   &amp;   \ker    &amp;     \limsup   &amp;   \min   &amp;   \sinh    \\hline<br />
- \arcsin  &amp;   \cosh   &amp;   \deg  &amp;    \gcd  &amp;    \lg     &amp;     \ln      &amp;   \Pr    &amp;   \sup    \\hline<br />
- \arctan  &amp;   \cot    &amp;   \det  &amp;    \hom  &amp;    \lim     &amp;    \log     &amp;   \sec   &amp;   \tan    \\hline<br />
- \arg     &amp;   \coth   &amp;   \dim  &amp;    \inf  &amp;    \liminf  &amp;    \max     &amp;   \sin   &amp;   \tanh    \\hline
-  \end{array}</p>
-
+\arccos   &amp;  \cos    &amp;   \csc   &amp;   \exp   &amp;   \ker    &amp;     \limsup   &amp;   \min   &amp;   \sinh    \\hline<br>
+\arcsin  &amp;   \cosh   &amp;   \deg  &amp;    \gcd  &amp;    \lg     &amp;     \ln	   &amp;   \Pr    &amp;   \sup    \\hline<br>
+\arctan  &amp;   \cot    &amp;   \det  &amp;    \hom  &amp;    \lim     &amp;    \log	   &amp;   \sec   &amp;   \tan    \\hline<br>
+\arg     &amp;   \coth   &amp;   \dim  &amp;    \inf  &amp;    \liminf  &amp;    \max	   &amp;   \sin   &amp;   \tanh    \\hline
+\end{array}</p>
 <h3 id="variable-sized-symbols">Variable-sized symbols</h3>
-
 <p>%%latex
 \begin{array}{|c|c|c|}
 \hline
-\sum         &amp;        \bigcap       &amp;      \bigodot    \\hline<br />
- \prod       &amp;         \bigcup      &amp;       \bigotimes    \\hline<br />
- \coprod     &amp;         \bigsqcup    &amp;       \bigoplus    \\hline<br />
- \int        &amp;         \bigvee      &amp;       \biguplus    \\hline<br />
- \oint       &amp;         \bigwedge &amp;   \\hline
- \end{array}</p>
-
+\sum         &amp;        \bigcap       &amp;      \bigodot    \\hline    <br>
+\prod       &amp;         \bigcup      &amp;       \bigotimes    \\hline  <br>
+\coprod     &amp;         \bigsqcup    &amp;       \bigoplus    \\hline   <br>
+\int        &amp;         \bigvee      &amp;       \biguplus    \\hline   <br>
+\oint       &amp;         \bigwedge &amp;   \\hline
+\end{array}</p>
 <h3 id="delimiters">Delimiters</h3>
-
 <p>%%latex
 \begin{array}{|c|c|c|c|}
 \hline
-(         &amp;           )         &amp;          \uparrow      &amp;      \Uparrow    \\hline<br />
- [        &amp;            ]        &amp;           \downarrow    &amp;      \Downarrow    \\hline<br />
- {       &amp;            }       &amp;           \updownarrow  &amp;      \Updownarrow     \\hline<br />
- \lfloor    &amp;          \rfloor    &amp;         \lceil       &amp;       \rceil    \\hline<br />
- \langle    &amp;          \rangle    &amp;         /            &amp;       \backslash    \\hline<br />
- |          &amp;          |    &amp;           &amp;    \\hline
- \end{array}</p>
-
+(         &amp;           )         &amp;          \uparrow      &amp;      \Uparrow    \\hline    <br>
+[        &amp;            ]        &amp;           \downarrow    &amp;      \Downarrow    \\hline  <br>
+{       &amp;            }       &amp;           \updownarrow  &amp;      \Updownarrow     \\hline<br>
+\lfloor    &amp;          \rfloor    &amp;         \lceil       &amp;       \rceil    \\hline      <br>
+\langle    &amp;          \rangle    &amp;         /            &amp;       \backslash    \\hline  <br>
+|          &amp;          |    &amp;           &amp;    \\hline
+\end{array}</p>
 <p>%%latex
 \begin{array}{|c|c|c|c|}
 \hline
 \rmoustache    &amp;    \lmoustache     &amp;    \rgroup         &amp;   \lgroup     \\hline
-  \arrowvert   &amp;      \Arrowvert     &amp;     \bracevert    &amp;       \\hline
+\arrowvert   &amp;      \Arrowvert     &amp;     \bracevert    &amp;       \\hline
 \end{array}</p>
-
 <h3 id="matrix-symbols">Matrix symbols</h3>
-
 <p>\[\begin{matrix} a &amp; b \\ c &amp; d \end{matrix}\]</p>
-
 <p>%%latex</p>
-
 <p>\begin{pmatrix}
-   a &amp; b <br />
-   c &amp; d
+a &amp; b \
+c &amp; d
 \end{pmatrix}</p>
-
 <p>\[\begin{bmatrix} 1 &amp; 2 &amp; -1 \\ 3 &amp; 0 &amp; 1 \\ 0 &amp; 2 &amp; 4 \end{bmatrix}\]</p>
-
 <p>\[\left( \frac{p}{q} \right)\]</p>
-
 <h3 id="geometry-symbols">Geometry symbols</h3>
-
 <p>%%latex</p>
-
 <p>\begin{array}{|c|c|}
 \hline
 \angle  &amp; \measuredangle        \\hline
@@ -498,29 +402,17 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
 | &amp; \nparallel        \\hline
 \perp  &amp;  \not \perp       \\hline
 \end{array}</p>
-
 <h3 id="algebraic-symbols">Algebraic symbols</h3>
-
 <p>\[\sum_{n=0}^{\infty}\]</p>
-
 <p>\[\prod_{n=0}^{\infty}\]</p>
-
 <h3 id="calculus-symbols">Calculus symbols</h3>
-
 <p>\[\int_a^b\]</p>
-
 <p>\[\lim_{x \to a}\]</p>
-
 <p>\[ f&rsquo;(a) = \lim_{x \to a} \frac{f(x) - f(a)}{x - a}\]</p>
-
 <p>\[\lim_{x \to a^-} f(x) = f(a) = \lim_{x \to a^+} f(x)\]</p>
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>Remembering these symbols&rsquo; code may be difficult when only writing intermitently; however, this reference should provide any required information, quickly.</p>
-
 <h3 id="references-1">References</h3>
-
 <ul>
 <li><a href="https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols">wikipedia page of latex references</a></li>
 <li><a href="https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">mathjax tutorial</a></li>
@@ -537,37 +429,37 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#latex-beginnings">LaTeX Beginnings</a></li>
-<li><a href="#typical-usage">Typical Usage</a>
-<ul>
-<li><a href="#jupyter">Jupyter</a></li>
-<li><a href="#mathjax">MathJax</a></li>
-</ul></li>
-<li><a href="#references">References</a>
-<ul>
-<li><a href="#tables">Tables</a></li>
-<li><a href="#greek-letters">Greek letters</a></li>
-<li><a href="#notation">Notation</a></li>
-<li><a href="#basic-arrows-and-symbols">Basic arrows and symbols</a></li>
-<li><a href="#logic-set-and-operator-symbols">Logic, set, and operator symbols</a></li>
-<li><a href="#relation-symbols">Relation symbols</a></li>
-<li><a href="#miscellaneous-symbols">Miscellaneous symbols</a></li>
-<li><a href="#variable-sized-symbols">Variable-sized symbols</a></li>
-<li><a href="#delimiters">Delimiters</a></li>
-<li><a href="#matrix-symbols">Matrix symbols</a></li>
-<li><a href="#geometry-symbols">Geometry symbols</a></li>
-<li><a href="#algebraic-symbols">Algebraic symbols</a></li>
-<li><a href="#calculus-symbols">Calculus symbols</a></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a>
-<ul>
-<li><a href="#references-1">References</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#latex-beginnings">LaTeX Beginnings</a></li>
+    <li><a href="#typical-usage">Typical Usage</a>
+      <ul>
+        <li><a href="#jupyter">Jupyter</a></li>
+        <li><a href="#mathjax">MathJax</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a>
+      <ul>
+        <li><a href="#tables">Tables</a></li>
+        <li><a href="#greek-letters">Greek letters</a></li>
+        <li><a href="#notation">Notation</a></li>
+        <li><a href="#basic-arrows-and-symbols">Basic arrows and symbols</a></li>
+        <li><a href="#logic-set-and-operator-symbols">Logic, set, and operator symbols</a></li>
+        <li><a href="#relation-symbols">Relation symbols</a></li>
+        <li><a href="#miscellaneous-symbols">Miscellaneous symbols</a></li>
+        <li><a href="#variable-sized-symbols">Variable-sized symbols</a></li>
+        <li><a href="#delimiters">Delimiters</a></li>
+        <li><a href="#matrix-symbols">Matrix symbols</a></li>
+        <li><a href="#geometry-symbols">Geometry symbols</a></li>
+        <li><a href="#algebraic-symbols">Algebraic symbols</a></li>
+        <li><a href="#calculus-symbols">Calculus symbols</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a>
+      <ul>
+        <li><a href="#references-1">References</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
         </div>
         
@@ -659,7 +551,7 @@ Math(r'F(k) = \int_{-\infty}^{\infty} f(x) e^{2\pi i k} dx')
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

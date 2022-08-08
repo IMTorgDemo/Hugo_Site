@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,26 +106,17 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Python&rsquo;s Pipenv and Pyenv make a strong team for creating a consistent development environment for exact specifications.  Pyenv allows you to choose from any Python version for your project.  Pipenv attempts to improve upon the original virtual environment (venv) and requirements.txt file.  It does some things well, including integration of virtual environment with dependecy management, and is straight-forward to use.  Unfortunately, it doesn&rsquo;t always live up to the originally-planned, ambitious, goals.  This cheatsheet provides commands for functionality that works, and some work-arounds when it doesn&rsquo;t.</p>
-
+            <p>Python&rsquo;s Pipenv and Pyenv make a strong team for creating a consistent development environment for exact specifications.  Pyenv allows you to choose from any Python version for your project.  Pipenv attempts to improve upon the original virtual environment (venv) and requirements.txt file.  It does some things well, including integration of virtual environment with dependecy management, and is straight-forward to use.  Unfortunately, it doesn&rsquo;t always live up to the originally-planned, ambitious, goals.  This cheatsheet provides commands for functionality that works, and some work-arounds when it doesn&rsquo;t.</p>
 <h2 id="getting-started">Getting Started</h2>
-
 <p><strong>Pyenv</strong> takes care of the python binary and all related tools. It stores everything under <code>$PYENV_ROOT</code>.</p>
-
 <p><strong>Pipenv</strong> takes care of:</p>
-
 <ul>
 <li>calculating the complete set of dependencies;</li>
 <li>(in installation mode) telling virtualenv and pip where to install the dependencies;</li>
 <li>(in runtime mode) making available an environment with the right version of the Python interpreter (via pyenv) and the right set of packages (via virtualenv).</li>
 </ul>
-
 <p><em>Note: Pipenv can interact with <code>setup.py</code>, but it is easy to confuse Pipenv functionality with that for package distribution and installation.  The two are separate, and packaging is out of scope for Pipenv.</em></p>
-
 <p>Pipenv creates a directory that maintains your dependencies.  From the repo listed functionality, it has interesting interaction with existing technology:</p>
-
 <ul>
 <li>Enables truly deterministic builds, while easily specifying only what you want.</li>
 <li>Generates and checks file hashes for locked dependencies.</li>
@@ -136,243 +127,113 @@
 <li>Automatically adds/removes packages to a Pipfile when they are un/installed.</li>
 <li>Automatically loads <code>.env</code> files, if they exist.</li>
 </ul>
-
 <p>You may hear some harping over non-deterministic builds.  This is because Python&rsquo;s requirement.txt file does not dependency resolution of required modules, sub-dependency resolution (at least not well).  This can cause big problems during automated deployments.</p>
-
 <p>Pipenv solves these problems with Pipfile (which is meant to replace requirements.txt) and the Pipfile.lock (which enables deterministic builds).  Pipenv uses pip and virtualenv under the hood but simplifies their usage with a single command line interface.</p>
-
 <h2 id="prepare-python">Prepare Python</h2>
-
 <p>Pyenv is about ensuring your have the correct python interpreter.  This is similar to Node Version Manager (NVM) for Javascript.</p>
-
 <h3 id="install-pyenv">Install pyenv</h3>
-
-<pre><code class="language-python">brew uninstall pyenv
-</code></pre>
-
-<h3 id="install-python-version">Install Python version</h3>
-
-<pre><code class="language-python">pyenv install &lt;version&gt;    #such as, 3.7.2
-</code></pre>
-
-<h3 id="available-versions">Available versions</h3>
-
-<pre><code class="language-python">pyenv install --list
-</code></pre>
-
-<h3 id="change-global-local-dir-versions">Change global / local (dir) versions</h3>
-
-<pre><code class="language-python">pyenv global &lt;version&gt;   #such as, 3.6.6
-</code></pre>
-
-<pre><code class="language-python">pyenv local &lt;version&gt;   #such as, 3.6.6
-</code></pre>
-
-<h2 id="prepare-development-environment">Prepare Development Environment</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>brew uninstall pyenv
+</span></span></code></pre></div><h3 id="install-python-version">Install Python version</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pyenv install <span style="color:#f92672">&lt;</span>version<span style="color:#f92672">&gt;</span>    <span style="color:#75715e">#such as, 3.7.2</span>
+</span></span></code></pre></div><h3 id="available-versions">Available versions</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pyenv install <span style="color:#f92672">--</span>list
+</span></span></code></pre></div><h3 id="change-global--local-dir-versions">Change global / local (dir) versions</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pyenv <span style="color:#66d9ef">global</span> <span style="color:#f92672">&lt;</span>version<span style="color:#f92672">&gt;</span>   <span style="color:#75715e">#such as, 3.6.6</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pyenv local <span style="color:#f92672">&lt;</span>version<span style="color:#f92672">&gt;</span>   <span style="color:#75715e">#such as, 3.6.6</span>
+</span></span></code></pre></div><h2 id="prepare-development-environment">Prepare Development Environment</h2>
 <p>Pipenv creates all your virtual environments in a default location. If you want to change Pipenv’s default behavior, there are some <a href="https://docs.pipenv.org/advanced/#configuration-with-environment-variables">environmental variables for configuration</a>.</p>
-
 <h3 id="install-pipenv">Install pipenv</h3>
-
-<pre><code class="language-python">pip3 install pipenv
-</code></pre>
-
-<h3 id="initiate-directory">Initiate directory</h3>
-
-<pre><code class="language-python">mkdir project; cd project;
-pipenv --three   #or --two
-</code></pre>
-
-<h3 id="develop-from-existing-repo">Develop from existing repo</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pip3 install pipenv
+</span></span></code></pre></div><h3 id="initiate-directory">Initiate directory</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>mkdir project; cd project;
+</span></span><span style="display:flex;"><span>pipenv <span style="color:#f92672">--</span>three   <span style="color:#75715e">#or --two</span>
+</span></span></code></pre></div><h3 id="develop-from-existing-repo">Develop from existing repo</h3>
 <p>When an exact version isn’t specified in the Pipfile, the install command gives the opportunity for dependencies (and sub-dependencies) to update their versions.</p>
-
-<pre><code class="language-python">pipenv install --dev
-</code></pre>
-
-<h3 id="activate">Activate</h3>
-
-<pre><code class="language-python">pipenv shell
-</code></pre>
-
-<h3 id="locate-virtualenv">Locate Virtualenv</h3>
-
-<pre><code class="language-python">pipenv --where          #output project home information.
-</code></pre>
-
-<pre><code class="language-python">pipenv --venv           #output virtualenv information.
-</code></pre>
-
-<pre><code class="language-python">whereis python
-</code></pre>
-
-<h3 id="check-python-version">Check python version</h3>
-
-<pre><code class="language-python">python --version
-</code></pre>
-
-<h3 id="check-path">Check path</h3>
-
-<pre><code class="language-python">python
-&gt;&gt;&gt; import sys
-&gt;&gt;&gt; sys.executable
-quit()
-</code></pre>
-
-<h3 id="run-with-pipenv">Run with pipenv</h3>
-
-<pre><code class="language-python">pipenv run &lt;command&gt;    #such as, `python manage.py runserver`
-</code></pre>
-
-<h3 id="add-scripts-to-pipfile">Add scripts to Pipfile</h3>
-
-<pre><code>#Pipfile
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv install <span style="color:#f92672">--</span>dev
+</span></span></code></pre></div><h3 id="activate">Activate</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv shell
+</span></span></code></pre></div><h3 id="locate-virtualenv">Locate Virtualenv</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv <span style="color:#f92672">--</span>where          <span style="color:#75715e">#output project home information.</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv <span style="color:#f92672">--</span>venv           <span style="color:#75715e">#output virtualenv information.</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>whereis python
+</span></span></code></pre></div><h3 id="check-python-version">Check python version</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>python <span style="color:#f92672">--</span>version
+</span></span></code></pre></div><h3 id="check-path">Check path</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>python
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> sys<span style="color:#f92672">.</span>executable
+</span></span><span style="display:flex;"><span>quit()
+</span></span></code></pre></div><h3 id="run-with-pipenv">Run with pipenv</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv run <span style="color:#f92672">&lt;</span>command<span style="color:#f92672">&gt;</span>    <span style="color:#75715e">#such as, `python manage.py runserver`</span>
+</span></span></code></pre></div><h3 id="add-scripts-to-pipfile">Add scripts to Pipfile</h3>
+<pre tabindex="0"><code>#Pipfile
 [scripts]
-server = &quot;python manage.py runserver&quot;
-</code></pre>
-
-<p>And run with the following</p>
-
-<pre><code class="language-python">pipenv run server
-</code></pre>
-
-<h2 id="managing-dependencies">Managing Dependencies</h2>
-
+server = &#34;python manage.py runserver&#34;
+</code></pre><p>And run with the following</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv run server
+</span></span></code></pre></div><h2 id="managing-dependencies">Managing Dependencies</h2>
 <p>Pipenv generates the file Pipfile.lock, which is used to produce deterministic builds.  Issues can occur with Pipfile.lock, so it is sometimes prudent to create a requirements.txt file from your Pipenv, as a backup.</p>
-
 <p>You specify the locations similarly to how you’d do so with pip. For example, to install the requests library from version control, do the following.  Note the -e argument above to make the installation editable, this is required for Pipenv to do sub-dependency resolution.</p>
-
 <h3 id="install-from-vcs">Install from VCS</h3>
-
-<pre><code class="language-python">pipenv install -e git+https://github.com/requests/requests.git#egg=requests
-</code></pre>
-
-<h3 id="install-from-requirements-txt">Install from requirements.txt</h3>
-
-<pre><code class="language-python">pipenv install -r ./requirements.txt
-</code></pre>
-
-<h3 id="check-local-packages">Check local packages</h3>
-
-<pre><code class="language-python">pipenv lock -r
-</code></pre>
-
-<h3 id="create-requirements-txt">Create requirements.txt</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv install <span style="color:#f92672">-</span>e git<span style="color:#f92672">+</span>https:<span style="color:#f92672">//</span>github<span style="color:#f92672">.</span>com<span style="color:#f92672">/</span>requests<span style="color:#f92672">/</span>requests<span style="color:#f92672">.</span>git<span style="color:#75715e">#egg=requests</span>
+</span></span></code></pre></div><h3 id="install-from-requirementstxt">Install from requirements.txt</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv install <span style="color:#f92672">-</span>r <span style="color:#f92672">./</span>requirements<span style="color:#f92672">.</span>txt
+</span></span></code></pre></div><h3 id="check-local-packages">Check local packages</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv lock <span style="color:#f92672">-</span>r
+</span></span></code></pre></div><h3 id="create-requirementstxt">Create requirements.txt</h3>
 <p>You may want to generate requirements.txt file from existing Pipfile.lock without locking.  When you run <code>pipenv lock -r</code> it ignores existing Pipfile.lock and does locking process again.   There are issues around running this that are documented in this github <a href="https://github.com/pypa/pipenv/issues/3493">issue</a>.</p>
-
-<pre><code class="language-python">pipenv run pip freeze &gt; requirements.txt
-</code></pre>
-
-<p>Another approach is to use:</p>
-
-<pre><code class="language-python">pipenv lock --keep-outdated -d -r &gt; requirements.txt
-</code></pre>
-
-<h3 id="install-and-uninstall-a-package">Install and uninstall a package</h3>
-
-<pre><code class="language-python">pipenv install &lt;module&gt;    #such as, camelcase
-</code></pre>
-
-<pre><code class="language-python">pipenv uninstall &lt;module&gt;    #such as, camelcase
-</code></pre>
-
-<pre><code class="language-python">pipenv uninstall &lt;module&gt;
-pipenv uninstall --all
-pipenv uninstall --all-dev
-</code></pre>
-
-<pre><code class="language-python">pipenv install &lt;module&gt; --dev    #only for development, such as, nose
-</code></pre>
-
-<h3 id="check-dependency-graph">Check dependency graph</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv run pip freeze <span style="color:#f92672">&gt;</span> requirements<span style="color:#f92672">.</span>txt
+</span></span></code></pre></div><p>Another approach is to use:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv lock <span style="color:#f92672">--</span>keep<span style="color:#f92672">-</span>outdated <span style="color:#f92672">-</span>d <span style="color:#f92672">-</span>r <span style="color:#f92672">&gt;</span> requirements<span style="color:#f92672">.</span>txt
+</span></span></code></pre></div><h3 id="install-and-uninstall-a-package">Install and uninstall a package</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv install <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>    <span style="color:#75715e">#such as, camelcase</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv uninstall <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>    <span style="color:#75715e">#such as, camelcase</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv uninstall <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>pipenv uninstall <span style="color:#f92672">--</span>all
+</span></span><span style="display:flex;"><span>pipenv uninstall <span style="color:#f92672">--</span>all<span style="color:#f92672">-</span>dev
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv install <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span> <span style="color:#f92672">--</span>dev    <span style="color:#75715e">#only for development, such as, nose</span>
+</span></span></code></pre></div><h3 id="check-dependency-graph">Check dependency graph</h3>
 <p>If there are conflicting dependencies (package_a needs package_c&gt;=1.0, but package_b needs package_c&lt;1.0), Pipenv will not be able to create a lock file and wil output an error like the following:</p>
-
-<pre><code>Warning: Your dependencies could not be resolved. You likely have a mismatch in your sub-dependencies.
+<pre tabindex="0"><code>Warning: Your dependencies could not be resolved. You likely have a mismatch in your sub-dependencies.
   You can use \\( pipenv install --skip-lock to bypass this mechanism, then run \\) pipenv graph to inspect the situation.
 Could not find a version that matches package_c&gt;=1.0,package_c&lt;1.0
-</code></pre>
-
-<p>As the warning says, you can also show a dependency graph to understand your top-level dependencies and their sub-dependencies.  This command will print out a tree-like structure showing your dependencies.</p>
-
-<pre><code class="language-python">pipenv graph
-pipenv graph --reverse
-</code></pre>
-
-<p>You can reverse, <code>--reverse</code>, the tree to show the sub-dependencies with the parent that requires it.</p>
-
+</code></pre><p>As the warning says, you can also show a dependency graph to understand your top-level dependencies and their sub-dependencies.  This command will print out a tree-like structure showing your dependencies.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv graph
+</span></span><span style="display:flex;"><span>pipenv graph <span style="color:#f92672">--</span>reverse
+</span></span></code></pre></div><p>You can reverse, <code>--reverse</code>, the tree to show the sub-dependencies with the parent that requires it.</p>
 <h3 id="ignore-pipfile">Ignore pipfile</h3>
-
-<pre><code class="language-python">pipenv install --ignore-pipfile
-</code></pre>
-
-<h2 id="prepare-deployment">Prepare Deployment</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv install <span style="color:#f92672">--</span>ignore<span style="color:#f92672">-</span>pipfile
+</span></span></code></pre></div><h2 id="prepare-deployment">Prepare Deployment</h2>
 <p>Let’s say you’ve got everything working in your local development environment and you’re ready to push it to production. To do that, you need to lock your environment so you can ensure you have the same one in production.</p>
-
 <p>This will create/update your Pipfile.lock, which you’ll never need to (and are never meant to) edit manually. You should always use the generated file.</p>
-
-<h3 id="set-lockfile-before-deployment">Set lockfile - before deployment</h3>
-
-<pre><code class="language-python">pipenv lock
-</code></pre>
-
-<h3 id="production-deployment">Production deployment</h3>
-
+<h3 id="set-lockfile---before-deployment">Set lockfile - before deployment</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv lock
+</span></span></code></pre></div><h3 id="production-deployment">Production deployment</h3>
 <p>Now, once you get your code and Pipfile.lock in your production environment, you should install the last successful environment recorded.</p>
-
 <p>This tells Pipenv to ignore the Pipfile for installation and use what’s in the Pipfile.lock. Given this Pipfile.lock, Pipenv will create the exact same environment you had when you ran pipenv lock, sub-dependencies and all.</p>
-
 <p>The lock file enables deterministic builds by taking a snapshot of all the versions of packages in an environment (similar to the result of a pip freeze).</p>
-
-<pre><code class="language-python">pipenv install --ignore-pipfile
-</code></pre>
-
-<h3 id="env-variables">Env variables</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv install <span style="color:#f92672">--</span>ignore<span style="color:#f92672">-</span>pipfile
+</span></span></code></pre></div><h3 id="env-variables">Env variables</h3>
 <p>Pipenv supports the automatic loading of environmental variables when a <code>.env</code> file exists in the top-level directory. That way, when you pipenv shell to open the virtual environment, it loads your environmental variables from the file. The <code>.env</code> file just contains key-value pairs:</p>
-
-<pre><code>#.env
+<pre tabindex="0"><code>#.env
 SOME_ENV_CONFIG=some_value
 SOME_OTHER_ENV_CONFIG=some_other_value
-</code></pre>
-
-<h3 id="check-security-vulnerabilities">Check security vulnerabilities</h3>
-
+</code></pre><h3 id="check-security-vulnerabilities">Check security vulnerabilities</h3>
 <p>Check for security vulnerabilities (and PEP 508 requirements) in your environment.</p>
-
-<pre><code class="language-python">pipenv check
-</code></pre>
-
-<h2 id="package-distribution-and-installation">Package Distribution and Installation</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv check
+</span></span></code></pre></div><h2 id="package-distribution-and-installation">Package Distribution and Installation</h2>
 <p>How does Pipenv work with setup.py files?  There are a lot of nuances to that question. First, a setup.py file is necessary when you’re using setuptools as your build/distribution system. This has been the de facto standard for a while now, but recent changes have made the use of setuptools optional.</p>
-
 <p>Remember: Pipenv can help in distribution, but that is not within project scope.</p>
-
-<h3 id="install-module-s-into-virtual-environment">Install module&rsquo;s into virtual environment</h3>
-
-<pre><code class="language-python">pipenv install -e .
-</code></pre>
-
-<h3 id="install-module-onto-machine">Install module onto machine</h3>
-
-<pre><code class="language-python">pip install .
-</code></pre>
-
-<h2 id="wrapping-up">Wrapping Up</h2>
-
+<h3 id="install-modules-into-virtual-environment">Install module&rsquo;s into virtual environment</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv install <span style="color:#f92672">-</span>e <span style="color:#f92672">.</span>
+</span></span></code></pre></div><h3 id="install-module-onto-machine">Install module onto machine</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pip install <span style="color:#f92672">.</span>
+</span></span></code></pre></div><h2 id="wrapping-up">Wrapping Up</h2>
 <h3 id="exiting-the-virtualenv">Exiting the virtualenv</h3>
-
-<pre><code class="language-python">exit
-</code></pre>
-
-<h3 id="remove-the-virtualenv">Remove the virtualenv</h3>
-
-<pre><code class="language-python">pipenv --rm
-</code></pre>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>exit
+</span></span></code></pre></div><h3 id="remove-the-virtualenv">Remove the virtualenv</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipenv <span style="color:#f92672">--</span>rm
+</span></span></code></pre></div>
         </div>
 
         
@@ -380,58 +241,61 @@ SOME_OTHER_ENV_CONFIG=some_other_value
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#getting-started">Getting Started</a></li>
-<li><a href="#prepare-python">Prepare Python</a>
-<ul>
-<li><a href="#install-pyenv">Install pyenv</a></li>
-<li><a href="#install-python-version">Install Python version</a></li>
-<li><a href="#available-versions">Available versions</a></li>
-<li><a href="#change-global-local-dir-versions">Change global / local (dir) versions</a></li>
-</ul></li>
-<li><a href="#prepare-development-environment">Prepare Development Environment</a>
-<ul>
-<li><a href="#install-pipenv">Install pipenv</a></li>
-<li><a href="#initiate-directory">Initiate directory</a></li>
-<li><a href="#develop-from-existing-repo">Develop from existing repo</a></li>
-<li><a href="#activate">Activate</a></li>
-<li><a href="#locate-virtualenv">Locate Virtualenv</a></li>
-<li><a href="#check-python-version">Check python version</a></li>
-<li><a href="#check-path">Check path</a></li>
-<li><a href="#run-with-pipenv">Run with pipenv</a></li>
-<li><a href="#add-scripts-to-pipfile">Add scripts to Pipfile</a></li>
-</ul></li>
-<li><a href="#managing-dependencies">Managing Dependencies</a>
-<ul>
-<li><a href="#install-from-vcs">Install from VCS</a></li>
-<li><a href="#install-from-requirements-txt">Install from requirements.txt</a></li>
-<li><a href="#check-local-packages">Check local packages</a></li>
-<li><a href="#create-requirements-txt">Create requirements.txt</a></li>
-<li><a href="#install-and-uninstall-a-package">Install and uninstall a package</a></li>
-<li><a href="#check-dependency-graph">Check dependency graph</a></li>
-<li><a href="#ignore-pipfile">Ignore pipfile</a></li>
-</ul></li>
-<li><a href="#prepare-deployment">Prepare Deployment</a>
-<ul>
-<li><a href="#set-lockfile-before-deployment">Set lockfile - before deployment</a></li>
-<li><a href="#production-deployment">Production deployment</a></li>
-<li><a href="#env-variables">Env variables</a></li>
-<li><a href="#check-security-vulnerabilities">Check security vulnerabilities</a></li>
-</ul></li>
-<li><a href="#package-distribution-and-installation">Package Distribution and Installation</a>
-<ul>
-<li><a href="#install-module-s-into-virtual-environment">Install module&rsquo;s into virtual environment</a></li>
-<li><a href="#install-module-onto-machine">Install module onto machine</a></li>
-</ul></li>
-<li><a href="#wrapping-up">Wrapping Up</a>
-<ul>
-<li><a href="#exiting-the-virtualenv">Exiting the virtualenv</a></li>
-<li><a href="#remove-the-virtualenv">Remove the virtualenv</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#prepare-python">Prepare Python</a>
+      <ul>
+        <li><a href="#install-pyenv">Install pyenv</a></li>
+        <li><a href="#install-python-version">Install Python version</a></li>
+        <li><a href="#available-versions">Available versions</a></li>
+        <li><a href="#change-global--local-dir-versions">Change global / local (dir) versions</a></li>
+      </ul>
+    </li>
+    <li><a href="#prepare-development-environment">Prepare Development Environment</a>
+      <ul>
+        <li><a href="#install-pipenv">Install pipenv</a></li>
+        <li><a href="#initiate-directory">Initiate directory</a></li>
+        <li><a href="#develop-from-existing-repo">Develop from existing repo</a></li>
+        <li><a href="#activate">Activate</a></li>
+        <li><a href="#locate-virtualenv">Locate Virtualenv</a></li>
+        <li><a href="#check-python-version">Check python version</a></li>
+        <li><a href="#check-path">Check path</a></li>
+        <li><a href="#run-with-pipenv">Run with pipenv</a></li>
+        <li><a href="#add-scripts-to-pipfile">Add scripts to Pipfile</a></li>
+      </ul>
+    </li>
+    <li><a href="#managing-dependencies">Managing Dependencies</a>
+      <ul>
+        <li><a href="#install-from-vcs">Install from VCS</a></li>
+        <li><a href="#install-from-requirementstxt">Install from requirements.txt</a></li>
+        <li><a href="#check-local-packages">Check local packages</a></li>
+        <li><a href="#create-requirementstxt">Create requirements.txt</a></li>
+        <li><a href="#install-and-uninstall-a-package">Install and uninstall a package</a></li>
+        <li><a href="#check-dependency-graph">Check dependency graph</a></li>
+        <li><a href="#ignore-pipfile">Ignore pipfile</a></li>
+      </ul>
+    </li>
+    <li><a href="#prepare-deployment">Prepare Deployment</a>
+      <ul>
+        <li><a href="#set-lockfile---before-deployment">Set lockfile - before deployment</a></li>
+        <li><a href="#production-deployment">Production deployment</a></li>
+        <li><a href="#env-variables">Env variables</a></li>
+        <li><a href="#check-security-vulnerabilities">Check security vulnerabilities</a></li>
+      </ul>
+    </li>
+    <li><a href="#package-distribution-and-installation">Package Distribution and Installation</a>
+      <ul>
+        <li><a href="#install-modules-into-virtual-environment">Install module&rsquo;s into virtual environment</a></li>
+        <li><a href="#install-module-onto-machine">Install module onto machine</a></li>
+      </ul>
+    </li>
+    <li><a href="#wrapping-up">Wrapping Up</a>
+      <ul>
+        <li><a href="#exiting-the-virtualenv">Exiting the virtualenv</a></li>
+        <li><a href="#remove-the-virtualenv">Remove the virtualenv</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
         </div>
         
@@ -523,7 +387,7 @@ SOME_OTHER_ENV_CONFIG=some_other_value
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

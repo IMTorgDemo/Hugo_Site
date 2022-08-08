@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,71 +106,54 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>The deep learning movement began by applying neural networks to image classification.  PyTorch became a leading framework for work in this field.  This post provides a cheatsheet to some of the basic methods used for computer vision, using PyTorch.</p>
-
+            <p>The deep learning movement began by applying neural networks to image classification.  PyTorch became a leading framework for work in this field.  This post provides a cheatsheet to some of the basic methods used for computer vision, using PyTorch.</p>
 <h2 id="configuration">Configuration</h2>
-
 <p>This is a typical environment setup.  Seed the Random Number Generator for all devices (both CPU and CUDA) using <code>manual_seed()</code> so that work can be reproduced.  Computations are deterministic only on your specific problem, platform, and PyTorch release.  See, <a href="https://pytorch.org/docs/stable/notes/randomness.html">here</a>, for more.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> matplotlib <span style="color:#f92672">import</span> pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>set_printoptions(edgeitems<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">123</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">from matplotlib import pyplot as plt
-import numpy as np
-import torch
-
-torch.set_printoptions(edgeitems=2)
-torch.manual_seed(123)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;torch._C.Generator at 0x7f7dc265b930&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;torch._C.Generator at 0x7f7dc265b930&gt;
 </code></pre>
 
 </div>
-
 
 <h2 id="dataset">Dataset</h2>
-
 <p>Popular datasets include: MNIST, FashionMNIST, CIFAR-100, SVHN, Coco, Omniglot.  The <code>torchvision</code> library has access to them.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision <span style="color:#f92672">import</span> datasets
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cifar10 <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>CIFAR10(<span style="color:#e6db74">&#39;data&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>cifar10_val <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>CIFAR10(<span style="color:#e6db74">&#39;data&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">from torchvision import datasets
-
-cifar10 = datasets.CIFAR10('data', train=True, download=True)
-cifar10_val = datasets.CIFAR10('data', train=False, download=True)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to data/cifar-10-python.tar.gz
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to data/cifar-10-python.tar.gz
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">HBox(children=(FloatProgress(value=1.0, bar_style='info', max=1.0), HTML(value='')))
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">HBox(children=(FloatProgress(value=1.0, bar_style=&#39;info&#39;, max=1.0), HTML(value=&#39;&#39;)))
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">Extracting data/cifar-10-python.tar.gz to data
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Extracting data/cifar-10-python.tar.gz to data
 Files already downloaded and verified
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>type(cifar10)<span style="color:#f92672">.</span>__mro__
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">type(cifar10).__mro__
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(torchvision.datasets.cifar.CIFAR10,
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(torchvision.datasets.cifar.CIFAR10,
  torchvision.datasets.vision.VisionDataset,
  torch.utils.data.dataset.Dataset,
  object)
@@ -178,346 +161,255 @@ Files already downloaded and verified
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>class_names <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;airplane&#39;</span>,<span style="color:#e6db74">&#39;automobile&#39;</span>,<span style="color:#e6db74">&#39;bird&#39;</span>,<span style="color:#e6db74">&#39;cat&#39;</span>,<span style="color:#e6db74">&#39;deer&#39;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#e6db74">&#39;dog&#39;</span>,<span style="color:#e6db74">&#39;frog&#39;</span>,<span style="color:#e6db74">&#39;horse&#39;</span>,<span style="color:#e6db74">&#39;ship&#39;</span>,<span style="color:#e6db74">&#39;truck&#39;</span>]
+</span></span><span style="display:flex;"><span>len(cifar10)                      <span style="color:#75715e">#items in dataset</span>
+</span></span><span style="display:flex;"><span>img, label <span style="color:#f92672">=</span> cifar10[<span style="color:#ae81ff">99</span>]     
+</span></span><span style="display:flex;"><span>img, label, class_names[label]    <span style="color:#75715e">#image, label, label-name</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">class_names = ['airplane','automobile','bird','cat','deer',
-               'dog','frog','horse','ship','truck']
-len(cifar10)                      #items in dataset
-img, label = cifar10[99]     
-img, label, class_names[label]    #image, label, label-name
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(&lt;PIL.Image.Image image mode=RGB size=32x32 at 0x7F7DC113E358&gt;,
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(&lt;PIL.Image.Image image mode=RGB size=32x32 at 0x7F7DC113E358&gt;,
  1,
- 'automobile')
+ &#39;automobile&#39;)
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-python">plt.imshow(img)
-plt.show()
-</code></pre>
-
-<p><img src="output_9_0.png" alt="png" /></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(img)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img src="output_9_0.png" alt="png"></p>
 <h2 id="transform-pipelines">Transform Pipelines</h2>
-
 <p>The following transforms are used in nearly every pipeline to prepare data for a model.</p>
-
 <h3 id="totensor">ToTensor()</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision <span style="color:#f92672">import</span> transforms
+</span></span><span style="display:flex;"><span>print(dir(transforms)[:<span style="color:#ae81ff">20</span>])
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">from torchvision import transforms
-print(dir(transforms)[:20])
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">['CenterCrop', 'ColorJitter', 'Compose', 'FiveCrop', 'Grayscale', 'Lambda', 'LinearTransformation', 'Normalize', 'Pad', 'RandomAffine', 'RandomApply', 'RandomChoice', 'RandomCrop', 'RandomErasing', 'RandomGrayscale', 'RandomHorizontalFlip', 'RandomOrder', 'RandomPerspective', 'RandomResizedCrop', 'RandomRotation']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[&#39;CenterCrop&#39;, &#39;ColorJitter&#39;, &#39;Compose&#39;, &#39;FiveCrop&#39;, &#39;Grayscale&#39;, &#39;Lambda&#39;, &#39;LinearTransformation&#39;, &#39;Normalize&#39;, &#39;Pad&#39;, &#39;RandomAffine&#39;, &#39;RandomApply&#39;, &#39;RandomChoice&#39;, &#39;RandomCrop&#39;, &#39;RandomErasing&#39;, &#39;RandomGrayscale&#39;, &#39;RandomHorizontalFlip&#39;, &#39;RandomOrder&#39;, &#39;RandomPerspective&#39;, &#39;RandomResizedCrop&#39;, &#39;RandomRotation&#39;]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>to_tensor <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>ToTensor()
+</span></span><span style="display:flex;"><span>img_t <span style="color:#f92672">=</span> to_tensor(img)
+</span></span><span style="display:flex;"><span>img_t<span style="color:#f92672">.</span>shape
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">to_tensor = transforms.ToTensor()
-img_t = to_tensor(img)
-img_t.shape
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">torch.Size([3, 32, 32])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">torch.Size([3, 32, 32])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tensor_cifar10 <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>CIFAR10(<span style="color:#e6db74">&#39;data&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>                                  transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor()
+</span></span><span style="display:flex;"><span>                                 )
+</span></span></code></pre></div><p>The original PIL image ranged from 0 to 255 (8-bit per channel), the ToTensor transform turned the data into 32-bit floating point per channel, scaling values down from 0.0 to 1.0.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img_t<span style="color:#f92672">.</span>min(), img_t<span style="color:#f92672">.</span>max()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">tensor_cifar10 = datasets.CIFAR10('data', train=True, download=False,
-                                  transform=transforms.ToTensor()
-                                 )
-</code></pre>
-
-<p>The original PIL image ranged from 0 to 255 (8-bit per channel), the ToTensor transform turned the data into 32-bit floating point per channel, scaling values down from 0.0 to 1.0.</p>
-
-<pre><code class="language-python">img_t.min(), img_t.max()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(tensor(0.), tensor(1.))
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(tensor(0.), tensor(1.))
 </code></pre>
 
 </div>
-
 
 <p>Must use permute to change the order of the axes from CxHxW to HxWxC to match what Matplotlib expects.</p>
-
-<pre><code class="language-python">plt.imshow(img_t.permute(1, 2, 0))
-plt.show()
-</code></pre>
-
-<p><img src="output_18_0.png" alt="png" /></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(img_t<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img src="output_18_0.png" alt="png"></p>
 <h3 id="normalize">Normalize()</h3>
-
 <p>Unfortunately, some manual work must be done to obtain the mean and stadard deviations used to normalize the data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>imgs <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack([img_t <span style="color:#66d9ef">for</span> img_t, _ <span style="color:#f92672">in</span> tensor_cifar10], dim<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)    <span style="color:#75715e">#stack all tensors returned by the dataset along an extra dimension</span>
+</span></span><span style="display:flex;"><span>print( imgs<span style="color:#f92672">.</span>shape )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>imgs<span style="color:#f92672">.</span>view(<span style="color:#ae81ff">3</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>mean(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)   <span style="color:#75715e">#mean per channel</span>
+</span></span><span style="display:flex;"><span>imgs<span style="color:#f92672">.</span>view(<span style="color:#ae81ff">3</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>std(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)    <span style="color:#75715e">#std per channel</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">imgs = torch.stack([img_t for img_t, _ in tensor_cifar10], dim=3)    #stack all tensors returned by the dataset along an extra dimension
-print( imgs.shape )
-
-imgs.view(3, -1).mean(dim=1)   #mean per channel
-imgs.view(3, -1).std(dim=1)    #std per channel
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">torch.Size([3, 32, 32, 50000])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">torch.Size([3, 32, 32, 50000])
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">tensor([0.2470, 0.2435, 0.2616])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([0.2470, 0.2435, 0.2616])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>transforms<span style="color:#f92672">.</span>Normalize((<span style="color:#ae81ff">0.4915</span>, <span style="color:#ae81ff">0.4823</span>, <span style="color:#ae81ff">0.4468</span>), (<span style="color:#ae81ff">0.2470</span>, <span style="color:#ae81ff">0.2435</span>, <span style="color:#ae81ff">0.2616</span>))
+</span></span><span style="display:flex;"><span>cifar10 <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>CIFAR10(<span style="color:#e6db74">&#39;data&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>                          transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>Compose([
+</span></span><span style="display:flex;"><span>                              transforms<span style="color:#f92672">.</span>ToTensor(),
+</span></span><span style="display:flex;"><span>                              transforms<span style="color:#f92672">.</span>Normalize((<span style="color:#ae81ff">0.4915</span>, <span style="color:#ae81ff">0.4823</span>, <span style="color:#ae81ff">0.4468</span>),
+</span></span><span style="display:flex;"><span>                                                   (<span style="color:#ae81ff">0.2470</span>, <span style="color:#ae81ff">0.2435</span>, <span style="color:#ae81ff">0.2616</span>))
+</span></span><span style="display:flex;"><span>                          ]))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cifar10_val <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>CIFAR10(<span style="color:#e6db74">&#39;data&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>                          transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>Compose([
+</span></span><span style="display:flex;"><span>                              transforms<span style="color:#f92672">.</span>ToTensor(),
+</span></span><span style="display:flex;"><span>                              transforms<span style="color:#f92672">.</span>Normalize((<span style="color:#ae81ff">0.4915</span>, <span style="color:#ae81ff">0.4823</span>, <span style="color:#ae81ff">0.4468</span>),
+</span></span><span style="display:flex;"><span>                                                   (<span style="color:#ae81ff">0.2470</span>, <span style="color:#ae81ff">0.2435</span>, <span style="color:#ae81ff">0.2616</span>))
+</span></span><span style="display:flex;"><span>                          ]))
+</span></span></code></pre></div><p>This is because normalization has shifted the RGB levels outside the 0.0 to 1.0 range and changed the overall magnitudes of the channels.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img_t, _ <span style="color:#f92672">=</span> cifar10[<span style="color:#ae81ff">99</span>]
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(img_t<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">transforms.Normalize((0.4915, 0.4823, 0.4468), (0.2470, 0.2435, 0.2616))
-cifar10 = datasets.CIFAR10('data', train=True, download=False,
-                          transform=transforms.Compose([
-                              transforms.ToTensor(),
-                              transforms.Normalize((0.4915, 0.4823, 0.4468),
-                                                   (0.2470, 0.2435, 0.2616))
-                          ]))
-</code></pre>
-
-<pre><code class="language-python">cifar10_val = datasets.CIFAR10('data', train=False, download=False,
-                          transform=transforms.Compose([
-                              transforms.ToTensor(),
-                              transforms.Normalize((0.4915, 0.4823, 0.4468),
-                                                   (0.2470, 0.2435, 0.2616))
-                          ]))
-</code></pre>
-
-<p>This is because normalization has shifted the RGB levels outside the 0.0 to 1.0 range and changed the overall magnitudes of the channels.</p>
-
-<pre><code class="language-python">img_t, _ = cifar10[99]
-plt.imshow(img_t.permute(1, 2, 0))
-plt.show()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 </code></pre>
 
 </div>
 
-
-<p><img src="output_24_1.png" alt="png" /></p>
-
+<p><img src="output_24_1.png" alt="png"></p>
 <h2 id="fully-connected-feed-forward-network">Fully-Connected, Feed-Forward Network</h2>
-
 <p>This is the most simple type of neural network.  We can use the <code>nn.Sequential</code> function to step through each layer of the network.</p>
-
 <h3 id="problem-statement">Problem statement</h3>
-
 <p>Within the cifar10 dataset, we are only looking at items labelled &lsquo;birds&rsquo; or &lsquo;planes&rsquo;.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>label_map <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">1</span>}
+</span></span><span style="display:flex;"><span>cifar2 <span style="color:#f92672">=</span> [(img, label_map[label]) <span style="color:#66d9ef">for</span> img, label <span style="color:#f92672">in</span> cifar10 <span style="color:#66d9ef">if</span> label <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>]]
+</span></span><span style="display:flex;"><span>cifar2_val <span style="color:#f92672">=</span> [(img, label_map[label]) <span style="color:#66d9ef">for</span> img, label <span style="color:#f92672">in</span> cifar10_val <span style="color:#66d9ef">if</span> label <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>]]
+</span></span></code></pre></div><p>Softmax is a monotone function, in that lower values in the input will correspond to lower values in the output.  However, it’s not &ldquo;scale invariant&rdquo;, in that the ratio between values is not preserved.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">2.0</span>, <span style="color:#ae81ff">3.0</span>])
+</span></span><span style="display:flex;"><span>softmax <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>softmax(x)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">label_map = {0: 0, 2: 1}
-cifar2 = [(img, label_map[label]) for img, label in cifar10 if label in [0, 2]]
-cifar2_val = [(img, label_map[label]) for img, label in cifar10_val if label in [0, 2]]
-</code></pre>
-
-<p>Softmax is a monotone function, in that lower values in the input will correspond to lower values in the output.  However, it’s not &ldquo;scale invariant&rdquo;, in that the ratio between values is not preserved.</p>
-
-<pre><code class="language-python">x = torch.tensor([1.0, 2.0, 3.0])
-softmax = torch.nn.Softmax(dim=0)
-softmax(x)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([0.0900, 0.2447, 0.6652])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([0.0900, 0.2447, 0.6652])
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-python">import torch.nn as nn
-
-model = nn.Sequential(
-            nn.Linear(3072, 512),
-            nn.Tanh(),
-            nn.Linear(512, 2),
-            nn.Softmax(dim=1))
-</code></pre>
-
-<h3 id="test-design">Test design</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">3072</span>, <span style="color:#ae81ff">512</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</span></span></code></pre></div><h3 id="test-design">Test design</h3>
 <p>Once a model is designed, it should be tested with the same input to ensure no problems.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img, _ <span style="color:#f92672">=</span> cifar2[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(img<span style="color:#f92672">.</span>permute(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">img, _ = cifar2[0]
-plt.imshow(img.permute(1, 2, 0))
-plt.show()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 </code></pre>
 
 </div>
 
-
-<p><img src="output_32_1.png" alt="png" /></p>
-
+<p><img src="output_32_1.png" alt="png"></p>
 <p>Elements are initialized randomly by PyTorch between -1.0 and 1.0, so don&rsquo;t be confused by the values.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img_batch <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>out <span style="color:#f92672">=</span> model(img_batch)                  
+</span></span><span style="display:flex;"><span>out
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">img_batch = img.view(-1).unsqueeze(0)
-out = model(img_batch)                  
-out
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[0.3700, 0.6300]], grad_fn=&lt;SoftmaxBackward&gt;)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[0.3700, 0.6300]], grad_fn=&lt;SoftmaxBackward&gt;)
 </code></pre>
 
 </div>
-
 
 <p>The loss function associates a meaning to these two numbers, after back-propagation. If the labels are provided as index 0 for &ldquo;airplane&rdquo; and index 1 for &ldquo;bird&rdquo;, than that’s the order the outputs will be induced to take. Therefore, after training we will be able to get the label as an index by computing the argmax of the output probabilities, that is, the index at which we get the maximum probability.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>_, index <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>max(out, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>index
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">_, index = torch.max(out, dim=1)
-index
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([1])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([1])
 </code></pre>
 
 </div>
 
-
 <p>We want a loss function that is very high when the likelihood is low, that is, so low that the alternatives have a higher probability. Negative log likelihood (NLL) is a good candidate as it takes probabilities in input, so as the likelihood grows the other probabilities will necessarily decrease.  It has the expression:</p>
-
 <p><code>NLL = - sum(log(out_i[c_i]))</code>, where the sum is taken over <code>N</code> samples and <code>c_i</code> is the correct class for sample <code>i</code>.</p>
-
 <p>The <code>nn.NLLLoss</code> doesn’t take a logarithm of the likelihood, but it expects a tensor of log probabilities in input.  This is because taking a logarithm around 0 can create some VERY small numbers.  So, we must use <code>nn.LogSoftmax</code> instead of <code>nn.Softmax</code>, which takes care to make the calculation numerically stable.</p>
-
 <p>The combination of <code>nn.LogSoftmax</code> and <code>nn.NLLLoss</code> is equivalent to using <code>nn.CrossEntropyLoss</code>. In fact, the combined mathematical expression for taking the negative sum of log softmax of a vector of values corresponds to the mathematical expression for cross entropy.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>softmax <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>log_softmax <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>LogSoftmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">104.0</span>]])
+</span></span><span style="display:flex;"><span>softmax(x)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;softmax: &#39;</span>, torch<span style="color:#f92672">.</span>log(softmax(x)) )
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;log softmax: &#39;</span>, torch<span style="color:#f92672">.</span>exp(log_softmax(x)) )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">softmax = nn.Softmax(dim=1)
-log_softmax = nn.LogSoftmax(dim=1)
-
-x = torch.tensor([[0.0, 104.0]])
-softmax(x)
-print('softmax: ', torch.log(softmax(x)) )
-print('log softmax: ', torch.exp(log_softmax(x)) )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">softmax:  tensor([[-inf, 0.]])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">softmax:  tensor([[-inf, 0.]])
 log softmax:  tensor([[0., 1.]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">3072</span>, <span style="color:#ae81ff">512</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>LogSoftmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))    <span style="color:#75715e">#instead of nn.Softmax(dim=1))</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img_batch <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>out <span style="color:#f92672">=</span> model(img_batch)                  
+</span></span><span style="display:flex;"><span>out
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import torch.nn as nn
-
-model = nn.Sequential(
-            nn.Linear(3072, 512),
-            nn.Tanh(),
-            nn.Linear(512, 2),
-            nn.LogSoftmax(dim=1))    #instead of nn.Softmax(dim=1))
-</code></pre>
-
-<pre><code class="language-python">img_batch = img.view(-1).unsqueeze(0)
-out = model(img_batch)                  
-out
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[-0.7372, -0.6509]], grad_fn=&lt;LogSoftmaxBackward&gt;)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[-0.7372, -0.6509]], grad_fn=&lt;LogSoftmaxBackward&gt;)
 </code></pre>
 
 </div>
-
 
 <p>The loss takes the output of nn.LogSoftmax for a batch as the first argument and a tensor of class indices (0’s and 1’s in our case) as the second argument.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>loss <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>NLLLoss()
+</span></span><span style="display:flex;"><span>out <span style="color:#f92672">=</span> model(img<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>loss(out, torch<span style="color:#f92672">.</span>tensor([label]))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">loss = nn.NLLLoss()
-out = model(img.view(-1).unsqueeze(0))
-loss(out, torch.tensor([label]))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor(0.6509, grad_fn=&lt;NllLossBackward&gt;)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor(0.6509, grad_fn=&lt;NllLossBackward&gt;)
 </code></pre>
 
 </div>
 
-
 <h3 id="train-model">Train model</h3>
-
 <p>How we use records in training has important consequences.  An epoch ends when all samples in the training set have been evaluated.  But, this could be done in multiple ways:
 i) using ever observation in the dataset, then update the gradient (all obs)
 ii) using ever observation in the dataset, and updating the gradient on each sample, or
 iii) dividing the dataset into minibatches, for every minibatch, for every obs in minibatch, then update the gradient (all obs in minibatch)</p>
-
 <p>By shuffling samples at each epoch and estimating the gradient on one or (preferably, for stability) a few samples at a time, we are effectively introducing randomness in our gradient descent. Remember SGD? It stands for Stochastic Gradient Descent, and this is what the S is about: working on small batches (aka minibatches) of shuffled data.  Using minibatches helps convergence and prevents the optimization process from getting stuck in local minima it encounters along the way.</p>
-
 <p>Size of minibatches is another hyperparameter.  The job of a <code>torch.utils.data.DataLoader</code> is to sample minibatches from a Dataset, giving the flexibility to choose from different sampling strategies, a very common one being uniform sampling after shuffling the data at each epoch.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(cifar2, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.optim <span style="color:#66d9ef">as</span> optim
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(cifar2, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">3072</span>, <span style="color:#ae81ff">128</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>LogSoftmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>learning_rate <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-2</span>
+</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>SGD(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>learning_rate)
+</span></span><span style="display:flex;"><span>loss_fn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>NLLLoss()
+</span></span><span style="display:flex;"><span>n_epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(n_epochs):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> train_loader:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#imgs will be a tensor of size 64x3x32x32</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#labels a tensor of size 64 containing label indices</span>
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> model(imgs<span style="color:#f92672">.</span>view(imgs<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> loss_fn(outputs, labels)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> epoch <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> epoch <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Epoch </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, Training loss </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(
+</span></span><span style="display:flex;"><span>            epoch, float(loss)))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">train_loader = torch.utils.data.DataLoader(cifar2, batch_size=64, shuffle=True)
-</code></pre>
-
-<pre><code class="language-python">import torch
-import torch.nn as nn
-import torch.optim as optim
-
-train_loader = torch.utils.data.DataLoader(cifar2, batch_size=64, shuffle=True)
-
-model = nn.Sequential(
-            nn.Linear(3072, 128),
-            nn.Tanh(),
-            nn.Linear(128, 2),
-            nn.LogSoftmax(dim=1))
-
-learning_rate = 1e-2
-optimizer = optim.SGD(model.parameters(), lr=learning_rate)
-loss_fn = nn.NLLLoss()
-n_epochs = 100
-
-for epoch in range(n_epochs):
-    for imgs, labels in train_loader:
-        #imgs will be a tensor of size 64x3x32x32
-        #labels a tensor of size 64 containing label indices
-        outputs = model(imgs.view(imgs.shape[0], -1))
-        loss = loss_fn(outputs, labels)
-
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-    if epoch == 1 or epoch % 10 == 0:
-        print('Epoch {}, Training loss {}'.format(
-            epoch, float(loss)))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Epoch 0, Training loss 0.5787188410758972
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Epoch 0, Training loss 0.5787188410758972
 Epoch 1, Training loss 0.6271973848342896
 Epoch 10, Training loss 0.19447796046733856
 Epoch 20, Training loss 0.4353618323802948
@@ -532,349 +424,269 @@ Epoch 90, Training loss 0.009175573475658894
 
 </div>
 
-
 <h3 id="results">Results</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#training set</span>
+</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(cifar2, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>correct <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> train_loader:
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> model(imgs<span style="color:#f92672">.</span>view(imgs<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>        _, predicted <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>max(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        total <span style="color:#f92672">+=</span> labels<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        correct <span style="color:#f92672">+=</span> int((predicted <span style="color:#f92672">==</span> labels)<span style="color:#f92672">.</span>sum())
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Accuracy: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (correct <span style="color:#f92672">/</span> total))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#training set
-train_loader = torch.utils.data.DataLoader(cifar2, batch_size=64, shuffle=False)
-
-correct = 0
-total = 0
-
-with torch.no_grad():
-    for imgs, labels in train_loader:
-        outputs = model(imgs.view(imgs.shape[0], -1))
-        _, predicted = torch.max(outputs, dim=1)
-        total += labels.shape[0]
-        correct += int((predicted == labels).sum())
-        
-print(&quot;Accuracy: %f&quot; % (correct / total))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Accuracy: 0.998200
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Accuracy: 0.998200
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#validation set</span>
+</span></span><span style="display:flex;"><span>val_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(cifar2_val, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>correct <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> val_loader:
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> model(imgs<span style="color:#f92672">.</span>view(imgs<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>        _, predicted <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>max(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        total <span style="color:#f92672">+=</span> labels<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        correct <span style="color:#f92672">+=</span> int((predicted <span style="color:#f92672">==</span> labels)<span style="color:#f92672">.</span>sum())
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Accuracy: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (correct <span style="color:#f92672">/</span> total))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#validation set
-val_loader = torch.utils.data.DataLoader(cifar2_val, batch_size=64, shuffle=False)
-
-correct = 0
-total = 0
-
-with torch.no_grad():
-    for imgs, labels in val_loader:
-        outputs = model(imgs.view(imgs.shape[0], -1))
-        _, predicted = torch.max(outputs, dim=1)
-        total += labels.shape[0]
-        correct += int((predicted == labels).sum())
-        
-print(&quot;Accuracy: %f&quot; % (correct / total))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Accuracy: 0.820000
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Accuracy: 0.820000
 </code></pre>
 
 </div>
-
 
 <p>High training accuracy with low test accuracy probably means over-fitting.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>numel_list <span style="color:#f92672">=</span> [p<span style="color:#f92672">.</span>numel() <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> model<span style="color:#f92672">.</span>parameters() <span style="color:#66d9ef">if</span> p<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">==</span> <span style="color:#66d9ef">True</span>]
+</span></span><span style="display:flex;"><span>sum(numel_list), numel_list
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">numel_list = [p.numel() for p in model.parameters() if p.requires_grad == True]
-sum(numel_list), numel_list
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(393602, [393216, 128, 256, 2])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(393602, [393216, 128, 256, 2])
 </code></pre>
 
 </div>
-
 
 <p>The combination of nn.LogSoftmax and nn.NLLLoss is equivalent to using nn.CrossEntropyLoss.  The only gotcha that the output of our model will not be interpretable as probabilities (or log probabilities). We’ll need to explicitly pass the output through a softmax to obtain those.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>connected_model <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">3072</span>, <span style="color:#ae81ff">1024</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">1024</span>, <span style="color:#ae81ff">512</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">128</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>loss_fn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>numel_list <span style="color:#f92672">=</span> [p<span style="color:#f92672">.</span>numel() <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> connected_model<span style="color:#f92672">.</span>parameters() <span style="color:#66d9ef">if</span> p<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">==</span> <span style="color:#66d9ef">True</span>]
+</span></span><span style="display:flex;"><span>sum(numel_list), numel_list
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">connected_model = nn.Sequential(
-            nn.Linear(3072, 1024),
-            nn.Tanh(),
-            nn.Linear(1024, 512),
-            nn.Tanh(),
-            nn.Linear(512, 128),
-            nn.Tanh(),
-            nn.Linear(128, 2))
-
-loss_fn = nn.CrossEntropyLoss()
-</code></pre>
-
-<pre><code class="language-python">numel_list = [p.numel() for p in connected_model.parameters() if p.requires_grad == True]
-sum(numel_list), numel_list
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(3737474, [3145728, 1024, 524288, 512, 65536, 128, 256, 2])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(3737474, [3145728, 1024, 524288, 512, 65536, 128, 256, 2])
 </code></pre>
 
 </div>
-
 
 <h2 id="convolutional-network">Convolutional Network</h2>
-
 <p>Computer vision techniques are dominated by convolutional neural networks because of their accuracy in image classification. The technique of image analysis and recognition, where the agriculture and weather features are extracted from the open-source satellites like LSAT to predict the future growth and yield of a particular land are being implemented.  With convolutions we achieve: locality and translation-invariance.</p>
-
 <h3 id="working-with-the-convolution">Working with the convolution</h3>
-
 <p>Here, we have a convolution layer: 3 input channels, 16 (arbitrary) output channgels, and 3x3, 2-dim kernel.  Expect a weight tensor sized the following way: we’ll have as many kernels, sized (n_input_channels)x3x3, as the number of output channels. That is, we expect the weight tensor to be sized (n_input_channels)x3x3x(n_output_channels), so 3x3x3x16.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>conv <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>conv<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>shape, conv<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>shape
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">conv = nn.Conv2d(3, 16, kernel_size=3)
-conv.weight.shape, conv.bias.shape
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(torch.Size([16, 3, 3, 3]), torch.Size([16]))
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(torch.Size([16, 3, 3, 3]), torch.Size([16]))
 </code></pre>
 
 </div>
-
 
 <p>By default, PyTorch will skip pixels at the boundary, thereby producing images that are one half of the convolution kernel width (in our case, 3//2 = 1) smaller on each side. This explains why we’re missing two pixels in each dimension.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img, _ <span style="color:#f92672">=</span> cifar2[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>output <span style="color:#f92672">=</span> conv(img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))     <span style="color:#75715e">#unsqueeze accounts for batch dimension</span>
+</span></span><span style="display:flex;"><span>img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>shape, output<span style="color:#f92672">.</span>shape
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">img, _ = cifar2[0]
-output = conv(img.unsqueeze(0))     #unsqueeze accounts for batch dimension
-img.unsqueeze(0).shape, output.shape
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(torch.Size([1, 3, 32, 32]), torch.Size([1, 16, 30, 30]))
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(torch.Size([1, 3, 32, 32]), torch.Size([1, 16, 30, 30]))
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-python">plt.imshow(output[0, 0].detach(), cmap='gray')
-plt.show()
-</code></pre>
-
-<p><img src="output_59_0.png" alt="png" /></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(output[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>detach(), cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img src="output_59_0.png" alt="png"></p>
 <p>Here, we are using padding of 1 on the borders.  The size of weight and bias don’t change whether padding is used or not.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>conv <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>output <span style="color:#f92672">=</span> conv(img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>shape, output<span style="color:#f92672">.</span>shape
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">conv = nn.Conv2d(3, 1, kernel_size=3, padding=1)
-output = conv(img.unsqueeze(0))
-img.unsqueeze(0).shape, output.shape
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(torch.Size([1, 3, 32, 32]), torch.Size([1, 1, 32, 32]))
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(torch.Size([1, 3, 32, 32]), torch.Size([1, 1, 32, 32]))
 </code></pre>
 
 </div>
-
 
 <h3 id="local-average">Local average</h3>
-
 <p>Blurring occurs because every pixel of the output is the average of a neighborhood of the input.</p>
-
-<pre><code class="language-python">with torch.no_grad():
-    conv.bias.zero_()
-with torch.no_grad():
-    conv.weight.fill_(1.0 / 9.0)
-</code></pre>
-
-<pre><code class="language-python">output = conv(img.unsqueeze(0))
-plt.imshow(output[0, 0].detach(), cmap='gray')
-plt.show()
-</code></pre>
-
-<p><img src="output_64_0.png" alt="png" /></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    conv<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>zero_()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    conv<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>fill_(<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">9.0</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>output <span style="color:#f92672">=</span> conv(img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(output[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>detach(), cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img src="output_64_0.png" alt="png"></p>
 <h3 id="edge-detection">Edge detection</h3>
-
 <p>Edge detection kernel: the kernel highlights the vertical edge between two horizontally adjacent regions.</p>
-
-<pre><code class="language-python">conv = nn.Conv2d(3, 1, kernel_size=3, padding=1)
-with torch.no_grad():
-    conv.weight[:] = torch.tensor([[-1.0, 0.0, 1.0],
-                                   [-1.0, 0.0, 1.0],
-                                   [-1.0, 0.0, 1.0]])
-conv.bias.zero_()
-</code></pre>
-
-<p>From this angle, the job of a convolutional neural network is to estimate the kernel of a set of filter banks in successive layers, that will transform a multi-channel image into another multi-channel image, where different channels will correspond to different features (e.g. one channel for the average, another channel for vertical edges, etc).</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>conv <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    conv<span style="color:#f92672">.</span>weight[:] <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.0</span>],
+</span></span><span style="display:flex;"><span>                                   [<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.0</span>],
+</span></span><span style="display:flex;"><span>                                   [<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.0</span>]])
+</span></span><span style="display:flex;"><span>conv<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>zero_()
+</span></span></code></pre></div><p>From this angle, the job of a convolutional neural network is to estimate the kernel of a set of filter banks in successive layers, that will transform a multi-channel image into another multi-channel image, where different channels will correspond to different features (e.g. one channel for the average, another channel for vertical edges, etc).</p>
 <h3 id="pooling">Pooling</h3>
-
 <p>Downsampling could in principle occur in different ways. Scaling an image by a half is the equivalent of taking 4 neighboring pixels in input and producing one pixel in output. How we compute the value of the output based on the values of the input is up to us. We could:</p>
-
 <ul>
 <li>Average the four pixels. This was a common approach early on, but has since fallen out of favor somewhat.</li>
 <li>Take the maximum of the four pixels (<strong>Max Pooling</strong>). This is currently the most commonly used approach, but has a downside of discarding the other 3/4ths of the data.</li>
 <li>Perform a strided convolution, where only every Nth pixel is calculated. A 3x4 convolution with stride 2 still incorporates input from all pixels from the previous layer. Current literature shows promise for this approach, but it has not yet supplanted maxpool.</li>
 </ul>
-
 <p>Max-pooling is provided by the <code>nn.MaxPool2d</code> module.  It takes in input the size of the neighborhood over which to operate the pooling operation. If we wish to downsample our image by a half, we’ll want to use a size of 2.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pool <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>output <span style="color:#f92672">=</span> pool(img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>shape, output<span style="color:#f92672">.</span>shape
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">pool = nn.MaxPool2d(2)
-output = pool(img.unsqueeze(0))
-img.unsqueeze(0).shape, output.shape
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(torch.Size([1, 3, 32, 32]), torch.Size([1, 3, 16, 16]))
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(torch.Size([1, 3, 32, 32]), torch.Size([1, 3, 16, 16]))
 </code></pre>
 
 </div>
-
 
 <h3 id="build-model">Build model</h3>
-
 <p>While using <code>nn.Sequential</code> may seem convenient, it is only capable for the most basic networks.  In order to make detailed modifications, we will have to create our own <code>nn.Module</code> subclasses.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">8</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># WARNING: something missing here</span>
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">32</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Tanh(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sum([p<span style="color:#f92672">.</span>numel() <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> model<span style="color:#f92672">.</span>parameters()])
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">model = nn.Sequential(
-            nn.Conv2d(3, 16, kernel_size=3, padding=1),
-            nn.Tanh(),
-            nn.MaxPool2d(2),
-            nn.Conv2d(16, 8, kernel_size=3, padding=1),
-            nn.Tanh(),
-            nn.MaxPool2d(2),
-            # WARNING: something missing here
-            nn.Linear(512, 32),
-            nn.Tanh(),
-            nn.Linear(32, 2))
-
-sum([p.numel() for p in model.parameters()])
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">18090
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">18090
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-python">#This fails
-model(img.unsqueeze(0))
-#RuntimeError: size mismatch, m1: [64 x 8], m2: [512 x 32] at c:\...\THTensorMath.cpp:940
-</code></pre>
-
-<p>Looking back at the model the only module that has to have a 512 x 32 tensor is <code>nn.Linear(512, 32)</code>, the first linear module after the last convolution block.  What’s missing there is the reshaping step from a 8-channel 8x8 image to a 512-element, 1D vector (1D if we ignore the batch dimension, that is). This could be achieved by calling view on the output of the last <code>nn.MaxPool2d</code>, but unfortunately we don’t have any explicit visibility of the output of each module when we use <code>nn.Sequential</code>.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#This fails</span>
+</span></span><span style="display:flex;"><span>model(img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#RuntimeError: size mismatch, m1: [64 x 8], m2: [512 x 32] at c:\...\THTensorMath.cpp:940</span>
+</span></span></code></pre></div><p>Looking back at the model the only module that has to have a 512 x 32 tensor is <code>nn.Linear(512, 32)</code>, the first linear module after the last convolution block.  What’s missing there is the reshaping step from a 8-channel 8x8 image to a 512-element, 1D vector (1D if we ignore the batch dimension, that is). This could be achieved by calling view on the output of the last <code>nn.MaxPool2d</code>, but unfortunately we don’t have any explicit visibility of the output of each module when we use <code>nn.Sequential</code>.</p>
 <p>The Net class is equivalent to the <code>nn.Sequential</code> model we built above in terms of submodules, but, by writing the forward function explicitly, we were able to manipulate the output of <code>self.pool3</code> directly and call view on it to turn it into a BxN vector. Note that we leave the batch dimension as -1 in the call to view, since in principle we don’t know how many samples there’ll be in the batch.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(Net, self)<span style="color:#f92672">.</span>__init__()    
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#no matter how nested the submodule, any nn.Module can access the list of all child parameters. </span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>act1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Tanh()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>pool1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">8</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>act2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Tanh()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>pool2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">32</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>act4 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Tanh()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>pool1(self<span style="color:#f92672">.</span>act1(self<span style="color:#f92672">.</span>conv1(x)))
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>pool2(self<span style="color:#f92672">.</span>act2(self<span style="color:#f92672">.</span>conv2(out)))
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>)      <span style="color:#75715e">#&lt;&lt;&lt;&lt;&lt;new</span>
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>act4(self<span style="color:#f92672">.</span>fc1(out))
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc2(out)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> out
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> Net()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sum([p<span style="color:#f92672">.</span>numel() <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> model<span style="color:#f92672">.</span>parameters()])
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">class Net(nn.Module):
-    def __init__(self):
-        super(Net, self).__init__()    
-        #no matter how nested the submodule, any nn.Module can access the list of all child parameters. 
-        self.conv1 = nn.Conv2d(3, 16, kernel_size=3, padding=1)
-        self.act1 = nn.Tanh()
-        self.pool1 = nn.MaxPool2d(2)
-        self.conv2 = nn.Conv2d(16, 8, kernel_size=3, padding=1)
-        self.act2 = nn.Tanh()
-        self.pool2 = nn.MaxPool2d(2)
-        self.fc1 = nn.Linear(8 * 8 * 8, 32)
-        self.act4 = nn.Tanh()
-        self.fc2 = nn.Linear(32, 2)
-
-    def forward(self, x):
-        out = self.pool1(self.act1(self.conv1(x)))
-        out = self.pool2(self.act2(self.conv2(out)))
-        out = out.view(-1, 8 * 8 * 8)      #&lt;&lt;&lt;&lt;&lt;new
-        out = self.act4(self.fc1(out))
-        out = self.fc2(out)
-        return out
-</code></pre>
-
-<pre><code class="language-python">model = Net()
-
-sum([p.numel() for p in model.parameters()])
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">18090
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">18090
 </code></pre>
 
 </div>
-
 
 <p>It appears a bit of a waste to register submodules that have no parameters, like <code>nn.Tanh</code> and <code>nn.MaxPool2d</code>. It would be easier to call them directly in the forward function.</p>
-
 <p>It makes sense to keep using <code>nn</code> modules for <code>nn.Linear</code> and <code>nn.Conv2d</code>, so that Net will be able to manage their <code>Parameter</code>s (state) during training. However, we can safely switch to the functional counterparts of pooling and activation, since they have no parameters.</p>
-
 <p>One may want to still initialize <code>nn.MaxPool2d</code> as we did before, to reinforce the fact that we’re using a kernel of 2. We could actually have just one instance of <code>nn.MaxPool2d</code> that we use everwhere - since <code>nn.MaxPool2d</code> has no parameters, <code>self.pool1</code>, <code>self.pool2</code> and <code>self.pool3</code> we initialized earlier were essentially the same thing and could be used interchangeably.</p>
-
 <p>In more complex models getting the size of the first linear layer right is sometimes a source of frustration.  Creating a submodule can be helpful.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(Net, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">8</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">32</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(torch<span style="color:#f92672">.</span>tanh(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(torch<span style="color:#f92672">.</span>tanh(self<span style="color:#f92672">.</span>conv2(out)), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tanh(self<span style="color:#f92672">.</span>fc1(out))
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc2(out)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> out
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> Net()
+</span></span><span style="display:flex;"><span>model(img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import torch.nn.functional as F
-
-class Net(nn.Module):
-    def __init__(self):
-        super(Net, self).__init__()
-        self.conv1 = nn.Conv2d(3, 16, kernel_size=3, padding=1)
-        self.conv2 = nn.Conv2d(16, 8, kernel_size=3, padding=1)
-        self.fc1 = nn.Linear(8 * 8 * 8, 32)
-        self.fc2 = nn.Linear(32, 2)
-        
-    def forward(self, x):
-        out = F.max_pool2d(torch.tanh(self.conv1(x)), 2)
-        out = F.max_pool2d(torch.tanh(self.conv2(out)), 2)
-        out = out.view(-1, 8 * 8 * 8)
-        out = torch.tanh(self.fc1(out))
-        out = self.fc2(out)
-        return out
-</code></pre>
-
-<pre><code class="language-python">model = Net()
-model(img.unsqueeze(0))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[0.1432, 0.1911]], grad_fn=&lt;AddmmBackward&gt;)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[0.1432, 0.1911]], grad_fn=&lt;AddmmBackward&gt;)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(cifar2, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> Net()
+</span></span><span style="display:flex;"><span>learning_rate <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-2</span>
+</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>SGD(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>learning_rate)
+</span></span><span style="display:flex;"><span>loss_fn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+</span></span><span style="display:flex;"><span>n_epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(n_epochs):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> train_loader:
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> model(imgs)
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> loss_fn(outputs, labels)
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> epoch <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> epoch <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Epoch </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, Training loss </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(
+</span></span><span style="display:flex;"><span>            epoch, float(loss)))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import torch
-import torch.nn as nn
-import torch.nn.functional as F
-
-train_loader = torch.utils.data.DataLoader(cifar2, batch_size=64, shuffle=True)
-    
-model = Net()
-learning_rate = 1e-2
-optimizer = optim.SGD(model.parameters(), lr=learning_rate)
-loss_fn = nn.CrossEntropyLoss()
-n_epochs = 100
-
-for epoch in range(n_epochs):
-    for imgs, labels in train_loader:
-        outputs = model(imgs)
-        loss = loss_fn(outputs, labels)
-                
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-    if epoch == 1 or epoch % 10 == 0:
-        print('Epoch {}, Training loss {}'.format(
-            epoch, float(loss)))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Epoch 0, Training loss 0.7593254446983337
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Epoch 0, Training loss 0.7593254446983337
 Epoch 1, Training loss 0.40714699029922485
 Epoch 10, Training loss 0.18846207857131958
 Epoch 20, Training loss 0.08485838770866394
@@ -889,45 +701,33 @@ Epoch 90, Training loss 0.37778040766716003
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>val_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(cifar2_val, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>correct <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> val_loader:
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> model(imgs)
+</span></span><span style="display:flex;"><span>        _, predicted <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>max(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        total <span style="color:#f92672">+=</span> labels<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        correct <span style="color:#f92672">+=</span> int((predicted <span style="color:#f92672">==</span> labels)<span style="color:#f92672">.</span>sum())
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Accuracy: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (correct <span style="color:#f92672">/</span> total))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">val_loader = torch.utils.data.DataLoader(cifar2_val, batch_size=64, shuffle=False)
-
-correct = 0
-total = 0
-
-with torch.no_grad():
-    for imgs, labels in val_loader:
-        outputs = model(imgs)
-        _, predicted = torch.max(outputs, dim=1)
-        total += labels.shape[0]
-        correct += int((predicted == labels).sum())
-        
-print(&quot;Accuracy: %f&quot; % (correct / total))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Accuracy: 0.890500
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Accuracy: 0.890500
 </code></pre>
 
 </div>
 
-
 <p>This only saves the parameters.  So you must ensure the model (submodule) definition is not changed when instantiating and loading the parameters (state).</p>
-
-<pre><code class="language-python">torch.save(model.state_dict(), data_path + 'birds_vs_airplanes.pt')
-</code></pre>
-
-<pre><code class="language-python">loaded_model = Net()
-loaded_model.load_state_dict(torch.load(data_path + 'birds_vs_airplanes.pt'))
-</code></pre>
-
-<h2 id="modifying-network-designs">Modifying Network Designs</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>save(model<span style="color:#f92672">.</span>state_dict(), data_path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;birds_vs_airplanes.pt&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>loaded_model <span style="color:#f92672">=</span> Net()
+</span></span><span style="display:flex;"><span>loaded_model<span style="color:#f92672">.</span>load_state_dict(torch<span style="color:#f92672">.</span>load(data_path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;birds_vs_airplanes.pt&#39;</span>))
+</span></span></code></pre></div><h2 id="modifying-network-designs">Modifying Network Designs</h2>
 <p>We are interested in changing the details of the network, such as width (neurons) and depth (layers), as well as adding some nice features to reduce overfitting, such as:</p>
-
 <p><em>width</em></p>
-
 <ul>
 <li>adaptive learning rate</li>
 <li>stopping criteria</li>
@@ -935,117 +735,105 @@ loaded_model.load_state_dict(torch.load(data_path + 'birds_vs_airplanes.pt'))
 <li>dropout: <code>nn.Dropout*D</code></li>
 <li>principled augmentation: <code>nn.BatchNorm*D</code></li>
 </ul>
-
 <p><em>depth</em></p>
-
 <ul>
 <li>skip connection: ResNet()</li>
 <li>identity mapping:</li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(Net, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">8</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">32</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(torch<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(torch<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(out)), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tanh(self<span style="color:#f92672">.</span>fc1(out))
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc2(out)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> out
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, width<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>):
+</span></span><span style="display:flex;"><span>        super(Net, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>width <span style="color:#f92672">=</span> width
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, self<span style="color:#f92672">.</span>width, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(self<span style="color:#f92672">.</span>width, int(self<span style="color:#f92672">.</span>width<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>), kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> int(self<span style="color:#f92672">.</span>width<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>), int(self<span style="color:#f92672">.</span>width<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(int(self<span style="color:#f92672">.</span>width<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(torch<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(torch<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(out)), <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> int(self<span style="color:#f92672">.</span>width<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tanh(self<span style="color:#f92672">.</span>fc1(out))
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc2(out)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> out
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> Net(width<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>model(img<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import torch
-import torch.nn as nn
-import torch.nn.functional as F
-
-class Net(nn.Module):
-    def __init__(self):
-        super(Net, self).__init__()
-        self.conv1 = nn.Conv2d(3, 16, kernel_size=3, padding=1)
-        self.conv2 = nn.Conv2d(16, 8, kernel_size=3, padding=1)
-        self.fc1 = nn.Linear(8 * 8 * 8, 32)
-        self.fc2 = nn.Linear(32, 2)
-        
-    def forward(self, x):
-        out = F.max_pool2d(torch.relu(self.conv1(x)), 2)
-        out = F.max_pool2d(torch.relu(self.conv2(out)), 2)
-        out = out.view(-1, 8 * 8 * 8)
-        out = torch.tanh(self.fc1(out))
-        out = self.fc2(out)
-        return out
-</code></pre>
-
-<pre><code class="language-python">import torch
-import torch.nn as nn
-import torch.nn.functional as F
-
-class Net(nn.Module):
-    def __init__(self, width=16):
-        super(Net, self).__init__()
-        self.width = width
-        self.conv1 = nn.Conv2d(3, self.width, kernel_size=3, padding=1)
-        self.conv2 = nn.Conv2d(self.width, int(self.width/2), kernel_size=3, padding=1)
-        self.fc1 = nn.Linear(8 * 8 * int(self.width/2), int(self.width*2))
-        self.fc2 = nn.Linear(int(self.width*2), 2)
-        
-    def forward(self, x):
-        out = F.max_pool2d(torch.relu(self.conv1(x)), 2)
-        out = F.max_pool2d(torch.relu(self.conv2(out)), 2)
-        out = out.view(-1, 8 * 8 * int(self.width/2))
-        out = torch.tanh(self.fc1(out))
-        out = self.fc2(out)
-        return out
-</code></pre>
-
-<pre><code class="language-python">model = Net(width=64)
-model(img.unsqueeze(0))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[-0.1477, -0.0117]], grad_fn=&lt;AddmmBackward&gt;)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[-0.1477, -0.0117]], grad_fn=&lt;AddmmBackward&gt;)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(cifar2, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> Net(width<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>)
+</span></span><span style="display:flex;"><span>learning_rate <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-1</span>
+</span></span><span style="display:flex;"><span>weight_decay<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>
+</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>SGD(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>learning_rate, weight_decay<span style="color:#f92672">=</span>weight_decay)
+</span></span><span style="display:flex;"><span>loss_fn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+</span></span><span style="display:flex;"><span>n_epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>stopping_criteria <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-05</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(n_epochs):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> train_loader:
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> model(imgs)
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> loss_fn(outputs, labels)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#l1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#l1_lambda = 0.9</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#regularization_loss = 0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#for param in model.parameters(): </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#    regularization_loss += torch.sum(abs(param))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#l1_norm = sum(abs(p) for p in model.parameters())</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#loss = loss + l1_lambda * regularization_loss</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#l2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#optimizer = torch.optim.SGD(model.parameters(), lr=0.01, weight_decay=0.001)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#(or)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#l2_lambda = 0.001</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#l2_norm = sum(p.pow(2.0).sum() for p in model.parameters())</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#loss = loss + l2_lambda * l2_norm</span>
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> epoch <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> epoch <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Epoch </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, Training loss </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(
+</span></span><span style="display:flex;"><span>            epoch, float(loss)))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> float(loss) <span style="color:#f92672">&lt;</span> stopping_criteria:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import torch
-import torch.nn as nn
-import torch.nn.functional as F
-
-train_loader = torch.utils.data.DataLoader(cifar2, batch_size=64, shuffle=True)
-    
-model = Net(width=32)
-learning_rate = 1e-1
-weight_decay=0.001
-optimizer = optim.SGD(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
-loss_fn = nn.CrossEntropyLoss()
-n_epochs = 100
-stopping_criteria = 1e-05
-
-for epoch in range(n_epochs):
-    for imgs, labels in train_loader:
-        outputs = model(imgs)
-        loss = loss_fn(outputs, labels)
-        
-        #l1
-        #l1_lambda = 0.9
-        #regularization_loss = 0
-        #for param in model.parameters(): 
-        #    regularization_loss += torch.sum(abs(param))
-        #l1_norm = sum(abs(p) for p in model.parameters())
-        #loss = loss + l1_lambda * regularization_loss
-
-        #l2
-        #optimizer = torch.optim.SGD(model.parameters(), lr=0.01, weight_decay=0.001)
-        #(or)
-        #l2_lambda = 0.001
-        #l2_norm = sum(p.pow(2.0).sum() for p in model.parameters())
-        #loss = loss + l2_lambda * l2_norm
-                
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-    if epoch == 1 or epoch % 10 == 0:
-        print('Epoch {}, Training loss {}'.format(
-            epoch, float(loss)))
-    if float(loss) &lt; stopping_criteria:
-        break
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Epoch 0, Training loss 0.5520237684249878
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Epoch 0, Training loss 0.5520237684249878
 Epoch 1, Training loss 0.31745433807373047
 Epoch 10, Training loss 0.10780216008424759
 Epoch 20, Training loss 0.12875433266162872
@@ -1060,35 +848,29 @@ Epoch 90, Training loss 0.005372203420847654
 
 </div>
 
-
 <p>For modules that are only used during training, such as <code>nn.Dropout</code>, PyTorch lets us switch between the two modalities by calling <code>model.train()</code> or <code>model.eval()</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>val_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(cifar2_val, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>correct <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> val_loader:
+</span></span><span style="display:flex;"><span>        model<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> model(imgs)
+</span></span><span style="display:flex;"><span>        _, predicted <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>max(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        total <span style="color:#f92672">+=</span> labels<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        correct <span style="color:#f92672">+=</span> int((predicted <span style="color:#f92672">==</span> labels)<span style="color:#f92672">.</span>sum())
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Accuracy: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (correct <span style="color:#f92672">/</span> total))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">val_loader = torch.utils.data.DataLoader(cifar2_val, batch_size=64, shuffle=False)
-
-correct = 0
-total = 0
-
-with torch.no_grad():
-    for imgs, labels in val_loader:
-        model.eval()
-        outputs = model(imgs)
-        _, predicted = torch.max(outputs, dim=1)
-        total += labels.shape[0]
-        correct += int((predicted == labels).sum())
-        
-print(&quot;Accuracy: %f&quot; % (correct / total))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Accuracy: 0.912500
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Accuracy: 0.912500
 </code></pre>
 
 </div>
 
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>This post can be a cheatsheet for basic neural network designs, such as the Feed Forward and Convolution Network.</p>
 
         </div>
@@ -1098,35 +880,35 @@ print(&quot;Accuracy: %f&quot; % (correct / total))
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#configuration">Configuration</a></li>
-<li><a href="#dataset">Dataset</a></li>
-<li><a href="#transform-pipelines">Transform Pipelines</a>
-<ul>
-<li><a href="#totensor">ToTensor()</a></li>
-<li><a href="#normalize">Normalize()</a></li>
-</ul></li>
-<li><a href="#fully-connected-feed-forward-network">Fully-Connected, Feed-Forward Network</a>
-<ul>
-<li><a href="#problem-statement">Problem statement</a></li>
-<li><a href="#test-design">Test design</a></li>
-<li><a href="#train-model">Train model</a></li>
-<li><a href="#results">Results</a></li>
-</ul></li>
-<li><a href="#convolutional-network">Convolutional Network</a>
-<ul>
-<li><a href="#working-with-the-convolution">Working with the convolution</a></li>
-<li><a href="#local-average">Local average</a></li>
-<li><a href="#edge-detection">Edge detection</a></li>
-<li><a href="#pooling">Pooling</a></li>
-<li><a href="#build-model">Build model</a></li>
-</ul></li>
-<li><a href="#modifying-network-designs">Modifying Network Designs</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#configuration">Configuration</a></li>
+    <li><a href="#dataset">Dataset</a></li>
+    <li><a href="#transform-pipelines">Transform Pipelines</a>
+      <ul>
+        <li><a href="#totensor">ToTensor()</a></li>
+        <li><a href="#normalize">Normalize()</a></li>
+      </ul>
+    </li>
+    <li><a href="#fully-connected-feed-forward-network">Fully-Connected, Feed-Forward Network</a>
+      <ul>
+        <li><a href="#problem-statement">Problem statement</a></li>
+        <li><a href="#test-design">Test design</a></li>
+        <li><a href="#train-model">Train model</a></li>
+        <li><a href="#results">Results</a></li>
+      </ul>
+    </li>
+    <li><a href="#convolutional-network">Convolutional Network</a>
+      <ul>
+        <li><a href="#working-with-the-convolution">Working with the convolution</a></li>
+        <li><a href="#local-average">Local average</a></li>
+        <li><a href="#edge-detection">Edge detection</a></li>
+        <li><a href="#pooling">Pooling</a></li>
+        <li><a href="#build-model">Build model</a></li>
+      </ul>
+    </li>
+    <li><a href="#modifying-network-designs">Modifying Network Designs</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -1212,7 +994,7 @@ print(&quot;Accuracy: %f&quot; % (correct / total))
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

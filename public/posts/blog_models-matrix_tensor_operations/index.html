@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,117 +106,79 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>The Artificial Intelligence field is moving from single-function libraries to frameworks for building different network models.  TensorFlow was one of the first, and has strong production capabilities, such as process optimizations.  However, its syntax is unintuitive, and the library has a reputation for being difficult for testing new models.  This led to many organizations adopting PyTorch, with underlying Numpy, for designing network models.  This post describes the basic data structures for working with Matrices and Tensors in PyTorch.</p>
-
+            <p>The Artificial Intelligence field is moving from single-function libraries to frameworks for building different network models.  TensorFlow was one of the first, and has strong production capabilities, such as process optimizations.  However, its syntax is unintuitive, and the library has a reputation for being difficult for testing new models.  This led to many organizations adopting PyTorch, with underlying Numpy, for designing network models.  This post describes the basic data structures for working with Matrices and Tensors in PyTorch.</p>
 <h2 id="basics-of-tensors-and-matrices">Basics of Tensors and Matrices</h2>
-
 <h3 id="basic-terminology">Basic terminology</h3>
-
 <p>Before we begin performing opertions, we need to have a shared vocabulary on the of the three main data structures using in Artificial Intelligence (AI).</p>
-
 <ul>
 <li>scalar is a single number</li>
 <li>vector is just one row or column</li>
 <li>matrix is just a 2-D grid of numbers</li>
 <li>tensor is a &lsquo;placeholder&rsquo; for the a multi-dimensional array (vector, matrix, etc.)</li>
 </ul>
-
 <p>We should discuss tensor in more detail because a &lsquo;placeholder&rsquo; is not a very mathematical definition, and it is often confused with a matrix. A tensor is often thought of as a generalized matrix. That is, it could be a 1-D matrix (a vector is actually such a tensor), a 3-D matrix (something like a cube of numbers), even a 0-D matrix (a single number), or a higher dimensional structure that is harder to visualize. The dimension of the tensor is called its rank.</p>
-
 <p>A tensor is a mathematical entity that lives in a structure and interacts with other mathematical entities. If one transforms the other entities in the structure in a regular way, then the tensor must obey a related transformation rule.</p>
-
 <p>This “dynamical” property of a tensor is the key that distinguishes it from a mere matrix. It’s a team player whose numerical values shift around along with those of its teammates when a transformation is introduced that affects all of them.</p>
-
 <p>Any rank-2 tensor can be represented as a matrix, but not every matrix is really a rank-2 tensor. The numerical values of a tensor’s matrix representation depend on what transformation rules have been applied to the entire system.</p>
-
 <p>Indeed, speaking of a rank-2 tensor is not really accurate. The rank of a tensor has to be given by two numbers. The vector to vector mapping is given by a rank-(1,1) tensor, while the quadratic form is given by a rank-(0,2) tensor. There&rsquo;s also the type (2,0) which also corresponds to a matrix, but which maps two covectors to a number, and which again transforms differently.</p>
-
 <p>So, succinctly, a tensor is different from a matrix in that a tensor can be:</p>
-
 <ul>
 <li>rank (dimension) greater than 2</li>
 <li>part of a system, such as a neural network, that accounts for inter-related entities</li>
 <li>dynamic, such that, just as a random variable X can have an actualized value, x, a tensor can be a container for actualized values of an array</li>
 </ul>
-
 <p>The bottom line of this is:</p>
-
 <ul>
 <li>components of a rank-2 tensor can be written in a matrix.</li>
 <li>the tensor is not that matrix, because different types of tensors can correspond to the same matrix.</li>
 <li>the differences between those tensor types are uncovered by the basis transformations (hence the physicist&rsquo;s definition: &ldquo;A tensor is what transforms like a tensor&rdquo;).</li>
 </ul>
-
 <h3 id="the-need-for-the-tensor-construct">The need for the Tensor construct</h3>
-
 <p>You can specify a linear transformation 𝑎 between vectors by a matrix. Let&rsquo;s call that matrix 𝐴. Now if you do a basis transformation, this can also be written as a linear transformation, so that if the vector in the old basis is 𝑣, the vector in the new basis is \(T^{-1}𝑣\) (where v is a column vector). Now you can ask what matrix describes the transformation 𝑎 in the new basis. Well, it&rsquo;s the matrix \(T^{-1}AT\).</p>
-
 <p>Well, so far, so good. What I memorized back then is that under basis change a matrix transforms as \(T^{-1}AT\).</p>
-
 <p>But then, we learned about quadratic forms. Those are calculated using a matrix 𝐴 as \(u^TAv\). Still no problem, until we learned about how to do basis changes. Now, suddenly the matrix did not transform as \(T^{-1}AT\), but rather as \(T^TAT\). Which confused me like hell: How could one and the same object transform differently when used in different contexts?</p>
-
 <p>Well, the solution is: Because we are actually talking about different objects! In the first case, we are talking about a tensor which takes vectors to vectors. In the second case, we are talking about a tensor which takes two vectors into a scalar, or equivalently, which takes a vector to a covector.</p>
-
 <p>Proof basis change rule for quadratic form, with 𝑃 being the change of basis matrix between 𝑥,𝑦,𝑧 and 𝑢,𝑣,𝑤</p>
-
 <p>\begin{align}q&amp;= \begin{bmatrix}x&amp;y&amp;z\end{bmatrix}\begin{bmatrix}\text A\end{bmatrix}\begin{bmatrix}x\y\z\end{bmatrix}\ &amp;=\begin{bmatrix}x\y\z\end{bmatrix}^\top\begin{bmatrix}\text A\end{bmatrix}\begin{bmatrix}x\y\z\end{bmatrix}\ &amp;=\left(P\begin{bmatrix}u\v\w\end{bmatrix}\right)^\top \begin{bmatrix}\text A\end{bmatrix}P\begin{bmatrix}u\v\w\end{bmatrix}\ &amp;=\begin{bmatrix}u&amp;v&amp;w\end{bmatrix}P^\top\begin{bmatrix}\text A\end{bmatrix}P\begin{bmatrix}u\v\w\end{bmatrix} \end{align}</p>
-
 <p>This concludes our discussion of tensors.</p>
-
 <h2 id="numpy-ndarray">Numpy ndarray</h2>
-
 <p>PyTorch is &lsquo;A replacement for Numpy to use the power of GPUs.&rsquo;  PyTorch provides both matrices and tensors.  Let&rsquo;s dive into Numpy to see what PyTorch is replacing.</p>
-
 <h3 id="configure-environment">Configure environment</h3>
-
-<pre><code class="language-python">import torch
-import numpy as np
-</code></pre>
-
-<h3 id="background">Background</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span></code></pre></div><h3 id="background">Background</h3>
 <p>At the core, numpy provides the excellent ndarray objects, short for n-dimensional arrays.</p>
-
 <p>In a ‘ndarray’ object, aka ‘array’, you can store multiple items of the same data type. It is the facilities around the array object that makes numpy so convenient for performing math and data manipulations.</p>
-
 <ul>
 <li>arrays are designed to handle vectorized operations while a python list is not</li>
 <li>array size cannot be increased (unlike list), so a new array must be created</li>
 <li>array memory size is much smaller than list</li>
 <li>an array must have all items be of the same data type, unlike lists</li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>list1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span>arr1d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(list1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    list1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;lack of vectorization on base lists makes this operation impossible&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>print( arr1d <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">list1 = [0,1,2,3,4]
-arr1d = np.array(list1)
-
-try:
-    list1 + 2
-except:
-    print(&quot;lack of vectorization on base lists makes this operation impossible&quot;)
-    
-print( arr1d + 2 )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">lack of vectorization makes this impossible
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">lack of vectorization makes this impossible
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">array([2, 3, 4, 5, 6])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([2, 3, 4, 5, 6])
 </code></pre>
 
 </div>
-
 
 <p>The most commonly used numpy dtypes are:</p>
-
 <ul>
 <li><code>float</code></li>
 <li><code>int</code></li>
@@ -224,62 +186,50 @@ print( arr1d + 2 )
 <li><code>str</code></li>
 <li><code>object</code></li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Create a 2d array from a list of lists</span>
+</span></span><span style="display:flex;"><span>list2 <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>], [<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>]]
+</span></span><span style="display:flex;"><span>arr2d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(list2, dtype<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;float&#39;</span>)
+</span></span><span style="display:flex;"><span>arr2d
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># Create a 2d array from a list of lists
-list2 = [[0,1,2], [3,4,5], [6,7,8]]
-arr2d = np.array(list2, dtype='float')
-arr2d
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[0., 1., 2.],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[0., 1., 2.],
        [3., 4., 5.],
        [6., 7., 8.]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr2d<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;str&#39;</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr2d.astype('str')
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([['0.0', '1.0', '2.0'],
-       ['3.0', '4.0', '5.0'],
-       ['6.0', '7.0', '8.0']], dtype='&lt;U32')
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[&#39;0.0&#39;, &#39;1.0&#39;, &#39;2.0&#39;],
+       [&#39;3.0&#39;, &#39;4.0&#39;, &#39;5.0&#39;],
+       [&#39;6.0&#39;, &#39;7.0&#39;, &#39;8.0&#39;]], dtype=&#39;&lt;U32&#39;)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr2d<span style="color:#f92672">.</span>tolist()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr2d.tolist()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># memory address</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Memory: &#39;</span>, arr2d<span style="color:#f92672">.</span>data)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># shape</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Shape: &#39;</span>, arr2d<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># dtype</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Datatype: &#39;</span>, arr2d<span style="color:#f92672">.</span>dtype)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># size</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Size: &#39;</span>, arr2d<span style="color:#f92672">.</span>size)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ndim</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Num Dimensions: &#39;</span>, arr2d<span style="color:#f92672">.</span>ndim)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># memory address
-print('Memory: ', arr2d.data)
-# shape
-print('Shape: ', arr2d.shape)
-# dtype
-print('Datatype: ', arr2d.dtype)
-# size
-print('Size: ', arr2d.size)
-# ndim
-print('Num Dimensions: ', arr2d.ndim)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Shape:  (3, 3)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Shape:  (3, 3)
 Datatype:  float64
 Size:  9
 Num Dimensions:  2
@@ -287,143 +237,111 @@ Num Dimensions:  2
 
 </div>
 
-
 <h3 id="operations">Operations</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>np<span style="color:#f92672">.</span>identity(<span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">np.identity(3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[1., 0., 0.],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[1., 0., 0.],
        [0., 1., 0.],
        [0., 0., 1.]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>np<span style="color:#f92672">.</span>concatenate(arr2d)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">np.concatenate(arr2d)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ 0.,  1.,  2.,  3., -1., -1.,  6.,  7.,  8.])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ 0.,  1.,  2.,  3., -1., -1.,  6.,  7.,  8.])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#transpose</span>
+</span></span><span style="display:flex;"><span>arr2d<span style="color:#f92672">.</span>T
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#transpose
-arr2d.T
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[ 0.,  3.,  6.],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[ 0.,  3.,  6.],
        [ 1., -1.,  7.],
        [ 2., -1.,  8.]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#matrix inversion</span>
+</span></span><span style="display:flex;"><span>linalg<span style="color:#f92672">.</span>inv(arr2d)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#matrix inversion
-linalg.inv(arr2d)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[-0.04166667,  0.25      ,  0.04166667],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[-0.04166667,  0.25      ,  0.04166667],
        [-1.25      , -0.5       ,  0.25      ],
        [ 1.125     ,  0.25      , -0.125     ]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#norm</span>
+</span></span><span style="display:flex;"><span>linalg<span style="color:#f92672">.</span>norm(arr2d)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#determinent</span>
+</span></span><span style="display:flex;"><span>linalg<span style="color:#f92672">.</span>det(arr2d)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#norm
-linalg.norm(arr2d)
-</code></pre>
-
-<pre><code class="language-python">#determinent
-linalg.det(arr2d)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">24.000000000000004
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">24.000000000000004
 </code></pre>
 
 </div>
 
-
 <h3 id="selection">Selection</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#slicing</span>
+</span></span><span style="display:flex;"><span>arr2d[:<span style="color:#ae81ff">2</span>,:<span style="color:#ae81ff">2</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#slicing
-arr2d[:2,:2]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[0., 1.],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[0., 1.],
        [3., 4.]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#boolean indexing</span>
+</span></span><span style="display:flex;"><span>arr2d <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#boolean indexing
-arr2d &gt; 4
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[False, False, False],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[False, False, False],
        [False, False,  True],
        [ True,  True,  True]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#reverse the array on one dimen (rows)</span>
+</span></span><span style="display:flex;"><span>arr2d[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#reverse the array on one dimen (rows)
-arr2d[::-1,]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[6., 7., 8.],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[6., 7., 8.],
        [3., 4., 5.],
        [0., 1., 2.]])
 </code></pre>
 
 </div>
 
-
 <h3 id="creation">Creation</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#deep copy of array</span>
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> arr2d<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#NaN or Infinity</span>
+</span></span><span style="display:flex;"><span>arr2d[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan  <span style="color:#75715e"># not a number</span>
+</span></span><span style="display:flex;"><span>arr2d[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>inf  <span style="color:#75715e"># infinite</span>
+</span></span><span style="display:flex;"><span>print( arr2d )
+</span></span><span style="display:flex;"><span>print()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Replace nan and inf with -1. Don&#39;t use arr2 == np.nan</span>
+</span></span><span style="display:flex;"><span>missing_bool <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>isnan(arr2d) <span style="color:#f92672">|</span> np<span style="color:#f92672">.</span>isinf(arr2d)
+</span></span><span style="display:flex;"><span>arr2d[missing_bool] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>  
+</span></span><span style="display:flex;"><span>print( arr2d )
+</span></span><span style="display:flex;"><span>print()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print( tmp )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#deep copy of array
-tmp = arr2d.copy()
-
-#NaN or Infinity
-arr2d[1,1] = np.nan  # not a number
-arr2d[1,2] = np.inf  # infinite
-print( arr2d )
-print()
-
-# Replace nan and inf with -1. Don't use arr2 == np.nan
-missing_bool = np.isnan(arr2d) | np.isinf(arr2d)
-arr2d[missing_bool] = -1  
-print( arr2d )
-print()
-
-print( tmp )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[[ 0.  1.  2.]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[[ 0.  1.  2.]
  [ 3. nan inf]
  [ 6.  7.  8.]]
 
@@ -438,53 +356,47 @@ print( tmp )
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#reshape</span>
+</span></span><span style="display:flex;"><span>print( (arr2d<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>transpose())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#flatten</span>
+</span></span><span style="display:flex;"><span>print( arr2d<span style="color:#f92672">.</span>flatten())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ravel - new array is reference to the parent array, no copy()</span>
+</span></span><span style="display:flex;"><span>print( arr2d<span style="color:#f92672">.</span>ravel())
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#reshape
-print( (arr2d.reshape(9, 1)).transpose())
-
-#flatten
-print( arr2d.flatten())
-
-#ravel - new array is reference to the parent array, no copy()
-print( arr2d.ravel())
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[[ 0.  1.  2.  3. -1. -1.  6.  7.  8.]]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[[ 0.  1.  2.  3. -1. -1.  6.  7.  8.]]
 [ 0.  1.  2.  3. -1. -1.  6.  7.  8.]
 [ 0.  1.  2.  3. -1. -1.  6.  7.  8.]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Lower limit is 0 by default</span>
+</span></span><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">5</span>))  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 0 to 9</span>
+</span></span><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">10</span>))  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 0 to 9 with step of 2</span>
+</span></span><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">2</span>))  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 10 to 1, decreasing order</span>
+</span></span><span style="display:flex;"><span>print(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Exactly 10 numbers, Start at 1 and end at 50 (not equally spaced because of the int rounding)</span>
+</span></span><span style="display:flex;"><span>print( np<span style="color:#f92672">.</span>linspace(start<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stop<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>, num<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, dtype<span style="color:#f92672">=</span>int))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># LogSpace - start value is actually base^start and ends with base^stop (default base 10)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Limit the number of digits after the decimal to 2</span>
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>set_printoptions(precision<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start at 10^1 and end at 10^50</span>
+</span></span><span style="display:flex;"><span>print( np<span style="color:#f92672">.</span>logspace(start<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stop<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>, num<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, base<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)) 
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># Lower limit is 0 by default
-print(np.arange(5))  
-
-# 0 to 9
-print(np.arange(0, 10))  
-
-# 0 to 9 with step of 2
-print(np.arange(0, 10, 2))  
-
-# 10 to 1, decreasing order
-print(np.arange(10, 0, -1))
-
-# Exactly 10 numbers, Start at 1 and end at 50 (not equally spaced because of the int rounding)
-print( np.linspace(start=1, stop=50, num=10, dtype=int))
-
-
-# LogSpace - start value is actually base^start and ends with base^stop (default base 10)
-# Limit the number of digits after the decimal to 2
-np.set_printoptions(precision=2)  
-# Start at 10^1 and end at 10^50
-print( np.logspace(start=1, stop=50, num=10, base=10)) 
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[0 1 2 3 4]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[0 1 2 3 4]
 [0 1 2 3 4 5 6 7 8 9]
 [0 2 4 6 8]
 [10  9  8  7  6  5  4  3  2  1]
@@ -493,17 +405,14 @@ print( np.logspace(start=1, stop=50, num=10, base=10))
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#zeros</span>
+</span></span><span style="display:flex;"><span>print( np<span style="color:#f92672">.</span>zeros([<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ones</span>
+</span></span><span style="display:flex;"><span>print( np<span style="color:#f92672">.</span>ones([<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>]))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#zeros
-print( np.zeros([2,2]))
-
-#ones
-print( np.ones([2,2]))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[[0. 0.]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[[0. 0.]
  [0. 0.]]
 [[1. 1.]
  [1. 1.]]
@@ -511,81 +420,62 @@ print( np.ones([2,2]))
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>a <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>] 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Repeat whole of &#39;a&#39; two times</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Tile:   &#39;</span>, np<span style="color:#f92672">.</span>tile(a, <span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Repeat each element of &#39;a&#39; two times</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Repeat: &#39;</span>, np<span style="color:#f92672">.</span>repeat(a, <span style="color:#ae81ff">2</span>))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">a = [1,2,3] 
-# Repeat whole of 'a' two times
-print('Tile:   ', np.tile(a, 2))
-
-# Repeat each element of 'a' two times
-print('Repeat: ', np.repeat(a, 2))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Tile:    [1 2 3 1 2 3]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Tile:    [1 2 3 1 2 3]
 Repeat:  [1 1 2 2 3 3]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Create random integers of size 10 between [0,10)</span>
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>arr_rand <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">10</span>, size<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(arr_rand)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the unique items and their counts</span>
+</span></span><span style="display:flex;"><span>uniqs, counts <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>unique(arr_rand, return_counts<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Unique items : &#34;</span>, uniqs)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Counts       : &#34;</span>, counts)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># Create random integers of size 10 between [0,10)
-np.random.seed(100)
-arr_rand = np.random.randint(0, 10, size=10)
-print(arr_rand)
-
-# Get the unique items and their counts
-uniqs, counts = np.unique(arr_rand, return_counts=True)
-print(&quot;Unique items : &quot;, uniqs)
-print(&quot;Counts       : &quot;, counts)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[8 8 3 7 7 0 4 2 5 2]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[8 8 3 7 7 0 4 2 5 2]
 Unique items :  [0 2 3 4 5 7 8]
 Counts       :  [1 2 1 1 1 2 2]
 </code></pre>
 
 </div>
 
-
 <p>Now that we have a good understanding how to work with Numpy, lets see how the PyTorch Tensor may be a &lsquo;replacement&rsquo; as it states in its purpose.</p>
-
 <h2 id="pytorch-tensor">PyTorch Tensor</h2>
-
 <p>Let&rsquo;s forget our original discussion of a Tensor, for a moment, and focus on the concrete PyTorch implementation.  A <code>torch.Tensor</code> is a multi-dimensional matrix containing elements of a single data type.  When an uninitialized matrix is created, whatever values were in the allocated memory at the time will appear as the initial values.  <code>torch.Tensor</code> is an alias for the default tensor type, <code>torch.FloatTensor</code>.</p>
-
 <h3 id="creation-1">Creation</h3>
-
 <p>Since the <code>torch.Tensor</code> attempts to be a replacement for <code>ndarray</code>, we expect to see a similar class API.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>empty(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>)    <span style="color:#75715e">#construct a 5x3 matrix, uninitialized</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>rand(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>)     <span style="color:#75715e">#randomly initialized matrix</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)    <span style="color:#75715e">#matrix filled zeros and of dtype long</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>type(x)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">x = torch.empty(5, 3)    #construct a 5x3 matrix, uninitialized
-x = torch.rand(5, 3)     #randomly initialized matrix
-x = torch.zeros(5, 3, dtype=torch.long)    #matrix filled zeros and of dtype long
-</code></pre>
-
-<pre><code class="language-python">type(x)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">torch.Tensor
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">torch.Tensor
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( x<span style="color:#f92672">.</span>type() )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print( x<span style="color:#f92672">.</span>shape )
+</span></span><span style="display:flex;"><span>print( x<span style="color:#f92672">.</span>size() )
+</span></span><span style="display:flex;"><span>print( x<span style="color:#f92672">.</span>dim() )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( x.type() )
-
-print( x.shape )
-print( x.size() )
-print( x.dim() )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">torch.LongTensor
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">torch.LongTensor
 torch.Size([5, 3])
 torch.Size([5, 3])
 2
@@ -593,51 +483,36 @@ torch.Size([5, 3])
 
 </div>
 
-
 <p>A tensor can be constructed from a Python list or sequence using the torch.tensor() constructor.</p>
-
 <p><code>torch.tensor()</code> always copies data. If you have a Tensor data and just want to change its <code>requires_grad</code> flag, use <code>requires_grad_()</code> or <code>detach()</code> to avoid a copy. If you have a numpy array and want to avoid a copy, use <code>torch.as_tensor()</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">5.5</span>, <span style="color:#ae81ff">3</span>])    <span style="color:#75715e">#create a tensor from data</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># create a tensor</span>
+</span></span><span style="display:flex;"><span>new_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>Tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]])    <span style="color:#75715e"># create a 2 x 3 tensor with random values</span>
+</span></span><span style="display:flex;"><span>empty_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>Tensor(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)    <span style="color:#75715e"># create a 2 x 3 tensor with random values between -1and 1</span>
+</span></span><span style="display:flex;"><span>uniform_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>Tensor(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>uniform_(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)    <span style="color:#75715e"># create a 2 x 3 tensor with random values from a uniform distribution on the interval [0, 1)</span>
+</span></span><span style="display:flex;"><span>rand_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>rand(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)    <span style="color:#75715e"># create a 2 x 3 tensor of zeros</span>
+</span></span><span style="display:flex;"><span>zero_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><h3 id="selection-and-reshaping">Selection and reshaping</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## slicing examples</span>
+</span></span><span style="display:flex;"><span>slice_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>Tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>], [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>], [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>]])    <span style="color:#75715e"># elements from every row, first column</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( slice_tensor[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>] )
+</span></span><span style="display:flex;"><span>print( slice_tensor[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>item() )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">x = torch.tensor([5.5, 3])    #create a tensor from data
-</code></pre>
-
-<pre><code class="language-python"># create a tensor
-new_tensor = torch.Tensor([[1, 2], [3, 4]])    # create a 2 x 3 tensor with random values
-empty_tensor = torch.Tensor(2, 3)    # create a 2 x 3 tensor with random values between -1and 1
-uniform_tensor = torch.Tensor(2, 3).uniform_(-1, 1)    # create a 2 x 3 tensor with random values from a uniform distribution on the interval [0, 1)
-rand_tensor = torch.rand(2, 3)    # create a 2 x 3 tensor of zeros
-zero_tensor = torch.zeros(2, 3)
-</code></pre>
-
-<h3 id="selection-and-reshaping">Selection and reshaping</h3>
-
-<pre><code class="language-python">## slicing examples
-slice_tensor = torch.Tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]])    # elements from every row, first column
-</code></pre>
-
-<pre><code class="language-python">print( slice_tensor[1][0] )
-print( slice_tensor[1][0].item() )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor(4.)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor(4.)
 4.0
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(slice_tensor[:, <span style="color:#ae81ff">0</span>])         <span style="color:#75715e"># tensor([ 1.,  4.,  7.])# elements from every row, last column</span>
+</span></span><span style="display:flex;"><span>print(slice_tensor[:, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])        <span style="color:#75715e"># tensor([ 3.,  6.,  9.])# all elements on the second row</span>
+</span></span><span style="display:flex;"><span>print(slice_tensor[<span style="color:#ae81ff">2</span>, :])         <span style="color:#75715e"># tensor([ 4.,  5.,  6.])# all elements from first two rows</span>
+</span></span><span style="display:flex;"><span>print(slice_tensor[:<span style="color:#ae81ff">2</span>, :])        <span style="color:#75715e"># tensor([[ 1.,  2.,  3.],</span>
+</span></span><span style="display:flex;"><span>                                  <span style="color:#75715e">#         [ 4.,  5.,  6.]])</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print(slice_tensor[:, 0])         # tensor([ 1.,  4.,  7.])# elements from every row, last column
-print(slice_tensor[:, -1])        # tensor([ 3.,  6.,  9.])# all elements on the second row
-print(slice_tensor[2, :])         # tensor([ 4.,  5.,  6.])# all elements from first two rows
-print(slice_tensor[:2, :])        # tensor([[ 1.,  2.,  3.],
-                                  #         [ 4.,  5.,  6.]])
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([1., 4., 7.])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([1., 4., 7.])
 tensor([3., 6., 9.])
 tensor([7., 8., 9.])
 tensor([[1., 2., 3.],
@@ -646,16 +521,13 @@ tensor([[1., 2., 3.],
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>reshape_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>Tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print( reshape_tensor<span style="color:#f92672">.</span>view(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">4</span>) ) 
+</span></span><span style="display:flex;"><span>print( reshape_tensor<span style="color:#f92672">.</span>view(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">1</span>) )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">reshape_tensor = torch.Tensor([[1, 2], [3, 4]])
-
-print( reshape_tensor.view(1,4) ) 
-print( reshape_tensor.view(4,1) )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[1., 2., 3., 4.]])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[1., 2., 3., 4.]])
 tensor([[1.],
         [2.],
         [3.],
@@ -664,35 +536,26 @@ tensor([[1.],
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>my_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>rand(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>print(my_tensor)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">my_tensor = torch.rand(2,3)
-print(my_tensor)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[0.7329, 0.2473, 0.8068],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[0.7329, 0.2473, 0.8068],
         [0.5935, 0.4460, 0.9787]])
 </code></pre>
 
 </div>
 
-
 <h3 id="operations-1">Operations</h3>
-
 <p>There are multiple syntaxes for operations.  Any operation that mutates a tensor in-place is post-fixed with an underscore, <code>_</code>. For example: <code>x.copy_(y)</code>, <code>x.t_()</code>, will change x.  While this is a convenient syntax, as opposed to Pandas <code>inplace=True</code> argument, take care to shun this mutability if you prefer the functional programming style.</p>
-
 <p>The documentation for all operations is <a href="https://pytorch.org/docs/stable/torch.html">here</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>new_ones(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>double)      <span style="color:#75715e"># new_* methods take in sizes</span>
+</span></span><span style="display:flex;"><span>print(x)
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn_like(x, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)    <span style="color:#75715e"># override dtype!</span>
+</span></span><span style="display:flex;"><span>print(x)   
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">x = x.new_ones(5, 3, dtype=torch.double)      # new_* methods take in sizes
-print(x)
-x = torch.randn_like(x, dtype=torch.float)    # override dtype!
-print(x)   
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[1., 1., 1.],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[1., 1., 1.],
         [1., 1., 1.],
         [1., 1., 1.],
         [1., 1., 1.],
@@ -706,26 +569,21 @@ tensor([[-0.2641,  0.1227,  0.8318],
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>rand(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#method</span>
+</span></span><span style="display:flex;"><span>print(torch<span style="color:#f92672">.</span>add(x, y))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#output tensor as argument</span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>empty(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>add(x, y, out<span style="color:#f92672">=</span>result)
+</span></span><span style="display:flex;"><span>print(result)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Addition: in-place</span>
+</span></span><span style="display:flex;"><span>y<span style="color:#f92672">.</span>add_(x)
+</span></span><span style="display:flex;"><span>print(y)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">y = torch.rand(5, 3)
-</code></pre>
-
-<pre><code class="language-python">#method
-print(torch.add(x, y))
-
-#output tensor as argument
-result = torch.empty(5, 3)
-torch.add(x, y, out=result)
-print(result)
-
-#Addition: in-place
-y.add_(x)
-print(y)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[ 0.2509,  0.9078,  0.9634],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[ 0.2509,  0.9078,  0.9634],
         [-0.5009,  0.2014,  0.7240],
         [-0.5479, -0.4745,  0.5204],
         [-1.4827,  0.4353, -0.4762],
@@ -744,14 +602,11 @@ tensor([[ 0.2509,  0.9078,  0.9634],
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( my_tensor<span style="color:#f92672">.</span>t() )             <span style="color:#75715e"># regular transpose function</span>
+</span></span><span style="display:flex;"><span>print( my_tensor<span style="color:#f92672">.</span>permute(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>) )   <span style="color:#75715e"># transpose via permute function</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( my_tensor.t() )             # regular transpose function
-print( my_tensor.permute(-1,0) )   # transpose via permute function
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[0.7329, 0.5935],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[0.7329, 0.5935],
         [0.2473, 0.4460],
         [0.8068, 0.9787]])
 tensor([[0.7329, 0.5935],
@@ -761,123 +616,91 @@ tensor([[0.7329, 0.5935],
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cross_prod <span style="color:#f92672">=</span> my_tensor<span style="color:#f92672">.</span>cross(my_tensor)
+</span></span><span style="display:flex;"><span>print( cross_prod )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">cross_prod = my_tensor.cross(my_tensor)
-print( cross_prod )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[ 4.3144e-09,  8.3869e-09,  3.0715e-09],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[ 4.3144e-09,  8.3869e-09,  3.0715e-09],
         [ 4.7199e-09,  6.7144e-09, -7.1207e-09]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>maxtrix_prod <span style="color:#f92672">=</span> my_tensor<span style="color:#f92672">.</span>mm( my_tensor<span style="color:#f92672">.</span>t() )
+</span></span><span style="display:flex;"><span>print( maxtrix_prod )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">maxtrix_prod = my_tensor.mm( my_tensor.t() )
-print( maxtrix_prod )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[1.2493, 1.3350],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[1.2493, 1.3350],
         [1.3350, 1.5091]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>element_mult <span style="color:#f92672">=</span> my_tensor<span style="color:#f92672">.</span>mul(my_tensor)
+</span></span><span style="display:flex;"><span>print( element_mult )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">element_mult = my_tensor.mul(my_tensor)
-print( element_mult )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[0.5371, 0.0612, 0.6510],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[0.5371, 0.0612, 0.6510],
         [0.3523, 0.1989, 0.9579]])
 </code></pre>
 
 </div>
 
-
 <h3 id="operations-on-the-gpu">Operations on the GPU</h3>
-
 <p>The crux of the <code>torch.Tensor</code> is application to the GPU for faster use in network-based modeling.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available():
+</span></span><span style="display:flex;"><span>    my_tensor<span style="color:#f92672">.</span>cuda(<span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>my_tensor<span style="color:#f92672">.</span>is_cuda
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">if torch.cuda.is_available():
-    my_tensor.cuda(True)
-</code></pre>
-
-<pre><code class="language-python">my_tensor.is_cuda
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">False
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">False
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Create a numpy array</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]])
+</span></span><span style="display:flex;"><span>print(x)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># Create a numpy array
-x = np.array([[1, 2], [3, 4]])
-print(x)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[[1 2]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[[1 2]
  [3 4]]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Convert the numpy array to a torch tensor</span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>from_numpy(x)
+</span></span><span style="display:flex;"><span>print(y)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># Convert the numpy array to a torch tensor
-y = torch.from_numpy(x)
-print(y)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">tensor([[1, 2],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">tensor([[1, 2],
         [3, 4]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Convert the torch tensor to a numpy array</span>
+</span></span><span style="display:flex;"><span>z <span style="color:#f92672">=</span> y<span style="color:#f92672">.</span>numpy()
+</span></span><span style="display:flex;"><span>print(z)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># Convert the torch tensor to a numpy array
-z = y.numpy()
-print(z)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[[1 2]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[[1 2]
  [3 4]]
 </code></pre>
 
 </div>
 
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>This post explains the basic operations of the <code>ndarray</code> and how <code>Tensor</code> adds value.  Later posts will explore how the <code>Tensor</code> is used in PyTorch and network modeling.</p>
-
 <h3 id="references-framemworks">References: framemworks</h3>
-
 <p><strong>Numpy</strong></p>
-
 <ul>
 <li><a href="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Numpy_Python_Cheat_Sheet.pdf">ref: datacamp numpy cheatsheet</a></li>
 <li><a href="https://docs.scipy.org/doc/numpy/user/quickstart.html">docs: numpy quickstart</a></li>
 <li><a href="https://docs.scipy.org/doc/numpy/reference/">docs: numpy api</a></li>
 </ul>
-
 <p><strong>PyTorch</strong></p>
-
 <ul>
 <li><a href="https://pytorch.org/tutorials/beginner/ptcheat.html">docs: pytorch cheatsheet</a></li>
 <li><a href="https://pytorch.org/docs/stable/index.html">docs: pytorch api</a></li>
@@ -893,35 +716,36 @@ print(z)
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#basics-of-tensors-and-matrices">Basics of Tensors and Matrices</a>
-<ul>
-<li><a href="#basic-terminology">Basic terminology</a></li>
-<li><a href="#the-need-for-the-tensor-construct">The need for the Tensor construct</a></li>
-</ul></li>
-<li><a href="#numpy-ndarray">Numpy ndarray</a>
-<ul>
-<li><a href="#configure-environment">Configure environment</a></li>
-<li><a href="#background">Background</a></li>
-<li><a href="#operations">Operations</a></li>
-<li><a href="#selection">Selection</a></li>
-<li><a href="#creation">Creation</a></li>
-</ul></li>
-<li><a href="#pytorch-tensor">PyTorch Tensor</a>
-<ul>
-<li><a href="#creation-1">Creation</a></li>
-<li><a href="#selection-and-reshaping">Selection and reshaping</a></li>
-<li><a href="#operations-1">Operations</a></li>
-<li><a href="#operations-on-the-gpu">Operations on the GPU</a></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a>
-<ul>
-<li><a href="#references-framemworks">References: framemworks</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#basics-of-tensors-and-matrices">Basics of Tensors and Matrices</a>
+      <ul>
+        <li><a href="#basic-terminology">Basic terminology</a></li>
+        <li><a href="#the-need-for-the-tensor-construct">The need for the Tensor construct</a></li>
+      </ul>
+    </li>
+    <li><a href="#numpy-ndarray">Numpy ndarray</a>
+      <ul>
+        <li><a href="#configure-environment">Configure environment</a></li>
+        <li><a href="#background">Background</a></li>
+        <li><a href="#operations">Operations</a></li>
+        <li><a href="#selection">Selection</a></li>
+        <li><a href="#creation">Creation</a></li>
+      </ul>
+    </li>
+    <li><a href="#pytorch-tensor">PyTorch Tensor</a>
+      <ul>
+        <li><a href="#creation-1">Creation</a></li>
+        <li><a href="#selection-and-reshaping">Selection and reshaping</a></li>
+        <li><a href="#operations-1">Operations</a></li>
+        <li><a href="#operations-on-the-gpu">Operations on the GPU</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a>
+      <ul>
+        <li><a href="#references-framemworks">References: framemworks</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
         </div>
         
@@ -1018,7 +842,7 @@ print(z)
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,77 +106,45 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Hadoop is seen as the staple of clusters and distributed management.  Spark is ubiquitous data science tool.  What if you combine Hadoop with Spark?  We will explore that question and compare different deployment architectures in this post.</p>
-
+            <p>Hadoop is seen as the staple of clusters and distributed management.  Spark is ubiquitous data science tool.  What if you combine Hadoop with Spark?  We will explore that question and compare different deployment architectures in this post.</p>
 <h2 id="introduction">Introduction</h2>
-
 <p>As Storage you use HDFS. Analytics is done with Apache Spark and YARN is taking care of the resource management.  Why does that work so well together?</p>
-
 <p>From a platform architecture perspective, Hadoop and Spark are usually managed on the same cluster. This means on each server where a HDFS data node is running, a Spark worker thread runs as well.</p>
-
 <p>In distributed processing, network transfer between machines is a large bottle neck. Transferring data within a machine reduces this traffic significantly.  Spark is able to determine on which data node the needed data is stored. This allows a direct load of the data from the local storage into the memory of the machine.  This reduces network traffic a lot.</p>
-
 <h2 id="spark-on-yarn">Spark on Yarn</h2>
-
 <p>You need to make sure that your physical resources are distributed perfectly between the services. This is especially the case when you run Spark workers with other Hadoop services on the same machine.</p>
-
 <p>It just would not make sense to have two resource managers managing the same server&rsquo;s resources. Sooner or later they will get in each others way.</p>
-
 <p>That&rsquo;s why the Spark standalone resource manager is seldom used.</p>
-
 <p>So, the question is not Spark or Hadoop. The question has to be: Should you use Spark or MapReduce alongside Hadoop&rsquo;s HDFS and YARN.</p>
-
 <ul>
 <li>Spark is an in-memory distributed computing engine.</li>
 <li>Hadoop is a framework for distributed storage (HDFS) and distributed processing (YARN).</li>
 <li>Spark can run with or without Hadoop components (HDFS/YARN)</li>
 </ul>
-
 <p>Since Spark does not have its own distributed storage system, it has to depend on one of these storage systems for distributed computing.</p>
-
 <ul>
 <li>S3 – Non-urgent batch jobs. S3 fits very specific use cases when data locality isn’t critical.</li>
 <li>Cassandra – Perfect for streaming data analysis and an overkill for batch jobs.</li>
 <li>HDFS – Great fit for batch jobs without compromising on data locality.</li>
 </ul>
-
 <h2 id="architectures">Architectures</h2>
-
 <p>We can explore some different architectures that are commonly used.  These are constantly evolving as new IAAS and open source projects become available.</p>
-
 <h3 id="traditional">Traditional</h3>
-
 <p>The traditional approach is to keep a cluster of servers running 24x7.  The cluster uses HDFS as data storage, and Hadoop yarn managing the servers.  MapReduce can perform simple ETL, but if advanced processing is needed, then Spark can be employed on top of the cluster.  This is used for traditional batch-processing of large volumes of data when software requirements do not allow for the cluster to be automatically configured.  It is also the most expensive design witch typical arrangements costing ~$20K per month.</p>
-
 <p>While expensive, you have access to the entire Hadoop ecosystem - the additional applications are trivial to use once you have the hardware.  You use Apache Kafka to ingest data, and store the it in HDFS. You do the analytics with Apache Spark and as a backend for the display you store data in Apache HBase.  To have a working system you also need YARN for resource management. You also need Zookeeper, a configuration management service to use Kafka and HBase.  Spark for instance, can directly access Kafka to consume messages. It is able to access HDFS for storing or processing stored data.  It also can write into HBase to push analytics results to the front end.</p>
-
 <p>The cool thing of such ecosystem is that it is easy to build in new functions.  Want to store data from Kafka directly into HDFS without using Spark?  No problem, there is a project for that. Apache Flume has interfaces for Kafka and HDFS.  It can act as an agent to consume messages from Kafka and store them into HDFS. You even do not have to worry about Flume resource management.</p>
-
 <p>A large bank can now process payments and update accounts, daily, with just a small team of engineers available for potential problems.  Analysts can create thorough reports from the data warehouse.</p>
-
 <h3 id="lambda">Lambda</h3>
-
 <p>Once businesses started demanding that the Traditional architecture provide more data, faster, the batch-processing pipeline was not going to deliver.  So, a second pipeline, speed-processing, was setup next to the Traditional for near real-time performance.  may not be as accurate or complete as the ones eventually produced by the batch layer, but they are available almost immediately after data is received.</p>
-
 <p>A large bank now has a current view of customer transactions and accounts, and can make tactical decisions, hourly.</p>
-
 <h3 id="smack-stack">SMACK Stack</h3>
-
 <p>This high-throughput, scalable design uses all of the latest Apache tools in a streaming manner for the latest Internet-Of-Things (IOT) data ingestion problems.  SMACK is an acronym for: Spark, Mesos, Akka, Cassandra, and Kafka.  Spark and Mesos are obvious replacements for Hadoop.  Akka is an event-driven, functional paradigm for managing all of this.  Cassandra is a data store, while Kafka is a messaging pipe (like RabbitMQ).</p>
-
 <p>A large bank can now provide instant feedback to the customer on products customized for their background and the banks current situation.</p>
-
 <h3 id="highest-value">Highest Value</h3>
-
-<p>The deployment that allows you to be most productive for the lowest cost is batch ETL of temporary clusters.  In this arrangement, a cluster is spun-up, data is processed, then the cluster is brought-down.<br />
+<p>The deployment that allows you to be most productive for the lowest cost is batch ETL of temporary clusters.  In this arrangement, a cluster is spun-up, data is processed, then the cluster is brought-down.<br>
 AWS popularized this technique with S3, Spark, Mesos all coordinated with Lambda.  Challenges arise when working with custom, legacy software that may make automated cluster creation difficult.</p>
-
 <p>A bank can now replace its constantly-running cluster with a batch process that may cost a few hundred dollars a week.</p>
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>These deployment categories are useful as a guide to the different ways Big Data tools can be used together.  If you have the time and resources, and are feeling adventurous, you can try something new on dedicated machines.  However, for solution architects on a budget, these tried-and-true lessons can be employed fairly quickly and with confidence that problems can be fixed with stable solutions.</p>
 
         </div>
@@ -186,21 +154,19 @@ AWS popularized this technique with S3, Spark, Mesos all coordinated with Lambda
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#spark-on-yarn">Spark on Yarn</a></li>
-<li><a href="#architectures">Architectures</a>
-<ul>
-<li><a href="#traditional">Traditional</a></li>
-<li><a href="#lambda">Lambda</a></li>
-<li><a href="#smack-stack">SMACK Stack</a></li>
-<li><a href="#highest-value">Highest Value</a></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#spark-on-yarn">Spark on Yarn</a></li>
+    <li><a href="#architectures">Architectures</a>
+      <ul>
+        <li><a href="#traditional">Traditional</a></li>
+        <li><a href="#lambda">Lambda</a></li>
+        <li><a href="#smack-stack">SMACK Stack</a></li>
+        <li><a href="#highest-value">Highest Value</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -287,7 +253,7 @@ AWS popularized this technique with S3, Spark, Mesos all coordinated with Lambda
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

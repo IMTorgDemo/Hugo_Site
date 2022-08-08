@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,348 +106,271 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Groovy is a scripting language that compiles to the Java Virtual Machine.  It would be more-aptly named <em>JavaScript</em> if that name were not already taken, but it has many similarities to Python.  In fact, some of the libraries implemented for Groovy, such as <a href="https://jtablesaw.github.io/tablesaw/">TableSaw</a>, attempt to take it in the same <em>Data Science</em> direction as Python.</p>
-
+            <p>Groovy is a scripting language that compiles to the Java Virtual Machine.  It would be more-aptly named <em>JavaScript</em> if that name were not already taken, but it has many similarities to Python.  In fact, some of the libraries implemented for Groovy, such as <a href="https://jtablesaw.github.io/tablesaw/">TableSaw</a>, attempt to take it in the same <em>Data Science</em> direction as Python.</p>
 <p>This post will provide an introduction to the Groovy language using Jupyter notebook with BeakerX, and provides specific applications to Data Science.  It begins with a tour of the Groovy language, then describes some of the most interesting features that the language provides.  We give a comparison to Java with some notes for making integration with Java environments easier.  We finish-off with applications and examples in Data Science.</p>
-
 <p>This notebook takes code and examples from this github repo: <a href="https://github.com/twosigma/beakerx">https://github.com/twosigma/beakerx</a></p>
-
 <h2 id="getting-started">Getting Started</h2>
-
 <p>You can get started with Groovy in a few different ways.  After installing Groovy, the console (comes with Groovy distribution) is a Java Swing application where we can write and run code, interactively.</p>
-
-<pre><code>\\( groovyconsole
-</code></pre>
-
-<p>Or you can run a script, directly.</p>
-
-<pre><code>\\) groovy your-script.groovy
-</code></pre>
-
-<p>In this post we will use Jupyter with the <a href="https://github.com/twosigma/beakerx">BeakerX JVM kernel</a>.  BeakerX provides a variety of languages and support transforming data structures among them.  This makes it ideal for learning and prototyping.  You can get started with BeakerX using Docker.</p>
-
-<pre><code>$ docker run -p 8888:8888 beakerx/beakerx
-</code></pre>
-
-<h2 id="introduction">Introduction</h2>
-
+<pre tabindex="0"><code>\\( groovyconsole
+</code></pre><p>Or you can run a script, directly.</p>
+<pre tabindex="0"><code>\\) groovy your-script.groovy
+</code></pre><p>In this post we will use Jupyter with the <a href="https://github.com/twosigma/beakerx">BeakerX JVM kernel</a>.  BeakerX provides a variety of languages and support transforming data structures among them.  This makes it ideal for learning and prototyping.  You can get started with BeakerX using Docker.</p>
+<pre tabindex="0"><code>$ docker run -p 8888:8888 beakerx/beakerx
+</code></pre><h2 id="introduction">Introduction</h2>
 <h3 id="basic-syntax">Basic syntax</h3>
-
 <p>We provide the obligatory <em>hello world</em> example using a simple println statement to print output to the console.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Example</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      println<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Hello World&#39;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>Example<span style="color:#f92672">.</span><span style="color:#a6e22e">main</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">class Example {
-   static void main(String[] args) {
-      println('Hello World');
-   }
-}
-Example.main()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Hello World
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Hello World
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>By default, Groovy includes the following libraries in your code, so you don’t need to explicitly import them.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.lang.* 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.* 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.io.* 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.net.* 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> groovy.lang.* 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> groovy.util.* 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.math.BigInteger 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.math.BigDecimal
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">import java.lang.* 
-import java.util.* 
-import java.io.* 
-import java.net.* 
-
-import groovy.lang.* 
-import groovy.util.* 
-
-import java.math.BigInteger 
-import java.math.BigDecimal
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
-
 <p>Groovy supports all Java types (primitive and reference types).</p>
-
 <p>All primitive types are auto-converted to their wrapper types. So <code>int a = 2</code> will become <code>Integer a = 2</code></p>
-
 <p>When declaring variables we can do one of the followings:</p>
-
 <ul>
 <li>Do not use any type (that will create a global variable): <code>a = 2</code></li>
 <li>Use keyword def (that will create a local variable): <code>def a = 2</code></li>
 <li>Use the actual type (that will create a local variable of strict type Integer): <code>int a = 3</code></li>
 </ul>
-
 <p>When no type is used, variables act like they are of type Object, so they can be reassigned to different types.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>printf <span style="color:#e6db74">&#34;%s - %s%n&#34;</span><span style="color:#f92672">,</span> a<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">(),</span> a
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;apple&#34;</span>
+</span></span><span style="display:flex;"><span>printf <span style="color:#e6db74">&#34;%s - %s%n&#34;</span><span style="color:#f92672">,</span> a<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">(),</span> a
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">a = 2
-printf &quot;%s - %s%n&quot;, a.getClass().getName(), a
-a = &quot;apple&quot;
-printf &quot;%s - %s%n&quot;, a.getClass().getName(), a
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">java.lang.Integer - 2
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">java.lang.Integer - 2
 java.lang.String - apple
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <h3 id="running-the-code">Running the code</h3>
-
 <p>The code outside methods but still in a script is copied to at run to an object method.  So during runtime everything is inside methods. In that sense, this feature allows the variables declared in a method to be accessible to other methods.</p>
-
 <p>Groovy keeps these global variables in a map like object (<code>groovy.lang.Binding</code>).</p>
-
 <p>When def is used, variables act like they are of type Object, so they can be reassigned to different types (same as when no type is used):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//&#39;;&#39; should be used after each statement, but is not necessary in beakerx cells
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//def is a keyword used in Groovy to define an identifier
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> c <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">;</span>    <span style="color:#75715e">//local variable
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>d <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">;</span>        <span style="color:#75715e">//global variable - var with no type are global so they can be accessed across methods
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//';' should be used after each statement, but is not necessary in beakerx cells
-//def is a keyword used in Groovy to define an identifier
-def c = 1;    //local variable
-d = 2;        //global variable - var with no type are global so they can be accessed across methods
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>c <span style="color:#75715e">//error - var declared with def are local, so they cannot be accessed across methods
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">c //error - var declared with def are local, so they cannot be accessed across methods
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">groovy.lang.MissingPropertyException: No such property: c for class: script1561051888331
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">groovy.lang.MissingPropertyException: No such property: c for class: script1561051888331
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at this cell line 1
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at this cell line 1
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>d <span style="color:#75715e">//this works
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">d //this works
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2
 </code></pre>
 
 </div>
-
 
 <h3 id="data-types">Data types</h3>
-
 <p>Using actual types (same as Java types).  They follow strict typing rules (just like Java). So they cannot be reassigned to different types:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>println a
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;apple&#34;</span>
+</span></span><span style="display:flex;"><span>println a
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">int a = 2
-println a
-a = &quot;apple&quot;
-println a
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object 'apple' with class 'java.lang.String' to class 'int'
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object &#39;apple&#39; with class &#39;java.lang.String&#39; to class &#39;int&#39;
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at this cell line 3
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at this cell line 3
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
 </code></pre>
 
 </div>
-
 
 <p>Like <code>def</code> variables they are also local, so they cannot be accessed across methods.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> e <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">printVars</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    println e<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>printVars<span style="color:#f92672">();</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">int e = 2
-void printVars() {
-    println e;
-}
-printVars();
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">groovy.lang.MissingPropertyException: No such property: e for class: script1561051968611
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">groovy.lang.MissingPropertyException: No such property: e for class: script1561051968611
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at script1561051968611.printVars(script1561051968611:4)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at script1561051968611.printVars(script1561051968611:4)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at this cell line 7
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at this cell line 7
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//remove variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>binding<span style="color:#f92672">.</span><span style="color:#a6e22e">variables</span><span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span> <span style="color:#e6db74">&#39;a&#39;</span>
+</span></span><span style="display:flex;"><span>binding<span style="color:#f92672">.</span><span style="color:#a6e22e">variables</span><span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span> <span style="color:#e6db74">&#39;b&#39;</span> 
+</span></span><span style="display:flex;"><span>binding<span style="color:#f92672">.</span><span style="color:#a6e22e">variables</span><span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span> <span style="color:#e6db74">&#39;c&#39;</span> 
+</span></span><span style="display:flex;"><span>binding<span style="color:#f92672">.</span><span style="color:#a6e22e">variables</span><span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span> <span style="color:#e6db74">&#39;d&#39;</span> 
+</span></span><span style="display:flex;"><span>binding<span style="color:#f92672">.</span><span style="color:#a6e22e">variables</span><span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span> <span style="color:#e6db74">&#39;e&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//remove variables
-binding.variables.remove 'a'
-binding.variables.remove 'b' 
-binding.variables.remove 'c' 
-binding.variables.remove 'd' 
-binding.variables.remove 'e'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>As seen above, Groovy uses Objects for everything (int is printed as java.lang.Integer). Primitives are auto-converted to their wrapper type.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>printf<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;%s - %s%n&#34;</span><span style="color:#f92672">,</span> a<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">(),</span> a<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isPrimitive</span><span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> b <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>printf <span style="color:#e6db74">&#34;%s - %s%n&#34;</span><span style="color:#f92672">,</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">(),</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isPrimitive</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>printf <span style="color:#e6db74">&#34;%s - %s%n&#34;</span><span style="color:#f92672">,</span> c<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">(),</span> c<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isPrimitive</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">double</span> d <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.2</span>
+</span></span><span style="display:flex;"><span>printf <span style="color:#e6db74">&#34;%s - %s%n&#34;</span><span style="color:#f92672">,</span> d<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">(),</span> d<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isPrimitive</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.3</span><span style="color:#75715e">//no type
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>printf <span style="color:#e6db74">&#34;%s - %s%n&#34;</span><span style="color:#f92672">,</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">(),</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isPrimitive</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">int a = 2
-printf(&quot;%s - %s%n&quot;, a.getClass(), a.getClass().isPrimitive())
-
-def b = 2
-printf &quot;%s - %s%n&quot;, b.getClass(), b.getClass().isPrimitive()
-
-c = 2
-printf &quot;%s - %s%n&quot;, c.getClass(), c.getClass().isPrimitive()
-
-double d = 2.2
-printf &quot;%s - %s%n&quot;, d.getClass(), d.getClass().isPrimitive()
-
-e = 2.3//no type
-printf &quot;%s - %s%n&quot;, e.getClass(), e.getClass().isPrimitive()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">class java.lang.Integer - false
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">class java.lang.Integer - false
 class java.lang.Integer - false
 class java.lang.Integer - false
 class java.lang.Double - false
@@ -456,34 +379,29 @@ class java.math.BigDecimal - false
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
-
 <p>All of the variables are initialized (even local) with their default values (just like instance variable).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> a <span style="color:#75715e">//initialized with null
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>println a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>String s <span style="color:#75715e">//initialized with null
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>println s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> b<span style="color:#75715e">//initialized with 0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>println b
+</span></span><span style="display:flex;"><span>println b <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">boolean</span> bool<span style="color:#75715e">//initialized with false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>println bool
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def a //initialized with null
-println a
-
-String s //initialized with null
-println s
-
-int b//initialized with 0
-println b
-println b + 3
-
-boolean bool//initialized with false
-println bool
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 null
 0
 3
@@ -492,169 +410,142 @@ false
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>Using actual types.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">sum</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> x<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> y<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">+</span> y<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>println <span style="color:#a6e22e">sum</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">int sum(int x, int y) {
-    x + y;
-}
-println sum(1, 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">4
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">4
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>Using <code>def</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sum</span><span style="color:#f92672">(</span><span style="color:#66d9ef">def</span> x<span style="color:#f92672">,</span> <span style="color:#66d9ef">def</span> y<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">+</span> y<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>println <span style="color:#a6e22e">sum</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def sum(def x, def y) {
-    x + y;
-}
-println sum(1, 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">4
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">4
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>Using no types with parameters.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sum</span><span style="color:#f92672">(</span>x<span style="color:#f92672">,</span> y<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">+</span> y<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>println <span style="color:#a6e22e">sum</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def sum(x, y) {
-    x + y;
-}
-println sum(1, 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">4
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">4
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>Methods must return def or actual type.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>sum<span style="color:#f92672">(</span>x<span style="color:#f92672">,</span> y<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">+</span> y<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>println <span style="color:#a6e22e">sum</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">sum(x, y) {
-    x + y;
-}
-println sum(1, 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">groovy.lang.MissingPropertyException: No such property: x for class: script1561052241554
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">groovy.lang.MissingPropertyException: No such property: x for class: script1561052241554
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at this cell line 1
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at this cell line 1
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Example</span> <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Example of a int datatype 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#66d9ef">int</span> x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">;</span> 
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Example of a long datatype 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#66d9ef">long</span> y <span style="color:#f92672">=</span> <span style="color:#ae81ff">100L</span><span style="color:#f92672">;</span> 
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Example of a floating point datatype 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#66d9ef">float</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10.56f</span><span style="color:#f92672">;</span> 
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Example of a double datatype 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#66d9ef">double</span> b <span style="color:#f92672">=</span> <span style="color:#ae81ff">10.5e40</span><span style="color:#f92672">;</span> 
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Example of a BigInteger datatype 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      BigInteger bi <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>g<span style="color:#f92672">;</span> 
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Example of a BigDecimal datatype 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      BigDecimal bd <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.5</span>g<span style="color:#f92672">;</span> 
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>      println<span style="color:#f92672">(</span>x<span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>      println<span style="color:#f92672">(</span>y<span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>      println<span style="color:#f92672">(</span>a<span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>      println<span style="color:#f92672">(</span>b<span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>      println<span style="color:#f92672">(</span>bi<span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>      println<span style="color:#f92672">(</span>bd<span style="color:#f92672">);</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">}</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>Example<span style="color:#f92672">.</span><span style="color:#a6e22e">main</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">class Example { 
-   static void main(String[] args) { 
-      //Example of a int datatype 
-      int x = 5; 
-		
-      //Example of a long datatype 
-      long y = 100L; 
-		
-      //Example of a floating point datatype 
-      float a = 10.56f; 
-		
-      //Example of a double datatype 
-      double b = 10.5e40; 
-		
-      //Example of a BigInteger datatype 
-      BigInteger bi = 30g; 
-		
-      //Example of a BigDecimal datatype 
-      BigDecimal bd = 3.5g; 
-		
-      println(x); 
-      println(y); 
-      println(a); 
-      println(b); 
-      println(bi); 
-      println(bd); 
-   } 
-}
-Example.main()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">5
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">5
 100
 10.56
 1.05E41
@@ -664,19 +555,15 @@ Example.main()
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
-
 <h2 id="features">Features</h2>
-
 <p>Groovy has many different features.  We have seen a few of these, earlier, but the others are mentioned, here.</p>
-
 <ul>
 <li>Support for both static and dynamic typing</li>
 <li>Support for operator overloading</li>
@@ -687,19 +574,15 @@ Example.main()
 <li>Use of existing Java libraries</li>
 <li>Extends the java.lang.Object</li>
 </ul>
-
 <h3 id="support-for-regular-expressions">Support for regular expressions</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> m <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Groovy is groovy&#34;</span> <span style="color:#f92672">=~</span> <span style="color:#e6db74">/(G|g)roovy/</span>
+</span></span><span style="display:flex;"><span>println m<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">][</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span> <span style="color:#75715e">// The first whole match (i.e. the first word Groovy)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>println m<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">][</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#75715e">// The first group in the first match (i.e. G)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>println m<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">][</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span> <span style="color:#75715e">// The second whole match (i.e. the word groovy)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>println m<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">][</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#75715e">// The first group in the second match (i.e. g)
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def m = &quot;Groovy is groovy&quot; =~ /(G|g)roovy/
-println m[0][0] // The first whole match (i.e. the first word Groovy)
-println m[0][1] // The first group in the first match (i.e. G)
-println m[1][0] // The second whole match (i.e. the word groovy)
-println m[1][1] // The first group in the second match (i.e. g)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Groovy
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Groovy
 G
 groovy
 g
@@ -707,82 +590,60 @@ g
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <h3 id="support-for-markup-languages">Support for markup languages</h3>
-
 <p>One of the most used classes for creating HTML or XML markup.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> groovy.xml.MarkupBuilder 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> xml <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MarkupBuilder<span style="color:#f92672">()</span> 
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">import groovy.xml.MarkupBuilder 
-def xml = new MarkupBuilder() 
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">groovy.xml.MarkupBuilder@7500ce0e
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">groovy.xml.MarkupBuilder@7500ce0e
 </code></pre>
 
 </div>
-
 
 <h3 id="liberal-use-of-closures">Liberal use of closures</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//closure example
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>timesTwo <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>x <span style="color:#f92672">-&gt;</span> x<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//closure example
-timesTwo = {x -&gt; x*2}
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">script1556559307332$_run_closure1@cad3663
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">script1556559307332$_run_closure1@cad3663
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>timesTwo<span style="color:#f92672">(</span><span style="color:#ae81ff">4</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">timesTwo(4)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">8
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">8
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>timesTwo<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Multiplying Strings!&#34;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">timesTwo(&quot;Multiplying Strings!&quot;)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Multiplying Strings!Multiplying Strings!
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Multiplying Strings!Multiplying Strings!
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>sin<span style="color:#f92672">(</span><span style="color:#ae81ff">3.1415</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">sin(3.1415)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">9.265358966049026E-5
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">9.265358966049026E-5
 </code></pre>
 
 </div>
-
 
 <h2 id="comparison-of-groovy-with-java">Comparison of Groovy with Java</h2>
-
 <h3 id="basic-differences">Basic differences</h3>
-
 <ul>
 <li>automatically a wrapping a class called Script for every program</li>
 <li>default access specifier is public</li>
@@ -791,174 +652,136 @@ timesTwo = {x -&gt; x*2}
 <li>semicolons <code>;</code> and paraentheses <code>()</code> are optional</li>
 <li>dynamic typing with the <code>def &lt;var&gt;</code> keyword (locar var), or with no prefix <code>&lt;var&gt;</code> (global var)</li>
 <li>string interpolation (GString) is performed with <code>\\(</code> operator, such as <code>&quot;Hello, \\){firstName[0]}. $name&quot;</code></li>
-<li>&rdquo;&ldquo;&ldquo;multi-line strings are also allowed&rdquo;&ldquo;&rdquo;</li>
+<li>&ldquo;&ldquo;&ldquo;multi-line strings are also allowed&rdquo;&rdquo;&rdquo;</li>
 <li>implicit truthy <code>if(100)</code> because 100 exists</li>
 </ul>
-
 <h3 id="new-operators">New operators</h3>
-
 <ul>
-<li><p>conditional operators</p>
-
+<li>
+<p>conditional operators</p>
 <ul>
 <li><strong>safe navigation</strong><code>?</code> operator checks for properties, such as <code>if(company.getContact()?.getAddress()?.getCountry() == Country.NEW_ZEALAND) { ... }</code> means If the contact or the address are null, the result of the left side will just be null, but no exception will be thrown.</li>
 <li><strong>ternary / elvis</strong> <code>?</code> operator <code>def name = client.getName() ?: &quot;&quot;</code> will assign client.getName() if it isn’t false and the empty string, otherwise</li>
-</ul></li>
-
-<li><p>type operators</p>
-
+</ul>
+</li>
+<li>
+<p>type operators</p>
 <ul>
 <li><strong>spaceship</strong> <code>&lt;=&gt;</code> delegates to the compareTo() method: <code>def x = 1 &lt;=&gt; 2; println x; // calls Integer.compareTo</code></li>
 <li><strong>identity</strong> <code>is()</code> tests object reference equality, while <code>==</code> checks equality with <code>.equals()</code></li>
 <li><strong>coercion</strong> <code>as</code> converts an object from one type to another (using <code>.asType()</code>), without assignment compatibility, which is different from casting: <code>String s = &quot;1.1&quot;; BigDecimal bd = s as BigDecimal; println bd.class.name</code></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="using-methods">Using methods</h3>
-
 <ul>
 <li>a function used in a script will be compiled to a method within an object</li>
 <li><code>return</code> keyword is optional</li>
 <li>method operators
-
 <ul>
 <li><strong>method pointer</strong> <code>.&amp;</code> stores a reference to a method in a variable: <code>def power = Math.&amp;pow; def result = power(2, 4);</code></li>
 <li><strong>call operator</strong> <code>()</code> an object with a call method can be called directly: <code>class A{def call(println(&quot;hi&quot;){}}; def a = new A(); a();</code></li>
-</ul></li>
+</ul>
+</li>
 <li>closures
-
 <ul>
 <li>like Java8 lambdas</li>
 <li>anonymous first-class functions are often called lambda functions</li>
 <li><code>def power = { int x, int y -&gt; return Math.pow(x, y) }; println power(2, 3)</code></li>
-</ul></li>
+</ul>
+</li>
 <li>currying</li>
 <li>memoization</li>
 </ul>
-
 <h3 id="collections-list-and-map">Collections: list and map</h3>
-
 <ul>
 <li>list and map operators
-
 <ul>
 <li><strong>subscript</strong> <code>[]</code> allows to read/write to collections and maps: <code>def list = [2, 4]; println list[0]; def map = [x: 2, y: 4]; println map['x']</code></li>
 <li><strong>membership</strong> <code>in</code> test whether value is in the target collection: <code>def numbers = [2,4,6,8]; println 2 in numbers</code></li>
 <li><strong>spread-dot</strong> <code>*.</code> invokes an action on all items of an aggregate object: <code>def lists = [[1], [10, 20, 30], [6, 8]]; def sizes = lists*.size(); //[1, 3, 2]</code>
 <strong>range</strong> <code>..</code> to create ranges of objects: <code>def numbers = 1..5; println numbers</code></li>
-</ul></li>
+</ul>
+</li>
 <li>create an ArrayList with the given numbers: <code>def list = [1,1,2,3,5]</code></li>
 <li>closures make it easy to iterate, filter and transform lists
-
 <ul>
 <li>iterate a list using a passed closure executed once for each element, implicitly passed, as a parameter to the closure: <code>list.each { println it }</code></li>
 <li>filter a list: <code>list.findAll { it % 2 == 0 }</code></li>
 <li>transform a list: <code>list.collect { it * it }</code></li>
 <li>improve: <code>[&quot;Hello&quot;, &quot;World&quot;].collect { it.toUpperCase() }</code> using the spread-dot: <code>[&quot;Hello&quot;, &quot;World&quot;]*.toUpperCase()</code></li>
 <li>Collection (and Iterable) interfaces provide some more methods, like <code>any</code> or <code>every</code></li>
-</ul></li>
-
-<li><p>maps act similar to lists</p>
-
-<pre><code>def key = 'Key3'
+</ul>
+</li>
+<li>maps act similar to lists
+<pre tabindex="0"><code>def key = &#39;Key3&#39;
 def aMap = [
-'Key1': 'Value 1', // Put key1 -&gt; Value 1 to the map
-Key2: 'Value 2', // You can also skip the quotes, the key will automatically be a String
-(key): 'Another value' // If you want the key to be the value of a variable, you need to put it in parantheses
+  &#39;Key1&#39;: &#39;Value 1&#39;, // Put key1 -&gt; Value 1 to the map
+  Key2: &#39;Value 2&#39;, // You can also skip the quotes, the key will automatically be a String
+  (key): &#39;Another value&#39; // If you want the key to be the value of a variable, you need to put it in parantheses
 ]
 </code></pre></li>
 </ul>
-
 <h2 id="applications-in-data-science">Applications in Data Science</h2>
-
 <h3 id="dataframes-with-tablesaw">Dataframes with Tablesaw</h3>
-
 <p><a href="https://tablesaw.tech/">Tablesaw</a> is easy to add to the BeakerX Groovy kernel.
 Tablesaw provides the ability to easily transform, summarize, and filter data, as well as computing descriptive statistics and fundamental machine learning algorithms.</p>
-
-<p>Two helpful demo notebooks (scala) include:
-* <a href="https://github.com/IMTorgDemo/IMTorgDemo-Notebooks/blob/master/demo_RS-WhitehawkRecommendSystem.ipynb">Recommnder System</a>
-* <a href="https://github.com/IMTorgDemo/IMTorgDemo-Notebooks/blob/master/demo_RS-WhitehawkEvolutionDataDriven.ipynb">Evolution to a Data-Driven System</a></p>
-
+<p>Two helpful demo notebooks (scala) include:</p>
+<ul>
+<li><a href="https://github.com/IMTorgDemo/IMTorgDemo-Notebooks/blob/master/demo_RS-WhitehawkRecommendSystem.ipynb">Recommnder System</a></li>
+<li><a href="https://github.com/IMTorgDemo/IMTorgDemo-Notebooks/blob/master/demo_RS-WhitehawkEvolutionDataDriven.ipynb">Evolution to a Data-Driven System</a></li>
+</ul>
 <p>Add using <code>mvn</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>classpath add mvn
+</span></span><span style="display:flex;"><span>tech<span style="color:#f92672">.</span><span style="color:#a6e22e">tablesaw</span> tablesaw<span style="color:#f92672">-</span>plot <span style="color:#ae81ff">0.11</span><span style="color:#f92672">.</span><span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>tech<span style="color:#f92672">.</span><span style="color:#a6e22e">tablesaw</span> tablesaw<span style="color:#f92672">-</span>smile <span style="color:#ae81ff">0.11</span><span style="color:#f92672">.</span><span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>tech<span style="color:#f92672">.</span><span style="color:#a6e22e">tablesaw</span> tablesaw<span style="color:#f92672">-</span>beakerx <span style="color:#ae81ff">0.11</span><span style="color:#f92672">.</span><span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#f92672">import</span> tech.tablesaw.aggregate.*
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#f92672">import</span> tech.tablesaw.api.*
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#f92672">import</span> tech.tablesaw.api.ml.clustering.*
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#f92672">import</span> tech.tablesaw.api.ml.regression.*
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#f92672">import</span> tech.tablesaw.columns.*
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// display Tablesaw tables with BeakerX table display widget
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>tech<span style="color:#f92672">.</span><span style="color:#a6e22e">tablesaw</span><span style="color:#f92672">.</span><span style="color:#a6e22e">beakerx</span><span style="color:#f92672">.</span><span style="color:#a6e22e">TablesawDisplayer</span><span style="color:#f92672">.</span><span style="color:#a6e22e">register</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%classpath add mvn
-tech.tablesaw tablesaw-plot 0.11.4
-tech.tablesaw tablesaw-smile 0.11.4
-tech.tablesaw tablesaw-beakerx 0.11.4
-</code></pre>
-
-<pre><code class="language-Groovy">%import tech.tablesaw.aggregate.*
-%import tech.tablesaw.api.*
-%import tech.tablesaw.api.ml.clustering.*
-%import tech.tablesaw.api.ml.regression.*
-%import tech.tablesaw.columns.*
-
-// display Tablesaw tables with BeakerX table display widget
-tech.tablesaw.beakerx.TablesawDisplayer.register()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>Read .csv data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>tornadoes <span style="color:#f92672">=</span> Table<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">().</span><span style="color:#a6e22e">csv</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;../doc/resources/data/tornadoes_2014.csv&#34;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Print the dataset structure.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">structure</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><p>Get header names.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">columnNames</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">tornadoes = Table.read().csv(&quot;../doc/resources/data/tornadoes_2014.csv&quot;)
-</code></pre>
-
-<p>Print the dataset structure.</p>
-
-<pre><code class="language-Groovy">tornadoes.structure()
-</code></pre>
-
-<p>Get header names.</p>
-
-<pre><code class="language-Groovy">tornadoes.columnNames()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[Date, Time, State, State No, Scale, Injuries, Fatalities, Start Lat, Start Lon, Length, Width]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[Date, Time, State, State No, Scale, Injuries, Fatalities, Start Lat, Start Lon, Length, Width]
 </code></pre>
 
 </div>
-
 
 <p>Displays the row and column counts.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">shape</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">tornadoes.shape()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">908 rows X 11 cols
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">908 rows X 11 cols
 </code></pre>
 
 </div>
 
-
 <p>Displays the first n rows.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">first</span><span style="color:#f92672">(</span><span style="color:#ae81ff">3</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> static tech<span style="color:#f92672">.</span><span style="color:#a6e22e">tablesaw</span><span style="color:#f92672">.</span><span style="color:#a6e22e">api</span><span style="color:#f92672">.</span><span style="color:#a6e22e">QueryHelper</span><span style="color:#f92672">.</span><span style="color:#a6e22e">column</span>
+</span></span><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">structure</span><span style="color:#f92672">().</span><span style="color:#a6e22e">selectWhere</span><span style="color:#f92672">(</span>column<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Column Type&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">isEqualTo</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;FLOAT&#34;</span><span style="color:#f92672">))</span>
+</span></span></code></pre></div><p>Summarize the data in each column.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">summary</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">tornadoes.first(3)
-</code></pre>
-
-<pre><code class="language-Groovy">import static tech.tablesaw.api.QueryHelper.column
-tornadoes.structure().selectWhere(column(&quot;Column Type&quot;).isEqualTo(&quot;FLOAT&quot;))
-</code></pre>
-
-<p>Summarize the data in each column.</p>
-
-<pre><code class="language-Groovy">tornadoes.summary()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">
 Table summary for: tornadoes_2014.csv
        Column: Date        
  Measure   |    Value     |
@@ -1085,356 +908,286 @@ Table summary for: tornadoes_2014.csv
     Range  |     2640.0  |
  Variance  |  57764.465  |
  Std. Dev  |  240.34239  |
-
 </code></pre>
 
 </div>
-
 
 <p>Mapping operations.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> month <span style="color:#f92672">=</span> tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">dateColumn</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Date&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">month</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">addColumn</span><span style="color:#f92672">(</span>month<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">columnNames</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def month = tornadoes.dateColumn(&quot;Date&quot;).month()
-tornadoes.addColumn(month);
-tornadoes.columnNames()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[Date, Time, State, State No, Scale, Injuries, Fatalities, Start Lat, Start Lon, Length, Width, Date month]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[Date, Time, State, State No, Scale, Injuries, Fatalities, Start Lat, Start Lon, Length, Width, Date month]
 </code></pre>
 
 </div>
-
 
 <p>Sorting by column.</p>
-
-<pre><code class="language-Groovy">tornadoes.sortOn(&quot;-Fatalities&quot;)
-</code></pre>
-
-<p>Descriptive statistics.</p>
-
-<pre><code class="language-Groovy">tornadoes.column(&quot;Fatalities&quot;).summary()
-</code></pre>
-
-<p>Performing totals and sub-totals.</p>
-
-<pre><code class="language-Groovy">def injuriesByScale = tornadoes.median(&quot;Injuries&quot;).by(&quot;Scale&quot;)
-injuriesByScale.setName(&quot;Median injuries by Tornado Scale&quot;)
-injuriesByScale
-</code></pre>
-
-<p>Cross tabulation.</p>
-
-<pre><code class="language-Groovy">CrossTab.xCount(tornadoes, tornadoes.categoryColumn(&quot;State&quot;), tornadoes.shortColumn(&quot;Scale&quot;))
-</code></pre>
-
-<h3 id="example-with-tablesaw">Example with Tablesaw</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">sortOn</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;-Fatalities&#34;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Descriptive statistics.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Fatalities&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">summary</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><p>Performing totals and sub-totals.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> injuriesByScale <span style="color:#f92672">=</span> tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">median</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Injuries&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">by</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Scale&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>injuriesByScale<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Median injuries by Tornado Scale&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>injuriesByScale
+</span></span></code></pre></div><p>Cross tabulation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>CrossTab<span style="color:#f92672">.</span><span style="color:#a6e22e">xCount</span><span style="color:#f92672">(</span>tornadoes<span style="color:#f92672">,</span> tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">categoryColumn</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;State&#34;</span><span style="color:#f92672">),</span> tornadoes<span style="color:#f92672">.</span><span style="color:#a6e22e">shortColumn</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Scale&#34;</span><span style="color:#f92672">))</span>
+</span></span></code></pre></div><h3 id="example-with-tablesaw">Example with Tablesaw</h3>
 <p>You can fetch data from <a href="https://www.quandl.com/">Quandl</a> and load it directly into Tablesaw</p>
-
-<pre><code class="language-Groovy">%classpath add mvn com.jimmoores quandl-tablesaw 2.0.0
-%import com.jimmoores.quandl.*
-%import com.jimmoores.quandl.tablesaw.*
-</code></pre>
-
-<pre><code class="language-Groovy">TableSawQuandlSession session = TableSawQuandlSession.create();
-Table table = session.getDataSet(DataSetRequest.Builder.of(&quot;WIKI/AAPL&quot;).build());
-</code></pre>
-
-<pre><code class="language-Groovy">// Create a new column containing the year
-ShortColumn yearColumn = table.dateColumn(&quot;Date&quot;).year();
-yearColumn.setName(&quot;Year&quot;);
-table.addColumn(yearColumn);
-// Create max, min and total volume tables aggregated by year
-Table summaryMax = table.groupBy(&quot;year&quot;).max(&quot;Adj. Close&quot;);
-Table summaryMin = table.groupBy(&quot;year&quot;).min(&quot;Adj. Close&quot;);
-Table summaryVolume = table.groupBy(&quot;year&quot;)sum(&quot;Volume&quot;);
-// Create a new table from each of these
-summary = Table.create(&quot;Summary&quot;, summaryMax.column(0), summaryMax.column(1), 
-                       summaryMin.column(1), summaryVolume.column(1));
-// Add back a DateColumn to the summary...will be used for plotting
-DateColumn yearDates = new DateColumn(&quot;YearDate&quot;);
-for(year in summary.column('Year')){
-    yearDates.append(java.time.LocalDate.of(year,1,1));
-}
-summary.addColumn(yearDates)
-
-summary
-</code></pre>
-
-<pre><code class="language-Groovy">years = summary.column('YearDate').collect()
-
-plot = new TimePlot(title: 'Price Chart for AAPL', xLabel: 'Time', yLabel: 'Max [Adj. Close]')
-plot &lt;&lt; new YAxis(label: 'Volume')
-plot &lt;&lt; new Points(x: years, y: summary.column('Max [Adj. Close]').collect())
-plot &lt;&lt; new Line(x: years, y: summary.column('Max [Adj. Close]').collect(), color: Color.blue)
-plot &lt;&lt; new Stems(x: years, y: summary.column('Sum [Volume]').collect(), yAxis: 'Volume')
-</code></pre>
-
-<h3 id="auto-translation-in-beakerx">Auto-Translation in BeakerX</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%</span>classpath add mvn com<span style="color:#f92672">.</span><span style="color:#a6e22e">jimmoores</span> quandl<span style="color:#f92672">-</span>tablesaw <span style="color:#ae81ff">2.0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#f92672">import</span> com.jimmoores.quandl.*
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#f92672">import</span> com.jimmoores.quandl.tablesaw.*
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>TableSawQuandlSession session <span style="color:#f92672">=</span> TableSawQuandlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>Table table <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span><span style="color:#a6e22e">getDataSet</span><span style="color:#f92672">(</span>DataSetRequest<span style="color:#f92672">.</span><span style="color:#a6e22e">Builder</span><span style="color:#f92672">.</span><span style="color:#a6e22e">of</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;WIKI/AAPL&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">build</span><span style="color:#f92672">());</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">// Create a new column containing the year
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ShortColumn yearColumn <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span><span style="color:#a6e22e">dateColumn</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Date&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">year</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>yearColumn<span style="color:#f92672">.</span><span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Year&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>table<span style="color:#f92672">.</span><span style="color:#a6e22e">addColumn</span><span style="color:#f92672">(</span>yearColumn<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Create max, min and total volume tables aggregated by year
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Table summaryMax <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span><span style="color:#a6e22e">groupBy</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;year&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">max</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Adj. Close&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>Table summaryMin <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span><span style="color:#a6e22e">groupBy</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;year&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">min</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Adj. Close&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>Table summaryVolume <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span><span style="color:#a6e22e">groupBy</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;year&#34;</span><span style="color:#f92672">)</span>sum<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Volume&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Create a new table from each of these
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>summary <span style="color:#f92672">=</span> Table<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Summary&#34;</span><span style="color:#f92672">,</span> summaryMax<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">),</span> summaryMax<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">),</span> 
+</span></span><span style="display:flex;"><span>                       summaryMin<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">),</span> summaryVolume<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Add back a DateColumn to the summary...will be used for plotting
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>DateColumn yearDates <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DateColumn<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;YearDate&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>year <span style="color:#66d9ef">in</span> summary<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Year&#39;</span><span style="color:#f92672">)){</span>
+</span></span><span style="display:flex;"><span>    yearDates<span style="color:#f92672">.</span><span style="color:#a6e22e">append</span><span style="color:#f92672">(</span>java<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span><span style="color:#f92672">.</span><span style="color:#a6e22e">LocalDate</span><span style="color:#f92672">.</span><span style="color:#a6e22e">of</span><span style="color:#f92672">(</span>year<span style="color:#f92672">,</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">1</span><span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>summary<span style="color:#f92672">.</span><span style="color:#a6e22e">addColumn</span><span style="color:#f92672">(</span>yearDates<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>summary
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>years <span style="color:#f92672">=</span> summary<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;YearDate&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plot <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TimePlot<span style="color:#f92672">(</span>title: <span style="color:#e6db74">&#39;Price Chart for AAPL&#39;</span><span style="color:#f92672">,</span> xLabel: <span style="color:#e6db74">&#39;Time&#39;</span><span style="color:#f92672">,</span> yLabel: <span style="color:#e6db74">&#39;Max [Adj. Close]&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>plot <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> YAxis<span style="color:#f92672">(</span>label: <span style="color:#e6db74">&#39;Volume&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>plot <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Points<span style="color:#f92672">(</span>x: years<span style="color:#f92672">,</span> y: summary<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Max [Adj. Close]&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>plot <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Line<span style="color:#f92672">(</span>x: years<span style="color:#f92672">,</span> y: summary<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Max [Adj. Close]&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">(),</span> color: Color<span style="color:#f92672">.</span><span style="color:#a6e22e">blue</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>plot <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Stems<span style="color:#f92672">(</span>x: years<span style="color:#f92672">,</span> y: summary<span style="color:#f92672">.</span><span style="color:#a6e22e">column</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Sum [Volume]&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">(),</span> yAxis: <span style="color:#e6db74">&#39;Volume&#39;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="auto-translation-in-beakerx">Auto-Translation in BeakerX</h3>
 <p>Auto-Translation is the act of converting a data structure in one language to another.  In the context of data science, the obvious data structures are lists and data frames.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//start with groovy
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>beakerx<span style="color:#f92672">.</span><span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a groovy value&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//start with groovy
-beakerx.foo = &quot;a groovy value&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">a groovy value
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">a groovy value
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//to javascript
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">%%</span>javascript
+</span></span><span style="display:flex;"><span>beakerx<span style="color:#f92672">.</span><span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">23</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">48</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;from JS&#34;</span><span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>beakerx<span style="color:#f92672">.</span><span style="color:#a6e22e">foo</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//back to groovy
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>beakerx<span style="color:#f92672">.</span><span style="color:#a6e22e">bar</span> 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//to python
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>from beakerx <span style="color:#f92672">import</span> beakerx
+</span></span><span style="display:flex;"><span>beakerx<span style="color:#f92672">.</span><span style="color:#a6e22e">foo</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//to javascript
-%%javascript
-beakerx.bar = [23, 48, 7, &quot;from JS&quot;];
-beakerx.foo
-</code></pre>
-
-<pre><code class="language-Groovy">//back to groovy
-beakerx.bar 
-</code></pre>
-
-<pre><code class="language-Groovy">//to python
-%%python
-from beakerx import beakerx
-beakerx.foo
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">'a groovy value'
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&#39;a groovy value&#39;
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//to scala
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">%%</span>scala
+</span></span><span style="display:flex;"><span>beakerx<span style="color:#f92672">.</span><span style="color:#a6e22e">foo</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//to scala
-%%scala
-beakerx.foo
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">a groovy value
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">a groovy value
 </code></pre>
 
 </div>
-
 
 <h3 id="graphing-with-beakerx">Graphing with BeakerX</h3>
-
 <p>Both BeakerX and Tablesaw do a good job of addressing the need to visualize data.</p>
-
-<pre><code class="language-Groovy">rates = new CSV().read(&quot;../doc/resources/data/interest-rates.csv&quot;)
-def f = new java.text.SimpleDateFormat(&quot;yyyy MM dd&quot;)
-lehmanDate = f.parse(&quot;2008 09 15&quot;)
-bubbleBottomDate = f.parse(&quot;2002 10 09&quot;)
-inversion1 = [f.parse(&quot;2000 07 22&quot;), f.parse(&quot;2001 02 16&quot;)]
-inversion2 = [f.parse(&quot;2006 08 01&quot;), f.parse(&quot;2007 06 07&quot;)]
-def size = rates.size()
-(0 ..&lt; size).each{row = rates[it]; row.spread = row.y10 - row.m3}
-
-OutputCell.HIDDEN
-</code></pre>
-
-<pre><code class="language-Groovy">// The simplest chart function with all defaults:
-new SimpleTimePlot(rates, [&quot;y1&quot;, &quot;y10&quot;])
-</code></pre>
-
-<pre><code class="language-Groovy">//scatter plot
-def c = new Color(120, 120, 120, 100)
-new Plot() &lt;&lt; new Points(x: rates.y1, y: rates.y30, displayName: &quot;y1 vs y30&quot;) \
-           &lt;&lt; new Points(x: rates.m3, y: rates.y5, displayName: &quot;m3 vs y5&quot;) \
-           &lt;&lt; new Line(x: rates.m3, y: rates.y5, color: c) \
-           &lt;&lt; new Line(x: rates.y1, y: rates.y30, color: c)
-</code></pre>
-
-<pre><code class="language-Groovy">def ch = new Crosshair(color: Color.gray, width: 2, style: StrokeType.DOT)
-
-// The top plot has 2 lines.
-p1 = new TimePlot(yLabel: &quot;Interest Rate&quot;, crosshair: ch)
-p1 &lt;&lt; new Line(x: rates.time, y: rates.m3, displayName: &quot;3 month&quot;)
-p1 &lt;&lt; new Line(x: rates.time, y: rates.y10, displayName: &quot;10 year&quot;)
-
-// The bottom plot has an area filled in.
-p2 = new TimePlot(yLabel: &quot;Spread&quot;, crosshair: ch)
-p2 &lt;&lt; new Area(x: rates.time, y: rates.spread, color: new Color(120, 60, 0))
-
-// Highlight the inversion intervals
-def b1 = new ConstantBand(x: inversion1, color: new Color(240, 100, 100, 55))
-def b2 = new ConstantBand(x: inversion2, color: new Color(240, 100, 100, 55))
-
-// Add notation and line for Lehman Bankruptcy.
-p1 &lt;&lt; new Text(x: lehmanDate, y: 7.5, text: &quot;Lehman Brothers Bankruptcy&quot;)
-def l1 = new ConstantLine(x: lehmanDate, style: StrokeType.DOT, color: Color.gray)
-
-// Add notation and line for Stocks Nadir.
-p1 &lt;&lt; new Text(x: bubbleBottomDate, y: 5.75, text: &quot;Stocks Hit Bottom&quot;)
-def l2 = new ConstantLine(x: bubbleBottomDate, style: StrokeType.DOT, color: Color.gray)
-
-// add the notations and highlight bands to both plots
-p1 &lt;&lt; l1 &lt;&lt; l2 &lt;&lt; b1 &lt;&lt; b2
-p2 &lt;&lt; l1 &lt;&lt; l2 &lt;&lt; b1 &lt;&lt; b2
-
-OutputCell.HIDDEN
-</code></pre>
-
-<pre><code class="language-Groovy">// Then use a CombinedPlot to get stacked plots with linked X axis.
-def c = new CombinedPlot(title: &quot;US Treasuries&quot;, initWidth: 1000)
-
-// add both plots to the combined plot, and including their relative heights.
-c.add(p1, 3)
-c.add(p2, 1)
-</code></pre>
-
-<h3 id="integration-with-d3js">Integration with D3js</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>rates <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CSV<span style="color:#f92672">().</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;../doc/resources/data/interest-rates.csv&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> f <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> java<span style="color:#f92672">.</span><span style="color:#a6e22e">text</span><span style="color:#f92672">.</span><span style="color:#a6e22e">SimpleDateFormat</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;yyyy MM dd&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>lehmanDate <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span><span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2008 09 15&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>bubbleBottomDate <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span><span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2002 10 09&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>inversion1 <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2000 07 22&#34;</span><span style="color:#f92672">),</span> f<span style="color:#f92672">.</span><span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2001 02 16&#34;</span><span style="color:#f92672">)]</span>
+</span></span><span style="display:flex;"><span>inversion2 <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2006 08 01&#34;</span><span style="color:#f92672">),</span> f<span style="color:#f92672">.</span><span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2007 06 07&#34;</span><span style="color:#f92672">)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> size <span style="color:#f92672">=</span> rates<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">..&lt;</span> size<span style="color:#f92672">).</span><span style="color:#a6e22e">each</span><span style="color:#f92672">{</span>row <span style="color:#f92672">=</span> rates<span style="color:#f92672">[</span>it<span style="color:#f92672">];</span> row<span style="color:#f92672">.</span><span style="color:#a6e22e">spread</span> <span style="color:#f92672">=</span> row<span style="color:#f92672">.</span><span style="color:#a6e22e">y10</span> <span style="color:#f92672">-</span> row<span style="color:#f92672">.</span><span style="color:#a6e22e">m3</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OutputCell<span style="color:#f92672">.</span><span style="color:#a6e22e">HIDDEN</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">// The simplest chart function with all defaults:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SimpleTimePlot</span><span style="color:#f92672">(</span>rates<span style="color:#f92672">,</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;y1&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;y10&#34;</span><span style="color:#f92672">])</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//scatter plot
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> c <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Color<span style="color:#f92672">(</span><span style="color:#ae81ff">120</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">120</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">120</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Plot</span><span style="color:#f92672">()</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Points<span style="color:#f92672">(</span>x: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">y1</span><span style="color:#f92672">,</span> y: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">y30</span><span style="color:#f92672">,</span> displayName: <span style="color:#e6db74">&#34;y1 vs y30&#34;</span><span style="color:#f92672">)</span> <span style="color:#960050;background-color:#1e0010">\</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Points<span style="color:#f92672">(</span>x: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">m3</span><span style="color:#f92672">,</span> y: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">y5</span><span style="color:#f92672">,</span> displayName: <span style="color:#e6db74">&#34;m3 vs y5&#34;</span><span style="color:#f92672">)</span> <span style="color:#960050;background-color:#1e0010">\</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Line<span style="color:#f92672">(</span>x: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">m3</span><span style="color:#f92672">,</span> y: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">y5</span><span style="color:#f92672">,</span> color: c<span style="color:#f92672">)</span> <span style="color:#960050;background-color:#1e0010">\</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Line<span style="color:#f92672">(</span>x: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">y1</span><span style="color:#f92672">,</span> y: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">y30</span><span style="color:#f92672">,</span> color: c<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> ch <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Crosshair<span style="color:#f92672">(</span>color: Color<span style="color:#f92672">.</span><span style="color:#a6e22e">gray</span><span style="color:#f92672">,</span> width: <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> style: StrokeType<span style="color:#f92672">.</span><span style="color:#a6e22e">DOT</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// The top plot has 2 lines.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>p1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TimePlot<span style="color:#f92672">(</span>yLabel: <span style="color:#e6db74">&#34;Interest Rate&#34;</span><span style="color:#f92672">,</span> crosshair: ch<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>p1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Line<span style="color:#f92672">(</span>x: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span><span style="color:#f92672">,</span> y: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">m3</span><span style="color:#f92672">,</span> displayName: <span style="color:#e6db74">&#34;3 month&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>p1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Line<span style="color:#f92672">(</span>x: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span><span style="color:#f92672">,</span> y: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">y10</span><span style="color:#f92672">,</span> displayName: <span style="color:#e6db74">&#34;10 year&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// The bottom plot has an area filled in.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>p2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TimePlot<span style="color:#f92672">(</span>yLabel: <span style="color:#e6db74">&#34;Spread&#34;</span><span style="color:#f92672">,</span> crosshair: ch<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>p2 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Area<span style="color:#f92672">(</span>x: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span><span style="color:#f92672">,</span> y: rates<span style="color:#f92672">.</span><span style="color:#a6e22e">spread</span><span style="color:#f92672">,</span> color: <span style="color:#66d9ef">new</span> Color<span style="color:#f92672">(</span><span style="color:#ae81ff">120</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">60</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Highlight the inversion intervals
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> b1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConstantBand<span style="color:#f92672">(</span>x: inversion1<span style="color:#f92672">,</span> color: <span style="color:#66d9ef">new</span> Color<span style="color:#f92672">(</span><span style="color:#ae81ff">240</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">55</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> b2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConstantBand<span style="color:#f92672">(</span>x: inversion2<span style="color:#f92672">,</span> color: <span style="color:#66d9ef">new</span> Color<span style="color:#f92672">(</span><span style="color:#ae81ff">240</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">55</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Add notation and line for Lehman Bankruptcy.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>p1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Text<span style="color:#f92672">(</span>x: lehmanDate<span style="color:#f92672">,</span> y: <span style="color:#ae81ff">7.5</span><span style="color:#f92672">,</span> text: <span style="color:#e6db74">&#34;Lehman Brothers Bankruptcy&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> l1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConstantLine<span style="color:#f92672">(</span>x: lehmanDate<span style="color:#f92672">,</span> style: StrokeType<span style="color:#f92672">.</span><span style="color:#a6e22e">DOT</span><span style="color:#f92672">,</span> color: Color<span style="color:#f92672">.</span><span style="color:#a6e22e">gray</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Add notation and line for Stocks Nadir.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>p1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> Text<span style="color:#f92672">(</span>x: bubbleBottomDate<span style="color:#f92672">,</span> y: <span style="color:#ae81ff">5.75</span><span style="color:#f92672">,</span> text: <span style="color:#e6db74">&#34;Stocks Hit Bottom&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> l2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConstantLine<span style="color:#f92672">(</span>x: bubbleBottomDate<span style="color:#f92672">,</span> style: StrokeType<span style="color:#f92672">.</span><span style="color:#a6e22e">DOT</span><span style="color:#f92672">,</span> color: Color<span style="color:#f92672">.</span><span style="color:#a6e22e">gray</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// add the notations and highlight bands to both plots
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>p1 <span style="color:#f92672">&lt;&lt;</span> l1 <span style="color:#f92672">&lt;&lt;</span> l2 <span style="color:#f92672">&lt;&lt;</span> b1 <span style="color:#f92672">&lt;&lt;</span> b2
+</span></span><span style="display:flex;"><span>p2 <span style="color:#f92672">&lt;&lt;</span> l1 <span style="color:#f92672">&lt;&lt;</span> l2 <span style="color:#f92672">&lt;&lt;</span> b1 <span style="color:#f92672">&lt;&lt;</span> b2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OutputCell<span style="color:#f92672">.</span><span style="color:#a6e22e">HIDDEN</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">// Then use a CombinedPlot to get stacked plots with linked X axis.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> c <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CombinedPlot<span style="color:#f92672">(</span>title: <span style="color:#e6db74">&#34;US Treasuries&#34;</span><span style="color:#f92672">,</span> initWidth: <span style="color:#ae81ff">1000</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// add both plots to the combined plot, and including their relative heights.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>c<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>p1<span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>c<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>p2<span style="color:#f92672">,</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="integration-with-d3js">Integration with D3js</h3>
 <p>Being able to prototype for the frontend is key for deliverying quickly.  The BeakerX integration with D3js is great for this.</p>
-
-<pre><code class="language-Groovy">def r = new Random()
-def nnodes = 100
-def nodes = []
-def links = []
-
-for (x in (0..nnodes)){
-  nodes.add(name:&quot;&quot; + x, group:((int) x*7/nnodes))
-}
-
-for (x in (0..(int) nnodes*1.15)) { 
-  source = x % nnodes
-  target = ((int) log(1 + r.nextInt(nnodes))/log(1.3))
-  value = 10.0 / (1 + abs(source - target))
-  links.add(source: source, target: target, value: value*value)
-}
-
-beakerx.graph = [nodes: nodes, links: links]
-OutputCell.HIDDEN
-</code></pre>
-
-<pre><code class="language-javascript">%%javascript
-require.config({
-  paths: {
-      d3: '//cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min'
-  }});
-</code></pre>
-
-<pre><code class="language-Groovy">%%html
-&lt;style&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> r <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Random<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> nnodes <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> nodes <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> links <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>x <span style="color:#66d9ef">in</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#a6e22e">nnodes</span><span style="color:#f92672">)){</span>
+</span></span><span style="display:flex;"><span>  nodes<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>name:<span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">+</span> x<span style="color:#f92672">,</span> group:<span style="color:#f92672">((</span><span style="color:#66d9ef">int</span><span style="color:#f92672">)</span> x<span style="color:#f92672">*</span><span style="color:#ae81ff">7</span><span style="color:#e6db74">/nnodes))
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">for (x in (0..(int) nnodes*1.15)) { 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  source = x % nnodes
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  target = ((int) log(1 + r.nextInt(nnodes))/</span>log<span style="color:#f92672">(</span><span style="color:#ae81ff">1.3</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>  value <span style="color:#f92672">=</span> <span style="color:#ae81ff">10.0</span> <span style="color:#f92672">/</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> abs<span style="color:#f92672">(</span>source <span style="color:#f92672">-</span> target<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>  links<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>source: source<span style="color:#f92672">,</span> target: target<span style="color:#f92672">,</span> value: value<span style="color:#f92672">*</span>value<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>beakerx<span style="color:#f92672">.</span><span style="color:#a6e22e">graph</span> <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>nodes: nodes<span style="color:#f92672">,</span> links: links<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>OutputCell<span style="color:#f92672">.</span><span style="color:#a6e22e">HIDDEN</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#f92672">%%</span><span style="color:#a6e22e">javascript</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">require</span>.<span style="color:#a6e22e">config</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">paths</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">d3</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;//cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min&#39;</span>
+</span></span><span style="display:flex;"><span>  }});
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>html
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>style<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">.</span><span style="color:#a6e22e">node</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  stroke: <span style="color:#960050;background-color:#1e0010">#</span>fff<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>  stroke<span style="color:#f92672">-</span>width: <span style="color:#ae81ff">1.5</span>px<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">.</span><span style="color:#a6e22e">link</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  stroke: <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">999</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>  stroke<span style="color:#f92672">-</span>opacity: <span style="color:#f92672">.</span><span style="color:#ae81ff">6</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/</span>style<span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><html><style>
 .node {
   stroke: #fff;
   stroke-width: 1.5px;
 }
-
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}
-&lt;/style&gt;
-</code></pre>
-
-<p><html><style>
-.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}</p>
-
 <p>.link {
-  stroke: #999;
-  stroke-opacity: .6;
+stroke: #999;
+stroke-opacity: .6;
 }
 </style></html></p>
-
-<pre><code class="language-javascript">%%javascript
-
-beakerx.displayHTML(this, '&lt;div id=&quot;fdg&quot;&gt;&lt;/div&gt;');
-
-var graph = beakerx.graph
-
-var d3 = require(['d3'], function (d3) {
-    
-    var width = 600,
-        height = 500;
-
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
-
-    var simulation = d3.forceSimulation()
-        .force(&quot;link&quot;, d3.forceLink().distance(30))
-        .force(&quot;charge&quot;, d3.forceManyBody().strength(-200))
-        .force(&quot;center&quot;, d3.forceCenter(width / 2, height / 2))
-        .force(&quot;y&quot;, d3.forceY(width / 2).strength(0.3))
-        .force(&quot;x&quot;, d3.forceX(height / 2).strength(0.3));
-
-    var svg = d3.select(&quot;#fdg&quot;)
-                .append(&quot;svg&quot;)
-                .attr(&quot;width&quot;, width)
-                .attr(&quot;height&quot;, height)
-                .attr(&quot;transform&quot;, &quot;translate(&quot;+[100, 0]+&quot;)&quot;);
-
-    simulation
-          .nodes(graph.nodes)
-          .force(&quot;link&quot;)
-          .links(graph.links);
-
-    var link = svg.selectAll(&quot;.link&quot;)
-          .data(graph.links)
-          .enter().append(&quot;line&quot;)
-          .attr(&quot;class&quot;, &quot;link&quot;)
-          .style(&quot;stroke-width&quot;, function(d) { return Math.sqrt(d.value); });
-
-    var node = svg.selectAll(&quot;.node&quot;)
-          .data(graph.nodes)
-          .enter().append(&quot;circle&quot;)
-          .attr(&quot;class&quot;, &quot;node&quot;)
-          .attr(&quot;r&quot;, 10)
-          .style(&quot;fill&quot;, function(d) { return color(d.group); });
-
-    node.append(&quot;title&quot;)
-          .text(function(d) { return d.name; });
-
-    simulation.on(&quot;tick&quot;, function() {
-        link.attr(&quot;x1&quot;, function(d) { return d.source.x; })
-            .attr(&quot;y1&quot;, function(d) { return d.source.y; })
-            .attr(&quot;x2&quot;, function(d) { return d.target.x; })
-            .attr(&quot;y2&quot;, function(d) { return d.target.y; });
-
-        node.attr(&quot;cx&quot;, function(d) { return d.x; })
-            .attr(&quot;cy&quot;, function(d) { return d.y; });
-    });
-    
-    node.call(d3.drag()
-        .on(&quot;start&quot;, dragstarted)
-        .on(&quot;drag&quot;, dragged)
-        .on(&quot;end&quot;, dragended)
-    );
-    
-    function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-    }
-
-    function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-    }
-
-    function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-    }
-});
-</code></pre>
-
-<h2 id="references">References</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#f92672">%%</span><span style="color:#a6e22e">javascript</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">beakerx</span>.<span style="color:#a6e22e">displayHTML</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;&lt;div id=&#34;fdg&#34;&gt;&lt;/div&gt;&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">graph</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">beakerx</span>.<span style="color:#a6e22e">graph</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">d3</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>([<span style="color:#e6db74">&#39;d3&#39;</span>], <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">d3</span>) {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">width</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">600</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">height</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">color</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">scaleOrdinal</span>(<span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">schemeCategory20</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">simulation</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">forceSimulation</span>()
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">force</span>(<span style="color:#e6db74">&#34;link&#34;</span>, <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">forceLink</span>().<span style="color:#a6e22e">distance</span>(<span style="color:#ae81ff">30</span>))
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">force</span>(<span style="color:#e6db74">&#34;charge&#34;</span>, <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">forceManyBody</span>().<span style="color:#a6e22e">strength</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>))
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">force</span>(<span style="color:#e6db74">&#34;center&#34;</span>, <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">forceCenter</span>(<span style="color:#a6e22e">width</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">height</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">force</span>(<span style="color:#e6db74">&#34;y&#34;</span>, <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">forceY</span>(<span style="color:#a6e22e">width</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>).<span style="color:#a6e22e">strength</span>(<span style="color:#ae81ff">0.3</span>))
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">force</span>(<span style="color:#e6db74">&#34;x&#34;</span>, <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">forceX</span>(<span style="color:#a6e22e">height</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>).<span style="color:#a6e22e">strength</span>(<span style="color:#ae81ff">0.3</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">svg</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">select</span>(<span style="color:#e6db74">&#34;#fdg&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;svg&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;width&#34;</span>, <span style="color:#a6e22e">width</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;height&#34;</span>, <span style="color:#a6e22e">height</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;transform&#34;</span>, <span style="color:#e6db74">&#34;translate(&#34;</span><span style="color:#f92672">+</span>[<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;)&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">simulation</span>
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">nodes</span>(<span style="color:#a6e22e">graph</span>.<span style="color:#a6e22e">nodes</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">force</span>(<span style="color:#e6db74">&#34;link&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">links</span>(<span style="color:#a6e22e">graph</span>.<span style="color:#a6e22e">links</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">link</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">svg</span>.<span style="color:#a6e22e">selectAll</span>(<span style="color:#e6db74">&#34;.link&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">data</span>(<span style="color:#a6e22e">graph</span>.<span style="color:#a6e22e">links</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">enter</span>().<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;line&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;class&#34;</span>, <span style="color:#e6db74">&#34;link&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">style</span>(<span style="color:#e6db74">&#34;stroke-width&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> Math.<span style="color:#a6e22e">sqrt</span>(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">value</span>); });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">node</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">svg</span>.<span style="color:#a6e22e">selectAll</span>(<span style="color:#e6db74">&#34;.node&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">data</span>(<span style="color:#a6e22e">graph</span>.<span style="color:#a6e22e">nodes</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">enter</span>().<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;circle&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;class&#34;</span>, <span style="color:#e6db74">&#34;node&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;r&#34;</span>, <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">style</span>(<span style="color:#e6db74">&#34;fill&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">color</span>(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">group</span>); });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;title&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">text</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">name</span>; });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">simulation</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;tick&#34;</span>, <span style="color:#66d9ef">function</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">link</span>.<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;x1&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">x</span>; })
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;y1&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">y</span>; })
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;x2&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">x</span>; })
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;y2&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">y</span>; });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;cx&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">x</span>; })
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;cy&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">d</span>) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">y</span>; });
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">drag</span>()
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;start&#34;</span>, <span style="color:#a6e22e">dragstarted</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;drag&#34;</span>, <span style="color:#a6e22e">dragged</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;end&#34;</span>, <span style="color:#a6e22e">dragended</span>)
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dragstarted</span>(<span style="color:#a6e22e">d</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">active</span>) <span style="color:#a6e22e">simulation</span>.<span style="color:#a6e22e">alphaTarget</span>(<span style="color:#ae81ff">0.3</span>).<span style="color:#a6e22e">restart</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">fx</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">x</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">fy</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">y</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dragged</span>(<span style="color:#a6e22e">d</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">fx</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">x</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">fy</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">y</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dragended</span>(<span style="color:#a6e22e">d</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">active</span>) <span style="color:#a6e22e">simulation</span>.<span style="color:#a6e22e">alphaTarget</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">fx</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">fy</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h2 id="references">References</h2>
 <h3 id="table-of-keywords">Table of keywords</h3>
-
 <p>The following table lists the keywords which are defined in Groovy</p>
-
 <table>
 <thead>
 <tr>
@@ -1445,7 +1198,6 @@ var d3 = require(['d3'], function (d3) {
 <th></th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>as</td>
@@ -1454,7 +1206,6 @@ var d3 = require(['d3'], function (d3) {
 <td>case</td>
 <td></td>
 </tr>
-
 <tr>
 <td>catch</td>
 <td>class</td>
@@ -1462,7 +1213,6 @@ var d3 = require(['d3'], function (d3) {
 <td>continue</td>
 <td></td>
 </tr>
-
 <tr>
 <td>def</td>
 <td>default</td>
@@ -1470,7 +1220,6 @@ var d3 = require(['d3'], function (d3) {
 <td>else</td>
 <td></td>
 </tr>
-
 <tr>
 <td>enum</td>
 <td>extends</td>
@@ -1478,7 +1227,6 @@ var d3 = require(['d3'], function (d3) {
 <td>Finally</td>
 <td></td>
 </tr>
-
 <tr>
 <td>for</td>
 <td>goto</td>
@@ -1486,7 +1234,6 @@ var d3 = require(['d3'], function (d3) {
 <td>implements</td>
 <td></td>
 </tr>
-
 <tr>
 <td>import</td>
 <td>in</td>
@@ -1494,7 +1241,6 @@ var d3 = require(['d3'], function (d3) {
 <td>interface</td>
 <td></td>
 </tr>
-
 <tr>
 <td>new</td>
 <td>pull</td>
@@ -1502,7 +1248,6 @@ var d3 = require(['d3'], function (d3) {
 <td>return</td>
 <td></td>
 </tr>
-
 <tr>
 <td>super</td>
 <td>switch</td>
@@ -1510,7 +1255,6 @@ var d3 = require(['d3'], function (d3) {
 <td>throw</td>
 <td></td>
 </tr>
-
 <tr>
 <td>throws</td>
 <td>trait</td>
@@ -1518,7 +1262,6 @@ var d3 = require(['d3'], function (d3) {
 <td>try</td>
 <td></td>
 </tr>
-
 <tr>
 <td>while</td>
 <td></td>
@@ -1528,9 +1271,7 @@ var d3 = require(['d3'], function (d3) {
 </tr>
 </tbody>
 </table>
-
 <p>Groovy but not Java:</p>
-
 <table>
 <thead>
 <tr>
@@ -1541,7 +1282,6 @@ var d3 = require(['d3'], function (d3) {
 <th></th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>as</td>
@@ -1552,12 +1292,9 @@ var d3 = require(['d3'], function (d3) {
 </tr>
 </tbody>
 </table>
-
 <h3 id="data-types-1">Data types</h3>
-
 <p>Primitive data types</p>
-
-<pre><code>    byte − represent a byte value. An example is 2
+<pre tabindex="0"><code>    byte − represent a byte value. An example is 2
     short − represent a short number. An example is 10
     int − represent whole numbers. An example is 1234
     long − represent a long number. An example is 10000090
@@ -1566,26 +1303,17 @@ var d3 = require(['d3'], function (d3) {
     char − defines a single character literal. An example is ‘a’
     Boolean − represents a Boolean value which can either be true or false
     String − text literals which are represented in the form of chain of characters. For example “Hello World”.
-</code></pre>
-
-<p>In addition to the primitive types, the following object types (sometimes referred to as wrapper types) are allowed −</p>
-
-<pre><code>    java.lang.Byte
+</code></pre><p>In addition to the primitive types, the following object types (sometimes referred to as wrapper types) are allowed −</p>
+<pre tabindex="0"><code>    java.lang.Byte
     java.lang.Short
     java.lang.Integer
     java.lang.Long
     java.lang.Float
     java.lang.Double
-</code></pre>
-
-<p>For arbitrary precision artithemetic</p>
-
-<pre><code>java.math.BigInteger
+</code></pre><p>For arbitrary precision artithemetic</p>
+<pre tabindex="0"><code>java.math.BigInteger
 java.math.BigDecimal
-</code></pre>
-
-<h3 id="online">Online</h3>
-
+</code></pre><h3 id="online">Online</h3>
 <ul>
 <li><a href="http://groovy-lang.org/documentation.html">official website and documentation</a></li>
 <li><a href="https://www.jetbrains.com/help/idea/getting-started-with-groovy.html">getting started with groovy in IntelliJ</a></li>
@@ -1601,45 +1329,47 @@ java.math.BigDecimal
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#getting-started">Getting Started</a></li>
-<li><a href="#introduction">Introduction</a>
-<ul>
-<li><a href="#basic-syntax">Basic syntax</a></li>
-<li><a href="#running-the-code">Running the code</a></li>
-<li><a href="#data-types">Data types</a></li>
-</ul></li>
-<li><a href="#features">Features</a>
-<ul>
-<li><a href="#support-for-regular-expressions">Support for regular expressions</a></li>
-<li><a href="#support-for-markup-languages">Support for markup languages</a></li>
-<li><a href="#liberal-use-of-closures">Liberal use of closures</a></li>
-</ul></li>
-<li><a href="#comparison-of-groovy-with-java">Comparison of Groovy with Java</a>
-<ul>
-<li><a href="#basic-differences">Basic differences</a></li>
-<li><a href="#new-operators">New operators</a></li>
-<li><a href="#using-methods">Using methods</a></li>
-<li><a href="#collections-list-and-map">Collections: list and map</a></li>
-</ul></li>
-<li><a href="#applications-in-data-science">Applications in Data Science</a>
-<ul>
-<li><a href="#dataframes-with-tablesaw">Dataframes with Tablesaw</a></li>
-<li><a href="#example-with-tablesaw">Example with Tablesaw</a></li>
-<li><a href="#auto-translation-in-beakerx">Auto-Translation in BeakerX</a></li>
-<li><a href="#graphing-with-beakerx">Graphing with BeakerX</a></li>
-<li><a href="#integration-with-d3js">Integration with D3js</a></li>
-</ul></li>
-<li><a href="#references">References</a>
-<ul>
-<li><a href="#table-of-keywords">Table of keywords</a></li>
-<li><a href="#data-types-1">Data types</a></li>
-<li><a href="#online">Online</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#basic-syntax">Basic syntax</a></li>
+        <li><a href="#running-the-code">Running the code</a></li>
+        <li><a href="#data-types">Data types</a></li>
+      </ul>
+    </li>
+    <li><a href="#features">Features</a>
+      <ul>
+        <li><a href="#support-for-regular-expressions">Support for regular expressions</a></li>
+        <li><a href="#support-for-markup-languages">Support for markup languages</a></li>
+        <li><a href="#liberal-use-of-closures">Liberal use of closures</a></li>
+      </ul>
+    </li>
+    <li><a href="#comparison-of-groovy-with-java">Comparison of Groovy with Java</a>
+      <ul>
+        <li><a href="#basic-differences">Basic differences</a></li>
+        <li><a href="#new-operators">New operators</a></li>
+        <li><a href="#using-methods">Using methods</a></li>
+        <li><a href="#collections-list-and-map">Collections: list and map</a></li>
+      </ul>
+    </li>
+    <li><a href="#applications-in-data-science">Applications in Data Science</a>
+      <ul>
+        <li><a href="#dataframes-with-tablesaw">Dataframes with Tablesaw</a></li>
+        <li><a href="#example-with-tablesaw">Example with Tablesaw</a></li>
+        <li><a href="#auto-translation-in-beakerx">Auto-Translation in BeakerX</a></li>
+        <li><a href="#graphing-with-beakerx">Graphing with BeakerX</a></li>
+        <li><a href="#integration-with-d3js">Integration with D3js</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a>
+      <ul>
+        <li><a href="#table-of-keywords">Table of keywords</a></li>
+        <li><a href="#data-types-1">Data types</a></li>
+        <li><a href="#online">Online</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
         </div>
         
@@ -1731,7 +1461,7 @@ java.math.BigDecimal
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

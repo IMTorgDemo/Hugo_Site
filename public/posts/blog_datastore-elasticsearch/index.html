@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,452 +106,334 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Distributed systems are very popular tools in the &lsquo;big data&rsquo; market space and ElasticSearch evolved to become one of the major players.  It serves the niche role of scaling to store large amounts of data, then allows querying it quickly.  It evolved greatly over the last ten years to provide a variety of functionality.  While it serves its primary purpose well, teams should resist the urge to use it in other roles, such as advanced analytics.</p>
-
+            <p>Distributed systems are very popular tools in the &lsquo;big data&rsquo; market space and ElasticSearch evolved to become one of the major players.  It serves the niche role of scaling to store large amounts of data, then allows querying it quickly.  It evolved greatly over the last ten years to provide a variety of functionality.  While it serves its primary purpose well, teams should resist the urge to use it in other roles, such as advanced analytics.</p>
 <h2 id="tool-characteristics">Tool Characteristics</h2>
-
 <h3 id="strengths">Strengths</h3>
-
 <p>ElasticSearch is a Java, Lucene-based, tool that queries large, unstructured data very quickly.  It can be deployed using docker and offers just a simple http endpoint for interaction.</p>
-
 <p>In the realm of &lsquo;big data&rsquo; it provides much the expected functionality.  Because is distributed it has great ability to scale horizontally.  The data is also replicated, automatically, in case of server node failure.</p>
-
 <p>ElasticSearch can execute complex queries very quickly.  This is because it indexes all data.  Part of its speed is that it caches many of the queries used as a filter, so it only executes them once.  This is performed with support for all commonly-used data types, such as Text (structured and unstructured, Numbers (long, integer, short, byte, double, float), Dates, as well as complex types such as: arrays, objects, nested types, geo-spatial, iPV4 and others.</p>
-
 <p>Additional functionality is provided through a variety of plugins. This supports scenarios for great security and analysis.</p>
-
 <h3 id="weaknesses">Weaknesses</h3>
-
 <p>Despite these strengths, Elasticsearch has drawbacks that are quite similar to other &lsquo;big data&rsquo; tools.  Particularly, it is great with data search and recovery, but not for creating and modifying data.  MongoDb is still popular for unstructured transactional data.</p>
-
 <p>ElasticSearch is a type of data warehousing paradigm, not a database replacement.  Specifically, the Elastic company, with its many related products, really grew in size when it was applied to logging and log search problems.  The last decade saw a growing demand for analysts to be able to search the large amounts of metadata created by machines.</p>
-
 <p>Elastic attempted to make in-roads as an analytics and data science platform.  This is a dangerous road for teams to go down.  While it can retrieve data, specifically in time-series scenarios, ElasticSearch is an unstructured-only tool.</p>
-
 <p>Data science demands structure in the final stages of modeling.  The balance of working with structured and unstructured data is handled very well by Apache Spark&rsquo;s RDD&rsquo;s and DataFrames.  ElasticSearch has no such complimentary models.  The most sophisticated role it can handel is the analyst answering basic business questions.</p>
-
 <p>Another difficulty is the major breakages that occur between versions.  For a fast-moving team, keeping up-to-date with the latest ElasticSearch can be a big obstacle.</p>
-
 <h2 id="installation">Installation</h2>
-
 <p>ElasticSearch can be quickly deployed on a single node using docker.  One requirement is the vm.max_map_count kernel setting needs to be set to at least 262144 for production use.</p>
-
-<pre><code class="language-python">#get the container running
-docker run -d -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; --name cntr_elastic docker.elastic.co/elasticsearch/elasticsearch:7.0.1
-
-#enter container to check-out configs            
-docker exec -it --user root cntr_elastic bash
-</code></pre>
-
-<p>The configuration is loaded from files under <code>/usr/share/elasticsearch/config/</code>.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#get the container running</span>
+</span></span><span style="display:flex;"><span>docker run <span style="color:#f92672">-</span>d <span style="color:#f92672">-</span>p <span style="color:#ae81ff">9200</span>:<span style="color:#ae81ff">9200</span> <span style="color:#f92672">-</span>p <span style="color:#ae81ff">9300</span>:<span style="color:#ae81ff">9300</span> <span style="color:#f92672">-</span>e <span style="color:#e6db74">&#34;discovery.type=single-node&#34;</span> <span style="color:#f92672">--</span>name cntr_elastic docker<span style="color:#f92672">.</span>elastic<span style="color:#f92672">.</span>co<span style="color:#f92672">/</span>elasticsearch<span style="color:#f92672">/</span>elasticsearch:<span style="color:#ae81ff">7.0.1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#enter container to check-out configs            </span>
+</span></span><span style="display:flex;"><span>docker exec <span style="color:#f92672">-</span>it <span style="color:#f92672">--</span>user root cntr_elastic bash
+</span></span></code></pre></div><p>The configuration is loaded from files under <code>/usr/share/elasticsearch/config/</code>.</p>
 <p>Some configurations that may need changing in <code>elasticsearch.yml</code>:</p>
-
 <ul>
 <li><code>cluster.name: &quot;docker-cluster&quot;</code></li>
 <li><code>path.logs: /path/to/logs</code></li>
 <li><code>discovery.zen.ping.unicast.hosts: [&quot;localhost&quot;]</code></li>
 </ul>
-
 <p>To install directly on MacOS it is simple enough.  Afterward, make appropriate updates to <code>~/.bash_profile</code>.</p>
-
-<pre><code class="language-python">brew install elasticsearch
-</code></pre>
-
-<p>Check that node es01 listens on localhost:9200 while es02 talks to es01 over a Docker network.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>brew install elasticsearch
+</span></span></code></pre></div><p>Check that node es01 listens on localhost:9200 while es02 talks to es01 over a Docker network.</p>
 <p><strong>NOTE</strong>: because we are running these curl command from within docker, and they must reach the host&rsquo;s ip address, then when must use <code>host.docker.internal</code> for the ip address (since the host is a MacOS).  Read more about your host&rsquo;s ip address by referencing this <a href="https://stackoverflow.com/questions/22944631/how-to-get-the-ip-address-of-the-docker-host-from-inside-a-docker-container">stackoverflow post</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl http:<span style="color:#f92672">//</span>host<span style="color:#f92672">.</span>docker<span style="color:#f92672">.</span>internal:<span style="color:#ae81ff">9200</span><span style="color:#f92672">/</span>_cat<span style="color:#f92672">/</span>health
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl http://host.docker.internal:9200/_cat/health
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">1559051160 13:46:00 docker-cluster green 1 1 0 0 0 0 0 0 - 100.0%
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">1559051160 13:46:00 docker-cluster green 1 1 0 0 0 0 0 0 - 100.0%
 </code></pre>
 
 </div>
 
-
 <h2 id="operation">Operation</h2>
-
 <h3 id="typical-command-syntax">Typical command syntax</h3>
-
 <p>All commands follow similar pattern:</p>
-
 <p><code>&lt;HTTP Verb&gt; /&lt;Index&gt;/&lt;Endpoint&gt;/&lt;ID&gt;</code></p>
-
 <h3 id="explore-cluster">Explore cluster</h3>
-
 <p>Get health of the cluster:</p>
-
 <ul>
 <li>Green - everything is good (cluster is fully functional)</li>
 <li>Yellow - all data is available but some replicas are not yet allocated (cluster is fully functional)</li>
 <li>Red - some data is not available for whatever reason (cluster is partially functional)</li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X GET <span style="color:#e6db74">&#34;host.docker.internal:9200/_cat/health?v&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X GET &quot;host.docker.internal:9200/_cat/health?v&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">epoch      timestamp cluster        status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">epoch      timestamp cluster        status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
 1559051178 13:46:18  docker-cluster green           1         1      0   0    0    0        0             0                  -                100.0%
 </code></pre>
 
 </div>
 
-
 <p>List the available nodes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X GET <span style="color:#e6db74">&#34;host.docker.internal:9200/_cat/nodes?v&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X GET &quot;host.docker.internal:9200/_cat/nodes?v&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">ip         heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">ip         heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name
 172.17.0.3           31          31  16    0.33    0.25     0.14 mdi       *      fa57091880ec
 </code></pre>
 
 </div>
 
-
 <p>List indices being used</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X GET <span style="color:#e6db74">&#34;host.docker.internal:9200/_cat/indices?v&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X GET &quot;host.docker.internal:9200/_cat/indices?v&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">health status index uuid pri rep docs.count docs.deleted store.size pri.store.size
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">health status index uuid pri rep docs.count docs.deleted store.size pri.store.size
 </code></pre>
 
 </div>
-
 
 <p>Create a new index: <code>customer</code>, and use pretty-print in json.</p>
-
 <p>There is now one index named customer and it has one primary shard and one replica (the defaults) and it contains zero documents in it</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X PUT <span style="color:#e6db74">&#34;host.docker.internal:9200/customer?pretty&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X PUT &quot;host.docker.internal:9200/customer?pretty&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;acknowledged&quot; : true,
-  &quot;shards_acknowledged&quot; : true,
-  &quot;index&quot; : &quot;customer&quot;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;acknowledged&#34; : true,
+  &#34;shards_acknowledged&#34; : true,
+  &#34;index&#34; : &#34;customer&#34;
 }
 </code></pre>
 
 </div>
-
 
 <p>Add(Index) one <code>document</code>, with <code>id</code> of 1</p>
-
 <p>specific <code>id</code> provided</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X PUT <span style="color:#e6db74">&#34;host.docker.internal:9200/customer/_doc/1?pretty&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d<span style="color:#e6db74">&#39;{&#34;name&#34;: &#34;John Doe&#34;}&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X PUT &quot;host.docker.internal:9200/customer/_doc/1?pretty&quot; -H 'Content-Type: application/json' -d'{&quot;name&quot;: &quot;John Doe&quot;}'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;_index&quot; : &quot;customer&quot;,
-  &quot;_type&quot; : &quot;_doc&quot;,
-  &quot;_id&quot; : &quot;1&quot;,
-  &quot;_version&quot; : 1,
-  &quot;result&quot; : &quot;created&quot;,
-  &quot;_shards&quot; : {
-    &quot;total&quot; : 2,
-    &quot;successful&quot; : 1,
-    &quot;failed&quot; : 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;_index&#34; : &#34;customer&#34;,
+  &#34;_type&#34; : &#34;_doc&#34;,
+  &#34;_id&#34; : &#34;1&#34;,
+  &#34;_version&#34; : 1,
+  &#34;result&#34; : &#34;created&#34;,
+  &#34;_shards&#34; : {
+    &#34;total&#34; : 2,
+    &#34;successful&#34; : 1,
+    &#34;failed&#34; : 0
   },
-  &quot;_seq_no&quot; : 0,
-  &quot;_primary_term&quot; : 1
+  &#34;_seq_no&#34; : 0,
+  &#34;_primary_term&#34; : 1
 }
 </code></pre>
 
 </div>
-
 
 <p>no <code>id</code> specified</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X POST <span style="color:#e6db74">&#34;host.docker.internal:9200/customer/_doc?pretty&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d<span style="color:#e6db74">&#39;{&#34;name&#34;: &#34;Jane Doe&#34;}&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X POST &quot;host.docker.internal:9200/customer/_doc?pretty&quot; -H 'Content-Type: application/json' -d'{&quot;name&quot;: &quot;Jane Doe&quot;}'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;_index&quot; : &quot;customer&quot;,
-  &quot;_type&quot; : &quot;_doc&quot;,
-  &quot;_id&quot; : &quot;K4Sy_moBhQilF9iEcwe-&quot;,
-  &quot;_version&quot; : 1,
-  &quot;result&quot; : &quot;created&quot;,
-  &quot;_shards&quot; : {
-    &quot;total&quot; : 2,
-    &quot;successful&quot; : 1,
-    &quot;failed&quot; : 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;_index&#34; : &#34;customer&#34;,
+  &#34;_type&#34; : &#34;_doc&#34;,
+  &#34;_id&#34; : &#34;K4Sy_moBhQilF9iEcwe-&#34;,
+  &#34;_version&#34; : 1,
+  &#34;result&#34; : &#34;created&#34;,
+  &#34;_shards&#34; : {
+    &#34;total&#34; : 2,
+    &#34;successful&#34; : 1,
+    &#34;failed&#34; : 0
   },
-  &quot;_seq_no&quot; : 1,
-  &quot;_primary_term&quot; : 1
+  &#34;_seq_no&#34; : 1,
+  &#34;_primary_term&#34; : 1
 }
 </code></pre>
 
 </div>
 
-
 <p>Query the index</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X GET <span style="color:#e6db74">&#34;host.docker.internal:9200/customer/_doc/1?pretty&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X GET &quot;host.docker.internal:9200/customer/_doc/1?pretty&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;_index&quot; : &quot;customer&quot;,
-  &quot;_type&quot; : &quot;_doc&quot;,
-  &quot;_id&quot; : &quot;1&quot;,
-  &quot;_version&quot; : 1,
-  &quot;_seq_no&quot; : 0,
-  &quot;_primary_term&quot; : 1,
-  &quot;found&quot; : true,
-  &quot;_source&quot; : {
-    &quot;name&quot; : &quot;John Doe&quot;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;_index&#34; : &#34;customer&#34;,
+  &#34;_type&#34; : &#34;_doc&#34;,
+  &#34;_id&#34; : &#34;1&#34;,
+  &#34;_version&#34; : 1,
+  &#34;_seq_no&#34; : 0,
+  &#34;_primary_term&#34; : 1,
+  &#34;found&#34; : true,
+  &#34;_source&#34; : {
+    &#34;name&#34; : &#34;John Doe&#34;
   }
 }
 </code></pre>
 
 </div>
 
-
 <p>Delete the index</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X DELETE <span style="color:#e6db74">&#34;host.docker.internal:9200/customer?pretty&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X DELETE &quot;host.docker.internal:9200/customer?pretty&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;acknowledged&quot; : true
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;acknowledged&#34; : true
 }
 </code></pre>
 
 </div>
-
 
 <h3 id="modify-data">Modify data</h3>
-
 <p>Add(Index) one <code>document</code>, with <code>id</code> of 1</p>
-
 <p>specific <code>id</code> provided</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X PUT <span style="color:#e6db74">&#34;host.docker.internal:9200/customer/_doc/1?pretty&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d<span style="color:#e6db74">&#39;{&#34;name&#34;: &#34;John Doe&#34;}&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X PUT &quot;host.docker.internal:9200/customer/_doc/1?pretty&quot; -H 'Content-Type: application/json' -d'{&quot;name&quot;: &quot;John Doe&quot;}'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;_index&quot; : &quot;customer&quot;,
-  &quot;_type&quot; : &quot;_doc&quot;,
-  &quot;_id&quot; : &quot;1&quot;,
-  &quot;_version&quot; : 1,
-  &quot;result&quot; : &quot;created&quot;,
-  &quot;_shards&quot; : {
-    &quot;total&quot; : 2,
-    &quot;successful&quot; : 1,
-    &quot;failed&quot; : 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;_index&#34; : &#34;customer&#34;,
+  &#34;_type&#34; : &#34;_doc&#34;,
+  &#34;_id&#34; : &#34;1&#34;,
+  &#34;_version&#34; : 1,
+  &#34;result&#34; : &#34;created&#34;,
+  &#34;_shards&#34; : {
+    &#34;total&#34; : 2,
+    &#34;successful&#34; : 1,
+    &#34;failed&#34; : 0
   },
-  &quot;_seq_no&quot; : 0,
-  &quot;_primary_term&quot; : 1
+  &#34;_seq_no&#34; : 0,
+  &#34;_primary_term&#34; : 1
 }
 </code></pre>
 
 </div>
-
 
 <p>Update document</p>
-
 <p>Change the name and provide a new field</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X POST <span style="color:#e6db74">&#34;host.docker.internal:9200/customer/_update/1?pretty&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d <span style="color:#e6db74">&#39;{&#34;doc&#34;: { &#34;name&#34;: &#34;Jane Doe&#34;, &#34;age&#34;: 20  }}&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X POST &quot;host.docker.internal:9200/customer/_update/1?pretty&quot; -H 'Content-Type: application/json' -d '{&quot;doc&quot;: { &quot;name&quot;: &quot;Jane Doe&quot;, &quot;age&quot;: 20  }}'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;_index&quot; : &quot;customer&quot;,
-  &quot;_type&quot; : &quot;_doc&quot;,
-  &quot;_id&quot; : &quot;1&quot;,
-  &quot;_version&quot; : 2,
-  &quot;result&quot; : &quot;updated&quot;,
-  &quot;_shards&quot; : {
-    &quot;total&quot; : 2,
-    &quot;successful&quot; : 1,
-    &quot;failed&quot; : 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;_index&#34; : &#34;customer&#34;,
+  &#34;_type&#34; : &#34;_doc&#34;,
+  &#34;_id&#34; : &#34;1&#34;,
+  &#34;_version&#34; : 2,
+  &#34;result&#34; : &#34;updated&#34;,
+  &#34;_shards&#34; : {
+    &#34;total&#34; : 2,
+    &#34;successful&#34; : 1,
+    &#34;failed&#34; : 0
   },
-  &quot;_seq_no&quot; : 1,
-  &quot;_primary_term&quot; : 1
+  &#34;_seq_no&#34; : 1,
+  &#34;_primary_term&#34; : 1
 }
 </code></pre>
 
 </div>
-
 
 <p>Increment with script</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X POST <span style="color:#e6db74">&#34;host.docker.internal:9200/customer/_update/1?pretty&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d<span style="color:#e6db74">&#39;{&#34;script&#34; : &#34;ctx._source.age += 5&#34;}&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X POST &quot;host.docker.internal:9200/customer/_update/1?pretty&quot; -H 'Content-Type: application/json' -d'{&quot;script&quot; : &quot;ctx._source.age += 5&quot;}'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;_index&quot; : &quot;customer&quot;,
-  &quot;_type&quot; : &quot;_doc&quot;,
-  &quot;_id&quot; : &quot;1&quot;,
-  &quot;_version&quot; : 3,
-  &quot;result&quot; : &quot;updated&quot;,
-  &quot;_shards&quot; : {
-    &quot;total&quot; : 2,
-    &quot;successful&quot; : 1,
-    &quot;failed&quot; : 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;_index&#34; : &#34;customer&#34;,
+  &#34;_type&#34; : &#34;_doc&#34;,
+  &#34;_id&#34; : &#34;1&#34;,
+  &#34;_version&#34; : 3,
+  &#34;result&#34; : &#34;updated&#34;,
+  &#34;_shards&#34; : {
+    &#34;total&#34; : 2,
+    &#34;successful&#34; : 1,
+    &#34;failed&#34; : 0
   },
-  &quot;_seq_no&quot; : 2,
-  &quot;_primary_term&quot; : 1
+  &#34;_seq_no&#34; : 2,
+  &#34;_primary_term&#34; : 1
 }
 </code></pre>
 
 </div>
-
 
 <p>Delete the document</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X DELETE <span style="color:#e6db74">&#34;host.docker.internal:9200/customer/_doc/2?pretty&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X DELETE &quot;host.docker.internal:9200/customer/_doc/2?pretty&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{
-  &quot;_index&quot; : &quot;customer&quot;,
-  &quot;_type&quot; : &quot;_doc&quot;,
-  &quot;_id&quot; : &quot;2&quot;,
-  &quot;_version&quot; : 1,
-  &quot;result&quot; : &quot;not_found&quot;,
-  &quot;_shards&quot; : {
-    &quot;total&quot; : 2,
-    &quot;successful&quot; : 1,
-    &quot;failed&quot; : 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{
+  &#34;_index&#34; : &#34;customer&#34;,
+  &#34;_type&#34; : &#34;_doc&#34;,
+  &#34;_id&#34; : &#34;2&#34;,
+  &#34;_version&#34; : 1,
+  &#34;result&#34; : &#34;not_found&#34;,
+  &#34;_shards&#34; : {
+    &#34;total&#34; : 2,
+    &#34;successful&#34; : 1,
+    &#34;failed&#34; : 0
   },
-  &quot;_seq_no&quot; : 3,
-  &quot;_primary_term&quot; : 1
+  &#34;_seq_no&#34; : 3,
+  &#34;_primary_term&#34; : 1
 }
 </code></pre>
 
 </div>
 
-
 <p>Run a Batch process</p>
-
 <ul>
 <li>update the first doc, delete the second</li>
 <li>if a single action fails, it will continue to process others</li>
 <li>may get an error <code>[\\n]</code>, different for each operating system</li>
 </ul>
-
-<pre><code class="language-python">! curl -X POST &quot;host.docker.internal:9200/customer/_bulk?pretty&quot; -H 'Content-Type: application/json' -d'\
-{&quot;index&quot;:{&quot;_id&quot;:&quot;1&quot;}}\
-{&quot;name&quot;: &quot;John Doe&quot; }\
-{&quot;index&quot;:{&quot;_id&quot;:&quot;2&quot;}}'
-</code></pre>
-
-<h3 id="explore-data">Explore data</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X POST <span style="color:#e6db74">&#34;host.docker.internal:9200/customer/_bulk?pretty&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">{&#34;index&#34;:{&#34;_id&#34;:&#34;1&#34;}}</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">{&#34;name&#34;: &#34;John Doe&#34; }</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">{&#34;index&#34;:{&#34;_id&#34;:&#34;2&#34;}}&#39;</span>
+</span></span></code></pre></div><h3 id="explore-data">Explore data</h3>
 <p>Bulk load json, load data file: accounts.json</p>
-
-<pre><code class="language-python">! curl -H &quot;Content-Type: application/json&quot; -XPOST &quot;host.docker.internal:9200/bank/_bulk?pretty&amp;refresh&quot; --data-binary &quot;@./Data/ElasticSearch/accounts.json&quot;;
-</code></pre>
-
-<p>Query: uri</p>
-
-<pre><code class="language-python">! curl -X GET &quot;host.docker.internal:9200/bank/_search?q=*&amp;sort=account_number:asc&amp;pretty&quot;
-</code></pre>
-
-<p>Query: body</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#f92672">-</span>XPOST <span style="color:#e6db74">&#34;host.docker.internal:9200/bank/_bulk?pretty&amp;refresh&#34;</span> <span style="color:#f92672">--</span>data<span style="color:#f92672">-</span>binary <span style="color:#e6db74">&#34;@./Data/ElasticSearch/accounts.json&#34;</span>;
+</span></span></code></pre></div><p>Query: uri</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X GET <span style="color:#e6db74">&#34;host.docker.internal:9200/bank/_search?q=*&amp;sort=account_number:asc&amp;pretty&#34;</span>
+</span></span></code></pre></div><p>Query: body</p>
 <pre><code>+ more typical and expressive search
 + _source is used to select fields
 + from is 0-based, defaults to 0 
 + size defaults to 10
 </code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X GET <span style="color:#e6db74">&#34;host.docker.internal:9200/bank/_search&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">{&#34;query&#34;: { &#34;match_all&#34;: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> },</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">  &#34;_source&#34;: [&#34;account_number&#34;, &#34;balance&#34;],</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">  &#34;sort&#34;: [{ &#34;account_number&#34;: &#34;asc&#34; }],</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">  &#34;from&#34;: 10,</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">  &#34;size&#34;: 1</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">}&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X GET &quot;host.docker.internal:9200/bank/_search&quot; -H 'Content-Type: application/json' -d'\
-{&quot;query&quot;: { &quot;match_all&quot;: {} },\
-  &quot;_source&quot;: [&quot;account_number&quot;, &quot;balance&quot;],\
-  &quot;sort&quot;: [{ &quot;account_number&quot;: &quot;asc&quot; }],\
-  &quot;from&quot;: 10,\
-  &quot;size&quot;: 1\
-}'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{&quot;took&quot;:11,&quot;timed_out&quot;:false,&quot;_shards&quot;:{&quot;total&quot;:1,&quot;successful&quot;:1,&quot;skipped&quot;:0,&quot;failed&quot;:0},&quot;hits&quot;:{&quot;total&quot;:{&quot;value&quot;:1000,&quot;relation&quot;:&quot;eq&quot;},&quot;max_score&quot;:null,&quot;hits&quot;:[{&quot;_index&quot;:&quot;bank&quot;,&quot;_type&quot;:&quot;_doc&quot;,&quot;_id&quot;:&quot;10&quot;,&quot;_score&quot;:null,&quot;_source&quot;:{&quot;account_number&quot;:10,&quot;balance&quot;:46170},&quot;sort&quot;:[10]}]}}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#34;took&#34;:11,&#34;timed_out&#34;:false,&#34;_shards&#34;:{&#34;total&#34;:1,&#34;successful&#34;:1,&#34;skipped&#34;:0,&#34;failed&#34;:0},&#34;hits&#34;:{&#34;total&#34;:{&#34;value&#34;:1000,&#34;relation&#34;:&#34;eq&#34;},&#34;max_score&#34;:null,&#34;hits&#34;:[{&#34;_index&#34;:&#34;bank&#34;,&#34;_type&#34;:&#34;_doc&#34;,&#34;_id&#34;:&#34;10&#34;,&#34;_score&#34;:null,&#34;_source&#34;:{&#34;account_number&#34;:10,&#34;balance&#34;:46170},&#34;sort&#34;:[10]}]}}
 </code></pre>
 
 </div>
 
-
 <p>Query: where clause</p>
-
 <ul>
 <li><code>bool must</code> clause specifies AND, all the queries that must be true</li>
 <li><code>bool should</code> clause for OR</li>
 <li><code>bool &quot;must_not&quot;</code> clause for NONE</li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X GET <span style="color:#e6db74">&#34;host.docker.internal:9200/bank/_search&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">{&#34;query&#34;: {&#34;bool&#34;: {&#34;must&#34;: </span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">	[{ &#34;match&#34;: { &#34;address&#34;: &#34;mill&#34; } },</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">	 { &#34;match&#34;: { &#34;address&#34;: &#34;lane&#34; } }</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">    ]</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">}}}&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! curl -X GET &quot;host.docker.internal:9200/bank/_search&quot; -H 'Content-Type: application/json' -d'\
-{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: \
-	[{ &quot;match&quot;: { &quot;address&quot;: &quot;mill&quot; } },\
-	 { &quot;match&quot;: { &quot;address&quot;: &quot;lane&quot; } }\
-    ]\
-}}}'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{&quot;took&quot;:25,&quot;timed_out&quot;:false,&quot;_shards&quot;:{&quot;total&quot;:1,&quot;successful&quot;:1,&quot;skipped&quot;:0,&quot;failed&quot;:0},&quot;hits&quot;:{&quot;total&quot;:{&quot;value&quot;:1,&quot;relation&quot;:&quot;eq&quot;},&quot;max_score&quot;:9.507477,&quot;hits&quot;:[{&quot;_index&quot;:&quot;bank&quot;,&quot;_type&quot;:&quot;_doc&quot;,&quot;_id&quot;:&quot;136&quot;,&quot;_score&quot;:9.507477,&quot;_source&quot;:{&quot;account_number&quot;:136,&quot;balance&quot;:45801,&quot;firstname&quot;:&quot;Winnie&quot;,&quot;lastname&quot;:&quot;Holland&quot;,&quot;age&quot;:38,&quot;gender&quot;:&quot;M&quot;,&quot;address&quot;:&quot;198 Mill Lane&quot;,&quot;employer&quot;:&quot;Neteria&quot;,&quot;email&quot;:&quot;winnieholland@neteria.com&quot;,&quot;city&quot;:&quot;Urie&quot;,&quot;state&quot;:&quot;IL&quot;}}]}}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#34;took&#34;:25,&#34;timed_out&#34;:false,&#34;_shards&#34;:{&#34;total&#34;:1,&#34;successful&#34;:1,&#34;skipped&#34;:0,&#34;failed&#34;:0},&#34;hits&#34;:{&#34;total&#34;:{&#34;value&#34;:1,&#34;relation&#34;:&#34;eq&#34;},&#34;max_score&#34;:9.507477,&#34;hits&#34;:[{&#34;_index&#34;:&#34;bank&#34;,&#34;_type&#34;:&#34;_doc&#34;,&#34;_id&#34;:&#34;136&#34;,&#34;_score&#34;:9.507477,&#34;_source&#34;:{&#34;account_number&#34;:136,&#34;balance&#34;:45801,&#34;firstname&#34;:&#34;Winnie&#34;,&#34;lastname&#34;:&#34;Holland&#34;,&#34;age&#34;:38,&#34;gender&#34;:&#34;M&#34;,&#34;address&#34;:&#34;198 Mill Lane&#34;,&#34;employer&#34;:&#34;Neteria&#34;,&#34;email&#34;:&#34;winnieholland@neteria.com&#34;,&#34;city&#34;:&#34;Urie&#34;,&#34;state&#34;:&#34;IL&#34;}}]}}
 </code></pre>
 
 </div>
 
-
 <p>Query: filter clause</p>
-
 <ul>
 <li>get a range of values</li>
 <li>bool query contains a match_all query (the query part) and a range query (the filter part)</li>
 </ul>
-
-<pre><code class="language-python">! curl -X GET &quot;host.docker.internal:9200/bank/_search&quot; -H 'Content-Type: application/json' -d'\
-{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: { &quot;match_all&quot;: {} },\
-      &quot;filter&quot;: {&quot;range&quot;: {\
-          &quot;balance&quot;: {&quot;gte&quot;: 20000, &quot;lte&quot;: 30000}\
-          }}\
-}}}'
-</code></pre>
-
-<p>For more specific queries using <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started-aggregations.html">Aggregations</a> check the docs.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> curl <span style="color:#f92672">-</span>X GET <span style="color:#e6db74">&#34;host.docker.internal:9200/bank/_search&#34;</span> <span style="color:#f92672">-</span>H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> <span style="color:#f92672">-</span>d<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">{&#34;query&#34;: {&#34;bool&#34;: {&#34;must&#34;: { &#34;match_all&#34;: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> },</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">      &#34;filter&#34;: {&#34;range&#34;: {</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">          &#34;balance&#34;: {&#34;gte&#34;: 20000, &#34;lte&#34;: 30000}</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">          }}</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span><span style="color:#e6db74">}}}&#39;</span>
+</span></span></code></pre></div><p>For more specific queries using <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started-aggregations.html">Aggregations</a> check the docs.</p>
 <h2 id="conclusion">Conclusion</h2>
-
 <p>ElasticSearch is a powerful tool for a very specific use case of fast data querying.  However, do not attempt over-extend its functional uses.</p>
-
 <h2 id="references">References</h2>
-
 <ul>
 <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html">docker configurations</a></li>
 <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">gettings started guide</a></li>
@@ -564,26 +446,25 @@ docker exec -it --user root cntr_elastic bash
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#tool-characteristics">Tool Characteristics</a>
-<ul>
-<li><a href="#strengths">Strengths</a></li>
-<li><a href="#weaknesses">Weaknesses</a></li>
-</ul></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#operation">Operation</a>
-<ul>
-<li><a href="#typical-command-syntax">Typical command syntax</a></li>
-<li><a href="#explore-cluster">Explore cluster</a></li>
-<li><a href="#modify-data">Modify data</a></li>
-<li><a href="#explore-data">Explore data</a></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#references">References</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#tool-characteristics">Tool Characteristics</a>
+      <ul>
+        <li><a href="#strengths">Strengths</a></li>
+        <li><a href="#weaknesses">Weaknesses</a></li>
+      </ul>
+    </li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#operation">Operation</a>
+      <ul>
+        <li><a href="#typical-command-syntax">Typical command syntax</a></li>
+        <li><a href="#explore-cluster">Explore cluster</a></li>
+        <li><a href="#modify-data">Modify data</a></li>
+        <li><a href="#explore-data">Explore data</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -670,7 +551,7 @@ docker exec -it --user root cntr_elastic bash
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

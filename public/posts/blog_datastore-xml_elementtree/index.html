@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,15 +106,10 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Together with JSON, the XML format is the most popular structure for data on the web.  It is not only used for data storage, but also for websites, in the form of HTML.  XML was seen as the ubiquitous data format, but with the ascent of Javascript, JSON became more popular for web applications.  Still, XML is an effective format, and learning to parse and work with it is necessary for anyone who works with a variety of data sources.</p>
-
+            <p>Together with JSON, the XML format is the most popular structure for data on the web.  It is not only used for data storage, but also for websites, in the form of HTML.  XML was seen as the ubiquitous data format, but with the ascent of Javascript, JSON became more popular for web applications.  Still, XML is an effective format, and learning to parse and work with it is necessary for anyone who works with a variety of data sources.</p>
 <h2 id="introduction-to-elementtree">Introduction to ElementTree</h2>
-
 <p>ElementTree is written in C (formerly cElementTree), and is part of the Python stdlib.  While the API may not be as easy as some other modules, such as minidom and beautifulsoup, ElementTree is quite fast and efficient.  Below are the results of tests performed by the ElementTree maintainers:</p>
-
-<pre><code>Library                         Time    Space
+<pre tabindex="0"><code>Library                         Time    Space
 xml.dom.minidom (Python 2.1)    6.3 s   80000K
 gnosis.objectify                2.0 s   22000k
 xml.dom.minidom (Python 2.4)    1.4 s   53000k
@@ -126,492 +121,380 @@ libxml2 (C extension)           0.098 s 16000k
 readlines (read as utf-8)       0.093 s 8850k
 cElementTree (C extension)  --&gt; 0.047 s 4900K &lt;--
 readlines (read as ascii)       0.032 s 5050k  
-</code></pre>
-
-<h2 id="config">Config</h2>
-
+</code></pre><h2 id="config">Config</h2>
 <p>Begin by ensuring that your xml file is well-formed.  You can get a sense of this by visual inspection.  If the XML is not valid, then you will not be able to load the file.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> ls Data<span style="color:#f92672">/</span>example<span style="color:#f92672">/</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! ls Data/example/
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">example.xml
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">example.xml
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> head <span style="color:#f92672">-</span>n3 Data<span style="color:#f92672">/</span>example<span style="color:#f92672">/</span>example<span style="color:#f92672">.</span>xml
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! head -n3 Data/example/example.xml
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;?xml version=&quot;1.0&quot;?&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;?xml version=&#34;1.0&#34;?&gt;
 &lt;collection&gt;
-    &lt;genre category=&quot;Action&quot;&gt;
+    &lt;genre category=&#34;Action&#34;&gt;
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> tail <span style="color:#f92672">-</span>n3 Data<span style="color:#f92672">/</span>example<span style="color:#f92672">/</span>example<span style="color:#f92672">.</span>xml
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">! tail -n3 Data/example/example.xml
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">        &lt;/decade&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">        &lt;/decade&gt;
     &lt;/genre&gt;
 &lt;/collection&gt;
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-python">import xml.etree.ElementTree as ET
-</code></pre>
-
-<pre><code class="language-python">file_path = './Data/example/example.xml'
-tree = ET.parse(file_path)
-</code></pre>
-
-<h2 id="explore">Explore</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> xml.etree.ElementTree <span style="color:#66d9ef">as</span> ET
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>file_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./Data/example/example.xml&#39;</span>
+</span></span><span style="display:flex;"><span>tree <span style="color:#f92672">=</span> ET<span style="color:#f92672">.</span>parse(file_path)
+</span></span></code></pre></div><h2 id="explore">Explore</h2>
 <p>Continue exploring the structure of the xml.  There is typically a level of the branch where there are many leaves.  These leaves are often the data you are most interested in examining.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>root <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>getroot()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( root )
+</span></span><span style="display:flex;"><span>print( root<span style="color:#f92672">.</span>tag )
+</span></span><span style="display:flex;"><span>print( root<span style="color:#f92672">.</span>attrib )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">root = tree.getroot()
-</code></pre>
-
-<pre><code class="language-python">print( root )
-print( root.tag )
-print( root.attrib )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;Element 'collection' at 0x7fc18cd36db8&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;Element &#39;collection&#39; at 0x7fc18cd36db8&gt;
 collection
 {}
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[(x<span style="color:#f92672">.</span>tag, x<span style="color:#f92672">.</span>attrib) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> root]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">[(x.tag, x.attrib) for x in root]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[('genre', {'category': 'Action'}), ('genre', {'category': 'Thriller'})]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[(&#39;genre&#39;, {&#39;category&#39;: &#39;Action&#39;}), (&#39;genre&#39;, {&#39;category&#39;: &#39;Thriller&#39;})]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[(x<span style="color:#f92672">.</span>tag, x<span style="color:#f92672">.</span>attrib) <span style="color:#66d9ef">for</span> idx,x <span style="color:#f92672">in</span> enumerate(root<span style="color:#f92672">.</span>iter()) <span style="color:#66d9ef">if</span> idx <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">[(x.tag, x.attrib) for idx,x in enumerate(root.iter()) if idx &lt; 10]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[('collection', {}),
- ('genre', {'category': 'Action'}),
- ('decade', {'years': '1980s'}),
- ('movie',
-  {'favorite': 'True', 'title': 'Indiana Jones: The raiders of the lost Ark'}),
- ('format', {'multiple': 'No'}),
- ('year', {}),
- ('rating', {}),
- ('description', {}),
- ('movie', {'favorite': 'True', 'title': 'THE KARATE KID'}),
- ('format', {'multiple': 'Yes'})]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[(&#39;collection&#39;, {}),
+ (&#39;genre&#39;, {&#39;category&#39;: &#39;Action&#39;}),
+ (&#39;decade&#39;, {&#39;years&#39;: &#39;1980s&#39;}),
+ (&#39;movie&#39;,
+  {&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;Indiana Jones: The raiders of the lost Ark&#39;}),
+ (&#39;format&#39;, {&#39;multiple&#39;: &#39;No&#39;}),
+ (&#39;year&#39;, {}),
+ (&#39;rating&#39;, {}),
+ (&#39;description&#39;, {}),
+ (&#39;movie&#39;, {&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;THE KARATE KID&#39;}),
+ (&#39;format&#39;, {&#39;multiple&#39;: &#39;Yes&#39;})]
 </code></pre>
 
 </div>
-
 
 <p>It looks like a path of branches gets us to our <code>movie</code> leaf.  To get there we must follow: <code>/genre/decade/movie</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(ET<span style="color:#f92672">.</span>tostring(root, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf8&#39;</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf8&#39;</span>)[:<span style="color:#ae81ff">700</span>])
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print(ET.tostring(root, encoding='utf8').decode('utf8')[:700])
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;?xml version='1.0' encoding='utf8'?&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;?xml version=&#39;1.0&#39; encoding=&#39;utf8&#39;?&gt;
 &lt;collection&gt;
-    &lt;genre category=&quot;Action&quot;&gt;
-        &lt;decade years=&quot;1980s&quot;&gt;
-            &lt;movie favorite=&quot;True&quot; title=&quot;Indiana Jones: The raiders of the lost Ark&quot;&gt;
-                &lt;format multiple=&quot;No&quot;&gt;DVD&lt;/format&gt;
+    &lt;genre category=&#34;Action&#34;&gt;
+        &lt;decade years=&#34;1980s&#34;&gt;
+            &lt;movie favorite=&#34;True&#34; title=&#34;Indiana Jones: The raiders of the lost Ark&#34;&gt;
+                &lt;format multiple=&#34;No&#34;&gt;DVD&lt;/format&gt;
                 &lt;year&gt;1981&lt;/year&gt;
                 &lt;rating&gt;PG&lt;/rating&gt;
                 &lt;description&gt;
-                'Archaeologist and adventurer Indiana Jones 
+                &#39;Archaeologist and adventurer Indiana Jones 
                 is hired by the U.S. government to find the Ark of the 
-                Covenant before the Nazis.'
+                Covenant before the Nazis.&#39;
                 &lt;/description&gt;
             &lt;/movie&gt;
-               &lt;movie favorite=&quot;True&quot; title=&quot;THE KARATE KID&quot;&gt;
-               &lt;format multiple=&quot;Yes&quot;&gt;DVD,Online&lt;/format&gt;
+               &lt;movie favorite=&#34;True&#34; title=&#34;THE KARATE KID&#34;&gt;
+               &lt;format multiple=&#34;Yes&#34;&gt;DVD,Online&lt;/format&gt;
  
 </code></pre>
 
 </div>
 
-
 <h2 id="xpath-expressions">XPath Expressions</h2>
-
 <p>XPath is a query language used to search through an XML quickly and easily. XPath is a &ldquo;path like&rdquo; syntax to identify and navigate nodes in an XML document.</p>
-
 <p>ElementTree has a <code>.findall()</code> function that will traverse the immediate children of the referenced element. You can use XPath expressions to specify more useful searches.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> movie <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(movie<span style="color:#f92672">.</span>attrib)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">for movie in root.findall(&quot;./genre/decade/movie&quot;):
-    print(movie.attrib)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'favorite': 'True', 'title': 'Indiana Jones: The raiders of the lost Ark'}
-{'favorite': 'True', 'title': 'THE KARATE KID'}
-{'favorite': 'False', 'title': 'Back 2 the Future'}
-{'favorite': 'False', 'title': 'X-Men'}
-{'favorite': 'True', 'title': 'Batman Returns'}
-{'favorite': 'False', 'title': 'Reservoir Dogs'}
-{'favorite': 'False', 'title': 'ALIEN'}
-{'favorite': 'True', 'title': &quot;Ferris Bueller's Day Off&quot;}
-{'favorite': 'FALSE', 'title': 'American Psycho'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;Indiana Jones: The raiders of the lost Ark&#39;}
+{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;THE KARATE KID&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;Back 2 the Future&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;X-Men&#39;}
+{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;Batman Returns&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;Reservoir Dogs&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;ALIEN&#39;}
+{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#34;Ferris Bueller&#39;s Day Off&#34;}
+{&#39;favorite&#39;: &#39;FALSE&#39;, &#39;title&#39;: &#39;American Psycho&#39;}
 </code></pre>
 
 </div>
-
 
 <p>Search on child tag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> leaf <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie/[year=&#39;1992&#39;]&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(leaf<span style="color:#f92672">.</span>attrib)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">for leaf in root.findall(&quot;./genre/decade/movie/[year='1992']&quot;):
-    print(leaf.attrib)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'favorite': 'True', 'title': 'Batman Returns'}
-{'favorite': 'False', 'title': 'Reservoir Dogs'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;Batman Returns&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;Reservoir Dogs&#39;}
 </code></pre>
 
 </div>
-
 
 <p>Search on child tag&rsquo;s attribute</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> leaf <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie/format/[@multiple=&#39;Yes&#39;]&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(leaf)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">for leaf in root.findall(&quot;./genre/decade/movie/format/[@multiple='Yes']&quot;):
-    print(leaf)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;Element 'format' at 0x7fc18c4e6138&gt;
-&lt;Element 'format' at 0x7fc18c4e64a8&gt;
-&lt;Element 'format' at 0x7fc18c4e69f8&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;Element &#39;format&#39; at 0x7fc18c4e6138&gt;
+&lt;Element &#39;format&#39; at 0x7fc18c4e64a8&gt;
+&lt;Element &#39;format&#39; at 0x7fc18c4e69f8&gt;
 </code></pre>
 
 </div>
-
 
 <p>use <code>...</code> inside of XPath to return the parent element of the current element.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> leaf <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie/format/[@multiple=&#39;Yes&#39;]...&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(leaf<span style="color:#f92672">.</span>attrib)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">for leaf in root.findall(&quot;./genre/decade/movie/format/[@multiple='Yes']...&quot;):
-    print(leaf.attrib)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'favorite': 'True', 'title': 'THE KARATE KID'}
-{'favorite': 'False', 'title': 'X-Men'}
-{'favorite': 'False', 'title': 'ALIEN'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;THE KARATE KID&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;X-Men&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;ALIEN&#39;}
 </code></pre>
 
 </div>
-
 
 <h2 id="modifying-xml">Modifying XML</h2>
-
 <h3 id="single-element">Single element</h3>
-
 <p>Obtain a single element of the tree and assign it to a variable.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>b2tf <span style="color:#f92672">=</span> root<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;./genre/decade/movie[@title=&#39;Back 2 the Future&#39;]&#34;</span>)
+</span></span><span style="display:flex;"><span>print(b2tf)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">b2tf = root.find(&quot;./genre/decade/movie[@title='Back 2 the Future']&quot;)
-print(b2tf)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;Element 'movie' at 0x7fc18c4e6278&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;Element &#39;movie&#39; at 0x7fc18c4e6278&gt;
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>b2tf<span style="color:#f92672">.</span>attrib
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">b2tf.attrib
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'favorite': 'False', 'title': 'Back 2 the Future'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;Back 2 the Future&#39;}
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>b2tf<span style="color:#f92672">.</span>attrib[<span style="color:#e6db74">&#34;title&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Back to the Future&#34;</span>
+</span></span><span style="display:flex;"><span>print(b2tf<span style="color:#f92672">.</span>attrib)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">b2tf.attrib[&quot;title&quot;] = &quot;Back to the Future&quot;
-print(b2tf.attrib)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'favorite': 'False', 'title': 'Back to the Future'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;Back to the Future&#39;}
 </code></pre>
 
 </div>
-
 
 <p>Because the assignment is not a deep copy, the change is made, in-place.  Now, we can write the corrected tree to file.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> movie <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(movie<span style="color:#f92672">.</span>attrib)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">for movie in root.findall(&quot;./genre/decade/movie&quot;):
-    print(movie.attrib)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'favorite': 'True', 'title': 'Indiana Jones: The raiders of the lost Ark'}
-{'favorite': 'True', 'title': 'THE KARATE KID'}
-{'favorite': 'False', 'title': 'Back to the Future'}
-{'favorite': 'False', 'title': 'X-Men'}
-{'favorite': 'True', 'title': 'Batman Returns'}
-{'favorite': 'False', 'title': 'Reservoir Dogs'}
-{'favorite': 'False', 'title': 'ALIEN'}
-{'favorite': 'True', 'title': &quot;Ferris Bueller's Day Off&quot;}
-{'favorite': 'FALSE', 'title': 'American Psycho'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;Indiana Jones: The raiders of the lost Ark&#39;}
+{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;THE KARATE KID&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;Back to the Future&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;X-Men&#39;}
+{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#39;Batman Returns&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;Reservoir Dogs&#39;}
+{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;ALIEN&#39;}
+{&#39;favorite&#39;: &#39;True&#39;, &#39;title&#39;: &#34;Ferris Bueller&#39;s Day Off&#34;}
+{&#39;favorite&#39;: &#39;FALSE&#39;, &#39;title&#39;: &#39;American Psycho&#39;}
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(file_path)
+</span></span><span style="display:flex;"><span>corr_file <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(path,<span style="color:#e6db74">&#34;example_corr.xml&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>write(corr_file)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> ls Data<span style="color:#f92672">/</span>example
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import os
-path = os.path.dirname(file_path)
-corr_file = os.path.join(path,&quot;example_corr.xml&quot;)
-tree.write(corr_file)
-</code></pre>
-
-<pre><code class="language-python">! ls Data/example
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">example_corr.xml  example.xml
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">example_corr.xml  example.xml
 </code></pre>
 
 </div>
-
 
 <h3 id="multiple-elements">Multiple elements</h3>
-
 <p>You can use regex to find commas - that will tell whether the multiple attribute should be &ldquo;Yes&rdquo; or &ldquo;No&rdquo;. Adding and modifying attributes can be done easily with the .set() method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> form <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie/format&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(form<span style="color:#f92672">.</span>attrib, form<span style="color:#f92672">.</span>text)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">for form in root.findall(&quot;./genre/decade/movie/format&quot;):
-    print(form.attrib, form.text)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'multiple': 'No'} DVD
-{'multiple': 'Yes'} DVD,Online
-{'multiple': 'False'} Blu-ray
-{'multiple': 'Yes'} dvd, digital
-{'multiple': 'No'} VHS
-{'multiple': 'No'} Online
-{'multiple': 'Yes'} DVD
-{'multiple': 'No'} DVD
-{'multiple': 'No'} blue-ray
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;multiple&#39;: &#39;No&#39;} DVD
+{&#39;multiple&#39;: &#39;Yes&#39;} DVD,Online
+{&#39;multiple&#39;: &#39;False&#39;} Blu-ray
+{&#39;multiple&#39;: &#39;Yes&#39;} dvd, digital
+{&#39;multiple&#39;: &#39;No&#39;} VHS
+{&#39;multiple&#39;: &#39;No&#39;} Online
+{&#39;multiple&#39;: &#39;Yes&#39;} DVD
+{&#39;multiple&#39;: &#39;No&#39;} DVD
+{&#39;multiple&#39;: &#39;No&#39;} blue-ray
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> form <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie/format&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Search for the commas in the format text</span>
+</span></span><span style="display:flex;"><span>    match <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;,&#39;</span>,form<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> match:
+</span></span><span style="display:flex;"><span>        form<span style="color:#f92672">.</span>set(<span style="color:#e6db74">&#39;multiple&#39;</span>,<span style="color:#e6db74">&#39;Yes&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        form<span style="color:#f92672">.</span>set(<span style="color:#e6db74">&#39;multiple&#39;</span>,<span style="color:#e6db74">&#39;No&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> form <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie/format&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(form<span style="color:#f92672">.</span>attrib, form<span style="color:#f92672">.</span>text)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import re
-for form in root.findall(&quot;./genre/decade/movie/format&quot;):
-    # Search for the commas in the format text
-    match = re.search(',',form.text)
-    if match:
-        form.set('multiple','Yes')
-    else:
-        form.set('multiple','No')
-</code></pre>
-
-<pre><code class="language-python">for form in root.findall(&quot;./genre/decade/movie/format&quot;):
-    print(form.attrib, form.text)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'multiple': 'No'} DVD
-{'multiple': 'Yes'} DVD,Online
-{'multiple': 'No'} Blu-ray
-{'multiple': 'Yes'} dvd, digital
-{'multiple': 'No'} VHS
-{'multiple': 'No'} Online
-{'multiple': 'No'} DVD
-{'multiple': 'No'} DVD
-{'multiple': 'No'} blue-ray
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;multiple&#39;: &#39;No&#39;} DVD
+{&#39;multiple&#39;: &#39;Yes&#39;} DVD,Online
+{&#39;multiple&#39;: &#39;No&#39;} Blu-ray
+{&#39;multiple&#39;: &#39;Yes&#39;} dvd, digital
+{&#39;multiple&#39;: &#39;No&#39;} VHS
+{&#39;multiple&#39;: &#39;No&#39;} Online
+{&#39;multiple&#39;: &#39;No&#39;} DVD
+{&#39;multiple&#39;: &#39;No&#39;} DVD
+{&#39;multiple&#39;: &#39;No&#39;} blue-ray
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-python">import os
-path = os.path.dirname(file_path)
-corr_file = os.path.join(path,&quot;example_corr.xml&quot;)
-tree.write(corr_file)
-</code></pre>
-
-<h3 id="move-elements">Move elements</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(file_path)
+</span></span><span style="display:flex;"><span>corr_file <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(path,<span style="color:#e6db74">&#34;example_corr.xml&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>write(corr_file)
+</span></span></code></pre></div><h3 id="move-elements">Move elements</h3>
 <p>Check if movies are correctly categorized by year, and fix them if not.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> decade <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(decade<span style="color:#f92672">.</span>attrib)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> year <span style="color:#f92672">in</span> decade<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./movie/year&#34;</span>):
+</span></span><span style="display:flex;"><span>        print(year<span style="color:#f92672">.</span>text, <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">for decade in root.findall(&quot;./genre/decade&quot;):
-    print(decade.attrib)
-    for year in decade.findall(&quot;./movie/year&quot;):
-        print(year.text, '\n')
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'years': '1980s'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;years&#39;: &#39;1980s&#39;}
 1981 
 
 1984 
 
 1985 
 
-{'years': '1990s'}
+{&#39;years&#39;: &#39;1990s&#39;}
 2000 
 
 1992 
 
 1992 
 
-{'years': '1970s'}
+{&#39;years&#39;: &#39;1970s&#39;}
 1979 
 
-{'years': '1980s'}
+{&#39;years&#39;: &#39;1980s&#39;}
 1986 
 
 2000 
-
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> movie <span style="color:#f92672">in</span> root<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;./genre/decade/movie/[year=&#39;2000&#39;]&#34;</span>):
+</span></span><span style="display:flex;"><span>    print(movie<span style="color:#f92672">.</span>attrib)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">for movie in root.findall(&quot;./genre/decade/movie/[year='2000']&quot;):
-    print(movie.attrib)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{'favorite': 'False', 'title': 'X-Men'}
-{'favorite': 'FALSE', 'title': 'American Psycho'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{&#39;favorite&#39;: &#39;False&#39;, &#39;title&#39;: &#39;X-Men&#39;}
+{&#39;favorite&#39;: &#39;FALSE&#39;, &#39;title&#39;: &#39;American Psycho&#39;}
 </code></pre>
 
 </div>
-
 
 <p>Add a new decade tag to the end of the XML using the <code>.SubElement()</code> method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>action <span style="color:#f92672">=</span> root<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;./genre[@category=&#39;Action&#39;]&#34;</span>)
+</span></span><span style="display:flex;"><span>new_dec <span style="color:#f92672">=</span> ET<span style="color:#f92672">.</span>SubElement(action, <span style="color:#e6db74">&#39;decade&#39;</span>)
+</span></span><span style="display:flex;"><span>new_dec<span style="color:#f92672">.</span>attrib[<span style="color:#e6db74">&#34;years&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;2000s&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(ET<span style="color:#f92672">.</span>tostring(action, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf8&#39;</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf8&#39;</span>)[:<span style="color:#ae81ff">500</span>])
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">action = root.find(&quot;./genre[@category='Action']&quot;)
-new_dec = ET.SubElement(action, 'decade')
-new_dec.attrib[&quot;years&quot;] = '2000s'
-
-print(ET.tostring(action, encoding='utf8').decode('utf8')[:500])
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;?xml version='1.0' encoding='utf8'?&gt;
-&lt;genre category=&quot;Action&quot;&gt;
-        &lt;decade years=&quot;1980s&quot;&gt;
-            &lt;movie favorite=&quot;True&quot; title=&quot;Indiana Jones: The raiders of the lost Ark&quot;&gt;
-                &lt;format multiple=&quot;No&quot;&gt;DVD&lt;/format&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;?xml version=&#39;1.0&#39; encoding=&#39;utf8&#39;?&gt;
+&lt;genre category=&#34;Action&#34;&gt;
+        &lt;decade years=&#34;1980s&#34;&gt;
+            &lt;movie favorite=&#34;True&#34; title=&#34;Indiana Jones: The raiders of the lost Ark&#34;&gt;
+                &lt;format multiple=&#34;No&#34;&gt;DVD&lt;/format&gt;
                 &lt;year&gt;1981&lt;/year&gt;
                 &lt;rating&gt;PG&lt;/rating&gt;
                 &lt;description&gt;
-                'Archaeologist and adventurer Indiana Jones 
+                &#39;Archaeologist and adventurer Indiana Jones 
                 is hired by the U.S. government to find the Ark of the 
                 Covenant before th
 </code></pre>
 
 </div>
-
 
 <p>Use <code>.append()</code> and <code>.remove()</code> to move the element.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>xmen <span style="color:#f92672">=</span> root<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;./genre/decade/movie[@title=&#39;X-Men&#39;]&#34;</span>)
+</span></span><span style="display:flex;"><span>dec2000s <span style="color:#f92672">=</span> root<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;./genre[@category=&#39;Action&#39;]/decade[@years=&#39;2000s&#39;]&#34;</span>)
+</span></span><span style="display:flex;"><span>dec2000s<span style="color:#f92672">.</span>append(xmen)
+</span></span><span style="display:flex;"><span>dec1990s <span style="color:#f92672">=</span> root<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;./genre[@category=&#39;Action&#39;]/decade[@years=&#39;1990s&#39;]&#34;</span>)
+</span></span><span style="display:flex;"><span>dec1990s<span style="color:#f92672">.</span>remove(xmen)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(ET<span style="color:#f92672">.</span>tostring(action, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf8&#39;</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf8&#39;</span>)[:<span style="color:#ae81ff">500</span>])
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">xmen = root.find(&quot;./genre/decade/movie[@title='X-Men']&quot;)
-dec2000s = root.find(&quot;./genre[@category='Action']/decade[@years='2000s']&quot;)
-dec2000s.append(xmen)
-dec1990s = root.find(&quot;./genre[@category='Action']/decade[@years='1990s']&quot;)
-dec1990s.remove(xmen)
-</code></pre>
-
-<pre><code class="language-python">print(ET.tostring(action, encoding='utf8').decode('utf8')[:500])
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;?xml version='1.0' encoding='utf8'?&gt;
-&lt;genre category=&quot;Action&quot;&gt;
-        &lt;decade years=&quot;1980s&quot;&gt;
-            &lt;movie favorite=&quot;True&quot; title=&quot;Indiana Jones: The raiders of the lost Ark&quot;&gt;
-                &lt;format multiple=&quot;No&quot;&gt;DVD&lt;/format&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;?xml version=&#39;1.0&#39; encoding=&#39;utf8&#39;?&gt;
+&lt;genre category=&#34;Action&#34;&gt;
+        &lt;decade years=&#34;1980s&#34;&gt;
+            &lt;movie favorite=&#34;True&#34; title=&#34;Indiana Jones: The raiders of the lost Ark&#34;&gt;
+                &lt;format multiple=&#34;No&#34;&gt;DVD&lt;/format&gt;
                 &lt;year&gt;1981&lt;/year&gt;
                 &lt;rating&gt;PG&lt;/rating&gt;
                 &lt;description&gt;
-                'Archaeologist and adventurer Indiana Jones 
+                &#39;Archaeologist and adventurer Indiana Jones 
                 is hired by the U.S. government to find the Ark of the 
                 Covenant before th
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-python">import os
-path = os.path.dirname(file_path)
-corr_file = os.path.join(path,&quot;example_corr.xml&quot;)
-tree.write(corr_file)
-</code></pre>
-
-<h2 id="xml-schema-xsd">XML schema (.xsd)</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(file_path)
+</span></span><span style="display:flex;"><span>corr_file <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(path,<span style="color:#e6db74">&#34;example_corr.xml&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>write(corr_file)
+</span></span></code></pre></div><h2 id="xml-schema-xsd">XML schema (.xsd)</h2>
 <p>ElementTree does not have support for XML schema.  However, lxml library is based on ElementTree, and it does have support for schemas.  If you have access to external libraries and need the functionality, then lxml may solve your problems.</p>
-
 <p>With a <code>XMLSchema</code> you can enforce the schema standards.</p>
-
-<pre><code class="language-python">from lxml import etree
-
-# Create the schema object
-with open(xsd_file) as f:
-    xmlschema_doc = etree.parse(f)
-xmlschema = etree.XMLSchema(xmlschema_doc)
-
-# Create a tree for the XML document
-doc = etree.parse(xml_text)
-
-# Validate the XML document using the schema
-return xmlschema.validate(doc)
-
-# Or if you want a exception to be raised
-xmlschema.assertValid(doc)
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> lxml <span style="color:#f92672">import</span> etree
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the schema object</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(xsd_file) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>    xmlschema_doc <span style="color:#f92672">=</span> etree<span style="color:#f92672">.</span>parse(f)
+</span></span><span style="display:flex;"><span>xmlschema <span style="color:#f92672">=</span> etree<span style="color:#f92672">.</span>XMLSchema(xmlschema_doc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a tree for the XML document</span>
+</span></span><span style="display:flex;"><span>doc <span style="color:#f92672">=</span> etree<span style="color:#f92672">.</span>parse(xml_text)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Validate the XML document using the schema</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> xmlschema<span style="color:#f92672">.</span>validate(doc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Or if you want a exception to be raised</span>
+</span></span><span style="display:flex;"><span>xmlschema<span style="color:#f92672">.</span>assertValid(doc)
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>Working with XML is an important skill, and Python stdlib&rsquo;s ElementTree library is invaluable for getting things done fast.  With a little knowledge of the ElementTree API and XPath expressions, you&rsquo;re fully capable of most functionality needed for XML CRUD operations.</p>
 
         </div>
@@ -621,23 +504,21 @@ xmlschema.assertValid(doc)
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#introduction-to-elementtree">Introduction to ElementTree</a></li>
-<li><a href="#config">Config</a></li>
-<li><a href="#explore">Explore</a></li>
-<li><a href="#xpath-expressions">XPath Expressions</a></li>
-<li><a href="#modifying-xml">Modifying XML</a>
-<ul>
-<li><a href="#single-element">Single element</a></li>
-<li><a href="#multiple-elements">Multiple elements</a></li>
-<li><a href="#move-elements">Move elements</a></li>
-</ul></li>
-<li><a href="#xml-schema-xsd">XML schema (.xsd)</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#introduction-to-elementtree">Introduction to ElementTree</a></li>
+    <li><a href="#config">Config</a></li>
+    <li><a href="#explore">Explore</a></li>
+    <li><a href="#xpath-expressions">XPath Expressions</a></li>
+    <li><a href="#modifying-xml">Modifying XML</a>
+      <ul>
+        <li><a href="#single-element">Single element</a></li>
+        <li><a href="#multiple-elements">Multiple elements</a></li>
+        <li><a href="#move-elements">Move elements</a></li>
+      </ul>
+    </li>
+    <li><a href="#xml-schema-xsd">XML schema (.xsd)</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -724,7 +605,7 @@ xmlschema.assertValid(doc)
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

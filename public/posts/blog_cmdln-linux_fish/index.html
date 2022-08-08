@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,646 +106,470 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>The Linux terminal (typically implemented with the Bourne Again Shell Script, BASH) can be intimidating for beginners and annoying for experienced programmers.  But, it is a necessity for most users of Linux; and, in many situations, it can also be a huge productivity enhancer over graphical interfaces.</p>
-
+            <p>The Linux terminal (typically implemented with the Bourne Again Shell Script, BASH) can be intimidating for beginners and annoying for experienced programmers.  But, it is a necessity for most users of Linux; and, in many situations, it can also be a huge productivity enhancer over graphical interfaces.</p>
 <p>Fish is a commandline tool that is a great complement to BASH.  It is highly configureable and provides nice features such as syntax coloring and <code>TAB</code> command completion, out-of-the-box.  For this tutorial, we will use a quick docker set-up with the smallest, but still capable, Linux image (bitnami/minideb).  Then, we will install fish and try some of the most common Linux commands.  Fish isn&rsquo;t necessary for most of these bash commands; however, it can make your life a little easier while flying through various directories working on your next project.</p>
-
 <p>Two great references that are much more in-depth than this tutorial are the following:</p>
-
 <ul>
 <li><a href="https://github.com/jlevy/the-art-of-command-line">The Art of the Command Line</a></li>
 <li><a href="https://linuxjourney.com/">Linux Journey</a></li>
 </ul>
-
 <h2 id="preparation">Preparation</h2>
-
 <p>Some terminology to know before working <a href="https://askubuntu.com/questions/506510/what-is-the-difference-between-terminal-console-shell-and-command-line">includes</a>:</p>
-
 <ul>
 <li>terminal - text input/output environment</li>
 <li>console - physical terminal (older hardware-oriented term)</li>
 <li>command line - where user enters commands</li>
 <li>shell - command line interpreter</li>
 </ul>
-
 <blockquote>
 <p>The user (you) will be opening <em>terminal</em> interface and entering the <em>command line</em> through the fish application <em>shell</em>.</p>
 </blockquote>
-
 <p>Install docker for your operating system, then run <a href="https://github.com/bitnami/minideb">Bitnami&rsquo;s minideb (mini-debian)</a> so that you have a disposable Linux container.  You can break whatever you want in this container and not worry that you&rsquo;ve hurt your actual operating system.  To reset it, just create a new container.</p>
-
-<pre><code class="language-python">#list current images
-docker images
-#obtain and run minideb container
-docker run --rm -it bitnami/minideb:latest
-#enter container's bash interface application
-docker exec -it cntr_minideb bash
-#install and use fish
-apt-get update &amp;&amp; apt-get upgrade
-apt-get install fish
-fish
-</code></pre>
-
-<p>Before you get started on the basics, you might want to install two additioanl applications.  The <code>nano</code> text editor can be much more intuitive than the more-common <code>vim</code>.  Also, the <a href="https://github.com/cheat/cheat">Cheat</a> application can help in your learning.  Digital Ocean has a tutorial for <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-command-line-cheat-sheets-on-ubuntu-14-04">getting started</a>.</p>
-
-<pre><code class="language-python">apt-get nano
-apt-get install python-pip
-pip install cheat
-cheat -v
-</code></pre>
-
-<p>Later, to exit the applications and shut-down docker</p>
-
-<pre><code class="language-python">#from fish
-exit
-#from bash
-exit
-#continue with docker container, later
-docker stop cntr_minideb
-#kill container
-docker rm cntr_minideb
-</code></pre>
-
-<h2 id="basic-file-system">Basic File System</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#list current images</span>
+</span></span><span style="display:flex;"><span>docker images
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#obtain and run minideb container</span>
+</span></span><span style="display:flex;"><span>docker run <span style="color:#f92672">--</span>rm <span style="color:#f92672">-</span>it bitnami<span style="color:#f92672">/</span>minideb:latest
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#enter container&#39;s bash interface application</span>
+</span></span><span style="display:flex;"><span>docker exec <span style="color:#f92672">-</span>it cntr_minideb bash
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install and use fish</span>
+</span></span><span style="display:flex;"><span>apt<span style="color:#f92672">-</span>get update <span style="color:#f92672">&amp;&amp;</span> apt<span style="color:#f92672">-</span>get upgrade
+</span></span><span style="display:flex;"><span>apt<span style="color:#f92672">-</span>get install fish
+</span></span><span style="display:flex;"><span>fish
+</span></span></code></pre></div><p>Before you get started on the basics, you might want to install two additioanl applications.  The <code>nano</code> text editor can be much more intuitive than the more-common <code>vim</code>.  Also, the <a href="https://github.com/cheat/cheat">Cheat</a> application can help in your learning.  Digital Ocean has a tutorial for <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-command-line-cheat-sheets-on-ubuntu-14-04">getting started</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>apt<span style="color:#f92672">-</span>get nano
+</span></span><span style="display:flex;"><span>apt<span style="color:#f92672">-</span>get install python<span style="color:#f92672">-</span>pip
+</span></span><span style="display:flex;"><span>pip install cheat
+</span></span><span style="display:flex;"><span>cheat <span style="color:#f92672">-</span>v
+</span></span></code></pre></div><p>Later, to exit the applications and shut-down docker</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#from fish</span>
+</span></span><span style="display:flex;"><span>exit
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#from bash</span>
+</span></span><span style="display:flex;"><span>exit
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#continue with docker container, later</span>
+</span></span><span style="display:flex;"><span>docker stop cntr_minideb
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#kill container</span>
+</span></span><span style="display:flex;"><span>docker rm cntr_minideb
+</span></span></code></pre></div><h2 id="basic-file-system">Basic File System</h2>
 <p>These basic commands are common to many different shell systems.  They include commands for working with files and directories, as well as some basic programming concepts, such as variables, that show-up throughout working in the terminal.</p>
-
 <h3 id="quickstart">Quickstart</h3>
-
-<pre><code class="language-python">#directory structure
-echo $HOME
-mkdir &lt;dir&gt;
-cd &lt;dir&gt;
-pwd 
-tree
-#display file statistics
-stat &lt;file&gt;
-file &lt;file&gt;
-#display help
-man &lt;command&gt;
-help &lt;command&gt;
-type &lt;command&gt;
-whatis &lt;command&gt;
-</code></pre>
-
-<h3 id="variables">Variables</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#directory structure</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#960050;background-color:#1e0010">$</span>HOME
+</span></span><span style="display:flex;"><span>mkdir <span style="color:#f92672">&lt;</span>dir<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>cd <span style="color:#f92672">&lt;</span>dir<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>pwd 
+</span></span><span style="display:flex;"><span>tree
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#display file statistics</span>
+</span></span><span style="display:flex;"><span>stat <span style="color:#f92672">&lt;</span>file<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>file <span style="color:#f92672">&lt;</span>file<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#display help</span>
+</span></span><span style="display:flex;"><span>man <span style="color:#f92672">&lt;</span>command<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>help <span style="color:#f92672">&lt;</span>command<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>type <span style="color:#f92672">&lt;</span>command<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>whatis <span style="color:#f92672">&lt;</span>command<span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><h3 id="variables">Variables</h3>
 <p>One way that the shell keeps track of all of these settings and details is through an area it maintains called the environment.</p>
-
 <p><em>Environmental variables</em> are variables that are defined for the current shell and are inherited, and override variables, by any child shells or processes. Environmental variables are used to pass information into processes that are spawned from the shell.</p>
-
 <p><em>Shell variables</em> are variables that are contained exclusively within the shell in which they were set or defined. They are often used to keep track of ephemeral data, like the current working directory.</p>
-
 <p>By convention, these types of variables are usually defined using all capital letters.</p>
-
 <p><em>Environment variables</em></p>
-
-<pre><code class="language-python">#environment variables
-printenv
-#print specific variable
-printenv &lt;var&gt;
-#set specific variable
-env VAR1=&quot;blahblah&quot; command_to_run command_options
-</code></pre>
-
-<p><em>Shell variables</em></p>
-
-<pre><code class="language-python">#shell variables
-set | less
-#without functions
-env VAR1=&quot;blahblah&quot; command_to_run command_options
-</code></pre>
-
-<p>Typical environment variables:</p>
-
-<pre><code class="language-python">#describes the shell
-SHELL
-#specifies the type of terminal to emulate when running the shell
-TERM
-#current logged in user
-USER
-#current working directory.
-PWD
-#previous working directory
-OLDPWD
-#defines color codes used to add colored output to the ls command
-LS_COLORS
-#path to the current user's mailbox
-MAIL
-#list of (ordered) directories that the system will check when looking for commands
-PATH
-#current language and localization settings
-LANG
-#current user's home directory
-HOME
-#previously executed command
-_
-</code></pre>
-
-<p>Common shell variables:</p>
-
-<pre><code class="language-python">#list of options that were used when bash was executed
-BASHOPTS
-#verion
-BASH_VERSION
-BASH_VERSINFO
-#number of columns wide that are being used to draw output
-COLUMNS
-#stack of directories that are available with the pushd and popd commands
-DIRSTACK
-#number of lines of command history stored to a file
-HISTFILESIZE
-#number of lines of command history allowed in memory
-HISTSIZE
-#The hostname of the computer at this time
-HOSTNAME
-#internal field separator to separate input on the command line; space by default
-IFS
-#primary command prompt definition
-PS1
-#secondary prompts for when a command spans multiple lines
-PS2
-#shell options that can be set with the set option.
-SHELLOPTS
-#the UID of the current user
-UID
-</code></pre>
-
-<p>Test shell variables:</p>
-
-<pre><code class="language-python">#define shell var
-TEST_VAR='Hello World!'
-#confirm
-set | grep TEST_VAR
-printenv | grep TEST_VAR
-#reference
-echo $TEST_VAR
-#shell vars are not passed to child processes
-bash
-echo $TEST_VAR
-</code></pre>
-
-<p>Test environment variables:</p>
-
-<pre><code class="language-python">#export shell var to the environment
-export TEST_VAR
-#available in child process
-bash
-echo $TEST_VAR
-exit
-#convert back to shell var
-export -n TEST_VAR
-#remove completely
-unset TEST_VAR
-</code></pre>
-
-<p>Typical usage:</p>
-
-<pre><code class="language-python">nano ~/.bash_profile
-#add `export TEST_VAR='Hello World!'
-#exit
-source ~/.bash_profile    #instead of restarting the terminal
-</code></pre>
-
-<h3 id="creation-redirection-and-wildcards">Creation, redirection, and wildcards</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#environment variables</span>
+</span></span><span style="display:flex;"><span>printenv
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#print specific variable</span>
+</span></span><span style="display:flex;"><span>printenv <span style="color:#f92672">&lt;</span>var<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#set specific variable</span>
+</span></span><span style="display:flex;"><span>env VAR1<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blahblah&#34;</span> command_to_run command_options
+</span></span></code></pre></div><p><em>Shell variables</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#shell variables</span>
+</span></span><span style="display:flex;"><span>set <span style="color:#f92672">|</span> less
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#without functions</span>
+</span></span><span style="display:flex;"><span>env VAR1<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blahblah&#34;</span> command_to_run command_options
+</span></span></code></pre></div><p>Typical environment variables:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#describes the shell</span>
+</span></span><span style="display:flex;"><span>SHELL
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#specifies the type of terminal to emulate when running the shell</span>
+</span></span><span style="display:flex;"><span>TERM
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#current logged in user</span>
+</span></span><span style="display:flex;"><span>USER
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#current working directory.</span>
+</span></span><span style="display:flex;"><span>PWD
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#previous working directory</span>
+</span></span><span style="display:flex;"><span>OLDPWD
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#defines color codes used to add colored output to the ls command</span>
+</span></span><span style="display:flex;"><span>LS_COLORS
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#path to the current user&#39;s mailbox</span>
+</span></span><span style="display:flex;"><span>MAIL
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#list of (ordered) directories that the system will check when looking for commands</span>
+</span></span><span style="display:flex;"><span>PATH
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#current language and localization settings</span>
+</span></span><span style="display:flex;"><span>LANG
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#current user&#39;s home directory</span>
+</span></span><span style="display:flex;"><span>HOME
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#previously executed command</span>
+</span></span><span style="display:flex;"><span>_
+</span></span></code></pre></div><p>Common shell variables:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#list of options that were used when bash was executed</span>
+</span></span><span style="display:flex;"><span>BASHOPTS
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verion</span>
+</span></span><span style="display:flex;"><span>BASH_VERSION
+</span></span><span style="display:flex;"><span>BASH_VERSINFO
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#number of columns wide that are being used to draw output</span>
+</span></span><span style="display:flex;"><span>COLUMNS
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#stack of directories that are available with the pushd and popd commands</span>
+</span></span><span style="display:flex;"><span>DIRSTACK
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#number of lines of command history stored to a file</span>
+</span></span><span style="display:flex;"><span>HISTFILESIZE
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#number of lines of command history allowed in memory</span>
+</span></span><span style="display:flex;"><span>HISTSIZE
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#The hostname of the computer at this time</span>
+</span></span><span style="display:flex;"><span>HOSTNAME
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#internal field separator to separate input on the command line; space by default</span>
+</span></span><span style="display:flex;"><span>IFS
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#primary command prompt definition</span>
+</span></span><span style="display:flex;"><span>PS1
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#secondary prompts for when a command spans multiple lines</span>
+</span></span><span style="display:flex;"><span>PS2
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#shell options that can be set with the set option.</span>
+</span></span><span style="display:flex;"><span>SHELLOPTS
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#the UID of the current user</span>
+</span></span><span style="display:flex;"><span>UID
+</span></span></code></pre></div><p>Test shell variables:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#define shell var</span>
+</span></span><span style="display:flex;"><span>TEST_VAR<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Hello World!&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#confirm</span>
+</span></span><span style="display:flex;"><span>set <span style="color:#f92672">|</span> grep TEST_VAR
+</span></span><span style="display:flex;"><span>printenv <span style="color:#f92672">|</span> grep TEST_VAR
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#reference</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#960050;background-color:#1e0010">$</span>TEST_VAR
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#shell vars are not passed to child processes</span>
+</span></span><span style="display:flex;"><span>bash
+</span></span><span style="display:flex;"><span>echo <span style="color:#960050;background-color:#1e0010">$</span>TEST_VAR
+</span></span></code></pre></div><p>Test environment variables:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#export shell var to the environment</span>
+</span></span><span style="display:flex;"><span>export TEST_VAR
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#available in child process</span>
+</span></span><span style="display:flex;"><span>bash
+</span></span><span style="display:flex;"><span>echo <span style="color:#960050;background-color:#1e0010">$</span>TEST_VAR
+</span></span><span style="display:flex;"><span>exit
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#convert back to shell var</span>
+</span></span><span style="display:flex;"><span>export <span style="color:#f92672">-</span>n TEST_VAR
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#remove completely</span>
+</span></span><span style="display:flex;"><span>unset TEST_VAR
+</span></span></code></pre></div><p>Typical usage:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>nano <span style="color:#f92672">~/.</span>bash_profile
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#add `export TEST_VAR=&#39;Hello World!&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#exit</span>
+</span></span><span style="display:flex;"><span>source <span style="color:#f92672">~/.</span>bash_profile    <span style="color:#75715e">#instead of restarting the terminal</span>
+</span></span></code></pre></div><h3 id="creation-redirection-and-wildcards">Creation, redirection, and wildcards</h3>
 <p>These commands are a little more advanced, but you see them often in instructions.  Once you get comfortable using them, they become very helpful.</p>
-
-<pre><code class="language-python">#new file
-touch &lt;filename&gt;
-#overwrites
-&lt;stream&gt; &gt; &lt;filename&gt;
-#appends
-&lt;stream&gt; &gt;&gt; &lt;filename&gt;
-#pipe output of left to input on right
-&lt;stream&gt; | &lt;stream&gt;
-</code></pre>
-
-<p>A common usage of the pipe:</p>
-
-<pre><code class="language-python">printenv | less
-</code></pre>
-
-<p>Additional operators:</p>
-
-<pre><code class="language-python">#takes input from the file on the right instead of the keyboard
-&lt;
-#redirect standard error to the location on the right
-^
-#match any character string that does not include &quot;/&quot;
-*
-#matche any single character, not including &quot;/&quot;
-? 
-#match any string including &quot;/&quot;, recusively
-**
-</code></pre>
-
-<p>Examples of the above commands:</p>
-
-<pre><code class="language-python">#list files in that directory and child directories
-ls /etc/**.conf
-#stand output to file, stand error to where stand output goes (same file)
-ls /etc &gt;ls_results.txt ^&amp;1
-</code></pre>
-
-<h3 id="command-history-and-tab-completion">Command history and TAB completion</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#new file</span>
+</span></span><span style="display:flex;"><span>touch <span style="color:#f92672">&lt;</span>filename<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#overwrites</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>stream<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span>filename<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#appends</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>stream<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;&gt;</span> <span style="color:#f92672">&lt;</span>filename<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pipe output of left to input on right</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>stream<span style="color:#f92672">&gt;</span> <span style="color:#f92672">|</span> <span style="color:#f92672">&lt;</span>stream<span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><p>A common usage of the pipe:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>printenv <span style="color:#f92672">|</span> less
+</span></span></code></pre></div><p>Additional operators:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#takes input from the file on the right instead of the keyboard</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#redirect standard error to the location on the right</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">^</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#match any character string that does not include &#34;/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#matche any single character, not including &#34;/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">?</span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#match any string including &#34;/&#34;, recusively</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">**</span>
+</span></span></code></pre></div><p>Examples of the above commands:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#list files in that directory and child directories</span>
+</span></span><span style="display:flex;"><span>ls <span style="color:#f92672">/</span>etc<span style="color:#f92672">/**.</span>conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#stand output to file, stand error to where stand output goes (same file)</span>
+</span></span><span style="display:flex;"><span>ls <span style="color:#f92672">/</span>etc <span style="color:#f92672">&gt;</span>ls_results<span style="color:#f92672">.</span>txt <span style="color:#f92672">^&amp;</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h3 id="command-history-and-tab-completion">Command history and TAB completion</h3>
 <p>The history of your previous commands is key for moving quickly and remembering completed tasks.  You can move up chronologically in your history by using the <code>UP</code> key. You can move in the reverse direction by using the <code>DOWN</code> key. This is fairly standard.  If we wish to return to our prompt, we just hit the <code>escape</code> key.  We can also type in part of a previous command and then press the <code>UP</code> key to search for the latest instances of that specific command.  Furthermore, we can use the <code>ALT-UP</code> and <code>ALT-DOWN</code> commands to recall the command line arguments only.</p>
-
-<pre><code class="language-python">#previous commands
-history
-#last argument
-&lt;cmd&gt; !$  
-&lt;cmd&gt; !_1
-#last command
-!!
-</code></pre>
-
-<h3 id="file-manipulation">File manipulation</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#previous commands</span>
+</span></span><span style="display:flex;"><span>history
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#last argument</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>cmd<span style="color:#f92672">&gt;</span> <span style="color:#960050;background-color:#1e0010">!$</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>cmd<span style="color:#f92672">&gt;</span> <span style="color:#960050;background-color:#1e0010">!</span>_1
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#last command</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!!</span>
+</span></span></code></pre></div><h3 id="file-manipulation">File manipulation</h3>
 <p>Download files or get them via http request, then familiarize yourself with them.</p>
-
-<pre><code class="language-python">#download
-wget
-#http requests
-curl
-#concatenate
-cat
-#word count
-wc
-#print file
-head
-tail
-</code></pre>
-
-<h2 id="system-administration">System Administration</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#download</span>
+</span></span><span style="display:flex;"><span>wget
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#http requests</span>
+</span></span><span style="display:flex;"><span>curl
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#concatenate</span>
+</span></span><span style="display:flex;"><span>cat
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#word count</span>
+</span></span><span style="display:flex;"><span>wc
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#print file</span>
+</span></span><span style="display:flex;"><span>head
+</span></span><span style="display:flex;"><span>tail
+</span></span></code></pre></div><h2 id="system-administration">System Administration</h2>
 <p>Administration of a Linux server is a huge field.  External references are provided, in various sections, to give more detailed explanation.</p>
-
 <h3 id="machine-configuration">Machine configuration</h3>
-
 <p>These are basic commands to understand your machine and prepare it for use.</p>
-
-<pre><code class="language-python">#os version
-cat /etc/os-release
-#kernel version
-uname -r
-#number of core
-python -c 'import multiprocessing as mp; print(mp.cpu_count())'	
-#make current
-sudo apt-get update &amp;&amp; sudo apt-get upgrade
-</code></pre>
-
-<h3 id="displaying-disk-usage">Displaying disk usage</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#os version</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#f92672">/</span>etc<span style="color:#f92672">/</span>os<span style="color:#f92672">-</span>release
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#kernel version</span>
+</span></span><span style="display:flex;"><span>uname <span style="color:#f92672">-</span>r
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#number of core</span>
+</span></span><span style="display:flex;"><span>python <span style="color:#f92672">-</span>c <span style="color:#e6db74">&#39;import multiprocessing as mp; print(mp.cpu_count())&#39;</span>	
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#make current</span>
+</span></span><span style="display:flex;"><span>sudo apt<span style="color:#f92672">-</span>get update <span style="color:#f92672">&amp;&amp;</span> sudo apt<span style="color:#f92672">-</span>get upgrade
+</span></span></code></pre></div><h3 id="displaying-disk-usage">Displaying disk usage</h3>
 <p>To understand the foundations around these commands, take a look at the following:</p>
-
 <ul>
 <li><a href="https://www.tecmint.com/check-linux-disk-usage-of-files-and-directories/">disk usage</a></li>
 <li><a href="https://www.tecmint.com/how-to-check-disk-space-in-linux/">disk space</a></li>
 </ul>
-
-<pre><code class="language-python">du --max-depth=1 --human-readable /home/vagrant/ | sort --human-numeric-sort
-du -d1 -h /home/ubuntu | sort -h
-du -sh
-df -h
-df -i		#inodes
-</code></pre>
-
-<h3 id="describing-cpu-and-memory-usage">Describing CPU and memory usage</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>du <span style="color:#f92672">--</span>max<span style="color:#f92672">-</span>depth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">--</span>human<span style="color:#f92672">-</span>readable <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>vagrant<span style="color:#f92672">/</span> <span style="color:#f92672">|</span> sort <span style="color:#f92672">--</span>human<span style="color:#f92672">-</span>numeric<span style="color:#f92672">-</span>sort
+</span></span><span style="display:flex;"><span>du <span style="color:#f92672">-</span>d1 <span style="color:#f92672">-</span>h <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>ubuntu <span style="color:#f92672">|</span> sort <span style="color:#f92672">-</span>h
+</span></span><span style="display:flex;"><span>du <span style="color:#f92672">-</span>sh
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">-</span>h
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">-</span>i		<span style="color:#75715e">#inodes</span>
+</span></span></code></pre></div><h3 id="describing-cpu-and-memory-usage">Describing CPU and memory usage</h3>
 <p>This is another field where you really need to know the internals to understand what you&rsquo;re looking at.  Get a better understanding of cpu utilization, <a href="http://www.brendangregg.com/blog/2017-05-09/cpu-utilization-is-wrong.html">here</a>.</p>
-
-<pre><code class="language-python">sudo apt-get install linux-tools-common linux-tools-generic linux-tools-3.13.0.110
-perf stat -a -- sleep 10
-</code></pre>
-
-<p><em>Notes</em></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sudo apt<span style="color:#f92672">-</span>get install linux<span style="color:#f92672">-</span>tools<span style="color:#f92672">-</span>common linux<span style="color:#f92672">-</span>tools<span style="color:#f92672">-</span>generic linux<span style="color:#f92672">-</span>tools<span style="color:#f92672">-</span><span style="color:#ae81ff">3.13.0.110</span>
+</span></span><span style="display:flex;"><span>perf stat <span style="color:#f92672">-</span>a <span style="color:#f92672">--</span> sleep <span style="color:#ae81ff">10</span>
+</span></span></code></pre></div><p><em>Notes</em></p>
 <ul>
 <li>IPC is &lt; 1.0: you are likely memory stalled, and software tuning strategies include reducing memory I/O, and improving CPU caching and memory locality</li>
 <li>IPC is &gt; 1.0: you are likely instruction bound. Look for ways to reduce code execution: eliminate unnecessary work, cache operations, etc. CPU flame graphs are a great tool for this investigation</li>
 </ul>
-
 <h3 id="installing-applications">Installing applications</h3>
-
 <p>This is a very old field and you will likely encounter many types of applications of varying history and quality.  Getting to know how to install applications and build packages can give you a greater appreciation before you inevitably do it yourself.</p>
-
-<pre><code class="language-python">#pre-approved sources to get packages from
-nano /etc/apt/sources.list
-#install package
-dpkg -i &lt;some_deb_package.deb&gt;
-#remove package
-dpkg -r &lt;some_deb_package.deb&gt;
-#list packages
-dpkg -l
-#package manager: advanced package tool
-apt install &lt;package&gt;
-apt list
-apt moo
-</code></pre>
-
-<h3 id="building-packages">Building packages</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#pre-approved sources to get packages from</span>
+</span></span><span style="display:flex;"><span>nano <span style="color:#f92672">/</span>etc<span style="color:#f92672">/</span>apt<span style="color:#f92672">/</span>sources<span style="color:#f92672">.</span>list
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install package</span>
+</span></span><span style="display:flex;"><span>dpkg <span style="color:#f92672">-</span>i <span style="color:#f92672">&lt;</span>some_deb_package<span style="color:#f92672">.</span>deb<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#remove package</span>
+</span></span><span style="display:flex;"><span>dpkg <span style="color:#f92672">-</span>r <span style="color:#f92672">&lt;</span>some_deb_package<span style="color:#f92672">.</span>deb<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#list packages</span>
+</span></span><span style="display:flex;"><span>dpkg <span style="color:#f92672">-</span>l
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#package manager: advanced package tool</span>
+</span></span><span style="display:flex;"><span>apt install <span style="color:#f92672">&lt;</span>package<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>apt list
+</span></span><span style="display:flex;"><span>apt moo
+</span></span></code></pre></div><h3 id="building-packages">Building packages</h3>
 <p>This may include many other commands based upon the language of the application.</p>
-
-<pre><code class="language-python">#build tools
-apt install build-essential
-tar -xzvf &lt;package.tar.gz&gt;
-#check dependencies
-./configure
-#install:copy the correct files to the correct locations on your computer.
-make install
-#uninstall
-make uninstall
-#instead make .deb and install it
-checkinstall
-</code></pre>
-
-<h3 id="processes">Processes</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#build tools</span>
+</span></span><span style="display:flex;"><span>apt install build<span style="color:#f92672">-</span>essential
+</span></span><span style="display:flex;"><span>tar <span style="color:#f92672">-</span>xzvf <span style="color:#f92672">&lt;</span>package<span style="color:#f92672">.</span>tar<span style="color:#f92672">.</span>gz<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check dependencies</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">./</span>configure
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install:copy the correct files to the correct locations on your computer.</span>
+</span></span><span style="display:flex;"><span>make install
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#uninstall</span>
+</span></span><span style="display:flex;"><span>make uninstall
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#instead make .deb and install it</span>
+</span></span><span style="display:flex;"><span>checkinstall
+</span></span></code></pre></div><h3 id="processes">Processes</h3>
 <p>The kernel is the software between applications and hardware.  It is managing the processes and resources provided to them.  The Linux kernel is named for Linus Torvalds who first created a replacement for Bell&rsquo;s proprietary Unix kernel.  He also created <code>git</code> version control system, and, so, his discussions and comments on web boaurds come with a healthy dose of ego.</p>
-
-<pre><code class="language-python">#example process
-sleep 1
-#run in background
-sleep 1 &amp;
-jobs
-#all details and non-tty ps
-ps aux
-#refresh 10sec and NIceness priority
-top; htop;
-renice 10 -p &lt;pid&gt;   
-pstree -p
-pgrep &lt;process&gt;
-pkill &lt;process&gt;
-#process filesystem
-ls /proc
-#process state
-cat /proc/&lt;pid&gt;/status
-#find from what directory process is run
-pwdx &lt;pid&gt;
-ps -ef 
-#what processes are listening
-netstat -lntp
-#how long system is running
-uptime
-</code></pre>
-
-<h3 id="routing">Routing</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#example process</span>
+</span></span><span style="display:flex;"><span>sleep <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run in background</span>
+</span></span><span style="display:flex;"><span>sleep <span style="color:#ae81ff">1</span> <span style="color:#f92672">&amp;</span>
+</span></span><span style="display:flex;"><span>jobs
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#all details and non-tty ps</span>
+</span></span><span style="display:flex;"><span>ps aux
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#refresh 10sec and NIceness priority</span>
+</span></span><span style="display:flex;"><span>top; htop;
+</span></span><span style="display:flex;"><span>renice <span style="color:#ae81ff">10</span> <span style="color:#f92672">-</span>p <span style="color:#f92672">&lt;</span>pid<span style="color:#f92672">&gt;</span>   
+</span></span><span style="display:flex;"><span>pstree <span style="color:#f92672">-</span>p
+</span></span><span style="display:flex;"><span>pgrep <span style="color:#f92672">&lt;</span>process<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>pkill <span style="color:#f92672">&lt;</span>process<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#process filesystem</span>
+</span></span><span style="display:flex;"><span>ls <span style="color:#f92672">/</span>proc
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#process state</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#f92672">/</span>proc<span style="color:#f92672">/&lt;</span>pid<span style="color:#f92672">&gt;/</span>status
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#find from what directory process is run</span>
+</span></span><span style="display:flex;"><span>pwdx <span style="color:#f92672">&lt;</span>pid<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>ps <span style="color:#f92672">-</span>ef 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#what processes are listening</span>
+</span></span><span style="display:flex;"><span>netstat <span style="color:#f92672">-</span>lntp
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#how long system is running</span>
+</span></span><span style="display:flex;"><span>uptime
+</span></span></code></pre></div><h3 id="routing">Routing</h3>
 <p>Routing is a <em>HUGE</em> subject, but these commands can give you a good support for the first 20%.</p>
-
-<pre><code class="language-python">apt install net-tools
-route -n
-ifconfig
-apt install iproute2
-#all interfaces
-ip link show
-#stats of an interface
-ip -s link show eth0
-#show ip addresses allocated to interfaces
-ip address show
-#network manager
-apt install nm-tool???
-</code></pre>
-
-<h3 id="background-shells">Background shells</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>apt install net<span style="color:#f92672">-</span>tools
+</span></span><span style="display:flex;"><span>route <span style="color:#f92672">-</span>n
+</span></span><span style="display:flex;"><span>ifconfig
+</span></span><span style="display:flex;"><span>apt install iproute2
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#all interfaces</span>
+</span></span><span style="display:flex;"><span>ip link show
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#stats of an interface</span>
+</span></span><span style="display:flex;"><span>ip <span style="color:#f92672">-</span>s link show eth0
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#show ip addresses allocated to interfaces</span>
+</span></span><span style="display:flex;"><span>ip address show
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#network manager</span>
+</span></span><span style="display:flex;"><span>apt install nm<span style="color:#f92672">-</span>tool<span style="color:#960050;background-color:#1e0010">???</span>
+</span></span></code></pre></div><h3 id="background-shells">Background shells</h3>
 <p>Multiple screens will become much more useful has you become more capable from the commandline.  There are three main systems, take a look at these references for getting a comparison of them.</p>
-
 <ul>
 <li><a href="https://superuser.com/questions/236158/tmux-vs-screen">tmux vs screen</a></li>
 <li><a href="https://stackoverflow.com/questions/20766300/nohup-vs-screen-which-is-better-for-long-running-process">nohup vs screen</a></li>
 </ul>
-
-<pre><code class="language-python">nohup
-screen
-tmux 
-</code></pre>
-
-<h3 id="profiles">Profiles</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>nohup
+</span></span><span style="display:flex;"><span>screen
+</span></span><span style="display:flex;"><span>tmux 
+</span></span></code></pre></div><h3 id="profiles">Profiles</h3>
 <p>Once you have commands down, you will want to start using the terminal on your host machine and customizing it to get your work down more quickly.  There are two main files for customizing your system.</p>
-
 <ul>
 <li><code>~/.bashrc</code> - Save aliases, shell settings, and functions you commonly use in ~/.bashrc, and arrange for login shells to source it. This will make your setup available in all your shell sessions.</li>
 <li><code>~/.bash_profile</code> - Put the settings of environment variables as well as commands that should be executed when you login in ~/.bash_profile. Separate configuration will be needed for shells you launch from graphical environment logins and cron jobs.</li>
 </ul>
-
 <p>A <em>login shell</em> is a shell session that begins by authenticating the user. If you are signing into a terminal session or through SSH and authenticate, your shell session will be set as a &ldquo;login&rdquo; shell.  A session started as a login session will read configuration details from the <code>/etc/profile</code> file first. It will then look for the first login shell configuration file in the user&rsquo;s home directory to get user-specific configuration details.  It reads the first file that it can find out of <code>~/.bash_profile</code>, <code>~/.bash_login</code>, and <code>~/.profile</code> and does not read any further files.</p>
-
 <p>A <em>non-login shell</em> is created if you start a new shell session from within your authenticated session, like we did by calling the bash command from the terminal. You were not asked for your authentication details when you started your child shell.  A non-login shell will read <code>/etc/bash.bashrc</code> and then the user-specific <code>~/.bashrc</code> file to build its environment.</p>
-
 <p>An <em>interactive shell</em> session, such as one that begins with ssh, is a shell session that is attached to a terminal. A <em>non-interactive shell</em> session is one is not attached to a terminal session, such as a script run from the command line.  Non-interactive shells read the environmental variable called <code>BASH_ENV</code> and read the file specified to define the new environment.</p>
-
 <p>We will usually be setting user-specific environmental variables, and we usually will want our settings to be available in both login and non-login shells. This means that the place to define these variables is in the <code>~/.bashrc</code> file.</p>
-
 <p>If you need to set system-wide variables, you may want to think about adding them to <code>/etc/profile</code>, <code>/etc/bash.bashrc</code>, or <code>/etc/environment</code>.</p>
-
 <h3 id="alias-and-functions">Alias and functions</h3>
-
 <p>This is another way to customize your system.  For more detailed explanation, try <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions">this tutorial</a>.</p>
-
-<pre><code class="language-python">alias ls=&quot;ls --group-directories-first --color&quot;
-cdls() { cd &quot;$@&quot; &amp;&amp; ls; }
-cddu() { cd &quot;$@&quot; &amp;&amp; du -d1 -h . | sort -h; }
-du1() { du -d1 -h &quot;$@&quot; | sort -h; }
-du2() { du -d2 -h &quot;$@&quot; | sort -h; }
-</code></pre>
-
-<h3 id="path">Path</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>alias ls<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ls --group-directories-first --color&#34;</span>
+</span></span><span style="display:flex;"><span>cdls() { cd <span style="color:#e6db74">&#34;$@&#34;</span> <span style="color:#f92672">&amp;&amp;</span> ls; }
+</span></span><span style="display:flex;"><span>cddu() { cd <span style="color:#e6db74">&#34;$@&#34;</span> <span style="color:#f92672">&amp;&amp;</span> du <span style="color:#f92672">-</span>d1 <span style="color:#f92672">-</span>h <span style="color:#f92672">.</span> <span style="color:#f92672">|</span> sort <span style="color:#f92672">-</span>h; }
+</span></span><span style="display:flex;"><span>du1() { du <span style="color:#f92672">-</span>d1 <span style="color:#f92672">-</span>h <span style="color:#e6db74">&#34;$@&#34;</span> <span style="color:#f92672">|</span> sort <span style="color:#f92672">-</span>h; }
+</span></span><span style="display:flex;"><span>du2() { du <span style="color:#f92672">-</span>d2 <span style="color:#f92672">-</span>h <span style="color:#e6db74">&#34;$@&#34;</span> <span style="color:#f92672">|</span> sort <span style="color:#f92672">-</span>h; }
+</span></span></code></pre></div><h3 id="path">Path</h3>
 <p>Your <em>Path</em> is where the shell looks for commands.  It is an <em>ordered</em> list, so the first application that fits the command is used.</p>
-
-<pre><code class="language-python">export PATH=$PATH:/path/to/dir
-</code></pre>
-
-<h2 id="user-management">User Management</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">$</span>PATH:<span style="color:#f92672">/</span>path<span style="color:#f92672">/</span>to<span style="color:#f92672">/</span>dir
+</span></span></code></pre></div><h2 id="user-management">User Management</h2>
 <h3 id="access-and-groups">Access and groups</h3>
-
 <p>Access can take a while to become comfortable with understanding.  Stay with it as security and protection is a necessity for every usage.</p>
-
-<pre><code class="language-python">#list of groups 
-cat /etc/group
-#list all users in a Linux group
-getent group &lt;groupname&gt;;
-#list all groups you belong to
-groups
-#create new user
-sudo adduser &lt;name&gt;
-#remove user
-deluser &lt;name&gt;
-#add user to group
-sudo usermod -G &lt;name-of-group&gt; -a &lt;name-of-user&gt;
-#remove user from group
-gpasswd -d &lt;user group&gt;
-</code></pre>
-
-<h3 id="ssh-to-remote-server">SSH to remote server</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#list of groups </span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#f92672">/</span>etc<span style="color:#f92672">/</span>group
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#list all users in a Linux group</span>
+</span></span><span style="display:flex;"><span>getent group <span style="color:#f92672">&lt;</span>groupname<span style="color:#f92672">&gt;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#list all groups you belong to</span>
+</span></span><span style="display:flex;"><span>groups
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create new user</span>
+</span></span><span style="display:flex;"><span>sudo adduser <span style="color:#f92672">&lt;</span>name<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#remove user</span>
+</span></span><span style="display:flex;"><span>deluser <span style="color:#f92672">&lt;</span>name<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#add user to group</span>
+</span></span><span style="display:flex;"><span>sudo usermod <span style="color:#f92672">-</span>G <span style="color:#f92672">&lt;</span>name<span style="color:#f92672">-</span>of<span style="color:#f92672">-</span>group<span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span>a <span style="color:#f92672">&lt;</span>name<span style="color:#f92672">-</span>of<span style="color:#f92672">-</span>user<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#remove user from group</span>
+</span></span><span style="display:flex;"><span>gpasswd <span style="color:#f92672">-</span>d <span style="color:#f92672">&lt;</span>user group<span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><h3 id="ssh-to-remote-server">SSH to remote server</h3>
 <p>login to remote</p>
-
-<pre><code class="language-python">ssh-keygen -t rsa
-ssh-copy-id githubstats@144.76.39.53
-ssh githubstats@144.76.39.53
-</code></pre>
-
-<h3 id="vps-system-admin">VPS system admin</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ssh<span style="color:#f92672">-</span>keygen <span style="color:#f92672">-</span>t rsa
+</span></span><span style="display:flex;"><span>ssh<span style="color:#f92672">-</span>copy<span style="color:#f92672">-</span>id githubstats<span style="color:#f92672">@</span><span style="color:#ae81ff">144.76.39.53</span>
+</span></span><span style="display:flex;"><span>ssh githubstats<span style="color:#f92672">@</span><span style="color:#ae81ff">144.76.39.53</span>
+</span></span></code></pre></div><h3 id="vps-system-admin">VPS system admin</h3>
 <p>ref(user-config): <a href="https://www.digitalocean.com/community/tutorials/how-to-use-git-to-manage-your-user-configuration-files-on-a-linux-vps">https://www.digitalocean.com/community/tutorials/how-to-use-git-to-manage-your-user-configuration-files-on-a-linux-vps</a></p>
-
 <h2 id="advanced-file-system">Advanced File System</h2>
-
 <h3 id="copying-moving-and-merging-files">Copying, moving, and merging files</h3>
-
-<pre><code class="language-python">#copy without subfolders
-find worker-1/data/db/* -type f -exec cp {} data_all_Random-Net/ \;
-
-python integrate_databases.py --src ~/data_ALL/* --dest ~/COMBINED.db
-
-# Data files: moving
-
-
-#merge
-rsync -aP worker-1/data/db/* data_all/
-rsync -aP worker-2/data/db/* data_all/
-</code></pre>
-
-<h3 id="copy-files-to-remote-server">Copy files to remote server</h3>
-
-<pre><code class="language-python">scp file.txt &lt;remote_username&gt;@&lt;ip_address&gt;:/remote/directory
-scp file.txt jason@10.10.0.2:/remote/directory
-scp &lt;remote_username&gt;@&lt;host_name&gt;:/from/directory /to/directory/
-scp jason@hetzner.com:/mnt/jason/file.xml /Users/jason/Desktop/
-</code></pre>
-
-<h3 id="find-files-directories-commands-and-applications">Find files, directories, commands, and applications</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#copy without subfolders</span>
+</span></span><span style="display:flex;"><span>find worker<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>data<span style="color:#f92672">/</span>db<span style="color:#f92672">/*</span> <span style="color:#f92672">-</span>type f <span style="color:#f92672">-</span>exec cp {} data_all_Random<span style="color:#f92672">-</span>Net<span style="color:#f92672">/</span> \;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>python integrate_databases<span style="color:#f92672">.</span>py <span style="color:#f92672">--</span>src <span style="color:#f92672">~/</span>data_ALL<span style="color:#f92672">/*</span> <span style="color:#f92672">--</span>dest <span style="color:#f92672">~/</span>COMBINED<span style="color:#f92672">.</span>db
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Data files: moving</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#merge</span>
+</span></span><span style="display:flex;"><span>rsync <span style="color:#f92672">-</span>aP worker<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>data<span style="color:#f92672">/</span>db<span style="color:#f92672">/*</span> data_all<span style="color:#f92672">/</span>
+</span></span><span style="display:flex;"><span>rsync <span style="color:#f92672">-</span>aP worker<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span><span style="color:#f92672">/</span>data<span style="color:#f92672">/</span>db<span style="color:#f92672">/*</span> data_all<span style="color:#f92672">/</span>
+</span></span></code></pre></div><h3 id="copy-files-to-remote-server">Copy files to remote server</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>scp file<span style="color:#f92672">.</span>txt <span style="color:#f92672">&lt;</span>remote_username<span style="color:#f92672">&gt;@&lt;</span>ip_address<span style="color:#f92672">&gt;</span>:<span style="color:#f92672">/</span>remote<span style="color:#f92672">/</span>directory
+</span></span><span style="display:flex;"><span>scp file<span style="color:#f92672">.</span>txt jason<span style="color:#f92672">@</span><span style="color:#ae81ff">10.10.0.2</span>:<span style="color:#f92672">/</span>remote<span style="color:#f92672">/</span>directory
+</span></span><span style="display:flex;"><span>scp <span style="color:#f92672">&lt;</span>remote_username<span style="color:#f92672">&gt;@&lt;</span>host_name<span style="color:#f92672">&gt;</span>:<span style="color:#f92672">/</span>from<span style="color:#f92672">/</span>directory <span style="color:#f92672">/</span>to<span style="color:#f92672">/</span>directory<span style="color:#f92672">/</span>
+</span></span><span style="display:flex;"><span>scp jason<span style="color:#a6e22e">@hetzner</span><span style="color:#f92672">.</span>com:<span style="color:#f92672">/</span>mnt<span style="color:#f92672">/</span>jason<span style="color:#f92672">/</span>file<span style="color:#f92672">.</span>xml <span style="color:#f92672">/</span>Users<span style="color:#f92672">/</span>jason<span style="color:#f92672">/</span>Desktop<span style="color:#f92672">/</span>
+</span></span></code></pre></div><h3 id="find-files-directories-commands-and-applications">Find files, directories, commands, and applications</h3>
 <p>This another topic that can take a while to learn all of the functionality, but can make your life amazinginly easier in the long run.  Refer back to over time, and reference a few of these tutorials at <a href="https://www.digitalocean.com/community/tutorials/how-to-use-find-and-locate-to-search-for-files-on-a-linux-vps">Digital Ocean</a> and <a href="https://www.binarytides.com/linux-find-command-examples/">Binary Tides</a>.</p>
-
-<pre><code class="language-python">#files, dir
-find .
-find &lt;location&gt; &lt;comparison-criteria&gt; &quot;&lt;search-term&gt;&quot;
-find &lt;path&gt; -type &lt;f,d&gt; -maxdepth &lt;2&gt; -iname &quot;&lt;name_ignore_case&gt;&quot; ! -iname &quot;&lt;or_name&gt;&quot;
-find / -ipath &quot;&lt;path_ignore_case&gt;&quot;
-find / -lname &quot;&lt;symbolic_link&gt;&quot;
-find / -regex &quot;&lt;name_by_regex&gt;&quot;
-#find files and remove them
-find . -maxdepth 1 -type d -name &quot;feature-*&quot; -exec rm -rf {} \;
-#check everywhere
-locate &lt;filename&gt;
-#commands
-history | grep ssh
-#application binaries
-whereis -b &lt;application&gt;
-</code></pre>
-
-<h3 id="find-files-that-contain-matching-text">Find files that contain matching text</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#files, dir</span>
+</span></span><span style="display:flex;"><span>find <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>find <span style="color:#f92672">&lt;</span>location<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span>comparison<span style="color:#f92672">-</span>criteria<span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#34;&lt;search-term&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>find <span style="color:#f92672">&lt;</span>path<span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span>type <span style="color:#f92672">&lt;</span>f,d<span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span>maxdepth <span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span>iname <span style="color:#e6db74">&#34;&lt;name_ignore_case&gt;&#34;</span> <span style="color:#960050;background-color:#1e0010">!</span> <span style="color:#f92672">-</span>iname <span style="color:#e6db74">&#34;&lt;or_name&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>find <span style="color:#f92672">/</span> <span style="color:#f92672">-</span>ipath <span style="color:#e6db74">&#34;&lt;path_ignore_case&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>find <span style="color:#f92672">/</span> <span style="color:#f92672">-</span>lname <span style="color:#e6db74">&#34;&lt;symbolic_link&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>find <span style="color:#f92672">/</span> <span style="color:#f92672">-</span>regex <span style="color:#e6db74">&#34;&lt;name_by_regex&gt;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#find files and remove them</span>
+</span></span><span style="display:flex;"><span>find <span style="color:#f92672">.</span> <span style="color:#f92672">-</span>maxdepth <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span>type d <span style="color:#f92672">-</span>name <span style="color:#e6db74">&#34;feature-*&#34;</span> <span style="color:#f92672">-</span>exec rm <span style="color:#f92672">-</span>rf {} \;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check everywhere</span>
+</span></span><span style="display:flex;"><span>locate <span style="color:#f92672">&lt;</span>filename<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#commands</span>
+</span></span><span style="display:flex;"><span>history <span style="color:#f92672">|</span> grep ssh
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#application binaries</span>
+</span></span><span style="display:flex;"><span>whereis <span style="color:#f92672">-</span>b <span style="color:#f92672">&lt;</span>application<span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><h3 id="find-files-that-contain-matching-text">Find files that contain matching text</h3>
 <p>Searching among millions of files for specific text is a very powerful feature.  Be sure to include this in your daily habits and it will be a live-saver for some future endeavor.</p>
-
-<pre><code class="language-python">grep -rnw '/path/to/somewhere/' -e 'pattern'
-
-# -r or -R is recursive
-# -n line number
-# -w match the whole word
-# -i ignore case
-# -l (lower-case L) can be added to just give the file name of matching files
-</code></pre>
-
-<p>Along with these, <code>--exclude</code>, <code>--include</code>, <code>--exclude-dir</code> flags could be used for efficient searching:</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>grep <span style="color:#f92672">-</span>rnw <span style="color:#e6db74">&#39;/path/to/somewhere/&#39;</span> <span style="color:#f92672">-</span>e <span style="color:#e6db74">&#39;pattern&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -r or -R is recursive</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -n line number</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -w match the whole word</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -i ignore case</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -l (lower-case L) can be added to just give the file name of matching files</span>
+</span></span></code></pre></div><p>Along with these, <code>--exclude</code>, <code>--include</code>, <code>--exclude-dir</code> flags could be used for efficient searching:</p>
 <ul>
-<li><p>This will only search through those files which have .c or .h extensions:</p>
-
-<p><code>grep --include=\*.{c,h} -rnw '/path/to/somewhere/' -e &quot;pattern&quot;</code></p></li>
-
-<li><p>This will exclude searching all the files ending with .o extension:</p>
-
-<p><code>grep --exclude=*.o -rnw '/path/to/somewhere/' -e &quot;pattern&quot;</code></p></li>
-
-<li><p>For directories it&rsquo;s possible to exclude a particular directory(ies) through &ndash;exclude-dir parameter. For example, this will exclude the dirs dir1/, dir2/ and all of them matching *.dst/:</p>
-
-<p><code>grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e &quot;pattern&quot;</code></p></li>
+<li>
+<p>This will only search through those files which have .c or .h extensions:</p>
+<p><code>grep --include=\*.{c,h} -rnw '/path/to/somewhere/' -e &quot;pattern&quot;</code></p>
+</li>
+<li>
+<p>This will exclude searching all the files ending with .o extension:</p>
+<p><code>grep --exclude=*.o -rnw '/path/to/somewhere/' -e &quot;pattern&quot;</code></p>
+</li>
+<li>
+<p>For directories it&rsquo;s possible to exclude a particular directory(ies) through &ndash;exclude-dir parameter. For example, this will exclude the dirs dir1/, dir2/ and all of them matching *.dst/:</p>
+<p><code>grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e &quot;pattern&quot;</code></p>
+</li>
 </ul>
-
 <h3 id="perform-command-on-multiple-files">Perform command on multiple files</h3>
-
 <p>There are two ways you can apply the same command across multiple files.  The first is a one-liner using <code>find</code> with <code>-exec</code>.  The second is using a <code>for</code> loop.  The examples use the following Clojure compilation on a javascript file: <code>java -jar compiler.jar --js filename.js --js_output_file newfilename.js</code></p>
-
-<pre><code class="language-python">#find and execute
-find . -name &quot;*.js&quot; -exec java -jar compiler.jar --js {} --js_output_file new{} \;
-</code></pre>
-
-<pre><code class="language-python">#typical for loop
-for filename in ./*.js
-do
-    java -jar compiler.jar --js &quot;${filename}&quot; --js_output_file &quot;new${filename}&quot;
-done
-</code></pre>
-
-<h3 id="compress-and-archive">Compress and archive</h3>
-
-<pre><code class="language-python">#create zip (automatic compression)
-zip -r &lt;desired_file.zip&gt; &lt;dir_path&gt;
-#exclude file from zip
-zip &lt;desired_file.zip&gt; -r &lt;dir_path&gt; -x *.&lt;file_extension&gt;
-#add to existing zip
-zip -r &lt;existing_file.zip&gt; &lt;path/to/dir&gt;
-#tar compress, maintains folder structure
-tar -czvf &lt;desired_tar_file&gt; &lt;dir_path&gt;
-#list files
-tar -tf &lt;tarfilename&gt;
-#uncompress, extract
-tar -xzvf &lt;tarball_file&gt;
-</code></pre>
-
-<h3 id="delete-and-trash-safe-delete">Delete and trash (safe-delete)</h3>
-
-<pre><code class="language-python">rm &lt;file&gt;
-sudo apt-get install trash-cli
-trash &lt;file&gt;
-trash-list
-trash-restore &lt;file&gt;
-trash-empty
-</code></pre>
-
-<h2 id="processing-files">Processing Files</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#find and execute</span>
+</span></span><span style="display:flex;"><span>find <span style="color:#f92672">.</span> <span style="color:#f92672">-</span>name <span style="color:#e6db74">&#34;*.js&#34;</span> <span style="color:#f92672">-</span>exec java <span style="color:#f92672">-</span>jar compiler<span style="color:#f92672">.</span>jar <span style="color:#f92672">--</span>js {} <span style="color:#f92672">--</span>js_output_file new{} \;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#typical for loop</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> filename <span style="color:#f92672">in</span> <span style="color:#f92672">./*.</span>js
+</span></span><span style="display:flex;"><span>do
+</span></span><span style="display:flex;"><span>    java <span style="color:#f92672">-</span>jar compiler<span style="color:#f92672">.</span>jar <span style="color:#f92672">--</span>js <span style="color:#e6db74">&#34;$</span><span style="color:#e6db74">{filename}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">--</span>js_output_file <span style="color:#e6db74">&#34;new$</span><span style="color:#e6db74">{filename}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>done
+</span></span></code></pre></div><h3 id="compress-and-archive">Compress and archive</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#create zip (automatic compression)</span>
+</span></span><span style="display:flex;"><span>zip <span style="color:#f92672">-</span>r <span style="color:#f92672">&lt;</span>desired_file<span style="color:#f92672">.</span>zip<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span>dir_path<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#exclude file from zip</span>
+</span></span><span style="display:flex;"><span>zip <span style="color:#f92672">&lt;</span>desired_file<span style="color:#f92672">.</span>zip<span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span>r <span style="color:#f92672">&lt;</span>dir_path<span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span>x <span style="color:#f92672">*.&lt;</span>file_extension<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#add to existing zip</span>
+</span></span><span style="display:flex;"><span>zip <span style="color:#f92672">-</span>r <span style="color:#f92672">&lt;</span>existing_file<span style="color:#f92672">.</span>zip<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span>path<span style="color:#f92672">/</span>to<span style="color:#f92672">/</span>dir<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#tar compress, maintains folder structure</span>
+</span></span><span style="display:flex;"><span>tar <span style="color:#f92672">-</span>czvf <span style="color:#f92672">&lt;</span>desired_tar_file<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span>dir_path<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#list files</span>
+</span></span><span style="display:flex;"><span>tar <span style="color:#f92672">-</span>tf <span style="color:#f92672">&lt;</span>tarfilename<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#uncompress, extract</span>
+</span></span><span style="display:flex;"><span>tar <span style="color:#f92672">-</span>xzvf <span style="color:#f92672">&lt;</span>tarball_file<span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><h3 id="delete-and-trash-safe-delete">Delete and trash (safe-delete)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rm <span style="color:#f92672">&lt;</span>file<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>sudo apt<span style="color:#f92672">-</span>get install trash<span style="color:#f92672">-</span>cli
+</span></span><span style="display:flex;"><span>trash <span style="color:#f92672">&lt;</span>file<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>trash<span style="color:#f92672">-</span>list
+</span></span><span style="display:flex;"><span>trash<span style="color:#f92672">-</span>restore <span style="color:#f92672">&lt;</span>file<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>trash<span style="color:#f92672">-</span>empty
+</span></span></code></pre></div><h2 id="processing-files">Processing Files</h2>
 <p>This subject is quite popular after the <em>big data</em> and <em>data science</em> movement.  Being able to work with files as they exist on the file system, without bringing them into a memory-hungry processing environment, such as R or Python, can be a life-saver.</p>
-
-<p>These are a few popular resources for learning more:
-* <a href="https://www.datascienceworkshops.com/blog/seven-command-line-tools-for-data-science/">Data science tools for the command line</a>
-* <a href="https://www.datascienceatthecommandline.com/#tools">book: Data science at the command line</a></p>
-
+<p>These are a few popular resources for learning more:</p>
+<ul>
+<li><a href="https://www.datascienceworkshops.com/blog/seven-command-line-tools-for-data-science/">Data science tools for the command line</a></li>
+<li><a href="https://www.datascienceatthecommandline.com/#tools">book: Data science at the command line</a></li>
+</ul>
 <h3 id="count-files-in-dir">Count files in dir</h3>
-
-<pre><code class="language-python">echo 'Files: '; ls -1q ./* | wc -l
-echo 'Files in subs'; find . -type f | wc -l
-</code></pre>
-
-<h3 id="data-files-summarizing">Data files: summarizing</h3>
-
-<pre><code class="language-python">#check number of lines
-! wc -l Data/taxi/green_tripdata_2015-09.csv
-#check first few lines
-! head -n3 Data/taxi/green_tripdata_2015-09.csv
-</code></pre>
-
-<h3 id="regex">Regex</h3>
-
-<pre><code class="language-python">env | grep -i User
-</code></pre>
-
-<h3 id="tools">Tools</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;Files: &#39;</span>; ls <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>q <span style="color:#f92672">./*</span> <span style="color:#f92672">|</span> wc <span style="color:#f92672">-</span>l
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;Files in subs&#39;</span>; find <span style="color:#f92672">.</span> <span style="color:#f92672">-</span>type f <span style="color:#f92672">|</span> wc <span style="color:#f92672">-</span>l
+</span></span></code></pre></div><h3 id="data-files-summarizing">Data files: summarizing</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#check number of lines</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> wc <span style="color:#f92672">-</span>l Data<span style="color:#f92672">/</span>taxi<span style="color:#f92672">/</span>green_tripdata_2015<span style="color:#f92672">-</span><span style="color:#ae81ff">09.</span>csv
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check first few lines</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> head <span style="color:#f92672">-</span>n3 Data<span style="color:#f92672">/</span>taxi<span style="color:#f92672">/</span>green_tripdata_2015<span style="color:#f92672">-</span><span style="color:#ae81ff">09.</span>csv
+</span></span></code></pre></div><h3 id="regex">Regex</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>env <span style="color:#f92672">|</span> grep <span style="color:#f92672">-</span>i User
+</span></span></code></pre></div><h3 id="tools">Tools</h3>
 <p>For YAML, use shyaml.
 For Amazon S3, s3cmd is convenient and s4cmd is faster. Amazon&rsquo;s aws and the improved saws are essential for other AWS-related tasks.</p>
-
 <ul>
 <li>jq - sed for JSON; For interactive use, also see jid and jiq</li>
 <li>json2csv - convert JSON to CSV</li>
@@ -753,23 +577,17 @@ For Amazon S3, s3cmd is convenient and s4cmd is faster. Amazon&rsquo;s aws and t
 <li>scrape - HTML extraction using XPath or CSS selectors</li>
 <li>xml2json - convert XML to JSON</li>
 </ul>
-
 <h2 id="version-control-and-github">Version Control and Github</h2>
-
 <p>The <a href="https://github.com/jlevy/awesome-github-1">awesome github</a> page provides a good understanding of the functionality that made Github the universal repo site for public source code projects.  Its private couterpart is an emulation named <a href="https://about.gitlab.com/">Gitlab</a>.</p>
-
-<pre><code class="language-python"># Git
-git checkout HEAD -- my-file.txt
-git push origin --delete &lt;branch_name&gt;
-git branch -d &lt;branch_name&gt;
-git remote set-url origin https://some_url/some_repo
-
-git reset --hard
-git clean -f -d
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Git</span>
+</span></span><span style="display:flex;"><span>git checkout HEAD <span style="color:#f92672">--</span> my<span style="color:#f92672">-</span>file<span style="color:#f92672">.</span>txt
+</span></span><span style="display:flex;"><span>git push origin <span style="color:#f92672">--</span>delete <span style="color:#f92672">&lt;</span>branch_name<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>git branch <span style="color:#f92672">-</span>d <span style="color:#f92672">&lt;</span>branch_name<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>git remote set<span style="color:#f92672">-</span>url origin https:<span style="color:#f92672">//</span>some_url<span style="color:#f92672">/</span>some_repo
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git reset <span style="color:#f92672">--</span>hard
+</span></span><span style="display:flex;"><span>git clean <span style="color:#f92672">-</span>f <span style="color:#f92672">-</span>d
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>This post is more of a cheatsheet and summary than it is for learning.  Each individual subject could be expounded upon in a book.  The reader can use this to gain a superficial understanding and have some commands to try.  After learning more about the details, it can be referenced for a quick review.</p>
 
         </div>
@@ -779,59 +597,61 @@ git clean -f -d
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#preparation">Preparation</a></li>
-<li><a href="#basic-file-system">Basic File System</a>
-<ul>
-<li><a href="#quickstart">Quickstart</a></li>
-<li><a href="#variables">Variables</a></li>
-<li><a href="#creation-redirection-and-wildcards">Creation, redirection, and wildcards</a></li>
-<li><a href="#command-history-and-tab-completion">Command history and TAB completion</a></li>
-<li><a href="#file-manipulation">File manipulation</a></li>
-</ul></li>
-<li><a href="#system-administration">System Administration</a>
-<ul>
-<li><a href="#machine-configuration">Machine configuration</a></li>
-<li><a href="#displaying-disk-usage">Displaying disk usage</a></li>
-<li><a href="#describing-cpu-and-memory-usage">Describing CPU and memory usage</a></li>
-<li><a href="#installing-applications">Installing applications</a></li>
-<li><a href="#building-packages">Building packages</a></li>
-<li><a href="#processes">Processes</a></li>
-<li><a href="#routing">Routing</a></li>
-<li><a href="#background-shells">Background shells</a></li>
-<li><a href="#profiles">Profiles</a></li>
-<li><a href="#alias-and-functions">Alias and functions</a></li>
-<li><a href="#path">Path</a></li>
-</ul></li>
-<li><a href="#user-management">User Management</a>
-<ul>
-<li><a href="#access-and-groups">Access and groups</a></li>
-<li><a href="#ssh-to-remote-server">SSH to remote server</a></li>
-<li><a href="#vps-system-admin">VPS system admin</a></li>
-</ul></li>
-<li><a href="#advanced-file-system">Advanced File System</a>
-<ul>
-<li><a href="#copying-moving-and-merging-files">Copying, moving, and merging files</a></li>
-<li><a href="#copy-files-to-remote-server">Copy files to remote server</a></li>
-<li><a href="#find-files-directories-commands-and-applications">Find files, directories, commands, and applications</a></li>
-<li><a href="#find-files-that-contain-matching-text">Find files that contain matching text</a></li>
-<li><a href="#perform-command-on-multiple-files">Perform command on multiple files</a></li>
-<li><a href="#compress-and-archive">Compress and archive</a></li>
-<li><a href="#delete-and-trash-safe-delete">Delete and trash (safe-delete)</a></li>
-</ul></li>
-<li><a href="#processing-files">Processing Files</a>
-<ul>
-<li><a href="#count-files-in-dir">Count files in dir</a></li>
-<li><a href="#data-files-summarizing">Data files: summarizing</a></li>
-<li><a href="#regex">Regex</a></li>
-<li><a href="#tools">Tools</a></li>
-</ul></li>
-<li><a href="#version-control-and-github">Version Control and Github</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#preparation">Preparation</a></li>
+    <li><a href="#basic-file-system">Basic File System</a>
+      <ul>
+        <li><a href="#quickstart">Quickstart</a></li>
+        <li><a href="#variables">Variables</a></li>
+        <li><a href="#creation-redirection-and-wildcards">Creation, redirection, and wildcards</a></li>
+        <li><a href="#command-history-and-tab-completion">Command history and TAB completion</a></li>
+        <li><a href="#file-manipulation">File manipulation</a></li>
+      </ul>
+    </li>
+    <li><a href="#system-administration">System Administration</a>
+      <ul>
+        <li><a href="#machine-configuration">Machine configuration</a></li>
+        <li><a href="#displaying-disk-usage">Displaying disk usage</a></li>
+        <li><a href="#describing-cpu-and-memory-usage">Describing CPU and memory usage</a></li>
+        <li><a href="#installing-applications">Installing applications</a></li>
+        <li><a href="#building-packages">Building packages</a></li>
+        <li><a href="#processes">Processes</a></li>
+        <li><a href="#routing">Routing</a></li>
+        <li><a href="#background-shells">Background shells</a></li>
+        <li><a href="#profiles">Profiles</a></li>
+        <li><a href="#alias-and-functions">Alias and functions</a></li>
+        <li><a href="#path">Path</a></li>
+      </ul>
+    </li>
+    <li><a href="#user-management">User Management</a>
+      <ul>
+        <li><a href="#access-and-groups">Access and groups</a></li>
+        <li><a href="#ssh-to-remote-server">SSH to remote server</a></li>
+        <li><a href="#vps-system-admin">VPS system admin</a></li>
+      </ul>
+    </li>
+    <li><a href="#advanced-file-system">Advanced File System</a>
+      <ul>
+        <li><a href="#copying-moving-and-merging-files">Copying, moving, and merging files</a></li>
+        <li><a href="#copy-files-to-remote-server">Copy files to remote server</a></li>
+        <li><a href="#find-files-directories-commands-and-applications">Find files, directories, commands, and applications</a></li>
+        <li><a href="#find-files-that-contain-matching-text">Find files that contain matching text</a></li>
+        <li><a href="#perform-command-on-multiple-files">Perform command on multiple files</a></li>
+        <li><a href="#compress-and-archive">Compress and archive</a></li>
+        <li><a href="#delete-and-trash-safe-delete">Delete and trash (safe-delete)</a></li>
+      </ul>
+    </li>
+    <li><a href="#processing-files">Processing Files</a>
+      <ul>
+        <li><a href="#count-files-in-dir">Count files in dir</a></li>
+        <li><a href="#data-files-summarizing">Data files: summarizing</a></li>
+        <li><a href="#regex">Regex</a></li>
+        <li><a href="#tools">Tools</a></li>
+      </ul>
+    </li>
+    <li><a href="#version-control-and-github">Version Control and Github</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -923,7 +743,7 @@ git clean -f -d
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

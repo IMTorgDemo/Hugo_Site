@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -111,407 +111,297 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>I recently implemented search functionality for my Hugo site, which can be seen at: <a href="https://imtorgdemo.github.io/pages/search/">https://imtorgdemo.github.io/pages/search/</a>.  The search uses lunr.js, an implementation of Solr.   While it works, sufficiently, the metadata used for ranking queries could be improved.  It would also be nice to visually locate the results by where resulting posts fit into the three data science fundamental disciplines: mathematics, computer science, and business.  This narrative provides a quick solution for ranking posts by each discipline, then reducing the dimensions to 3 axes in the xy-plane.</p>
-
+            <p>I recently implemented search functionality for my Hugo site, which can be seen at: <a href="https://imtorgdemo.github.io/pages/search/">https://imtorgdemo.github.io/pages/search/</a>.  The search uses lunr.js, an implementation of Solr.   While it works, sufficiently, the metadata used for ranking queries could be improved.  It would also be nice to visually locate the results by where resulting posts fit into the three data science fundamental disciplines: mathematics, computer science, and business.  This narrative provides a quick solution for ranking posts by each discipline, then reducing the dimensions to 3 axes in the xy-plane.</p>
 <h2 id="environment">Environment</h2>
-
 <p>Lets setup the environment for the basic scientific and NLP work.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> nltk
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> spacy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nlp <span style="color:#f92672">=</span> spacy<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#34;en_core_web_lg&#34;</span>)
+</span></span><span style="display:flex;"><span>doc <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;This is a sentence.&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>len(doc<span style="color:#f92672">.</span>vector)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import numpy as np
-import nltk
-import spacy
-
-nlp = spacy.load(&quot;en_core_web_lg&quot;)
-doc = nlp(&quot;This is a sentence.&quot;)
-</code></pre>
-
-<pre><code class="language-python">len(doc.vector)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">300
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">300
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir(<span style="color:#e6db74">&#39;./Data/markdown&#39;</span>)
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>listdir()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import os
-import sys
-
-os.chdir('./Data/markdown')
-os.listdir()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">['blog_test-my_first_post.md', 'blog-logic_for_math.md']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[&#39;blog_test-my_first_post.md&#39;, &#39;blog-logic_for_math.md&#39;]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir(<span style="color:#e6db74">&#39;/home/jovyan/PERSONAL/&#39;</span>)
+</span></span></code></pre></div><p>This is the basic metadata for each post.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> head Data<span style="color:#f92672">/</span>markdown<span style="color:#f92672">/</span>blog<span style="color:#f92672">-</span>logic_for_math<span style="color:#f92672">.</span>md
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">os.chdir('/home/jovyan/PERSONAL/')
-</code></pre>
-
-<p>This is the basic metadata for each post.</p>
-
-<pre><code class="language-python">! head Data/markdown/blog-logic_for_math.md
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">
 +++
-title = &quot;Building Math from the Ground-Up&quot;
-date = &quot;2019-07-05&quot;
-author = &quot;Jason Beach&quot;
-categories = [&quot;Mathematics&quot;, &quot;Logic&quot;]
-tags = [&quot;nlp&quot;, &quot;tag2&quot;, &quot;tag3&quot;]
+title = &#34;Building Math from the Ground-Up&#34;
+date = &#34;2019-07-05&#34;
+author = &#34;Jason Beach&#34;
+categories = [&#34;Mathematics&#34;, &#34;Logic&#34;]
+tags = [&#34;nlp&#34;, &#34;tag2&#34;, &#34;tag3&#34;]
 +++
-
-
 </code></pre>
 
 </div>
-
 
 <h2 id="preprocessing">PreProcessing</h2>
-
 <p>We will use a post that focuses primarily on mathematics.  So, we expect the ranking results to align with mathematics more than the other two fields.</p>
-
-<pre><code class="language-python">file_path = &quot;/home/jovyan/PERSONAL/Data/markdown/blog-logic_for_math.md&quot;
-
-with open(file_path, 'r') as file:
-    lines = file.readlines()
-</code></pre>
-
-<pre><code class="language-python">metadata = lines[1:9]
-</code></pre>
-
-<pre><code class="language-python">content = '  '.join(data[9:])
-content = content.replace(&quot;\n&quot;,&quot;&quot;)
-</code></pre>
-
-<pre><code class="language-python">import re, string
-
-pattern = re.compile(r'([^\s\w]|_)+')
-content = pattern.sub('', content)
-</code></pre>
-
-<pre><code class="language-python">content = ' '.join(content.split())
-</code></pre>
-
-<p>Get word assocations from website.  This is performed manually.  In the future, scrape the site and get many more assocations.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>file_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/home/jovyan/PERSONAL/Data/markdown/blog-logic_for_math.md&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(file_path, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> file:
+</span></span><span style="display:flex;"><span>    lines <span style="color:#f92672">=</span> file<span style="color:#f92672">.</span>readlines()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>metadata <span style="color:#f92672">=</span> lines[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">9</span>]
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>content <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;  &#39;</span><span style="color:#f92672">.</span>join(data[<span style="color:#ae81ff">9</span>:])
+</span></span><span style="display:flex;"><span>content <span style="color:#f92672">=</span> content<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> re<span style="color:#f92672">,</span> string
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pattern <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;([^\s\w]|_)+&#39;</span>)
+</span></span><span style="display:flex;"><span>content <span style="color:#f92672">=</span> pattern<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">&#39;&#39;</span>, content)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>content <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(content<span style="color:#f92672">.</span>split())
+</span></span></code></pre></div><p>Get word assocations from website.  This is performed manually.  In the future, scrape the site and get many more assocations.</p>
 <p>#TODO:scrape the website
 import requests</p>
-
 <p>url = &lsquo;<a href="https://wordassociations.net/en/words-associated-with/TARGET?button=Search'">https://wordassociations.net/en/words-associated-with/TARGET?button=Search'</a>
 url = url.replace(&lsquo;TARGET&rsquo;,&lsquo;computer&rsquo;)
 resp = requests.get(url)</p>
-
 <p>noun_loc = resp.text.find(&lsquo;Noun&rsquo;)
 resp.text.find(&lsquo;Adjective&rsquo;)</p>
-
-<pre><code class="language-python">#search: business
-word_assoc_biz = 'MbaEntrepreneurshipRetailEntrepreneurConsultancyStartupAccountingSectorMarketingBankingCateringGroceryInvestingWhartonEnterpriseLendingStakeholderCustomerEconomicFinanceConsumerCommerceConglomerateEconomicsBakeryInvestmentInsuranceManagementSupplierMarketplaceInvestorVentureFirmTelecomTradesmanPayrollManufacturingBrokerTransactionLumberRetailerProfitFinancingContractingSustainabilityPartnerInnovationHospitalityNetworkingAccountantExecutiveIncentivePartnershipProcurementShareholderEmployeeAssetUndergraduateIndustrialPhilanthropyEquityLiabilitySmallAdvertisingInformaticsSalesTourismRecessionLeisurePurchasingConsultantOwnerHaasAccreditationMercantileWholesaleProfitableLucrativeUnfinishedRetailThrivingRiskyConsultingCorporateMultinationalBoomingNonprofitGraduateAccreditedPhilanthropicFinancialSustainableAutomotiveBankruptUrgentDiversifyDivestInvestProsperRestructure'
-tmp = re.findall('[A-Z][^A-Z]*', word_assoc_biz)
-words_biz = ' '.join(tmp)
-</code></pre>
-
-<pre><code class="language-python">#search: software, programming
-word_assoc_cs = 'SimulcastOptimizationDualityIntegerSynthesizerApiSynthNewscastKeyboardCwProgrammerCompilerPythonBasicKeywordAiringAffiliateSyndicationDecompositionAlgorithmJavaUhfUnixSemanticsParadigmInterfaceRecourseConstraintArrangerAutomatonFccPascalSyntaxBroadcastingBroadcastCbcNickelodeonApproximationNetworkAffiliationPbsSemanticRelaxationInstrumentationLineupHdBrandingLanguagePercussionEmmyLogicFmIdeAbcChannelTelecastDrumCableForthBbQuadraticStochasticNonlinearWeekdayFractionalOrientedLinearConvexJavaOptimalDynamicSequentialDaytimeScriptedConcurrentConstrainedPrimalConcaveImperativeGraphicalRetroProceduralAiredObjectiveFuzzyAnalogPolynomialSyndicateAirNetworkProgrammeBroadcastGeneralizeStructureRelaunchMixnuHardwareLinuxCadPackageDeveloperMacintoshVendorWorkstationUnixAutomationProgrammerAmigaEncryptionFunctionalityServerVisualizationBrowserIbmAdobeCompatibilityComputerOsComputingAtariPcApiGuiInterfaceUserGraphicsNetworkingLicenseSimulationRepositoryModelingXpMidiModemUpdateVerificationRouterCompilerToolProcessorEditingSimulatorMultimediaApplicationProviderLaptopUpgradeCpuNokia3dMetadataMicroprocessorApacheStartupPiracyAppIntelValidationSuiteOptimizationCiscoKernelModellingDocumentationGraphicHackerImplementationConsultancyVulnerabilityTcpEmailGps'
-tmp = re.findall('[A-Z][^A-Z]*', word_assoc_cs)
-words_cs = ' '.join(tmp)
-</code></pre>
-
-<pre><code class="language-python">#search: mathematics
-word_assoc_math = 'PhysicAlgebraMathematicCalculusMathematicianPhysicsGeometryOlympiadAstronomyHilbertTopologyGraderPolynomialManifoldProficiencyInformaticsBscTheoremAxiomEulerMathMechanicPhdGeneralizationIntegralAptitudeProfessorshipGenealogyBsChemistryTextbookStatisticEmeritusComputationSpringerLogicDescartesDoctorateScienceMechanicsCurriculumMultiplicationBachelorProfessorUndergraduateSubgroupIntegerConjectureNeumannGraduateComputingLecturerSummaBiologySubsetAstrologyFourierExamPedagogyCantorTensorPhilosophyCalculatorPermutationMatriceAlgebraicMathematicalTopologicalProjectiveProficientEuclideanArithmeticAppliedDifferentialManifoldDiscreteOrthogonalComputationalAnalyticPolynomialInvariantNumericalGeometricFiniteQuadraticStochasticGradeGeometricalStudiedSymmetricBabylonianTheoreticalDegreeAbstractTextbookEmeritusGraduate'
-tmp = re.findall('[A-Z][^A-Z]*', word_assoc_math)
-words_math = ' '.join(tmp)
-</code></pre>
-
-<pre><code class="language-python">path = './Data/markdown/'
-file = path + 'word_assocation_ref.json'
-words = {&quot;math&quot;: words_math, &quot;cs&quot;: words_cs, &quot;biz&quot;: words_biz}
-
-import json
-with open(file, 'w') as fp:
-    json.dump(words, fp)
-</code></pre>
-
-<pre><code class="language-python">with open(file, 'r') as fp:
-    new_words = json.load(fp)
-</code></pre>
-
-<pre><code class="language-python">math = nlp(words_math)
-cs = nlp(words_cs)
-biz = nlp(words_biz)
-</code></pre>
-
-<h2 id="similarity">Similarity</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#search: business</span>
+</span></span><span style="display:flex;"><span>word_assoc_biz <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;MbaEntrepreneurshipRetailEntrepreneurConsultancyStartupAccountingSectorMarketingBankingCateringGroceryInvestingWhartonEnterpriseLendingStakeholderCustomerEconomicFinanceConsumerCommerceConglomerateEconomicsBakeryInvestmentInsuranceManagementSupplierMarketplaceInvestorVentureFirmTelecomTradesmanPayrollManufacturingBrokerTransactionLumberRetailerProfitFinancingContractingSustainabilityPartnerInnovationHospitalityNetworkingAccountantExecutiveIncentivePartnershipProcurementShareholderEmployeeAssetUndergraduateIndustrialPhilanthropyEquityLiabilitySmallAdvertisingInformaticsSalesTourismRecessionLeisurePurchasingConsultantOwnerHaasAccreditationMercantileWholesaleProfitableLucrativeUnfinishedRetailThrivingRiskyConsultingCorporateMultinationalBoomingNonprofitGraduateAccreditedPhilanthropicFinancialSustainableAutomotiveBankruptUrgentDiversifyDivestInvestProsperRestructure&#39;</span>
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;[A-Z][^A-Z]*&#39;</span>, word_assoc_biz)
+</span></span><span style="display:flex;"><span>words_biz <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(tmp)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#search: software, programming</span>
+</span></span><span style="display:flex;"><span>word_assoc_cs <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;SimulcastOptimizationDualityIntegerSynthesizerApiSynthNewscastKeyboardCwProgrammerCompilerPythonBasicKeywordAiringAffiliateSyndicationDecompositionAlgorithmJavaUhfUnixSemanticsParadigmInterfaceRecourseConstraintArrangerAutomatonFccPascalSyntaxBroadcastingBroadcastCbcNickelodeonApproximationNetworkAffiliationPbsSemanticRelaxationInstrumentationLineupHdBrandingLanguagePercussionEmmyLogicFmIdeAbcChannelTelecastDrumCableForthBbQuadraticStochasticNonlinearWeekdayFractionalOrientedLinearConvexJavaOptimalDynamicSequentialDaytimeScriptedConcurrentConstrainedPrimalConcaveImperativeGraphicalRetroProceduralAiredObjectiveFuzzyAnalogPolynomialSyndicateAirNetworkProgrammeBroadcastGeneralizeStructureRelaunchMixnuHardwareLinuxCadPackageDeveloperMacintoshVendorWorkstationUnixAutomationProgrammerAmigaEncryptionFunctionalityServerVisualizationBrowserIbmAdobeCompatibilityComputerOsComputingAtariPcApiGuiInterfaceUserGraphicsNetworkingLicenseSimulationRepositoryModelingXpMidiModemUpdateVerificationRouterCompilerToolProcessorEditingSimulatorMultimediaApplicationProviderLaptopUpgradeCpuNokia3dMetadataMicroprocessorApacheStartupPiracyAppIntelValidationSuiteOptimizationCiscoKernelModellingDocumentationGraphicHackerImplementationConsultancyVulnerabilityTcpEmailGps&#39;</span>
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;[A-Z][^A-Z]*&#39;</span>, word_assoc_cs)
+</span></span><span style="display:flex;"><span>words_cs <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(tmp)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#search: mathematics</span>
+</span></span><span style="display:flex;"><span>word_assoc_math <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;PhysicAlgebraMathematicCalculusMathematicianPhysicsGeometryOlympiadAstronomyHilbertTopologyGraderPolynomialManifoldProficiencyInformaticsBscTheoremAxiomEulerMathMechanicPhdGeneralizationIntegralAptitudeProfessorshipGenealogyBsChemistryTextbookStatisticEmeritusComputationSpringerLogicDescartesDoctorateScienceMechanicsCurriculumMultiplicationBachelorProfessorUndergraduateSubgroupIntegerConjectureNeumannGraduateComputingLecturerSummaBiologySubsetAstrologyFourierExamPedagogyCantorTensorPhilosophyCalculatorPermutationMatriceAlgebraicMathematicalTopologicalProjectiveProficientEuclideanArithmeticAppliedDifferentialManifoldDiscreteOrthogonalComputationalAnalyticPolynomialInvariantNumericalGeometricFiniteQuadraticStochasticGradeGeometricalStudiedSymmetricBabylonianTheoreticalDegreeAbstractTextbookEmeritusGraduate&#39;</span>
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#39;[A-Z][^A-Z]*&#39;</span>, word_assoc_math)
+</span></span><span style="display:flex;"><span>words_math <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(tmp)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./Data/markdown/&#39;</span>
+</span></span><span style="display:flex;"><span>file <span style="color:#f92672">=</span> path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;word_assocation_ref.json&#39;</span>
+</span></span><span style="display:flex;"><span>words <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;math&#34;</span>: words_math, <span style="color:#e6db74">&#34;cs&#34;</span>: words_cs, <span style="color:#e6db74">&#34;biz&#34;</span>: words_biz}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(file, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> fp:
+</span></span><span style="display:flex;"><span>    json<span style="color:#f92672">.</span>dump(words, fp)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(file, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> fp:
+</span></span><span style="display:flex;"><span>    new_words <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(fp)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>math <span style="color:#f92672">=</span> nlp(words_math)
+</span></span><span style="display:flex;"><span>cs <span style="color:#f92672">=</span> nlp(words_cs)
+</span></span><span style="display:flex;"><span>biz <span style="color:#f92672">=</span> nlp(words_biz)
+</span></span></code></pre></div><h2 id="similarity">Similarity</h2>
 <p>These results use the cosine similarity between the fields and all the word-embeddings of terms in the document.  They are not what we expect to see because math is ranked lowest, despite the document using math as the primary subject.</p>
-
 <p>We can probably do better by removing unneccessary stop words and taking the most &lsquo;important&rsquo; words in the document.  The most important terms can be defined using the TF-IDF formula that is typical in &lsquo;bag-of-words&rsquo; NLP approaches.</p>
-
 <p>We will use the <code>sklearn</code> library for the simple calculations.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Compare two documents</span>
+</span></span><span style="display:flex;"><span>doc1 <span style="color:#f92672">=</span> nlp(content)
+</span></span><span style="display:flex;"><span>print(doc1<span style="color:#f92672">.</span>similarity(biz))
+</span></span><span style="display:flex;"><span>print(doc1<span style="color:#f92672">.</span>similarity(cs))
+</span></span><span style="display:flex;"><span>print(doc1<span style="color:#f92672">.</span>similarity(math))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># Compare two documents
-doc1 = nlp(content)
-print(doc1.similarity(biz))
-print(doc1.similarity(cs))
-print(doc1.similarity(math))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0.5729121134078637
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0.5729121134078637
 0.6058354478834562
 0.48928262314068244
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.feature_extraction.text <span style="color:#f92672">import</span> TfidfVectorizer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tfidf <span style="color:#f92672">=</span> TfidfVectorizer(min_df<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, analyzer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;word&#39;</span>, stop_words <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;english&#39;</span>, sublinear_tf<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>tfidf<span style="color:#f92672">.</span>fit(content<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39; &#39;</span>))
+</span></span><span style="display:flex;"><span>feature_names <span style="color:#f92672">=</span> tfidf<span style="color:#f92672">.</span>get_feature_names()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_ifidf_for_words</span>(text):
+</span></span><span style="display:flex;"><span>    tfidf_matrix<span style="color:#f92672">=</span> tfidf<span style="color:#f92672">.</span>transform([text])<span style="color:#f92672">.</span>todense()
+</span></span><span style="display:flex;"><span>    feature_index <span style="color:#f92672">=</span> tfidf_matrix[<span style="color:#ae81ff">0</span>,:]<span style="color:#f92672">.</span>nonzero()[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    tfidf_scores <span style="color:#f92672">=</span> zip([feature_names[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> feature_index], [tfidf_matrix[<span style="color:#ae81ff">0</span>, x] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> feature_index])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dict(tfidf_scores)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> get_ifidf_for_words(content)
+</span></span><span style="display:flex;"><span>sorted_scores <span style="color:#f92672">=</span> {k: v <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> sorted(scores<span style="color:#f92672">.</span>items(), key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> item: item[<span style="color:#ae81ff">1</span>], reverse<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> islice
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">take</span>(n, iterable):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Return first n items of the iterable as a list&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> list(islice(iterable, n))
+</span></span></code></pre></div><p>The results of the choosing important words by TF-IDF look much more promising.  These are words you would expect to be associated with formal mathematics.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>take(<span style="color:#ae81ff">10</span>, sorted_scores<span style="color:#f92672">.</span>items())
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
-
-tfidf = TfidfVectorizer(min_df=3, analyzer='word', stop_words = 'english', sublinear_tf=True)
-tfidf.fit(content.split(' '))
-feature_names = tfidf.get_feature_names()
-
-def get_ifidf_for_words(text):
-    tfidf_matrix= tfidf.transform([text]).todense()
-    feature_index = tfidf_matrix[0,:].nonzero()[1]
-    tfidf_scores = zip([feature_names[i] for i in feature_index], [tfidf_matrix[0, x] for x in feature_index])
-    return dict(tfidf_scores)
-
-scores = get_ifidf_for_words(content)
-sorted_scores = {k: v for k, v in sorted(scores.items(), key=lambda item: item[1], reverse=True)}
-</code></pre>
-
-<pre><code class="language-python">from itertools import islice
-
-def take(n, iterable):
-    &quot;Return first n items of the iterable as a list&quot;
-    return list(islice(iterable, n))
-</code></pre>
-
-<p>The results of the choosing important words by TF-IDF look much more promising.  These are words you would expect to be associated with formal mathematics.</p>
-
-<pre><code class="language-python">take(10, sorted_scores.items())
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[('logic', 0.14527847977675443),
- ('logical', 0.140443796477262),
- ('form', 0.13793934097017202),
- ('predicate', 0.13687559493415327),
- ('use', 0.1342685066335781),
- ('language', 0.13265636975548645),
- ('symbols', 0.13265636975548645),
- ('truth', 0.13265636975548645),
- ('argument', 0.13077412529085744),
- ('inference', 0.13077412529085744)]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[(&#39;logic&#39;, 0.14527847977675443),
+ (&#39;logical&#39;, 0.140443796477262),
+ (&#39;form&#39;, 0.13793934097017202),
+ (&#39;predicate&#39;, 0.13687559493415327),
+ (&#39;use&#39;, 0.1342685066335781),
+ (&#39;language&#39;, 0.13265636975548645),
+ (&#39;symbols&#39;, 0.13265636975548645),
+ (&#39;truth&#39;, 0.13265636975548645),
+ (&#39;argument&#39;, 0.13077412529085744),
+ (&#39;inference&#39;, 0.13077412529085744)]
 </code></pre>
 
 </div>
-
 
 <p>There are 82 words that are most important in describing the document.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>len(list(sorted_scores<span style="color:#f92672">.</span>keys()))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">len(list(sorted_scores.keys()))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">82
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">82
 </code></pre>
 
 </div>
 
-
 <p>When we compare the document&rsquo;s most important words against the fields&rsquo; associations we find a much more compelling story.  Now, Math is ranked the highest.  Computer science is not far behind, but Business is rightfully quite different.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Compare documents</span>
+</span></span><span style="display:flex;"><span>words <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(list(sorted_scores<span style="color:#f92672">.</span>keys()))
+</span></span><span style="display:flex;"><span>doc1 <span style="color:#f92672">=</span> nlp(words)
+</span></span><span style="display:flex;"><span>print(doc1<span style="color:#f92672">.</span>similarity(biz))
+</span></span><span style="display:flex;"><span>print(doc1<span style="color:#f92672">.</span>similarity(cs))
+</span></span><span style="display:flex;"><span>print(doc1<span style="color:#f92672">.</span>similarity(math))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># Compare documents
-words = ' '.join(list(sorted_scores.keys()))
-doc1 = nlp(words)
-print(doc1.similarity(biz))
-print(doc1.similarity(cs))
-print(doc1.similarity(math))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0.5238546677925497
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0.5238546677925497
 0.6606328549347019
 0.6888387753219556
 </code></pre>
 
 </div>
 
-
 <h2 id="visual-location">Visual Location</h2>
-
 <p>We want to visually locate the document within a svg image that can be seen, below.  This is quite unintuitive because the there are three axes within a 2D-plane.  We must reduce the three dimensions to two.</p>
-
-<p><img src="images/img-datascience_plain.svg" alt="datascience" width="400"/></p>
-
+<img src="images/img-datascience_plain.svg" alt="datascience" width="400"/>
 <p>There is no correct answer to this.  In fact, there are approaches we could have taken, earlier, that would have completed this for us.  A supervised clustering approach could have ensured the three groups.</p>
-
 <p>But, we are keeping this simple and fast - no modeling.  Instead of justifying a best solution, let us find the simplest method to reduce dimensions which is NOT incorrect.  We can make the following assumptions:</p>
-
 <ul>
 <li>While the <code>similarity()</code> method returns cosine similarity with a range of 0-no similarity and 1-perfect similarity, the similarity in writing style leads us to expect an actual range of .50-.70</li>
 <li>x-dimension: Computer Science and Mathematics are antagonistic to each other (in a technical field perspective), but on a continuous scale between the two, so the two should be subtracted</li>
 <li>y-dimension: Business is discrete in it is addressed in the text, or not</li>
 </ul>
-
 <p>We can use the <a href="https://en.wikipedia.org/wiki/Generalised_logistic_function">generalized logistic function</a> with subtracting Computer Science from Math, and say 0 is completely a CS paper, while 1 is completely a Math paper.  We use an arbitrary B=25 to ensure a steep difference between the two.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#formula: Y = A + (K-A)/(C+Q*np.exp(-B*t))^1/v</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set A and B, with all other parameters set to 1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">general_logistic</span>(Beta, cs, math):
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> math <span style="color:#f92672">-</span> cs
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>np<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span>B<span style="color:#f92672">*</span>t)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>xPt <span style="color:#f92672">=</span> general_logistic(<span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">.660</span>, <span style="color:#ae81ff">.688</span>)
+</span></span><span style="display:flex;"><span>print( xPt )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#formula: Y = A + (K-A)/(C+Q*np.exp(-B*t))^1/v
-# set A and B, with all other parameters set to 1
-
-def general_logistic(Beta, cs, math):
-    t = math - cs
-    return (1/(1+np.exp(-B*t)))
-
-xPt = general_logistic(25, .660, .688)
-print( xPt )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0.6681877721681656
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0.6681877721681656
 </code></pre>
 
 </div>
-
 
 <p>Because the actual range is closer to .50-.70, we can expect .60 to be decisive line with value greater than meaning applicability.  So, the y-axis will be 0-top and 1-bottom, with the top of the Business set at .60.  A similarity value lower than this number means the paper is not in this set.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>yPt <span style="color:#f92672">=</span> doc1<span style="color:#f92672">.</span>similarity(biz)
+</span></span><span style="display:flex;"><span>print( yPt )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">yPt = doc1.similarity(biz)
-print( yPt )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0.5238546677925497
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0.5238546677925497
 </code></pre>
 
 </div>
 
-
-<p><img src="images/img-datascience_drawing.png" alt="datascience" width="400"/></p>
-
+<img src="images/img-datascience_drawing.png" alt="datascience" width="400"/>
 <h2 id="prototype">Prototype</h2>
-
 <p>Lets complete the prototype with some frontend work using D3js.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>BizPt <span style="color:#f92672">=</span> doc1<span style="color:#f92672">.</span>similarity(biz)
+</span></span><span style="display:flex;"><span>CsPt <span style="color:#f92672">=</span> doc1<span style="color:#f92672">.</span>similarity(cs)
+</span></span><span style="display:flex;"><span>MathPt <span style="color:#f92672">=</span> doc1<span style="color:#f92672">.</span>similarity(math)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>xPt <span style="color:#f92672">=</span> general_logistic(<span style="color:#ae81ff">25</span>, CsPt, MathPt)
+</span></span><span style="display:flex;"><span>yPt <span style="color:#f92672">=</span> BizPt
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>metadata<span style="color:#f92672">.</span>insert(<span style="color:#ae81ff">4</span>, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;location = [</span><span style="color:#e6db74">{</span>xPt<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>yPt<span style="color:#e6db74">}</span><span style="color:#e6db74">]</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>metadata
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">BizPt = doc1.similarity(biz)
-CsPt = doc1.similarity(cs)
-MathPt = doc1.similarity(math)
-
-xPt = general_logistic(25, CsPt, MathPt)
-yPt = BizPt
-</code></pre>
-
-<pre><code class="language-python">metadata.insert(4, f&quot;location = [{xPt}, {yPt}]\n&quot;)
-</code></pre>
-
-<pre><code class="language-python">metadata
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">['+++\n',
- 'title = &quot;Building Math from the Ground-Up&quot;\n',
- 'date = &quot;2019-07-05&quot;\n',
- 'author = &quot;Jason Beach&quot;\n',
- 'location = [0.6693281622812353, 0.5238546677925497]',
- 'categories = [&quot;Mathematics&quot;, &quot;Logic&quot;]\n',
- 'tags = [&quot;nlp&quot;, &quot;tag2&quot;, &quot;tag3&quot;]\n',
- '+++\n',
- '\n']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[&#39;+++\n&#39;,
+ &#39;title = &#34;Building Math from the Ground-Up&#34;\n&#39;,
+ &#39;date = &#34;2019-07-05&#34;\n&#39;,
+ &#39;author = &#34;Jason Beach&#34;\n&#39;,
+ &#39;location = [0.6693281622812353, 0.5238546677925497]&#39;,
+ &#39;categories = [&#34;Mathematics&#34;, &#34;Logic&#34;]\n&#39;,
+ &#39;tags = [&#34;nlp&#34;, &#34;tag2&#34;, &#34;tag3&#34;]\n&#39;,
+ &#39;+++\n&#39;,
+ &#39;\n&#39;]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>combined <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(metadata) <span style="color:#f92672">+</span> content
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>file_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/home/jovyan/PERSONAL/Data/markdown/result.md&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(file_path, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> file:
+</span></span><span style="display:flex;"><span>    file<span style="color:#f92672">.</span>write(combined)
+</span></span></code></pre></div><p>Once the transformed data exported to markdown files, it can be indexed by lunrJs.  The results of the search query can load both the post information, and the location can be used with the svg.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>beakerx<span style="color:#f92672">.</span>point <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;xPt&#34;</span>:xPt, <span style="color:#e6db74">&#34;yPt&#34;</span>:yPt}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> beakerx.object <span style="color:#f92672">import</span> beakerx
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#f92672">%%</span><span style="color:#a6e22e">javascript</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">require</span>.<span style="color:#a6e22e">config</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">paths</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">d3</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;//cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min&#39;</span>
+</span></span><span style="display:flex;"><span>  }});
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">combined = ''.join(metadata) + content
-
-file_path = &quot;/home/jovyan/PERSONAL/Data/markdown/result.md&quot;
-with open(file_path, 'w') as file:
-    file.write(combined)
-</code></pre>
-
-<p>Once the transformed data exported to markdown files, it can be indexed by lunrJs.  The results of the search query can load both the post information, and the location can be used with the svg.</p>
-
-<pre><code class="language-python">beakerx.point = {&quot;xPt&quot;:xPt, &quot;yPt&quot;:yPt}
-</code></pre>
-
-<pre><code class="language-python">from beakerx.object import beakerx
-</code></pre>
-
-<pre><code class="language-javascript">%%javascript
-require.config({
-  paths: {
-      d3: '//cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min'
-  }});
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;IPython.core.display.Javascript object&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;IPython.core.display.Javascript object&gt;
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#f92672">%%</span><span style="color:#a6e22e">javascript</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">beakerx</span>.<span style="color:#a6e22e">displayHTML</span>(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#39;&lt;div id=&#34;fdg&#34;&gt;&lt;/div&gt;&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">point</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">beakerx</span>.<span style="color:#a6e22e">point</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">d3</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>([<span style="color:#e6db74">&#39;d3&#39;</span>], <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">d3</span>) {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">width</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">300</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">height</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">svg</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d3</span>.<span style="color:#a6e22e">select</span>(<span style="color:#e6db74">&#34;#fdg&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;svg&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;width&#34;</span>, <span style="color:#a6e22e">width</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;height&#34;</span>, <span style="color:#a6e22e">height</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;transform&#34;</span>, <span style="color:#e6db74">&#34;translate(&#34;</span><span style="color:#f92672">+</span>[<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;)&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">node</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">svg</span>
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;circle&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;class&#34;</span>, <span style="color:#e6db74">&#34;dot&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;r&#34;</span>, <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;cx&#34;</span>, <span style="color:#ae81ff">150</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;cy&#34;</span>, <span style="color:#ae81ff">100</span>) 
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">style</span>(<span style="color:#e6db74">&#34;fill&#34;</span>, <span style="color:#e6db74">&#34;Blue&#34;</span>); 
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>});   
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-javascript">%%javascript
-
-beakerx.displayHTML(this, '&lt;div id=&quot;fdg&quot;&gt;&lt;/div&gt;');
-
-var point = beakerx.point
-
-
-
-var d3 = require(['d3'], function (d3) {
-    
-    var width = 300,
-        height = 200;
-
-    var svg = d3.select(&quot;#fdg&quot;)
-                .append(&quot;svg&quot;)
-                .attr(&quot;width&quot;, width)
-                .attr(&quot;height&quot;, height)
-                .attr(&quot;transform&quot;, &quot;translate(&quot;+[100, 0]+&quot;)&quot;)
-
-    var node = svg
-          .append(&quot;circle&quot;)
-          .attr(&quot;class&quot;, &quot;dot&quot;)
-          .attr(&quot;r&quot;, 10)
-          .attr(&quot;cx&quot;, 150)
-          .attr(&quot;cy&quot;, 100) 
-          .style(&quot;fill&quot;, &quot;Blue&quot;); 
-    
-});   
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;IPython.core.display.Javascript object&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;IPython.core.display.Javascript object&gt;
 </code></pre>
 
 </div>
-
 
 <h2 id="conclusion">Conclusion</h2>
-
 <p>The final result of the script and D3 can be at: <a href="https://imtorgdemo.github.io/pages/search/">https://imtorgdemo.github.io/pages/search/</a>.</p>
 
         </div>
@@ -521,17 +411,14 @@ var d3 = require(['d3'], function (d3) {
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#environment">Environment</a></li>
-<li><a href="#preprocessing">PreProcessing</a></li>
-<li><a href="#similarity">Similarity</a></li>
-<li><a href="#visual-location">Visual Location</a></li>
-<li><a href="#prototype">Prototype</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#environment">Environment</a></li>
+    <li><a href="#preprocessing">PreProcessing</a></li>
+    <li><a href="#similarity">Similarity</a></li>
+    <li><a href="#visual-location">Visual Location</a></li>
+    <li><a href="#prototype">Prototype</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -618,7 +505,7 @@ var d3 = require(['d3'], function (d3) {
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

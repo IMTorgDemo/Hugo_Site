@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,339 +106,252 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Scripting languages are quite popular for effectively getting work done.  But, their similarities lead to mental difficulties when remembering syntax and common idioms.  This post is used as a cheatsheet describing fundamental differences in how the languages are used.</p>
-
+            <p>Scripting languages are quite popular for effectively getting work done.  But, their similarities lead to mental difficulties when remembering syntax and common idioms.  This post is used as a cheatsheet describing fundamental differences in how the languages are used.</p>
 <h2 id="introduction">Introduction</h2>
-
 <p>In any one day, I may program in five or six different languages.  This is enjoyable when the syntax is different enough that there is no confusion.  Domain Specific Languages, including R, SQL, Bash, and HTML, are orthogonal in their approach to being productive.  But, the &lsquo;Big Three&rsquo; language families of Python, Javascript, and JVM variety (Java, Groovy, Scala) are so similar that they are easily confused.</p>
-
 <h2 id="common-themes">Common Themes</h2>
-
 <p>Python is a dynamically-typed language, and this feature is an important reason why programmers can be more productive with Python; they don’t have to deal with the overhead of Java’s static typing. So the debates about Java/Python productivity inevitably turn into debates about the comparative advantages and drawbacks of static typing versus dynamic typing — or strong typing versus weak typing — in programming languages.</p>
-
 <p>Dynamic typing is concise, which can lead to smaller source code and fewer errors.  But, this can also be exemplary of fewer features.  To compensate, python uses protocols and other means to provision classes; rather than solely through object-oriented class hierarchies.  It is VERY instructive to look at dynamic-typed language from the perspective of static-typed to understand what problems may occur from the differences.</p>
-
 <p>Static typing can better ensure certainty of data in IO operations among applications and distributed environments.  Its greater standardization also lends to more automation of code and functionality in specific frameworks, such as Spring.  While less concise, this standardization and straight-forward approach lend Java to large code bases that require many contributors, such as Apache open-source projects.</p>
-
 <p>We will provide examples of how that is demonstrated in practice.</p>
-
 <h3 id="closures-groovy">Closures (Groovy)</h3>
-
-<p>Closures, operator overloading and meta programming are the key tools to adding Grooviness to existing libraries. Even many features that may look like being built into the core syntax are just clever library design. Appending to a list with &lt;&lt; is an overloaded operator while looping over its entries with .each is an added method that takes a closure as its parameter.</p>
-
-<pre><code class="language-Groovy">def myClosure = { x, y -&gt; x + y }		// scala uses =&gt;
-[1, 2, 3, 4].each{ println it*2 } 		// it is assumed
-[&lt;list&gt;].&lt;iterator&gt;{&lt;param&gt; -&gt; &lt;statment&gt;}
-for(&lt;condition&gt;){&lt;logic&gt;} 				// loops can be faster than `.each`
-</code></pre>
-
-<h3 id="list-dict-comprehensions-py">List, dict comprehensions (Py)</h3>
-
+<p>Closures, operator overloading and meta programming are the key tools to adding Grooviness to existing libraries. Even many features that may look like being built into the core syntax are just clever library design. Appending to a list with &laquo; is an overloaded operator while looping over its entries with .each is an added method that takes a closure as its parameter.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> myClosure <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> x<span style="color:#f92672">,</span> y <span style="color:#f92672">-&gt;</span> x <span style="color:#f92672">+</span> y <span style="color:#f92672">}</span>		<span style="color:#75715e">// scala uses =&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">].</span><span style="color:#a6e22e">each</span><span style="color:#f92672">{</span> println it<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">}</span> 		<span style="color:#75715e">// it is assumed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">[&lt;</span>list<span style="color:#f92672">&gt;].&lt;</span>iterator<span style="color:#f92672">&gt;{&lt;</span>param<span style="color:#f92672">&gt;</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">&lt;</span>statment<span style="color:#f92672">&gt;}</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span><span style="color:#f92672">(&lt;</span>condition<span style="color:#f92672">&gt;){&lt;</span>logic<span style="color:#f92672">&gt;}</span> 				<span style="color:#75715e">// loops can be faster than `.each`
+</span></span></span></code></pre></div><h3 id="list-dict-comprehensions-py">List, dict comprehensions (Py)</h3>
 <p>Python list comprehensions provide a concise way to create lists.  If this syntax was implemented in Java, it would be unreadable from all of the associated data types.  Comprehensions use the following syntax:</p>
-
 <p>%%python
- result   = [ expression for item in list if conditional ]
+result   = [ expression for item in list if conditional ]
 <em>result</em>  = [<em>transform</em>    <em>iteration</em>         <em>filter</em>     ]</p>
-
 <p>#the * operator is used to repeat. The filter part answers the question if theitem should be transformed.</p>
-
 <p>Which corresponds to</p>
-
 <p>%%python
 for item in list:
-    if conditional:
-        expression</p>
+if conditional:
+expression</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>string <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello 12345 World&#34;</span>
+</span></span><span style="display:flex;"><span>numbers <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>x <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> string <span style="color:#66d9ef">if</span> x<span style="color:#f92672">.</span><span style="color:#a6e22e">isdigit</span><span style="color:#f92672">()]</span>
+</span></span><span style="display:flex;"><span>numbers
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-string = &quot;Hello 12345 World&quot;
-numbers = [x for x in string if x.isdigit()]
-numbers
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">['1', '2', '3', '4', '5']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">double</span><span style="color:#f92672">(</span>x<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> x<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#66d9ef">double</span><span style="color:#f92672">(</span>x<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> range<span style="color:#f92672">(</span><span style="color:#ae81ff">10</span><span style="color:#f92672">)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#66d9ef">double</span><span style="color:#f92672">(</span>x<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> range<span style="color:#f92672">(</span><span style="color:#ae81ff">10</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">if</span> x<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span><span style="color:#f92672">==</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-def double(x):
-  return x*2
-[double(x) for x in range(10)]
-[double(x) for x in range(10) if x%2==0]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[0, 4, 8, 12, 16]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[0, 4, 8, 12, 16]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>x<span style="color:#f92672">+</span>y <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">10</span><span style="color:#f92672">,</span><span style="color:#ae81ff">30</span><span style="color:#f92672">,</span><span style="color:#ae81ff">50</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">for</span> y <span style="color:#66d9ef">in</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">20</span><span style="color:#f92672">,</span><span style="color:#ae81ff">40</span><span style="color:#f92672">,</span><span style="color:#ae81ff">60</span><span style="color:#f92672">]]</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-[x+y for x in [10,30,50] for y in [20,40,60]]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[30, 50, 70, 50, 70, 90, 70, 90, 110]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[30, 50, 70, 50, 70, 90, 70, 90, 110]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>dict comprehensions are just <span style="color:#66d9ef">as</span> good <span style="color:#66d9ef">as</span> list comprehensions
+</span></span><span style="display:flex;"><span>my_phrase <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;No&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;one&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;expects&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;the&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Spanish&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Inquisition&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>my_dict <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>key: value <span style="color:#66d9ef">for</span> value<span style="color:#f92672">,</span> key <span style="color:#66d9ef">in</span> enumerate<span style="color:#f92672">(</span>my_phrase<span style="color:#f92672">)}</span>
+</span></span><span style="display:flex;"><span>reversed_dict <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>value: key <span style="color:#66d9ef">for</span> key<span style="color:#f92672">,</span> value <span style="color:#66d9ef">in</span> my_dict<span style="color:#f92672">.</span><span style="color:#a6e22e">items</span><span style="color:#f92672">()}</span>
+</span></span><span style="display:flex;"><span>reversed_dict
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#dict comprehensions are just as good as list comprehensions
-my_phrase = [&quot;No&quot;, &quot;one&quot;, &quot;expects&quot;, &quot;the&quot;, &quot;Spanish&quot;, &quot;Inquisition&quot;]
-my_dict = {key: value for value, key in enumerate(my_phrase)}
-reversed_dict = {value: key for key, value in my_dict.items()}
-reversed_dict
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{0: 'No', 1: 'one', 2: 'expects', 3: 'the', 4: 'Spanish', 5: 'Inquisition'}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{0: &#39;No&#39;, 1: &#39;one&#39;, 2: &#39;expects&#39;, 3: &#39;the&#39;, 4: &#39;Spanish&#39;, 5: &#39;Inquisition&#39;}
 </code></pre>
 
 </div>
-
 
 <h3 id="callback-js">Callback (Js)</h3>
-
 <ul>
 <li><a href="http://softwareloop.com/2015/02/09/javascript-idioms-for-java-developers/">js idioms for java devs</a></li>
 </ul>
-
 <h2 id="data-structures-and-collections">Data Structures and Collections</h2>
-
 <p>These are some of the most commonly-used objects within a language.  The data structure describes the underlying principles of how the class works with hardware, and the various collection interfaces describe how to interact with the object.</p>
-
-<h3 id="arraylist-linkedlist-jvm-iterables-sequences-py-array-js">ArrayList / LinkedList (JVM), iterables / sequences (Py), array (Js)</h3>
-
+<h3 id="arraylist--linkedlist-jvm-iterables--sequences-py-array-js">ArrayList / LinkedList (JVM), iterables / sequences (Py), array (Js)</h3>
 <p>ArrayList ???</p>
-
 <p>LinkedHashMap is just like HashMap with an additional feature of maintaining an order of elements inserted into it, <a href="https://www.geeksforgeeks.org/linkedhashmap-class-java-examples/">ref</a>.  Like arrays, Linked List is a linear data structure. Unlike arrays, linked list elements are not stored at a contiguous location; the elements are linked using pointers, <a href="https://www.geeksforgeeks.org/linked-list-set-1-introduction/">ref: java linked lists</a>.</p>
-
 <p>There are two <code>remove</code> methods available: One that takes an integer and removes an element by its index, and another that will remove the first element that matches the passed value.  If we have a list of integers, use <code>removeAt</code> to remove an element by its index, and <code>removeElement</code> to remove the first element that matches a value.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//ArrayList
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>list <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">8</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#ae81ff">9</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>list <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list  <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">8</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">9</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span><span style="color:#ae81ff">5</span><span style="color:#f92672">)</span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">max</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">-</span> <span style="color:#e6db74">&#39;c&#39;</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">]</span>  <span style="color:#75715e">//remove elements from list by value
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//ArrayList
-list = [5, 6, 7, 8]
-list.add(9)
-list &lt;&lt; 10
-assert list  == [5, 6, 7, 8, 9, 10]
-assert list.get(2) == 7
-
-list.remove(5)    
-assert list.max() == 9
-assert ['a','b','c','b','b'] - 'c' == ['a','b','b','b']  //remove elements from list by value
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">][-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>             <span style="color:#75715e">//use negative indices to count from the end
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> ArrayList     <span style="color:#75715e">//the specific kind of list being used
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert [1, 2, 3, 4, 5][-1] == 5             //use negative indices to count from the end
-
-assert list.size() == 5
-assert list.getClass() == ArrayList     //the specific kind of list being used
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">]</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">multiply</span><span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> Collections<span style="color:#f92672">.</span><span style="color:#a6e22e">nCopies</span><span style="color:#f92672">(</span><span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> Collections<span style="color:#f92672">.</span><span style="color:#a6e22e">nCopies</span><span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">])</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">],</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">]]</span> <span style="color:#75715e">//not [1,2,1,2]; nCopies from the JDK has different semantics than multiply for lists
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert [1, 2, 3] * 3 == [1, 2, 3, 1, 2, 3, 1, 2, 3]
-assert [1, 2, 3].multiply(2) == [1, 2, 3, 1, 2, 3]
-
-assert Collections.nCopies(3, 'b') == ['b', 'b', 'b']
-assert Collections.nCopies(2, [1, 2]) == [[1, 2], [1, 2]] //not [1,2,1,2]; nCopies from the JDK has different semantics than multiply for lists
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> list2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;(</span>list<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list2 <span style="color:#f92672">==</span> list   <span style="color:#75715e">//== checks that each corresponding element is the same
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def list2 = new ArrayList&lt;String&gt;(list)
-assert list2 == list   //== checks that each corresponding element is the same
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> list3 <span style="color:#f92672">=</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">clone</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list3 <span style="color:#f92672">==</span> list   <span style="color:#75715e">//clone() can also be called
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def list3 = list.clone()
-assert list3 == list   //clone() can also be called
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>Iterating on elements of a list is usually done calling the <code>each</code> and <code>eachWithIndex</code> methods, which execute code on each item of a list.</p>
-
 <p>Mapping is creating a new list by transforming each of its elements into something else, using the <code>collect</code> method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">].</span><span style="color:#a6e22e">eachWithIndex</span> <span style="color:#f92672">{</span> it<span style="color:#f92672">,</span> i <span style="color:#f92672">-&gt;</span> println <span style="color:#e6db74">&#34;$i: $it&#34;</span><span style="color:#f92672">}</span> <span style="color:#75715e">//`it` is the current element, while `i` is the index
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">collect</span> <span style="color:#f92672">{</span> it <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">]*.</span><span style="color:#a6e22e">multiply</span><span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">collect</span> <span style="color:#f92672">{</span> it<span style="color:#f92672">.</span><span style="color:#a6e22e">multiply</span><span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">}</span>  <span style="color:#75715e">//shortcut syntax instead of collect
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">['a', 'b', 'c'].eachWithIndex { it, i -&gt; println &quot;$i: $it&quot;} //`it` is the current element, while `i` is the index
-    
-assert [1, 2, 3].collect { it * 2 } == [2, 4, 6]
-assert [1, 2, 3]*.multiply(2) == [1, 2, 3].collect { it.multiply(2) }  //shortcut syntax instead of collect
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0: a
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0: a
 1: b
 2: c
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">find</span> <span style="color:#f92672">{</span> it <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>           <span style="color:#75715e">//find 1st element matching criteria
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">findAll</span> <span style="color:#f92672">{</span> it <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">]</span>   <span style="color:#75715e">//find all elements matching critieria
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;d&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;e&#39;</span><span style="color:#f92672">].</span><span style="color:#a6e22e">findIndexOf</span> <span style="color:#f92672">{</span> it <span style="color:#66d9ef">in</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;e&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;g&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>     <span style="color:#75715e">//find index of 1st element matching criteria
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;d&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">].</span><span style="color:#a6e22e">indexOf</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>                              <span style="color:#75715e">//first index returned
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;d&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">].</span><span style="color:#a6e22e">findIndexValues</span><span style="color:#f92672">{</span>it<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span><span style="color:#ae81ff">4</span><span style="color:#f92672">]</span>              <span style="color:#75715e">//all indices returned
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert [1, 2, 3].find { it &gt; 1 } == 2           //find 1st element matching criteria
-assert [1, 2, 3].findAll { it &gt; 1 } == [2, 3]   //find all elements matching critieria
-
-assert ['a', 'b', 'c', 'd', 'e'].findIndexOf { it in ['c', 'e', 'g'] } == 2     //find index of 1st element matching criteria
-assert ['a', 'b', 'c', 'd', 'c'].indexOf('c') == 2                              //first index returned
-assert ['a', 'b', 'c', 'd', 'c'].findIndexValues{it=='c'} == [2,4]              //all indices returned
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">every</span> <span style="color:#f92672">{</span> it <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">}</span>               <span style="color:#75715e">// returns true if all elements match the predicate
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">![</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">every</span> <span style="color:#f92672">{</span> it <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">}</span>              <span style="color:#75715e">// negation
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">any</span> <span style="color:#f92672">{</span> it <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">}</span>                 <span style="color:#75715e">// returns true if any element matches the predicate
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert [1, 2, 3].every { it &lt; 5 }               // returns true if all elements match the predicate
-assert ![1, 2, 3].every { it &lt; 3 }              // negation
-assert [1, 2, 3].any { it &gt; 2 }                 // returns true if any element matches the predicate
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">join</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;-&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;1-2-3&#39;</span>           <span style="color:#75715e">// String joining
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">inject</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;counting: &#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> str<span style="color:#f92672">,</span> item <span style="color:#f92672">-&gt;</span> str <span style="color:#f92672">+</span> item <span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;counting: 123&#39;</span>     <span style="color:#75715e">// reduce operation
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert [1, 2, 3].join('-') == '1-2-3'           // String joining
-assert [1, 2, 3].inject('counting: ') { str, item -&gt; str + item } == 'counting: 123'     // reduce operation
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>Comparator mc <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> a<span style="color:#f92672">,</span> b <span style="color:#f92672">-&gt;</span> a <span style="color:#f92672">==</span> b <span style="color:#f92672">?</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">:</span> <span style="color:#f92672">(</span>a <span style="color:#f92672">&lt;</span> b <span style="color:#f92672">?</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> list <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">9</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">11</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">9</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">13</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">max</span><span style="color:#f92672">(</span>mc<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">Comparator mc = { a, b -&gt; a == b ? 0 : (a &lt; b ? -1 : 1) }
-def list = [7, 4, 9, -6, -1, 11, 2, 3, -9, 5, -13]
-assert list.max(mc) == 11
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>Sorting is a common list operation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">9</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">].</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">9</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> list <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;abc&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;z&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;xyzuvw&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;Hello&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;321&#39;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span> <span style="color:#f92672">{</span> it<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;z&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;abc&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;321&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;Hello&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;xyzuvw&#39;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> list2 <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">11</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">9</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">13</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> list2<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span> <span style="color:#f92672">{</span> a<span style="color:#f92672">,</span> b <span style="color:#f92672">-&gt;</span> a <span style="color:#f92672">==</span> b <span style="color:#f92672">?</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">:</span> Math<span style="color:#f92672">.</span><span style="color:#a6e22e">abs</span><span style="color:#f92672">(</span>a<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> Math<span style="color:#f92672">.</span><span style="color:#a6e22e">abs</span><span style="color:#f92672">(</span>b<span style="color:#f92672">)</span> <span style="color:#f92672">?</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">9</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">11</span><span style="color:#f92672">,</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">13</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert [6, 3, 9, 2, 7, 1, 5].sort() == [1, 2, 3, 5, 6, 7, 9]
-
-def list = ['abc', 'z', 'xyzuvw', 'Hello', '321']
-assert list.sort { it.size() } == ['z', 'abc', '321', 'Hello', 'xyzuvw']
-
-def list2 = [7, 4, -6, -1, 11, 2, 3, -9, 5, -13]
-assert list2.sort { a, b -&gt; a == b ? 0 : Math.abs(a) &lt; Math.abs(b) ? -1 : 1 } == [-1, 2, 3, 4, 5, -6, 7, -9, 11, -13]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-Groovy">//Groovy Iterables???
-</code></pre>
-
-<p>Python provides iterables (the iterator protocol) for the implementation of lists, generators, and other classes that require returning its members one by one.  An iterator is an object representing a stream of data.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//Groovy Iterables???
+</span></span></span></code></pre></div><p>Python provides iterables (the iterator protocol) for the implementation of lists, generators, and other classes that require returning its members one by one.  An iterator is an object representing a stream of data.</p>
 <p>Sequences (list, tuple, string) are a type of iterable that support efficient element access using integer indices via the <code>__getitem()__</code> special method (indexing) and define a <code>__length()__</code> method that returns the length of the sequence.</p>
-
 <p>Many things in Python are iterables, but not all of them are sequences.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Sort</span><span style="color:#f92672">(</span>sub_li<span style="color:#f92672">):</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span> reverse <span style="color:#f92672">=</span> None <span style="color:#f92672">(</span>Sorts <span style="color:#66d9ef">in</span> Ascending order<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span> key is set to sort using second element of  
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span> sublist lambda has been used 
+</span></span><span style="display:flex;"><span>    sub_li<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span>key <span style="color:#f92672">=</span> lambda x: x<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">])</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sub_li
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>sub_li <span style="color:#f92672">=[[</span><span style="color:#e6db74">&#39;rishav&#39;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">],</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;akash&#39;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">],</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;ram&#39;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">20</span><span style="color:#f92672">],</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;gaurav&#39;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">15</span><span style="color:#f92672">]]</span> 
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>Sort<span style="color:#f92672">(</span>sub_li<span style="color:#f92672">))</span> 
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-def Sort(sub_li): 
-    # reverse = None (Sorts in Ascending order) 
-    # key is set to sort using second element of  
-    # sublist lambda has been used 
-    sub_li.sort(key = lambda x: x[1]) 
-    return sub_li
- 
-sub_li =[['rishav', 10], ['akash', 5], ['ram', 20], ['gaurav', 15]] 
-print(Sort(sub_li)) 
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[['akash', 5], ['rishav', 10], ['gaurav', 15], ['ram', 20]]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[[&#39;akash&#39;, 5], [&#39;rishav&#39;, 10], [&#39;gaurav&#39;, 15], [&#39;ram&#39;, 20]]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>you can iterate over a list and get its index
+</span></span><span style="display:flex;"><span>mylist <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;It&#39;s&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;only&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;model&#39;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> index<span style="color:#f92672">,</span> item <span style="color:#66d9ef">in</span> enumerate<span style="color:#f92672">(</span>mylist<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>index<span style="color:#f92672">,</span> item<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#you can iterate over a list and get its index
-mylist = [&quot;It's&quot;, 'only', 'a', 'model']
-for index, item in enumerate(mylist):
-    print(index, item)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0 It's
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0 It&#39;s
 1 only
 2 a
 3 model
@@ -446,87 +359,65 @@ for index, item in enumerate(mylist):
 
 </div>
 
-
-<pre><code class="language-javascript">%%javascript
-arr = []
-</code></pre>
-
-<h3 id="hash-map-jvm-collection-py-js">Hash map (JVM), collection (py), ??? (Js)</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#f92672">%%</span><span style="color:#a6e22e">javascript</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> []
+</span></span></code></pre></div><h3 id="hash-map-jvm-collection-py--js">Hash map (JVM), collection (py), ??? (Js)</h3>
 <ul>
 <li><a href="https://www.baeldung.com/groovy-maps">ref: groovy maps</a></li>
 <li><a href="https://www.geeksforgeeks.org/arraylist-vs-hashmap-in-java/">ref: arraylist vs hashmap</a></li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>map <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>name: <span style="color:#e6db74">&#39;Gromit&#39;</span><span style="color:#f92672">,</span> likes: <span style="color:#e6db74">&#39;cheese&#39;</span><span style="color:#f92672">,</span> id: <span style="color:#ae81ff">1234</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;city&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;New York&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;foo&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;bar&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> map<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;name&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Gromit&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> map<span style="color:#f92672">.</span><span style="color:#a6e22e">containsKey</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;city&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">map = [name: 'Gromit', likes: 'cheese', id: 1234, &quot;city&quot;:&quot;New York&quot;]
-map.put('foo', 'bar')
-assert map.get('name') == 'Gromit'
-assert map.containsKey('city') == true
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> map<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> map <span style="color:#66d9ef">instanceof</span> java<span style="color:#f92672">.</span><span style="color:#a6e22e">util</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Map</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> map<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> LinkedHashMap     <span style="color:#75715e">// this is probably what you want
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert map.size() == 5
-assert map instanceof java.util.Map
-assert map.getClass() == LinkedHashMap     // this is probably what you want
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
+<p>Map keys are strings by default.  You must &rsquo;escape&rsquo; a key (parenthesis) if you want to use a variable&rsquo;s value as key.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Bob&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> ages <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>a: <span style="color:#ae81ff">43</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> ages<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;Bob&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#75715e">//`Bob` is not found
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> ages<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">43</span>     <span style="color:#75715e">//because `a` is a literal!
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>ages <span style="color:#f92672">=</span> <span style="color:#f92672">[(</span>a<span style="color:#f92672">):</span> <span style="color:#ae81ff">43</span><span style="color:#f92672">]</span>            <span style="color:#75715e">//now we escape `a` by using parenthesis
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> ages<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;Bob&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">43</span>   <span style="color:#75715e">//and the value is found!
+</span></span></span></code></pre></div><div class="output">
 
-<p>Map keys are strings by default.  You must &lsquo;escape&rsquo; a key (parenthesis) if you want to use a variable&rsquo;s value as key.</p>
-
-<pre><code class="language-Groovy">def a = 'Bob'
-def ages = [a: 43]
-assert ages['Bob'] == null //`Bob` is not found
-assert ages['a'] == 43     //because `a` is a literal!
-
-ages = [(a): 43]            //now we escape `a` by using parenthesis
-assert ages['Bob'] == 43   //and the value is found!
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <p>Maps also act like beans so you can use the property notation to get/set items inside the Map.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> map<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Gromit&#39;</span>     <span style="color:#75715e">//can be used instead of map.get(&#39;name&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> map<span style="color:#f92672">.</span><span style="color:#a6e22e">id</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1234</span>
+</span></span><span style="display:flex;"><span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;foo&#39;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert map.name == 'Gromit'     //can be used instead of map.get('name')
-assert map.id == 1234
-map.bar = 'foo'
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">foo
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">foo
 </code></pre>
 
 </div>
 
-
 <p>Maps created using the map literal notation are ordered, that is to say that if you iterate on map entries, it is guaranteed that the entries will be returned in the same order they were added in the map.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">eachWithIndex</span><span style="color:#f92672">{</span>entry<span style="color:#f92672">,</span> i <span style="color:#f92672">-&gt;</span> println <span style="color:#e6db74">&#34;$i $entry.key: $entry.value&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">map.eachWithIndex{entry, i -&gt; println &quot;$i $entry.key: $entry.value&quot;}
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0 name: Gromit
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0 name: Gromit
 1 likes: cheese
 2 id: 1234
 3 city: New York
@@ -536,199 +427,167 @@ map.bar = 'foo'
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">()</span>																<span style="color:#75715e">// sort on key
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">find</span><span style="color:#f92672">{</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;New York&#34;</span><span style="color:#f92672">}.</span><span style="color:#a6e22e">key</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;city&#34;</span>							<span style="color:#75715e">// returns the first Entry that matches
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">findAll</span><span style="color:#f92672">{</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;New York&#34;</span><span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span>city <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;New York&#34;</span><span style="color:#f92672">]</span>				<span style="color:#75715e">// returns all matches to a map
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">map.sort()																// sort on key
-</code></pre>
-
-<pre><code class="language-Groovy">map.find{it.value == &quot;New York&quot;}.key == &quot;city&quot;							// returns the first Entry that matches
-map.findAll{it.value == &quot;New York&quot;} == [city : &quot;New York&quot;]				// returns all matches to a map
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">true
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">true
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">grep</span><span style="color:#f92672">{</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;New York&#34;</span><span style="color:#f92672">}.</span><span style="color:#a6e22e">each</span><span style="color:#f92672">{</span>it <span style="color:#f92672">-&gt;</span> assertTrue<span style="color:#f92672">(</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;city&#34;</span> <span style="color:#f92672">&amp;&amp;</span> it<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;New York&#34;</span><span style="color:#f92672">)}</span>			<span style="color:#75715e">// returns a list instead of a map
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">map.grep{it.value == &quot;New York&quot;}.each{it -&gt; assertTrue(it.key == &quot;city&quot; &amp;&amp; it.value == &quot;New York&quot;)}			// returns a list instead of a map
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">groovy.lang.MissingMethodException: No signature of method: script1579053864497.assertTrue() is applicable for argument types: (java.lang.Boolean) values: [true]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">groovy.lang.MissingMethodException: No signature of method: script1579053864497.assertTrue() is applicable for argument types: (java.lang.Boolean) values: [true]
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at script1579053864497$_run_closure2.doCall(script1579053864497:1)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at script1579053864497$_run_closure2.doCall(script1579053864497:1)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at this cell line 1
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at this cell line 1
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">every</span><span style="color:#f92672">{</span>it <span style="color:#f92672">-&gt;</span> it<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span> <span style="color:#66d9ef">instanceof</span> String<span style="color:#f92672">}</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">false</span>					<span style="color:#75715e">// returns a boolean
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">{</span>entry <span style="color:#f92672">-&gt;</span> entry<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">}</span>									<span style="color:#75715e">// collect entries into a list
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">findAll</span><span style="color:#f92672">{</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">30</span><span style="color:#f92672">}.</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">{</span>key<span style="color:#f92672">,</span> value <span style="color:#f92672">-&gt;</span> value<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">}</span>		<span style="color:#75715e">// query and collect into new map
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>map<span style="color:#f92672">.</span><span style="color:#a6e22e">groupBy</span><span style="color:#f92672">{</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">}</span>												<span style="color:#75715e">// subgroup
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">map.every{it -&gt; it.value instanceof String} == false					// returns a boolean
-map.collect{entry -&gt; entry.value.name}									// collect entries into a list
-map.findAll{it.value.age &lt; 30}.collect{key, value -&gt; value.name}		// query and collect into new map
-map.groupBy{it.value % 2}												// subgroup
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">groovy.lang.MissingPropertyException: No such property: name for class: java.lang.String
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">groovy.lang.MissingPropertyException: No such property: name for class: java.lang.String
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at script1579053917761$_run_closure2.doCall(script1579053917761:2)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at script1579053917761$_run_closure2.doCall(script1579053917761:2)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at this cell line 2
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at this cell line 2
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.runScript(GroovyCodeRunner.java:94)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:59)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">	at com.twosigma.beakerx.groovy.evaluator.GroovyCodeRunner.call(GroovyCodeRunner.java:32)
 </code></pre>
 
 </div>
-
 
 <p>Python defines a collection (dictionary, set, frozenset) as not having a deterministic ordering.</p>
-
-<pre><code class="language-Groovy">%%python
-#dict
-#open an append file when given a file with the following
-#a 5
-#b 6
-#d 7
-#a 2
-#c 1
-
-d = {}
-for line in file('data/keyvalue.txt'):
-    key, value = line.split()
-    l = d.get(key, [])
-    l.append(int(value))
-    d[key] = l
-    
-def sort_by_sum_value(a, b):
-...    sum_a = sum(a[1])
-...    sum_b = sum(b[1])
-...    return cmp(sum_a, sum_b)
-
-items = d.items()
-items    #[('a', [5, 2]), ('c', [1]), ('b', [6]), ('d', [7])]
-items.sort(sort_by_sum_value)
-
-
-#iterate over items
-my_dict = {'name': 'Lancelot', 'quest': 'Holy Grail', 'favourite_color': 'blue'}
-print(my_dict.get('airspeed velocity of an unladen swallow', 'African or European?\n'))
-for key, value in my_dict.iteritems():
-    print(key, value, sep=&quot;: &quot;)
-</code></pre>
-
-<h3 id="set-and-operations">Set and operations</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>dict
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>open an append file when given a file with the following
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>a <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>b <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>d <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>a <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>c <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> <span style="color:#f92672">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> line <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">file</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;data/keyvalue.txt&#39;</span><span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    key<span style="color:#f92672">,</span> value <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span><span style="color:#a6e22e">split</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>    l <span style="color:#f92672">=</span> d<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> <span style="color:#f92672">[])</span>
+</span></span><span style="display:flex;"><span>    l<span style="color:#f92672">.</span><span style="color:#a6e22e">append</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span><span style="color:#f92672">(</span>value<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>    d<span style="color:#f92672">[</span>key<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> l
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sort_by_sum_value</span><span style="color:#f92672">(</span>a<span style="color:#f92672">,</span> b<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>    sum_a <span style="color:#f92672">=</span> sum<span style="color:#f92672">(</span>a<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>    sum_b <span style="color:#f92672">=</span> sum<span style="color:#f92672">(</span>b<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>    <span style="color:#66d9ef">return</span> cmp<span style="color:#f92672">(</span>sum_a<span style="color:#f92672">,</span> sum_b<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>items <span style="color:#f92672">=</span> d<span style="color:#f92672">.</span><span style="color:#a6e22e">items</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>items    <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#f92672">[(</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">]),</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">,</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]),</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">6</span><span style="color:#f92672">]),</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;d&#39;</span><span style="color:#f92672">,</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">7</span><span style="color:#f92672">])]</span>
+</span></span><span style="display:flex;"><span>items<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span>sort_by_sum_value<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>iterate over items
+</span></span><span style="display:flex;"><span>my_dict <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;name&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Lancelot&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;quest&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Holy Grail&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;favourite_color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;blue&#39;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>my_dict<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;airspeed velocity of an unladen swallow&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;African or European?\n&#39;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> key<span style="color:#f92672">,</span> value <span style="color:#66d9ef">in</span> my_dict<span style="color:#f92672">.</span><span style="color:#a6e22e">iteritems</span><span style="color:#f92672">():</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> value<span style="color:#f92672">,</span> sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;: &#34;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="set-and-operations">Set and operations</h3>
 <p>Set operations can be performed on Groovy lists.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#66d9ef">in</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">]</span>             <span style="color:#75715e">// returns true if an element belongs to the list
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">].</span><span style="color:#a6e22e">contains</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">)</span>      <span style="color:#75715e">// equivalent to the `contains` method in Java
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">3</span><span style="color:#f92672">,</span><span style="color:#ae81ff">4</span><span style="color:#f92672">].</span><span style="color:#a6e22e">containsAll</span><span style="color:#f92672">([</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">4</span><span style="color:#f92672">])</span>       <span style="color:#75715e">// `containsAll` will check that all elements are found
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span><span style="color:#ae81ff">3</span><span style="color:#f92672">,</span><span style="color:#ae81ff">3</span><span style="color:#f92672">,</span><span style="color:#ae81ff">3</span><span style="color:#f92672">,</span><span style="color:#ae81ff">3</span><span style="color:#f92672">,</span><span style="color:#ae81ff">4</span><span style="color:#f92672">,</span><span style="color:#ae81ff">5</span><span style="color:#f92672">].</span><span style="color:#a6e22e">count</span><span style="color:#f92672">(</span><span style="color:#ae81ff">3</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span>  <span style="color:#75715e">// count the number of elements which have some value
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span><span style="color:#ae81ff">4</span><span style="color:#f92672">,</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span><span style="color:#ae81ff">8</span><span style="color:#f92672">,</span><span style="color:#ae81ff">10</span><span style="color:#f92672">,</span><span style="color:#ae81ff">12</span><span style="color:#f92672">].</span><span style="color:#a6e22e">intersect</span><span style="color:#f92672">([</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">3</span><span style="color:#f92672">,</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span><span style="color:#ae81ff">9</span><span style="color:#f92672">,</span><span style="color:#ae81ff">12</span><span style="color:#f92672">])</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span><span style="color:#ae81ff">12</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span><span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">disjoint</span><span style="color:#f92672">(</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">4</span><span style="color:#f92672">,</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span><span style="color:#ae81ff">9</span><span style="color:#f92672">]</span> <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#f92672">![</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span><span style="color:#ae81ff">3</span><span style="color:#f92672">].</span><span style="color:#a6e22e">disjoint</span><span style="color:#f92672">(</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span><span style="color:#ae81ff">4</span><span style="color:#f92672">,</span><span style="color:#ae81ff">6</span><span style="color:#f92672">]</span> <span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Python has its own builtin <code>set</code> collection.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>s <span style="color:#f92672">=</span> set<span style="color:#f92672">((</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>t <span style="color:#f92672">=</span> set<span style="color:#f92672">((</span><span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">union</span><span style="color:#f92672">(</span>t<span style="color:#f92672">)</span> <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>set<span style="color:#f92672">([</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">intersection</span><span style="color:#f92672">(</span>t<span style="color:#f92672">)</span> <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>u <span style="color:#f92672">=</span> set<span style="color:#f92672">((</span><span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span> t<span style="color:#f92672">.</span><span style="color:#a6e22e">issubset</span><span style="color:#f92672">(</span>u<span style="color:#f92672">)</span> <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span> u<span style="color:#f92672">.</span><span style="color:#a6e22e">issubset</span><span style="color:#f92672">(</span>t<span style="color:#f92672">)</span> <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sl <span style="color:#f92672">=</span> list<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>ss <span style="color:#f92672">=</span> set<span style="color:#f92672">(</span>sl<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">assert 'a' in ['a','b','c']             // returns true if an element belongs to the list
-assert ['a','b','c'].contains('a')      // equivalent to the `contains` method in Java
-assert [1,3,4].containsAll([1,4])       // `containsAll` will check that all elements are found
-
-assert [1,2,3,3,3,3,4,5].count(3) == 4  // count the number of elements which have some value
-
-assert [1,2,4,6,8,10,12].intersect([1,3,6,9,12]) == [1,6,12]
-
-assert [1,2,3].disjoint( [4,6,9] )
-assert ![1,2,3].disjoint( [2,4,6] )
-</code></pre>
-
-<p>Python has its own builtin <code>set</code> collection.</p>
-
-<pre><code class="language-Groovy">%%python
-s = set((1, 2, 3, 4, 5))
-t = set((4, 5, 6))
-print( s.union(t) )
-
-set([1, 2, 3, 4, 5, 6])
-print( s.intersection(t) )
-
-u = set((4, 5, 6, 7))
-print( t.issubset(u) )
-print( u.issubset(t) )
-
-sl = list(s)
-ss = set(sl)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">{1, 2, 3, 4, 5, 6}
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">{1, 2, 3, 4, 5, 6}
 {4, 5}
 True
 False
@@ -736,106 +595,83 @@ False
 
 </div>
 
-
-<pre><code class="language-javascript">%%javascript
-//just JSON???
-</code></pre>
-
-<h3 id="iterators">Iterators</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#f92672">%%</span><span style="color:#a6e22e">javascript</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//just JSON???
+</span></span></span></code></pre></div><h3 id="iterators">Iterators</h3>
 <p>Python doesn&rsquo;t have <code>for()</code> loops: <code>for(initializer; condition; iterator){</code>.  It has something more akin to a <code>foreach</code> loop: <code>for number in numbers:</code>.  Python’s for loop is using iterators.</p>
-
 <p>An iterable is an object capable of returning its members one by one - you can apply a <code>for</code> loop to it.  Sequences are a common type of iterable.  They support efficient element access using integer indices via the <code>__getitem()__</code> special method (indexing), so slicing can be performed on them.</p>
-
 <p>Dictionaries, file objects, sets, and generators are all iterables, but none of them is a sequence.</p>
-
 <p>An iterator is an object representing a stream of data. You can create an iterator object by applying the <code>iter()</code> built-in function to an iterable.  You can use an iterator to manually loop over the iterable it came from. A repeated passing of iterator to the built-in function next()returns successive items in the stream.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>numbers <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">10</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">12</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">15</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">18</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">20</span><span style="color:#f92672">]</span>   <span style="color:#960050;background-color:#1e0010">#</span>create iterable
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>iter<span style="color:#f92672">(</span>numbers<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>iterator <span style="color:#f92672">=</span> iter<span style="color:#f92672">(</span>numbers<span style="color:#f92672">)</span>         <span style="color:#960050;background-color:#1e0010">#</span>create iterator
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>next<span style="color:#f92672">(</span>iterator<span style="color:#f92672">))</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-numbers = [10, 12, 15, 18, 20]   #create iterable
-print(iter(numbers))
-
-iterator = iter(numbers)         #create iterator
-print(next(iterator))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;list_iterator object at 0x7f568f83b0f0&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;list_iterator object at 0x7f568f83b0f0&gt;
 10
 </code></pre>
 
 </div>
 
-
 <p>In Python, the iterators are also iterables which act as their own iterators.  However, the difference is that iterators don’t have some of the features that iterables have. They don’t have length <code>len()</code> and can’t be indexed <code>iterartor[0]</code>.</p>
-
 <p>Common iterators include: enumerate, reverse, zip, map, filter, and the File object.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>numbers <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">10</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">12</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">15</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">18</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">20</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>iterator <span style="color:#f92672">=</span> enumerate<span style="color:#f92672">(</span>numbers<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>next<span style="color:#f92672">(</span>iterator<span style="color:#f92672">))</span>             <span style="color:#960050;background-color:#1e0010">#</span>index<span style="color:#f92672">,</span> value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>squared <span style="color:#f92672">=</span> map<span style="color:#f92672">(</span>lambda x: x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> numbers<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>next<span style="color:#f92672">(</span>squared<span style="color:#f92672">))</span>              <span style="color:#960050;background-color:#1e0010">#</span>applied function
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-numbers = [10, 12, 15, 18, 20]
-iterator = enumerate(numbers)
-print(next(iterator))             #index, value
-
-squared = map(lambda x: x**2, numbers)
-print(next(squared))              #applied function
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">(0, 10)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">(0, 10)
 100
 </code></pre>
 
 </div>
 
-
 <p>Because of their laziness, the iterators can help us to deal with infinitely long iterables. Iterators can save us a lot of memory and CPU time.  We can use <code>itertools.repeat</code> to create an iterable that provides 100 million 4’s to us.  This iterator takes up 56 bytes of memory on my machine versus the 800 megabytes of a list.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>from itertools <span style="color:#f92672">import</span> repeat
+</span></span><span style="display:flex;"><span>lots_of_fours <span style="color:#f92672">=</span> repeat<span style="color:#f92672">(</span><span style="color:#ae81ff">4</span><span style="color:#f92672">,</span> times<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>_000_000<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>size_in_bytes <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span><span style="color:#a6e22e">getsizeof</span><span style="color:#f92672">(</span>lots_of_fours<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>size_in_bytes<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>lots_of_fours <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">4</span><span style="color:#f92672">]</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>_000_000
+</span></span><span style="display:flex;"><span>size_in_bytes <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span><span style="color:#a6e22e">getsizeof</span><span style="color:#f92672">(</span>lots_of_fours<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>size_in_bytes<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-from itertools import repeat
-lots_of_fours = repeat(4, times=100_000_000)
-
-import sys
-size_in_bytes = sys.getsizeof(lots_of_fours)
-print(size_in_bytes)
-
-lots_of_fours = [4] * 100_000_000
-size_in_bytes = sys.getsizeof(lots_of_fours)
-print(size_in_bytes)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">56
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">56
 800000064
 </code></pre>
 
 </div>
 
-
 <p>Python iterators are more general versions of the sequence protocol.  Here, <code>__iter__</code> just returns <code>self</code>, an object that has the function <code>next()</code>, which (when called) either returns a value or raises a <code>StopIteration</code> exception.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SillyIter</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__iter__</span><span style="color:#f92672">(</span>self<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__next__</span><span style="color:#f92672">(</span>self<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span><span style="color:#a6e22e">i</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span><span style="color:#a6e22e">i</span> <span style="color:#f92672">&gt;</span> self<span style="color:#f92672">.</span><span style="color:#a6e22e">n</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>            raise StopIteration
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span><span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>si <span style="color:#f92672">=</span> SillyIter<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> si:
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>i<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-class SillyIter:
-    i = 0
-    n = 5
-    def __iter__(self):
-        return self
-    def __next__(self):
-        self.i += 1
-        if self.i &gt; self.n:
-            raise StopIteration
-        return self.i
-
-si = SillyIter()
-for i in si:
-    print(i)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">1
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">1
 2
 3
 4
@@ -843,26 +679,22 @@ for i in si:
 </code></pre>
 
 </div>
-
 
 <p>It is much easier to use a generator function or generator expression to create a custom iterator.  A generator function from the Python docs.  A function which returns a generator iterator. It looks like a normal function except that it contains <code>yield</code> expressions for producing a series of values one at a time with the <code>next()</code>.  <code>yield</code> temporarily suspends processing, remembering the location execution state (including local variables and pending try-statements). When the generator iterator resumes, it picks up where it left off (in contrast to functions which start fresh on every invocation).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">SillyIter</span><span style="color:#f92672">():</span>
+</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> i <span style="color:#f92672">&lt;</span> n:
+</span></span><span style="display:flex;"><span>        i<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        yield i
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>si <span style="color:#f92672">=</span> SillyIter<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> si:
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>i<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-def SillyIter():
-    i = 0
-    n = 5
-    while i &lt; n:
-        i+=1
-        yield i
-
-si = SillyIter()
-for i in si:
-    print(i)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">1
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">1
 2
 3
 4
@@ -871,63 +703,51 @@ for i in si:
 
 </div>
 
-
 <p>A generator expression is similar to a list comprehension.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>squares <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>number<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">for</span> number <span style="color:#66d9ef">in</span> numbers <span style="color:#66d9ef">if</span> number <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>next<span style="color:#f92672">(</span>squares<span style="color:#f92672">))</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-squares = (number**2 for number in numbers if number % 2 == 0)
-print(next(squares))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">100
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">100
 </code></pre>
 
 </div>
 
-
 <p>We’ve actually already met several iterators in disguise; in particular, <code>enumerate</code> is an iterator. To drive home the point, here’s a simple reimplementation of enumerate:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">my_enumerate</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span><span style="color:#f92672">(</span>self<span style="color:#f92672">,</span> some_iter<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span><span style="color:#a6e22e">some_iter</span> <span style="color:#f92672">=</span> iter<span style="color:#f92672">(</span>some_iter<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span><span style="color:#a6e22e">count</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__iter__</span><span style="color:#f92672">(</span>self<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__next__</span><span style="color:#f92672">(</span>self<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        val <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span><span style="color:#a6e22e">some_iter</span><span style="color:#f92672">.</span><span style="color:#a6e22e">__next__</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span><span style="color:#a6e22e">count</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span><span style="color:#a6e22e">count</span><span style="color:#f92672">,</span> val
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> n<span style="color:#f92672">,</span> val <span style="color:#66d9ef">in</span> my_enumerate<span style="color:#f92672">([</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">]):</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>n<span style="color:#f92672">,</span> val<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-class my_enumerate:
-    def __init__(self, some_iter):
-        self.some_iter = iter(some_iter)
-        self.count = -1
-    def __iter__(self):
-        return self
-    def __next__(self):
-        val = self.some_iter.__next__()
-        self.count += 1
-        return self.count, val
-    
-for n, val in my_enumerate(['a', 'b', 'c']):
-    print(n, val)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0 a
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0 a
 1 b
 2 c
 </code></pre>
 
 </div>
 
-
 <p>Generators are a Python implementation of coroutines. Essentially, they’re functions that let you suspend execution and return a result:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span><span style="color:#f92672">():</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">range</span><span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">5</span><span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        yield i<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">g</span><span style="color:#f92672">():</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>i<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-def g():
-    for i in range(0, 5):
-        yield i**2
-for i in g():
-    print(i)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0
 1
 4
 9
@@ -936,51 +756,41 @@ for i in g():
 
 </div>
 
-
 <h3 id="tuple-jvm-groovy-py">Tuple (JVM, Groovy, Py)</h3>
-
 <ul>
 <li><a href="https://mrhaki.blogspot.com/2016/03/groovy-goodness-using-tuples.html">groovy tuples</a></li>
 <li><a href="https://oli.me.uk/tuples-in-javascript/">tuples in js</a></li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>tuple unpacking
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Spam&#39;</span>
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Eggs&#39;</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>a<span style="color:#f92672">,</span> b<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>a<span style="color:#f92672">,</span> b <span style="color:#f92672">=</span> b<span style="color:#f92672">,</span> a
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>a<span style="color:#f92672">,</span> b<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#tuple unpacking
-a = 'Spam'
-b = 'Eggs'
-print(a, b)
-a, b = b, a
-print(a, b)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Spam Eggs
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Spam Eggs
 Eggs Spam
 </code></pre>
 
 </div>
 
-
 <h3 id="other-collections">Other collections</h3>
-
 <p>The Python collections library is great.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>from collections <span style="color:#f92672">import</span> Counter
+</span></span><span style="display:flex;"><span>from random <span style="color:#f92672">import</span> randrange
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pprint
+</span></span><span style="display:flex;"><span>mycounter <span style="color:#f92672">=</span> Counter<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">range</span><span style="color:#f92672">(</span><span style="color:#ae81ff">100</span><span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    random_number <span style="color:#f92672">=</span> randrange<span style="color:#f92672">(</span><span style="color:#ae81ff">10</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    mycounter<span style="color:#f92672">[</span>random_number<span style="color:#f92672">]</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">range</span><span style="color:#f92672">(</span><span style="color:#ae81ff">10</span><span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>i<span style="color:#f92672">,</span> mycounter<span style="color:#f92672">[</span>i<span style="color:#f92672">])</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-from collections import Counter
-from random import randrange
-import pprint
-mycounter = Counter()
-for i in range(100):
-    random_number = randrange(10)
-    mycounter[random_number] += 1
-for i in range(10):
-    print(i, mycounter[i])
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0 12
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0 12
 1 10
 2 13
 3 8
@@ -994,51 +804,44 @@ for i in range(10):
 
 </div>
 
-
 <h2 id="data-types-with-classes">Data Types with Classes</h2>
-
 <p>With a protocol, Python agrees to respect anything that supports a particular set of methods as if it were a builtin type. (These protocols appear everywhere in Python; we are taking advantage of the mapping and sequence protocols below, to define <code>__getitem__</code> and <code>__len__</code>, respectively.)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Binner</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span><span style="color:#f92672">(</span>self<span style="color:#f92672">,</span> binwidth<span style="color:#f92672">,</span> binmax<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span><span style="color:#a6e22e">binwidth</span><span style="color:#f92672">,</span> self<span style="color:#f92672">.</span><span style="color:#a6e22e">binmax</span> <span style="color:#f92672">=</span> binwidth<span style="color:#f92672">,</span> binmax
+</span></span><span style="display:flex;"><span>        nbins <span style="color:#f92672">=</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">(</span>binmax <span style="color:#e6db74">/ float(binwidth) + 1)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        self.bins = [0] * nbins
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    def add(self, value):
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        bin = value /</span> self<span style="color:#f92672">.</span><span style="color:#a6e22e">binwidth</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span><span style="color:#a6e22e">bins</span><span style="color:#f92672">[</span>bin<span style="color:#f92672">]</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__getitem__</span><span style="color:#f92672">(</span>self<span style="color:#f92672">,</span> index<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span><span style="color:#a6e22e">bins</span><span style="color:#f92672">[</span>index<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__len__</span><span style="color:#f92672">(</span>self<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">len</span><span style="color:#f92672">(</span>self<span style="color:#f92672">.</span><span style="color:#a6e22e">bins</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>binner <span style="color:#f92672">=</span> Binner<span style="color:#f92672">(</span><span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">20</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">range</span><span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">20</span><span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    binner<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>i<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">range</span><span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">,</span> len<span style="color:#f92672">(</span>binner<span style="color:#f92672">)):</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span> i<span style="color:#f92672">,</span> binner<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-class Binner:
-    def __init__(self, binwidth, binmax):
-        self.binwidth, self.binmax = binwidth, binmax
-        nbins = int(binmax / float(binwidth) + 1)
-        self.bins = [0] * nbins
-    def add(self, value):
-        bin = value / self.binwidth
-        self.bins[bin] += 1
-    def __getitem__(self, index):
-        return self.bins[index]
-    def __len__(self):
-        return len(self.bins)
-
-binner = Binner(5, 20)
-for i in range(0, 20):
-    binner.add(i)
-for i in range(0, len(binner)):
-    print( i, binner[i] )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">---------------------------------------------------------------------------
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">---------------------------------------------------------------------------
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">TypeError                                 Traceback (most recent call last)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">TypeError                                 Traceback (most recent call last)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">&lt;ipython-input-32-c3e2c25ca8fa&gt; in &lt;module&gt;()
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;ipython-input-32-c3e2c25ca8fa&gt; in &lt;module&gt;()
      14 binner = Binner(5, 20)
      15 for i in range(0, 20):
 ---&gt; 16     binner.add(i)
@@ -1048,10 +851,9 @@ for i in range(0, len(binner)):
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">&lt;ipython-input-32-c3e2c25ca8fa&gt; in add(self, value)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;ipython-input-32-c3e2c25ca8fa&gt; in add(self, value)
       6     def add(self, value):
       7         bin = value / self.binwidth
 ----&gt; 8         self.bins[bin] += 1
@@ -1061,219 +863,178 @@ for i in range(0, len(binner)):
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">TypeError: list indices must be integers or slices, not float
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">TypeError: list indices must be integers or slices, not float
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>enums <span style="color:#66d9ef">in</span> python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span>           <span style="color:#a6e22e">Color</span> <span style="color:#f92672">:</span> pass
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Red</span>      <span style="color:#f92672">(</span>Color<span style="color:#f92672">):</span> pass
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Yellow</span>   <span style="color:#f92672">(</span>Color<span style="color:#f92672">):</span> pass
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Blue</span>     <span style="color:#f92672">(</span>Color<span style="color:#f92672">):</span> pass
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Toy</span><span style="color:#f92672">:</span> pass
+</span></span><span style="display:flex;"><span>myToy <span style="color:#f92672">=</span> Toy<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>myToy<span style="color:#f92672">.</span><span style="color:#a6e22e">color</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;blue&#34;</span>  <span style="color:#960050;background-color:#1e0010">#</span> note we assign a string<span style="color:#f92672">,</span> not an <span style="color:#66d9ef">enum</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> myToy<span style="color:#f92672">.</span><span style="color:#a6e22e">color</span> is Color:
+</span></span><span style="display:flex;"><span>    pass
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;My toy has no color!!!&#34;</span><span style="color:#f92672">)</span>    <span style="color:#960050;background-color:#1e0010">#</span> produces:  My toy has no color<span style="color:#f92672">!!!</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>myToy<span style="color:#f92672">.</span><span style="color:#a6e22e">color</span> <span style="color:#f92672">=</span> Blue   <span style="color:#960050;background-color:#1e0010">#</span> note we use an <span style="color:#66d9ef">enum</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;myToy.color is&#34;</span><span style="color:#f92672">,</span> myToy<span style="color:#f92672">.</span><span style="color:#a6e22e">color</span><span style="color:#f92672">.</span><span style="color:#a6e22e">__name__</span><span style="color:#f92672">)</span>  <span style="color:#960050;background-color:#1e0010">#</span> produces: myToy<span style="color:#f92672">.</span><span style="color:#a6e22e">color</span> is Blue
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;myToy.color is&#34;</span><span style="color:#f92672">,</span> myToy<span style="color:#f92672">.</span><span style="color:#a6e22e">color</span><span style="color:#f92672">)</span>           <span style="color:#960050;background-color:#1e0010">#</span> produces: myToy<span style="color:#f92672">.</span><span style="color:#a6e22e">color</span> is <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Blue</span><span style="color:#e6db74">&#39;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">if myToy.color is Blue:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    myToy.color = Red
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">if myToy.color is Red:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    print(&#34;my toy is red&#34;)   # produces: my toy is red
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">else:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    print(&#34;I don&#39;</span>t know what color my toy is<span style="color:#f92672">.</span><span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#enums in python
-class           Color : pass
-class Red      (Color): pass
-class Yellow   (Color): pass
-class Blue     (Color): pass
-
-class Toy: pass
-myToy = Toy()
-myToy.color = &quot;blue&quot;  # note we assign a string, not an enum
-if myToy.color is Color:
-    pass
-else:
-    print(&quot;My toy has no color!!!&quot;)    # produces:  My toy has no color!!!
- 
-myToy.color = Blue   # note we use an enum
-print(&quot;myToy.color is&quot;, myToy.color.__name__)  # produces: myToy.color is Blue
-print(&quot;myToy.color is&quot;, myToy.color)           # produces: myToy.color is &lt;class '__main__.Blue'&gt;
-if myToy.color is Blue:
-    myToy.color = Red
-if myToy.color is Red:
-    print(&quot;my toy is red&quot;)   # produces: my toy is red
-else:
-    print(&quot;I don't know what color my toy is.&quot;)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">My toy has no color!!!
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">My toy has no color!!!
 myToy.color is Blue
-myToy.color is &lt;class '__main__.Blue'&gt;
+myToy.color is &lt;class &#39;__main__.Blue&#39;&gt;
 my toy is red
 </code></pre>
 
 </div>
 
-
 <h2 id="io-operations">IO Operations</h2>
-
 <ul>
 <li><a href="http://eddelbuettel.net/groovy/groovy-io.html">groovy with java streams</a></li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//`with` closes the file automatically
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span>baseDir<span style="color:#f92672">,</span><span style="color:#e6db74">&#39;haiku.txt&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">withWriter</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;utf-8&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> writer <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    writer<span style="color:#f92672">.</span><span style="color:#a6e22e">writeLine</span> <span style="color:#e6db74">&#39;Hello World&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//But for such a simple example, using the &lt;&lt; operator would have been enough:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span>baseDir<span style="color:#f92672">,</span><span style="color:#e6db74">&#39;haiku.txt&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;&#39;&#39;Hello World&#39;&#39;&#39;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span>baseDir<span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;haiku.txt&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">eachLine</span> <span style="color:#f92672">{</span> line <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    println line
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//collect the lines of a text file into a list, you can do:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>baseDir<span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;haiku.txt&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">collect</span> <span style="color:#f92672">{</span>it<span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//output stream
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span>baseDir<span style="color:#f92672">,</span><span style="color:#e6db74">&#39;data.bin&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">withOutputStream</span> <span style="color:#f92672">{</span> stream <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//withInputStream idiom that will take care of closing file connection:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span>baseDir<span style="color:#f92672">,</span><span style="color:#e6db74">&#39;haiku.txt&#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">withInputStream</span> <span style="color:#f92672">{</span> stream <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">boolean</span> b <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>String message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Hello from Groovy&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Serialize data into a file
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>file<span style="color:#f92672">.</span><span style="color:#a6e22e">withDataOutputStream</span> <span style="color:#f92672">{</span> out <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    out<span style="color:#f92672">.</span><span style="color:#a6e22e">writeBoolean</span><span style="color:#f92672">(</span>b<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    out<span style="color:#f92672">.</span><span style="color:#a6e22e">writeUTF</span><span style="color:#f92672">(</span>message<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Then read it back
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>file<span style="color:#f92672">.</span><span style="color:#a6e22e">withDataInputStream</span> <span style="color:#f92672">{</span> input <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> input<span style="color:#f92672">.</span><span style="color:#a6e22e">readBoolean</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> b
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> input<span style="color:#f92672">.</span><span style="color:#a6e22e">readUTF</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> message
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//find files that match the regex, or just use `.eachFile` for each file, or `eachFileRecurse` to search deeper into subdirectories
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>dir<span style="color:#f92672">.</span><span style="color:#a6e22e">eachFileMatch</span><span style="color:#f92672">(~</span><span style="color:#e6db74">/.*\.txt/</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> file <span style="color:#f92672">-&gt;</span>     
+</span></span><span style="display:flex;"><span>    println file<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//execute external process
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> process <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ls -l&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">()</span>             
+</span></span><span style="display:flex;"><span>println <span style="color:#e6db74">&#34;Found text ${process.text}&#34;</span>   
+</span></span></code></pre></div><p>Python display directory tree, open files, and execute sub processes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span><span style="color:#a6e22e">listdir</span><span style="color:#f92672">(</span>path<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>file <span style="color:#f92672">=</span> open<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;testfile.txt&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;w&#34;</span><span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>file<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Hello World&#34;</span><span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>file<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">()</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>with <span style="color:#a6e22e">open</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;testfile.txt&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;r&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span><span style="color:#a6e22e">readlines</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> line <span style="color:#66d9ef">in</span> data:
+</span></span><span style="display:flex;"><span>    words <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span><span style="color:#a6e22e">split</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span> words <span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//`with` closes the file automatically
-new File(baseDir,'haiku.txt').withWriter('utf-8') { writer -&gt;
-    writer.writeLine 'Hello World'
-}
-</code></pre>
-
-<pre><code class="language-Groovy">//But for such a simple example, using the &lt;&lt; operator would have been enough:
-new File(baseDir,'haiku.txt') &lt;&lt; '''Hello World'''
-</code></pre>
-
-<pre><code class="language-Groovy">new File(baseDir, 'haiku.txt').eachLine { line -&gt;
-    println line
-}
-
-//collect the lines of a text file into a list, you can do:
-def list = new File(baseDir, 'haiku.txt').collect {it}
-</code></pre>
-
-<pre><code class="language-Groovy">//output stream
-new File(baseDir,'data.bin').withOutputStream { stream -&gt;
-    // do something ...
-}
-
-//withInputStream idiom that will take care of closing file connection:
-new File(baseDir,'haiku.txt').withInputStream { stream -&gt;
-    // do something ...
-}
-</code></pre>
-
-<pre><code class="language-Groovy">boolean b = true
-String message = 'Hello from Groovy'
-// Serialize data into a file
-file.withDataOutputStream { out -&gt;
-    out.writeBoolean(b)
-    out.writeUTF(message)
-}
-// ...
-// Then read it back
-file.withDataInputStream { input -&gt;
-    assert input.readBoolean() == b
-    assert input.readUTF() == message
-}
-</code></pre>
-
-<pre><code class="language-Groovy">//find files that match the regex, or just use `.eachFile` for each file, or `eachFileRecurse` to search deeper into subdirectories
-dir.eachFileMatch(~/.*\.txt/) { file -&gt;     
-    println file.name
-}
-</code></pre>
-
-<pre><code class="language-Groovy">//execute external process
-def process = &quot;ls -l&quot;.execute()             
-println &quot;Found text ${process.text}&quot;   
-</code></pre>
-
-<p>Python display directory tree, open files, and execute sub processes.</p>
-
-<pre><code class="language-Groovy">%%python
-import os
-os.listdir(path)
-</code></pre>
-
-<pre><code class="language-Groovy">%%python
-file = open(&quot;testfile.txt&quot;,&quot;w&quot;) 
-file.write(&quot;Hello World&quot;) 
-file.close() 
-
-with open(&quot;testfile.txt&quot;, &quot;r&quot;) as f:
-    data = f.readlines()
-    
-for line in data:
-    words = line.split()
-    print( words )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">['Hello', 'World']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[&#39;Hello&#39;, &#39;World&#39;]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> subprocess
+</span></span><span style="display:flex;"><span>output <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span><span style="color:#a6e22e">check_output</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;head&#39;</span><span style="color:#f92672">,</span> shell<span style="color:#f92672">=</span>True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>output<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-import subprocess
-output = subprocess.check_output('head', shell=True)
-print(output)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">b''
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">b&#39;&#39;
 </code></pre>
 
 </div>
-
 
 <h2 id="random-useful-bits">Random useful bits</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> False<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;you can&#39;t do that here!&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-assert False, &quot;you can't do that here!&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">---------------------------------------------------------------------------
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">---------------------------------------------------------------------------
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">AssertionError                            Traceback (most recent call last)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">AssertionError                            Traceback (most recent call last)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">&lt;ipython-input-44-1335db417df4&gt; in &lt;module&gt;()
-----&gt; 1 assert False, &quot;you can't do that here!&quot;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;ipython-input-44-1335db417df4&gt; in &lt;module&gt;()
+----&gt; 1 assert False, &#34;you can&#39;t do that here!&#34;
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">AssertionError: you can't do that here!
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">AssertionError: you can&#39;t do that here!
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>Worried that you<span style="color:#960050;background-color:#1e0010">’</span>re getting an empty list<span style="color:#f92672">?</span> 
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> <span style="color:#a6e22e">len</span><span style="color:#f92672">(</span>x<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#Worried that you’re getting an empty list? 
-x = []
-assert len(x)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">---------------------------------------------------------------------------
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">---------------------------------------------------------------------------
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">AssertionError                            Traceback (most recent call last)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">AssertionError                            Traceback (most recent call last)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">&lt;ipython-input-43-6aa249c95d4b&gt; in &lt;module&gt;()
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;ipython-input-43-6aa249c95d4b&gt; in &lt;module&gt;()
       1 #Worried that you’re getting an empty list?
       2 x = []
 ----&gt; 3 assert len(x)
@@ -1281,194 +1042,164 @@ assert len(x)
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">AssertionError: 
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">AssertionError: 
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>any and all
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#f92672">[</span> True<span style="color:#f92672">,</span> False <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span> any<span style="color:#f92672">(</span>x<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span> all<span style="color:#f92672">(</span>x<span style="color:#f92672">))</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#any and all
-x = [ True, False ]
-print( any(x))
-print( all(x))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">True
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">True
 False
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>Here<span style="color:#f92672">,</span> <span style="color:#f92672">*</span>args assigns all of the positional arguments to a tuple <span style="color:#960050;background-color:#1e0010">‘</span>args<span style="color:#960050;background-color:#1e0010">’</span><span style="color:#f92672">,</span> and <span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#f92672">**</span>kwargs<span style="color:#960050;background-color:#1e0010">’</span> assigns all of the keyword arguments to a dictionary <span style="color:#960050;background-color:#1e0010">‘</span>kwargs<span style="color:#960050;background-color:#1e0010">’</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_me</span><span style="color:#f92672">(*</span>args<span style="color:#f92672">,</span> <span style="color:#f92672">**</span>kwargs<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    print_me<span style="color:#f92672">(</span><span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">,</span> test<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;me&#39;</span><span style="color:#f92672">,</span> arg2<span style="color:#f92672">=</span>None<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>When a function is called with <span style="color:#66d9ef">this</span> notation<span style="color:#f92672">,</span> the args and kwargs are unpacked appropriately and passed into the function<span style="color:#f92672">.</span> For example<span style="color:#f92672">,</span> the function test_call
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>can be called with a tuple of three args <span style="color:#f92672">(</span>matching <span style="color:#960050;background-color:#1e0010">‘</span>a<span style="color:#960050;background-color:#1e0010">’</span><span style="color:#f92672">,</span> <span style="color:#960050;background-color:#1e0010">‘</span>b<span style="color:#960050;background-color:#1e0010">’</span><span style="color:#f92672">,</span> <span style="color:#960050;background-color:#1e0010">‘</span>c<span style="color:#960050;background-color:#1e0010">’</span><span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_call</span><span style="color:#f92672">(</span>a<span style="color:#f92672">,</span> b<span style="color:#f92672">,</span> c<span style="color:#f92672">,</span> x<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> y<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span> z<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span><span style="color:#f92672">):</span> print<span style="color:#f92672">(</span> a<span style="color:#f92672">,</span> b<span style="color:#f92672">,</span> c<span style="color:#f92672">,</span> x<span style="color:#f92672">,</span> y<span style="color:#f92672">,</span> z<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>tuple_in <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">7</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>test_call<span style="color:#f92672">(*</span>tuple_in<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#Here, *args assigns all of the positional arguments to a tuple ‘args’, and ‘**kwargs’ assigns all of the keyword arguments to a dictionary ‘kwargs’:
-def print_me(*args, **kwargs):
-    print_me(5, 6, 7, test='me', arg2=None)
-#When a function is called with this notation, the args and kwargs are unpacked appropriately and passed into the function. For example, the function test_call
-#can be called with a tuple of three args (matching ‘a’, ‘b’, ‘c’):
-def test_call(a, b, c, x=1, y=2, z=3): print( a, b, c, x, y, z)
-tuple_in = (5, 6, 7)
-test_call(*tuple_in)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">5 6 7 1 2 3
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">5 6 7 1 2 3
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">catch</span> exceptions
+</span></span><span style="display:flex;"><span>x<span style="color:#f92672">=[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">,</span><span style="color:#ae81ff">2</span><span style="color:#f92672">,</span><span style="color:#ae81ff">4</span><span style="color:#f92672">,</span><span style="color:#ae81ff">6</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">10</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>except IndexError:
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> None
+</span></span><span style="display:flex;"><span>y
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>The purpose of <span style="color:#66d9ef">try</span><span style="color:#f92672">/</span><span style="color:#66d9ef">finally</span> is to ensure that something is done<span style="color:#f92672">,</span> whether or not an exception is raised:
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">finally</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    x<span style="color:#f92672">.</span><span style="color:#a6e22e">append</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;something&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span> x<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#catch exceptions
-x=[0,2,4,6]
-try:
-    y = x[10]
-except IndexError:
-    y = None
-y
-</code></pre>
-
-<pre><code class="language-Groovy">%%python
-#The purpose of try/finally is to ensure that something is done, whether or not an exception is raised:
-x = [0, 1, 2]
-try:
-    y = x[5]
-finally:
-    x.append('something')
-    print( x)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[0, 1, 2, 'something']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[0, 1, 2, &#39;something&#39;]
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">---------------------------------------------------------------------------
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">---------------------------------------------------------------------------
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">IndexError                                Traceback (most recent call last)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">IndexError                                Traceback (most recent call last)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">&lt;ipython-input-54-07bd9b959038&gt; in &lt;module&gt;()
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;ipython-input-54-07bd9b959038&gt; in &lt;module&gt;()
       2 x = [0, 1, 2]
       3 try:
 ----&gt; 4     y = x[5]
       5 finally:
-      6     x.append('something')
+      6     x.append(&#39;something&#39;)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">IndexError: list index out of range
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">IndexError: list index out of range
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>semantically equivalent to <span style="color:#66d9ef">this</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>but it<span style="color:#960050;background-color:#1e0010">’</span>s a bit cleaner<span style="color:#f92672">,</span> because the exception doesn<span style="color:#960050;background-color:#1e0010">’</span>t have to be re<span style="color:#f92672">-</span>raised and you don<span style="color:#960050;background-color:#1e0010">’</span>t have to <span style="color:#66d9ef">catch</span> a specific exception type
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>except IndexError:
+</span></span><span style="display:flex;"><span>    x<span style="color:#f92672">.</span><span style="color:#a6e22e">append</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;something&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    raise
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#semantically equivalent to this
-#but it’s a bit cleaner, because the exception doesn’t have to be re-raised and you don’t have to catch a specific exception type
-try:
-    y = x[5]
-except IndexError:
-    x.append('something')
-    raise
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">---------------------------------------------------------------------------
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">---------------------------------------------------------------------------
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">IndexError                                Traceback (most recent call last)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">IndexError                                Traceback (most recent call last)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">&lt;ipython-input-55-c1a571ecce91&gt; in &lt;module&gt;()
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;ipython-input-55-c1a571ecce91&gt; in &lt;module&gt;()
       2 #but it’s a bit cleaner, because the exception doesn’t have to be re-raised and you don’t have to catch a specific exception type
       3 try:
 ----&gt; 4     y = x[5]
       5 except IndexError:
-      6     x.append('something')
+      6     x.append(&#39;something&#39;)
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">IndexError: list index out of range
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">IndexError: list index out of range
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>x
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-x
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[0, 1, 2, 'something', 'something']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[0, 1, 2, &#39;something&#39;, &#39;something&#39;]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>Exceptions are just classes that derive from Exception<span style="color:#f92672">,</span> and you can <span style="color:#66d9ef">catch</span> exceptions based on their base classes<span style="color:#f92672">.</span> So<span style="color:#f92672">,</span> <span style="color:#66d9ef">for</span> example<span style="color:#f92672">,</span> you can <span style="color:#66d9ef">catch</span> most standard errors by catching the StandardError exception<span style="color:#f92672">,</span> from which e<span style="color:#f92672">.</span><span style="color:#a6e22e">g</span><span style="color:#f92672">.</span> IndexError inherits:
+</span></span><span style="display:flex;"><span>print <span style="color:#a6e22e">issubclass</span><span style="color:#f92672">(</span>IndexError<span style="color:#f92672">,</span> StandardError<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> x<span style="color:#f92672">[</span><span style="color:#ae81ff">10</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>except StandardError:
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span> <span style="color:#e6db74">&#39;CAUGHT EXCEPTION!&#39;</span><span style="color:#f92672">,</span> str<span style="color:#f92672">(</span>e<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> None
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>define your own exceptions and exception hierarchies:
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyFavoriteException</span><span style="color:#f92672">(</span>Exception<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    pass
+</span></span><span style="display:flex;"><span>raise MyFavoriteException
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#Exceptions are just classes that derive from Exception, and you can catch exceptions based on their base classes. So, for example, you can catch most standard errors by catching the StandardError exception, from which e.g. IndexError inherits:
-print issubclass(IndexError, StandardError)
-try:
-    y = x[10]
-except StandardError:
-    print( 'CAUGHT EXCEPTION!', str(e))
-    y = None
-</code></pre>
-
-<pre><code class="language-Groovy">%%python
-#define your own exceptions and exception hierarchies:
-class MyFavoriteException(Exception):
-    pass
-raise MyFavoriteException
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">  File &quot;&lt;ipython-input-57-4b118fdb119a&gt;&quot;, line 2
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">  File &#34;&lt;ipython-input-57-4b118fdb119a&gt;&#34;, line 2
     print issubclass(IndexError, StandardError)
                    ^
 SyntaxError: invalid syntax
@@ -1476,101 +1207,89 @@ SyntaxError: invalid syntax
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>function decorators are functions that take functions <span style="color:#66d9ef">as</span> arguments<span style="color:#f92672">,</span> and <span style="color:#66d9ef">return</span> other functions<span style="color:#f92672">.</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">my_decorator</span><span style="color:#f92672">(</span>fn<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">new_fn</span><span style="color:#f92672">(*</span>args<span style="color:#f92672">,</span> <span style="color:#f92672">**</span>kwargs<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;something&#39;</span> <span style="color:#66d9ef">in</span> kwargs:
+</span></span><span style="display:flex;"><span>            print<span style="color:#f92672">(</span> <span style="color:#e6db74">&#39;REMOVING&#39;</span><span style="color:#f92672">,</span> kwargs<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;something&#39;</span><span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>            del kwargs<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;something&#39;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span><span style="color:#f92672">(*</span>args<span style="color:#f92672">,</span> <span style="color:#f92672">**</span>kwargs<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> new_fn
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>To apply <span style="color:#66d9ef">this</span> decorator<span style="color:#f92672">,</span> use <span style="color:#66d9ef">this</span> funny <span style="color:#960050;background-color:#1e0010">@</span> syntax:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@my_decorator</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">some_function</span><span style="color:#f92672">(</span>a<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span><span style="color:#f92672">,</span> b<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span><span style="color:#f92672">,</span> something<span style="color:#f92672">=</span>None<span style="color:#f92672">,</span> c<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span><span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span> a<span style="color:#f92672">,</span> b<span style="color:#f92672">,</span> something<span style="color:#f92672">,</span> c<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>OK<span style="color:#f92672">,</span> now some_function has been invisibly replaced with the result of my_decorator<span style="color:#f92672">,</span> which is going to be new_fn<span style="color:#f92672">.</span> Let<span style="color:#960050;background-color:#1e0010">’</span>s see the result:
+</span></span><span style="display:flex;"><span>some_function<span style="color:#f92672">(</span>something<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;MADE IT&#39;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#function decorators are functions that take functions as arguments, and return other functions. 
-def my_decorator(fn):
-    def new_fn(*args, **kwargs):
-        if 'something' in kwargs:
-            print( 'REMOVING', kwargs['something'])
-            del kwargs['something']
-        return fn(*args, **kwargs)
-    return new_fn
-#To apply this decorator, use this funny @ syntax:
-@my_decorator
-def some_function(a=5, b=6, something=None, c=7):
-    print( a, b, something, c)
-#OK, now some_function has been invisibly replaced with the result of my_decorator, which is going to be new_fn. Let’s see the result:
-some_function(something='MADE IT')
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">REMOVING MADE IT
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">REMOVING MADE IT
 5 6 None 7
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>add attributes to functions<span style="color:#f92672">.</span> <span style="color:#f92672">(</span>This is why I use them <span style="color:#66d9ef">in</span> my testing code sometimes<span style="color:#f92672">.)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">attrs</span><span style="color:#f92672">(**</span>kwds<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">decorate</span><span style="color:#f92672">(</span>f<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> k <span style="color:#66d9ef">in</span> kwds:
+</span></span><span style="display:flex;"><span>            setattr<span style="color:#f92672">(</span>f<span style="color:#f92672">,</span> k<span style="color:#f92672">,</span> kwds<span style="color:#f92672">[</span>k<span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> f
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> decorate
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@attrs</span><span style="color:#f92672">(</span>versionadded<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2.2&#34;</span><span style="color:#f92672">,</span> author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Guido van Rossum&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mymethod</span><span style="color:#f92672">(</span>f<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    pass
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span> mymethod<span style="color:#f92672">.</span><span style="color:#a6e22e">versionadded</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span> mymethod<span style="color:#f92672">.</span><span style="color:#a6e22e">author</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#add attributes to functions. (This is why I use them in my testing code sometimes.)
-def attrs(**kwds):
-    def decorate(f):
-        for k in kwds:
-            setattr(f, k, kwds[k])
-        return f
-    return decorate
-
-@attrs(versionadded=&quot;2.2&quot;, author=&quot;Guido van Rossum&quot;)
-def mymethod(f):
-    pass
-print( mymethod.versionadded)
-print( mymethod.author)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2.2
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2.2
 Guido van Rossum
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>memoize<span style="color:#f92672">/</span>caching of results
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">simple_cache</span><span style="color:#f92672">(</span>fn<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    cache <span style="color:#f92672">=</span> <span style="color:#f92672">{}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">new_fn</span><span style="color:#f92672">(</span>n<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> n <span style="color:#66d9ef">in</span> cache:
+</span></span><span style="display:flex;"><span>            print<span style="color:#f92672">(</span> <span style="color:#e6db74">&#39;FOUND IN CACHE; RETURNING&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> cache<span style="color:#f92672">[</span>n<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>otherwise<span style="color:#f92672">,</span> call function <span style="color:#f92672">&amp;</span> record value
+</span></span><span style="display:flex;"><span>        val <span style="color:#f92672">=</span> fn<span style="color:#f92672">(</span>n<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        cache<span style="color:#f92672">[</span>n<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> val
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> val
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> new_fn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>Then use <span style="color:#66d9ef">this</span> <span style="color:#66d9ef">as</span> a decorator to wrap the expensive function:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@simple_cache</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">expensive</span><span style="color:#f92672">(</span>n<span style="color:#f92672">):</span>
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span> <span style="color:#e6db74">&#39;IN THE EXPENSIVE FN:&#39;</span><span style="color:#f92672">,</span> n<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span>Now<span style="color:#f92672">,</span> when you call <span style="color:#66d9ef">this</span> function twice with the same argument<span style="color:#f92672">,</span> <span style="color:#66d9ef">if</span> will only <span style="color:#66d9ef">do</span> the calculation once<span style="color:#f92672">;</span> the second time<span style="color:#f92672">,</span> the function call will be intercepted and the cached value will be returned<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>expensive<span style="color:#f92672">(</span><span style="color:#ae81ff">55</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>expensive<span style="color:#f92672">(</span><span style="color:#ae81ff">55</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-#memoize/caching of results
-def simple_cache(fn):
-    cache = {}
-    def new_fn(n):
-        if n in cache:
-            print( 'FOUND IN CACHE; RETURNING')
-            return cache[n]
-        #otherwise, call function &amp; record value
-        val = fn(n)
-        cache[n] = val
-        return val
-    return new_fn
-
-#Then use this as a decorator to wrap the expensive function:
-@simple_cache
-def expensive(n):
-    print( 'IN THE EXPENSIVE FN:', n)
-    return n**2
-#Now, when you call this function twice with the same argument, if will only do the calculation once; the second time, the function call will be intercepted and the cached value will be returned.
-expensive(55)
-expensive(55)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">IN THE EXPENSIVE FN: 55
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">IN THE EXPENSIVE FN: 55
 FOUND IN CACHE; RETURNING
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">3025
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">3025
 </code></pre>
 
 </div>
 
-
 <h2 id="references">References</h2>
-
 <ul>
 <li><a href="https://groovy-lang.org/groovy-dev-kit.html#Collections-Maps">docs: groovy</a></li>
 <li><a href="https://intermediate-and-advanced-software-carpentry.readthedocs.io/en/latest/index.html">python idioms</a></li>
@@ -1583,31 +1302,30 @@ FOUND IN CACHE; RETURNING
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#common-themes">Common Themes</a>
-<ul>
-<li><a href="#closures-groovy">Closures (Groovy)</a></li>
-<li><a href="#list-dict-comprehensions-py">List, dict comprehensions (Py)</a></li>
-<li><a href="#callback-js">Callback (Js)</a></li>
-</ul></li>
-<li><a href="#data-structures-and-collections">Data Structures and Collections</a>
-<ul>
-<li><a href="#arraylist-linkedlist-jvm-iterables-sequences-py-array-js">ArrayList / LinkedList (JVM), iterables / sequences (Py), array (Js)</a></li>
-<li><a href="#hash-map-jvm-collection-py-js">Hash map (JVM), collection (py), ??? (Js)</a></li>
-<li><a href="#set-and-operations">Set and operations</a></li>
-<li><a href="#iterators">Iterators</a></li>
-<li><a href="#tuple-jvm-groovy-py">Tuple (JVM, Groovy, Py)</a></li>
-<li><a href="#other-collections">Other collections</a></li>
-</ul></li>
-<li><a href="#data-types-with-classes">Data Types with Classes</a></li>
-<li><a href="#io-operations">IO Operations</a></li>
-<li><a href="#random-useful-bits">Random useful bits</a></li>
-<li><a href="#references">References</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#common-themes">Common Themes</a>
+      <ul>
+        <li><a href="#closures-groovy">Closures (Groovy)</a></li>
+        <li><a href="#list-dict-comprehensions-py">List, dict comprehensions (Py)</a></li>
+        <li><a href="#callback-js">Callback (Js)</a></li>
+      </ul>
+    </li>
+    <li><a href="#data-structures-and-collections">Data Structures and Collections</a>
+      <ul>
+        <li><a href="#arraylist--linkedlist-jvm-iterables--sequences-py-array-js">ArrayList / LinkedList (JVM), iterables / sequences (Py), array (Js)</a></li>
+        <li><a href="#hash-map-jvm-collection-py--js">Hash map (JVM), collection (py), ??? (Js)</a></li>
+        <li><a href="#set-and-operations">Set and operations</a></li>
+        <li><a href="#iterators">Iterators</a></li>
+        <li><a href="#tuple-jvm-groovy-py">Tuple (JVM, Groovy, Py)</a></li>
+        <li><a href="#other-collections">Other collections</a></li>
+      </ul>
+    </li>
+    <li><a href="#data-types-with-classes">Data Types with Classes</a></li>
+    <li><a href="#io-operations">IO Operations</a></li>
+    <li><a href="#random-useful-bits">Random useful bits</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -1694,7 +1412,7 @@ FOUND IN CACHE; RETURNING
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

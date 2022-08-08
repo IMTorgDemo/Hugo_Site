@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,28 +106,18 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<h2 id="introduction">Introduction</h2>
-
+            <h2 id="introduction">Introduction</h2>
 <p>Most programming languages are procedural or are written in an imperative style: programs are lists of instructions that tell the computer what to do with the program’s input.  Even &lsquo;purely&rsquo; OOP languages, such as Java, are typically written in an imperative style with little thought give in actual OOP modeling.</p>
-
 <p>Functional code is characterised by one thing: the absence of side effects. It doesn’t rely on data outside the current function, and it doesn’t change data that exists outside the current function. Every other “functional” thing can be derived from this property.  Ideally, functions only take inputs and produce outputs, and don’t have any internal state that affects the output produced for a given input.</p>
-
 <p>Programming in this respect requires one to think in terms of data state.  Because of this and other attributes, functional programming is good at modeling processes, such as data ETL.</p>
-
 <h2 id="principles">Principles</h2>
-
 <p>Just three principles can provide guidance for programming in a functional manner.</p>
-
 <ul>
 <li>Pure and Higher-Order functions do not change external data, and they can accept other functions as parameters and can return functions as output.</li>
 <li>Immutability, all values are immutable by default. Any “mutating” operations copy the value, change it and pass back the changed copy. This eliminates bugs that arise from a programmer’s incomplete model of the possible states their program may enter.</li>
 <li>First class functions allow functions to be treated like any other value. This means they can be created, passed to functions, returned from functions and stored inside data structures.</li>
 </ul>
-
 <p>It is also helpful to keep in-mind a few unique aspects of functional languages.  Unfortunately, these are missing from Python, but are available in languages where functional characteristics are important, such as Scala:</p>
-
 <ul>
 <li>tail call optimisation is used for recursion</li>
 <li>currying is used for decomposing a function (that takes multiple arguments) into a function that takes the first argument, and returns a function that takes the next argument</li>
@@ -135,100 +125,74 @@
 <li>lazy evaluation is a compiler technique that avoids running code until the result is needed</li>
 <li>a process is deterministic only if repetitions yield the same result every time</li>
 </ul>
-
 <h2 id="functional-methods">Functional Methods</h2>
-
 <p>These basic methods for not iterating over data use Higher Order Functions.  Developers with Hadoop or Spark experience should be familiar with these techniques.</p>
-
 <ul>
 <li>list comprehensions</li>
 <li>map</li>
 <li>filter</li>
 <li>reduce</li>
 </ul>
-
 <p>Try not thinking about the operations on the data. Think of the states the data will go through.  Change of state is a process.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> reduce
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> operator <span style="color:#f92672">import</span> add
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>people <span style="color:#f92672">=</span> [{<span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;Mary&#39;</span>, <span style="color:#e6db74">&#39;height&#39;</span>: <span style="color:#ae81ff">160</span>},
+</span></span><span style="display:flex;"><span>          {<span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;Isla&#39;</span>, <span style="color:#e6db74">&#39;height&#39;</span>: <span style="color:#ae81ff">80</span>},
+</span></span><span style="display:flex;"><span>          {<span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;Sam&#39;</span>}]
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>heights <span style="color:#f92672">=</span> map(<span style="color:#66d9ef">lambda</span> x: x[<span style="color:#e6db74">&#39;height&#39;</span>],
+</span></span><span style="display:flex;"><span>              filter(<span style="color:#66d9ef">lambda</span> x: <span style="color:#e6db74">&#39;height&#39;</span> <span style="color:#f92672">in</span> x, people))
+</span></span><span style="display:flex;"><span>heights
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">from functools import reduce
-from operator import add
-</code></pre>
-
-<pre><code class="language-python">people = [{'name': 'Mary', 'height': 160},
-          {'name': 'Isla', 'height': 80},
-          {'name': 'Sam'}]
-</code></pre>
-
-<pre><code class="language-python">heights = map(lambda x: x['height'],
-              filter(lambda x: 'height' in x, people))
-heights
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;map at 0x7ffafa47a1d0&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;map at 0x7ffafa47a1d0&gt;
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>lst <span style="color:#f92672">=</span> list(heights)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> len(lst) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    average_height <span style="color:#f92672">=</span> reduce(add, lst) <span style="color:#f92672">/</span> len(lst)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>average_height 
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">lst = list(heights)
-</code></pre>
-
-<pre><code class="language-python">if len(lst) &gt; 0:
-    average_height = reduce(add, lst) / len(lst)
-    
-average_height 
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">120.0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">120.0
 </code></pre>
 
 </div>
-
 
 <p>Here, map is a generator.  So, we must run it as a list in order to use the <code>len()</code> method.</p>
-
 <h2 id="declarative-approach">Declarative Approach</h2>
-
 <p>A functional version of code is declarative. It describes what to do, rather than how to do it.  Convert imperative to declarative by the following steps:</p>
-
 <ul>
 <li>bundle pieces of the code into functions -&gt;
-
 <ul>
 <li>accomplished: the code describes itself (no need for comments).  Splitting code into functions is a great, low brain power way to make code more readable.</li>
 <li>lacking: functions used as sub-routines, they affect the code around them by changing external variables, rather than by returning values.</li>
-</ul></li>
+</ul>
+</li>
 <li>remove state -&gt;
-
 <ul>
 <li>accomplished:
 i) no shared state, everything performed on function parameters, then passed out
 ii) each function has parameters, those parameters are the system component state
 iii) no variables are instantiated inside functions, all data changes are done with return values</li>
-</ul></li>
+</ul>
+</li>
 <li>structure
-
 <ul>
 <li>main functions call auxiliary functions</li>
 <li>pipeline of one function to another</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h2 id="sequences-into-pipelines">Sequences into Pipelines</h2>
-
 <p>Gets to the heart of what is needed in ETL.</p>
-
 <ul>
 <li><code>deepcopy()</code> - if the data must be worked inside the function</li>
 </ul>
-
 <h2 id="functional-elements-python-lacks">Functional Elements Python Lacks</h2>
-
 <p>Functional things I miss in Python:</p>
-
 <ul>
 <li>Pattern matching</li>
 <li>Tail recursion</li>
@@ -239,9 +203,7 @@ iii) no variables are instantiated inside functions, all data changes are done w
 <li>Lazy lists</li>
 <li>Simple, powerful expression syntax (Python&rsquo;s simple block syntax prevents Guido from adding it)</li>
 </ul>
-
 <p>Reasons why these are important:</p>
-
 <ul>
 <li>No pattern matching and no tail recursion mean your basic algorithms have to be written imperatively. Recursion is ugly and slow in Python.</li>
 <li>A small list library and no functional dictionaries mean that you have to write a lot of stuff yourself.</li>
@@ -249,9 +211,7 @@ iii) no variables are instantiated inside functions, all data changes are done w
 <li>Iterators instead of lazy lists means that you have to know whether you want efficiency or persistence, and to scatter calls to list around if you want persistence. (Iterators are use-once)</li>
 <li>Python&rsquo;s simple imperative syntax, along with its simple LL1 parser, mean that a better syntax for if-expressions and lambda-expressions is basically impossible. Guido likes it this way, and I think he&rsquo;s right.</li>
 </ul>
-
 <h2 id="references">References</h2>
-
 <ul>
 <li><a href="https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming">non-functional vs functional examples </a></li>
 <li><a href="https://docs.python.org/3/howto/functional.html">docs: python3&rsquo;s functools and itertools </a></li>
@@ -265,18 +225,15 @@ iii) no variables are instantiated inside functions, all data changes are done w
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#principles">Principles</a></li>
-<li><a href="#functional-methods">Functional Methods</a></li>
-<li><a href="#declarative-approach">Declarative Approach</a></li>
-<li><a href="#sequences-into-pipelines">Sequences into Pipelines</a></li>
-<li><a href="#functional-elements-python-lacks">Functional Elements Python Lacks</a></li>
-<li><a href="#references">References</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#principles">Principles</a></li>
+    <li><a href="#functional-methods">Functional Methods</a></li>
+    <li><a href="#declarative-approach">Declarative Approach</a></li>
+    <li><a href="#sequences-into-pipelines">Sequences into Pipelines</a></li>
+    <li><a href="#functional-elements-python-lacks">Functional Elements Python Lacks</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -368,7 +325,7 @@ iii) no variables are instantiated inside functions, all data changes are done w
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

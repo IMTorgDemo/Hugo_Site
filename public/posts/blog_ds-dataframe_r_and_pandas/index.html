@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,70 +106,51 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Although Pandas uses the Dataframe as its primary data structure, just as R does, the Pandas syntax and underlying fundamentals can be disorienting for R users.  This post will describe some basic comparisons and inconsistencies between the two languages.  It will also provide some examples of very non-intuitive solutions to common problems.</p>
-
+            <p>Although Pandas uses the Dataframe as its primary data structure, just as R does, the Pandas syntax and underlying fundamentals can be disorienting for R users.  This post will describe some basic comparisons and inconsistencies between the two languages.  It will also provide some examples of very non-intuitive solutions to common problems.</p>
 <h2 id="introduction">Introduction</h2>
-
 <p>In the Datascience R versus Pandas debate, it is really an apples and oranges comparison.  R is a domain specific language in the field of statistics, analytics, and data visualization.  This makes R great for consulting, research, and basic analysis, especially within a careful academic context.</p>
-
 <p>In contrast, Python&rsquo;s statistics packages are woefully inadequate and rarely mention details which are of great importance to statistical practicioners.  An example of this is the use of contrasts in linear models.  The different Types (I-IV) of Analysis Of Variance models use different encodings for data.  Determining their estimators is not trivial.</p>
-
 <p>However, if you want tight integration with other applications, the strengths of typical programming languages, and want to &lsquo;just get models done&rsquo;, then Python / Pandas is a great solution.  Pandas is quite good at data manipulation.  Python has the very strong NumPy and SciKit Learn module, which are very good for matrix operations and predictive modeling.  And the Python language is a really good general scripting language with strong support for strings and datetime types.</p>
-
 <h3 id="setup">Setup</h3>
-
 <p>Ensure to import the proper libraries.  Let&rsquo;s compare with R syntax, directly, using <code>rpy2</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>load_ext rpy2<span style="color:#f92672">.</span>ipython
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>R require(ggplot2)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import pandas as pd
-import numpy as np
-</code></pre>
-
-<pre><code class="language-python">%load_ext rpy2.ipython
-</code></pre>
-
-<pre><code class="language-python">%R require(ggplot2)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([1], dtype=int32)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([1], dtype=int32)
 </code></pre>
 
 </div>
 
-
 <p>These Dataframes will be used for the various problems.</p>
-
-<pre><code class="language-python">trades = pd.DataFrame(
-    [
-        [&quot;2016-05-25 13:30:01.023&quot;, &quot;MSFT&quot;, 51.95, 75],
-        [&quot;2016-05-25 13:30:01.038&quot;, &quot;MSFT&quot;, 51.95, 155],
-        [&quot;2016-05-25 13:30:03.048&quot;, &quot;GOOG&quot;, 720.77, 100],
-        [&quot;2016-05-25 13:30:03.048&quot;, &quot;GOOG&quot;, 720.92, 100],
-        [&quot;2016-05-25 13:30:03.048&quot;, &quot;AAPL&quot;, 98.00, 100],
-    ],
-    columns=[&quot;timestamp&quot;, &quot;ticker&quot;, &quot;price&quot;, &quot;quantity&quot;],   #set index during assignment: `, index_col='timestamp'`
-)
-trades['timestamp'] = pd.to_datetime(trades['timestamp'])
-trades.head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        [<span style="color:#e6db74">&#34;2016-05-25 13:30:01.023&#34;</span>, <span style="color:#e6db74">&#34;MSFT&#34;</span>, <span style="color:#ae81ff">51.95</span>, <span style="color:#ae81ff">75</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#e6db74">&#34;2016-05-25 13:30:01.038&#34;</span>, <span style="color:#e6db74">&#34;MSFT&#34;</span>, <span style="color:#ae81ff">51.95</span>, <span style="color:#ae81ff">155</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#e6db74">&#34;2016-05-25 13:30:03.048&#34;</span>, <span style="color:#e6db74">&#34;GOOG&#34;</span>, <span style="color:#ae81ff">720.77</span>, <span style="color:#ae81ff">100</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#e6db74">&#34;2016-05-25 13:30:03.048&#34;</span>, <span style="color:#e6db74">&#34;GOOG&#34;</span>, <span style="color:#ae81ff">720.92</span>, <span style="color:#ae81ff">100</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#e6db74">&#34;2016-05-25 13:30:03.048&#34;</span>, <span style="color:#e6db74">&#34;AAPL&#34;</span>, <span style="color:#ae81ff">98.00</span>, <span style="color:#ae81ff">100</span>],
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;timestamp&#34;</span>, <span style="color:#e6db74">&#34;ticker&#34;</span>, <span style="color:#e6db74">&#34;price&#34;</span>, <span style="color:#e6db74">&#34;quantity&#34;</span>],   <span style="color:#75715e">#set index during assignment: `, index_col=&#39;timestamp&#39;`</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>trades[<span style="color:#e6db74">&#39;timestamp&#39;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(trades[<span style="color:#e6db74">&#39;timestamp&#39;</span>])
+</span></span><span style="display:flex;"><span>trades<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -219,27 +200,23 @@ trades.head()
   </tbody>
 </table>
 </div>
-
 <p>We then set the index to the timestamp.  The index allows selecting rows with the <code>loc</code> and <code>at</code> methods.</p>
-
-<pre><code class="language-python">trades_idx = trades.set_index('timestamp')
-trades_idx.head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades_idx <span style="color:#f92672">=</span> trades<span style="color:#f92672">.</span>set_index(<span style="color:#e6db74">&#39;timestamp&#39;</span>)
+</span></span><span style="display:flex;"><span>trades_idx<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -289,19 +266,13 @@ trades_idx.head()
   </tbody>
 </table>
 </div>
-
 <h2 id="syntax-differences">Syntax Differences</h2>
-
 <h3 id="basic-selection">Basic selection</h3>
-
 <p>The primary purpose of the DataFrame indexing operator, <code>df[ ]</code> is to select columns.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades[<span style="color:#e6db74">&#39;ticker&#39;</span>]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">trades['ticker'].head(3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0    MSFT
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0    MSFT
 1    MSFT
 2    GOOG
 Name: ticker, dtype: object
@@ -309,24 +280,21 @@ Name: ticker, dtype: object
 
 </div>
 
-
-<pre><code class="language-python">trades[['ticker','price']].head(3)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades[[<span style="color:#e6db74">&#39;ticker&#39;</span>,<span style="color:#e6db74">&#39;price&#39;</span>]]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -354,14 +322,11 @@ Name: ticker, dtype: object
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">%%</span>R <span style="color:#f92672">-</span>i trades
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">head</span>( trades[<span style="color:#e6db74">&#39;ticker&#39;</span>], <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-r">%%R -i trades
-head( trades['ticker'], 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">  ticker
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">  ticker
 0   MSFT
 1   MSFT
 2   GOOG
@@ -369,47 +334,36 @@ head( trades['ticker'], 3)
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">%%</span>R <span style="color:#f92672">-</span>i trades
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">head</span>( trades<span style="color:#a6e22e">[c</span>(<span style="color:#e6db74">&#39;ticker&#39;</span>,<span style="color:#e6db74">&#39;price&#39;</span>)], <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-r">%%R -i trades
-head( trades[c('ticker','price')], 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">  ticker  price
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">  ticker  price
 0   MSFT  51.95
 1   MSFT  51.95
 2   GOOG 720.77
 </code></pre>
 
 </div>
-
 
 <p>When the indexing operator is passed a string or integer, it attempts to find a column with that particular name and return it as a Series.</p>
-
 <p>For example, <code>df[2]</code> searches for a column name matching the integer value 2. This column does not exist and a <code>KeyError</code> is raised.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    trades[<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;got key error&#34;</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">try:
-    trades[2]
-except:
-    print(&quot;got key error&quot;)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">got key error
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">got key error
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">%%</span>R <span style="color:#f92672">-</span>i trades
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">head</span>(trades[2], <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-r">%%R -i trades
-head(trades[2], 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">  ticker
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">  ticker
 0   MSFT
 1   MSFT
 2   GOOG
@@ -417,28 +371,21 @@ head(trades[2], 3)
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">%%</span>R <span style="color:#f92672">-</span>i trades
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">head</span>(trades[,<span style="color:#ae81ff">2</span>], <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-r">%%R -i trades
-head(trades[,2], 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[1] &quot;MSFT&quot; &quot;MSFT&quot; &quot;GOOG&quot;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[1] &#34;MSFT&#34; &#34;MSFT&#34; &#34;GOOG&#34;
 </code></pre>
 
 </div>
 
-
 <p>We can use integer indexing of columns, in R.  Its not necessary to use the <code>c()</code> concatenate function to create a vector, but it can often make your code cleaner.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">%%</span>R <span style="color:#f92672">-</span>i trades
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">head</span>(trades[,<span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">2</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>)], <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-r">%%R -i trades
-head(trades[,c(2:3)], 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">  ticker  price
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">  ticker  price
 0   MSFT  51.95
 1   MSFT  51.95
 2   GOOG 720.77
@@ -446,26 +393,22 @@ head(trades[,c(2:3)], 3)
 
 </div>
 
-
 <p>However, the DataFrame indexing operator completely changes behavior to select rows when slice notation is used.  The DataFrame indexing operator selects rows in this manner, and can also do so by integer location, or by index label.</p>
-
-<pre><code class="language-python">trades[:3]
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades[:<span style="color:#ae81ff">3</span>]
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -501,14 +444,11 @@ head(trades[,c(2:3)], 3)
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">%%</span>R <span style="color:#f92672">-</span>i trades
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">head</span>(trades[1<span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>,], <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-r">%%R -i trades
-head(trades[1:3,], 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">            timestamp ticker  price quantity
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">            timestamp ticker  price quantity
 0 2016-05-25 13:30:00   MSFT  51.95       75
 1 2016-05-25 13:30:00   MSFT  51.95      155
 2 2016-05-25 13:30:00   GOOG 720.77      100
@@ -516,26 +456,22 @@ head(trades[1:3,], 3)
 
 </div>
 
-
 <p>The following selects rows beginning at integer location 1, up to but not including 6, by every third row.</p>
-
-<pre><code class="language-python">trades[1:6:3]
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">6</span>:<span style="color:#ae81ff">3</span>]
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -564,26 +500,22 @@ head(trades[1:3,], 3)
   </tbody>
 </table>
 </div>
-
 <p>You can also use slices consisting of string labels if your DataFrame index has strings in it.  Here we have new operators, <code>.iloc</code> to explicity support only integer indexing, and <code>.loc</code> to explicity support only label indexing.</p>
-
-<pre><code class="language-python">trades.iloc[1:6:3]
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">6</span>:<span style="color:#ae81ff">3</span>]
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -612,26 +544,22 @@ head(trades[1:3,], 3)
   </tbody>
 </table>
 </div>
-
 <p>With the timestamp index, we can subset using a variety of input string-formats.</p>
-
-<pre><code class="language-python">trades_idx.loc['2016-05'].head(3)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades_idx<span style="color:#f92672">.</span>loc[<span style="color:#e6db74">&#39;2016-05&#39;</span>]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -669,24 +597,21 @@ head(trades[1:3,], 3)
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">trades_idx.loc['May 2016'].head(3)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades_idx<span style="color:#f92672">.</span>loc[<span style="color:#e6db74">&#39;May 2016&#39;</span>]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -724,15 +649,11 @@ head(trades[1:3,], 3)
   </tbody>
 </table>
 </div>
-
 <p>The <code>.loc</code> / <code>.iloc</code> operators can select on both rows and columns, simultaneously, the indexing operator <code>[ ]</code> cannot.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades_idx<span style="color:#f92672">.</span>loc[<span style="color:#e6db74">&#39;May 2016&#39;</span>, <span style="color:#e6db74">&#39;ticker&#39;</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">trades_idx.loc['May 2016', 'ticker']
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">timestamp
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">timestamp
 2016-05-25 13:30:00.023    MSFT
 2016-05-25 13:30:00.038    MSFT
 2016-05-25 13:30:00.048    GOOG
@@ -743,58 +664,45 @@ Name: ticker, dtype: object
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    trades[<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;ticker&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;use R&#39;</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">try:
-    trades[2, 'ticker']
-except:
-    print('use R')
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">use R
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">use R
 </code></pre>
 
 </div>
-
 
 <p>This all seems very tideous for R users - just get on with it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">%%</span>R <span style="color:#f92672">-</span>i trades
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">head</span>(trades[2,<span style="color:#e6db74">&#39;ticker&#39;</span>], <span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-r">%%R -i trades
-head(trades[2,'ticker'], 3)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[1] &quot;MSFT&quot;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[1] &#34;MSFT&#34;
 </code></pre>
 
 </div>
 
-
 <h3 id="dataframe-index">Dataframe Index</h3>
-
 <p>One of the fundamental differences between R and pandas is that pandas leans heavily upon the dataframe index.  For R users, it can seem like an annoyance; however, using it is required because many results of pandas methods return a dataframe with an index.</p>
-
 <p>The index is already set for <code>trades_idx</code>, but if we want to replace it with a new one, it is easily done.</p>
-
-<pre><code class="language-python">trades_idx.set_index('price')
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades_idx<span style="color:#f92672">.</span>set_index(<span style="color:#e6db74">&#39;price&#39;</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -837,28 +745,24 @@ head(trades[2,'ticker'], 3)
   </tbody>
 </table>
 </div>
-
 <p>There are two ways to move the index into a column.</p>
-
-<pre><code class="language-python">new_trades_idx = trades_idx.copy()
-new_trades_idx['timestamp'] = trades_idx.index
-new_trades_idx
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>new_trades_idx <span style="color:#f92672">=</span> trades_idx<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>new_trades_idx[<span style="color:#e6db74">&#39;timestamp&#39;</span>] <span style="color:#f92672">=</span> trades_idx<span style="color:#f92672">.</span>index
+</span></span><span style="display:flex;"><span>new_trades_idx
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -915,24 +819,21 @@ new_trades_idx
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">trades_idx.reset_index(level=0, inplace=False)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades_idx<span style="color:#f92672">.</span>reset_index(level<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -982,40 +883,33 @@ new_trades_idx
   </tbody>
 </table>
 </div>
-
 <p>When using a timestamp as an index, default datetime format ISO8601 (“yyyy-mm-dd hh:mm:ss”) is used when selecting data with partial string indexing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    trades_idx<span style="color:#f92672">.</span>loc[<span style="color:#e6db74">&#39;2016-05-25 13:30:00.023&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;cannot use fractions of seconds&#39;</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">try:
-    trades_idx.loc['2016-05-25 13:30:00.023']
-except:
-    print('cannot use fractions of seconds')
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">cannot use fractions of seconds
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">cannot use fractions of seconds
 </code></pre>
 
 </div>
 
-
-<pre><code class="language-python">trades_idx.loc['2016-05-25 13:30:01':'2016-05-25 13:30:02']
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trades_idx<span style="color:#f92672">.</span>loc[<span style="color:#e6db74">&#39;2016-05-25 13:30:01&#39;</span>:<span style="color:#e6db74">&#39;2016-05-25 13:30:02&#39;</span>]
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1047,26 +941,22 @@ except:
   </tbody>
 </table>
 </div>
-
 <p>While the index of a R dataframe is immutable, the index of a pandas dataframe can expand, or even lose arbitrary items.  In this example, some rows are removed, and the index goes with them.  If we don&rsquo;t <code>reset_index()</code>, then those rows will always be missing.</p>
-
-<pre><code class="language-python">tmp2
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmp2
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1123,26 +1013,23 @@ except:
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">tmp2 = trades.copy()
-tmp3 = tmp2[0:4:2]
-tmp3
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmp2 <span style="color:#f92672">=</span> trades<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>tmp3 <span style="color:#f92672">=</span> tmp2[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4</span>:<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>tmp3
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1171,25 +1058,22 @@ tmp3
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">tmp3.reset_index(inplace=True)
-tmp3
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmp3<span style="color:#f92672">.</span>reset_index(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>tmp3
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1221,37 +1105,30 @@ tmp3
   </tbody>
 </table>
 </div>
-
 <p>Forgetting to <code>reset_index()</code> can cause serious problems.</p>
-
 <p>You can also create a multi-index to make things even more confusing.</p>
-
-<pre><code class="language-python">index = pd.MultiIndex.from_product([['TX', 'FL', 'CA'], 
-                                    ['North', 'South']], 
-                                   names=['State', 'Direction'])
-
-df = pd.DataFrame(index=index, 
-                  data=np.random.randint(0, 10, (6,4)), 
-                  columns=list('abcd'))
-</code></pre>
-
-<pre><code class="language-python">df
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>index <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>MultiIndex<span style="color:#f92672">.</span>from_product([[<span style="color:#e6db74">&#39;TX&#39;</span>, <span style="color:#e6db74">&#39;FL&#39;</span>, <span style="color:#e6db74">&#39;CA&#39;</span>], 
+</span></span><span style="display:flex;"><span>                                    [<span style="color:#e6db74">&#39;North&#39;</span>, <span style="color:#e6db74">&#39;South&#39;</span>]], 
+</span></span><span style="display:flex;"><span>                                   names<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;Direction&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(index<span style="color:#f92672">=</span>index, 
+</span></span><span style="display:flex;"><span>                  data<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">10</span>, (<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">4</span>)), 
+</span></span><span style="display:flex;"><span>                  columns<span style="color:#f92672">=</span>list(<span style="color:#e6db74">&#39;abcd&#39;</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1320,21 +1197,16 @@ df = pd.DataFrame(index=index,
   </tbody>
 </table>
 </div>
-
 <h3 id="subset-replacement-the-settingwithcopy-warning">Subset replacement (the <code>SettingWithCopy</code> warning)</h3>
-
 <p>Conditionally replacing values in R is straightforward because we can use simultaneous selection.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">%%</span>R <span style="color:#f92672">-</span>i trades
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tmp1 <span style="color:#f92672">&lt;-</span> trades
+</span></span><span style="display:flex;"><span>tmp1[tmp1<span style="color:#f92672">$</span>quantity <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">80</span>, <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#39;price&#39;</span>)] <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>tmp1
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-r">%%R -i trades
-
-tmp1 &lt;- trades
-tmp1[tmp1$quantity &gt; 80, c('price')] &lt;- 100
-tmp1
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">            timestamp ticker  price quantity
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">            timestamp ticker  price quantity
 0 2016-05-25 13:30:01   MSFT  51.95       75
 1 2016-05-25 13:30:01   MSFT 100.00      155
 2 2016-05-25 13:30:03   GOOG 100.00      100
@@ -1344,36 +1216,27 @@ tmp1
 
 </div>
 
-
 <p>We know that we cannot use simultaneous selection in pandas using the indexing operator.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmp1 <span style="color:#f92672">=</span> trades<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    tmp1[tmp1<span style="color:#f92672">.</span>quantity <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">80</span>, <span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;TypeError: &#39;Series&#39; objects are mutable, thus they cannot be hashed&#34;</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">tmp1 = trades.copy()
-try:
-    tmp1[tmp1.quantity &gt; 80, 'price'] = 100
-except:
-    print(&quot;TypeError: 'Series' objects are mutable, thus they cannot be hashed&quot;)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">TypeError: 'Series' objects are mutable, thus they cannot be hashed
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">TypeError: &#39;Series&#39; objects are mutable, thus they cannot be hashed
 </code></pre>
 
 </div>
 
-
 <p>Replacing by index doesn&rsquo;t give us what we want, either&gt;</p>
-
 <p>The direct way fails, too!  Oh, pandas, why must you be so difficult&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmp1 <span style="color:#f92672">=</span> trades<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>tmp1[tmp1<span style="color:#f92672">.</span>quantity <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">80</span>][<span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>tmp1
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">tmp1 = trades.copy()
-tmp1[tmp1.quantity &gt; 80]['price'] = 100
-tmp1
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">/opt/conda/lib/python3.7/site-packages/ipykernel_launcher.py:2: SettingWithCopyWarning: 
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">/opt/conda/lib/python3.7/site-packages/ipykernel_launcher.py:2: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -1383,21 +1246,20 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 
 </div>
 
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1447,37 +1309,24 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
   </tbody>
 </table>
 </div>
-
 <p>To understand, we must look under the hood:</p>
-
-<pre><code>df.loc[df.A &gt; 5, 'B'] = 4
+<pre tabindex="0"><code>df.loc[df.A &gt; 5, &#39;B&#39;] = 4
 # becomes
-df.__setitem__((df.A &gt; 5, 'B'), 4)
-</code></pre>
-
-<p>With a single <code>__setitem__</code> call to df. On the otherhand, consider this code:</p>
-
-<pre><code>df[df.A &gt; 5]['B'] = 4
+df.__setitem__((df.A &gt; 5, &#39;B&#39;), 4)
+</code></pre><p>With a single <code>__setitem__</code> call to df. On the otherhand, consider this code:</p>
+<pre tabindex="0"><code>df[df.A &gt; 5][&#39;B&#39;] = 4
 # becomes
-df.__getitem__(df.A &gt; 5).__setitem__('B&quot;, 4)
-</code></pre>
-
-<p>Now, depending on whether <code>__getitem__</code> returned a view or a copy, the <code>__setitem__</code> operation may not work.</p>
-
+df.__getitem__(df.A &gt; 5).__setitem__(&#39;B&#34;, 4)
+</code></pre><p>Now, depending on whether <code>__getitem__</code> returned a view or a copy, the <code>__setitem__</code> operation may not work.</p>
 <p>The documentation addresses these issues, <a href="https://pandas-docs.github.io/pandas-docs-travis/user_guide/indexing.html#returning-a-view-versus-a-copy">here</a>.  But, to summarize:</p>
-
 <blockquote>
 <p>Whenever an array of labels or a boolean vector are involved in the indexing operation, the result will be a copy.  With single label / scalar indexing and slicing, e.g. df.ix[3:6] or df.ix[:, &lsquo;A&rsquo;], a view will be returned.</p>
 </blockquote>
-
 <p>Finally, the <code>.loc</code> method gives us what we want because we can use it with boolean indexing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmp1<span style="color:#f92672">.</span>quantity <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">80</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">tmp1.quantity &gt; 80
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0    False
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0    False
 1     True
 2     True
 3     True
@@ -1487,26 +1336,23 @@ Name: quantity, dtype: bool
 
 </div>
 
-
-<pre><code class="language-python">tmp1 = trades.copy()
-tmp1.loc[tmp1.quantity &gt; 80, 'price'] = 100
-tmp1
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmp1 <span style="color:#f92672">=</span> trades<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>tmp1<span style="color:#f92672">.</span>loc[tmp1<span style="color:#f92672">.</span>quantity <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">80</span>, <span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>tmp1
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1556,144 +1402,87 @@ tmp1
   </tbody>
 </table>
 </div>
-
 <h2 id="general-usage">General Usage</h2>
-
 <h3 id="timestamps">Timestamps</h3>
-
 <p>A pandas object type is used for text or mixed numeric and non-numeric values. To get the correct order of the timestamp column we need to change it to the datetime64 type.</p>
-
 <p>Replacing datetime values has its own unique manner, of course.  Don&rsquo;t want to lose this:</p>
-
-<pre><code class="language-python">df.timestamp = pd.to_datetime(df.timestamp.str.replace(&quot;D&quot;, &quot;T&quot;))
-</code></pre>
-
-<h3 id="merge">Merge</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df<span style="color:#f92672">.</span>timestamp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(df<span style="color:#f92672">.</span>timestamp<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;T&#34;</span>))
+</span></span></code></pre></div><h3 id="merge">Merge</h3>
 <p>Merge with an indicator for where the rows came from</p>
-
-<pre><code class="language-python">df_merge = left.merge(right, on='key', how='left', indicator=True)
-</code></pre>
-
-<p>The <code>_merge</code> column is used to check for unexpected rows</p>
-
-<pre><code class="language-python">df_merge._merge.value_counts()
-</code></pre>
-
-<p>Merge by the nearest (not exact) timestamp</p>
-
-<pre><code class="language-python">pd.merge_asof(trades, quotes, on=&quot;timestamp&quot;, by='ticker', tolerance=pd.Timedelta('10ms'), direction='backward')
-</code></pre>
-
-<h3 id="missing-values">Missing values</h3>
-
-<p>Because Numpy has no native NA type, pandas uses multiple values denote a missing value:
-* NaN for numeric/object missing values
-* NaT for DateTime missing values
-* None, which comes from Python</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df_merge <span style="color:#f92672">=</span> left<span style="color:#f92672">.</span>merge(right, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;key&#39;</span>, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;left&#39;</span>, indicator<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><p>The <code>_merge</code> column is used to check for unexpected rows</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df_merge<span style="color:#f92672">.</span>_merge<span style="color:#f92672">.</span>value_counts()
+</span></span></code></pre></div><p>Merge by the nearest (not exact) timestamp</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>merge_asof(trades, quotes, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;timestamp&#34;</span>, by<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ticker&#39;</span>, tolerance<span style="color:#f92672">=</span>pd<span style="color:#f92672">.</span>Timedelta(<span style="color:#e6db74">&#39;10ms&#39;</span>), direction<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;backward&#39;</span>)
+</span></span></code></pre></div><h3 id="missing-values">Missing values</h3>
+<p>Because Numpy has no native NA type, pandas uses multiple values denote a missing value:</p>
+<ul>
+<li>NaN for numeric/object missing values</li>
+<li>NaT for DateTime missing values</li>
+<li>None, which comes from Python</li>
+</ul>
 <p>What surprised me is that None equals None in Python, but nan doesn’t equal nan in numpy.</p>
-
-<pre><code class="language-python">None == None
-</code></pre>
-
-<pre><code class="language-python">pd.np.nan == pd.np.nan
-</code></pre>
-
-<p>This is important so that we don’t filter values by None:</p>
-
-<pre><code class="language-python">df[df.some_column == None]# instead use:
-df[df.some_column.isnull()]
-</code></pre>
-
-<h3 id="report-creation">Report creation</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">None</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">None</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>np<span style="color:#f92672">.</span>nan <span style="color:#f92672">==</span> pd<span style="color:#f92672">.</span>np<span style="color:#f92672">.</span>nan
+</span></span></code></pre></div><p>This is important so that we don’t filter values by None:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[df<span style="color:#f92672">.</span>some_column <span style="color:#f92672">==</span> <span style="color:#66d9ef">None</span>]<span style="color:#75715e"># instead use:</span>
+</span></span><span style="display:flex;"><span>df[df<span style="color:#f92672">.</span>some_column<span style="color:#f92672">.</span>isnull()]
+</span></span></code></pre></div><h3 id="report-creation">Report creation</h3>
 <p>Pandas (with XlsxWriter library) allows us to make an Excel sheet with graphs and other Excel functionality.  We need to define the type of the chart (line chart in our example) and the data series for the chart (the data series needs to be in the Excel spreadsheet).</p>
-
-<pre><code class="language-python">report_name = 'example_report.xlsx'
-sheet_name = 'Sheet1'
-writer = pd.ExcelWriter(report_name, engine='xlsxwriter')
-df.to_excel(writer, sheet_name=sheet_name, index=False)
-# writer.save()
-
-# define the workbook
-workbook = writer.book
-worksheet = writer.sheets[sheet_name]
-# create a chart line object
-chart = workbook.add_chart({'type': 'line'})
-# configure the series of the chart from the spreadsheet
-# using a list of values instead of category/value formulas:
-#     [sheetname, first_row, first_col, last_row, last_col]
-chart.add_series({
-    'categories': [sheet_name, 1, 0, 3, 0],
-    'values':     [sheet_name, 1, 1, 3, 1],
-})
-# configure the chart axes
-chart.set_x_axis({'name': 'Index', 'position_axis': 'on_tick'})
-chart.set_y_axis({'name': 'Value', 'major_gridlines': {'visible': False}})
-# place the chart on the worksheet
-worksheet.insert_chart('E2', chart)
-# output the excel file
-writer.save()
-</code></pre>
-
-<h3 id="saving-objects">Saving objects</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>report_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;example_report.xlsx&#39;</span>
+</span></span><span style="display:flex;"><span>sheet_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Sheet1&#39;</span>
+</span></span><span style="display:flex;"><span>writer <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>ExcelWriter(report_name, engine<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;xlsxwriter&#39;</span>)
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>to_excel(writer, sheet_name<span style="color:#f92672">=</span>sheet_name, index<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># writer.save()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># define the workbook</span>
+</span></span><span style="display:flex;"><span>workbook <span style="color:#f92672">=</span> writer<span style="color:#f92672">.</span>book
+</span></span><span style="display:flex;"><span>worksheet <span style="color:#f92672">=</span> writer<span style="color:#f92672">.</span>sheets[sheet_name]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># create a chart line object</span>
+</span></span><span style="display:flex;"><span>chart <span style="color:#f92672">=</span> workbook<span style="color:#f92672">.</span>add_chart({<span style="color:#e6db74">&#39;type&#39;</span>: <span style="color:#e6db74">&#39;line&#39;</span>})
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># configure the series of the chart from the spreadsheet</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># using a list of values instead of category/value formulas:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     [sheetname, first_row, first_col, last_row, last_col]</span>
+</span></span><span style="display:flex;"><span>chart<span style="color:#f92672">.</span>add_series({
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;categories&#39;</span>: [sheet_name, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;values&#39;</span>:     [sheet_name, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>],
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># configure the chart axes</span>
+</span></span><span style="display:flex;"><span>chart<span style="color:#f92672">.</span>set_x_axis({<span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;Index&#39;</span>, <span style="color:#e6db74">&#39;position_axis&#39;</span>: <span style="color:#e6db74">&#39;on_tick&#39;</span>})
+</span></span><span style="display:flex;"><span>chart<span style="color:#f92672">.</span>set_y_axis({<span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;Value&#39;</span>, <span style="color:#e6db74">&#39;major_gridlines&#39;</span>: {<span style="color:#e6db74">&#39;visible&#39;</span>: <span style="color:#66d9ef">False</span>}})
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># place the chart on the worksheet</span>
+</span></span><span style="display:flex;"><span>worksheet<span style="color:#f92672">.</span>insert_chart(<span style="color:#e6db74">&#39;E2&#39;</span>, chart)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># output the excel file</span>
+</span></span><span style="display:flex;"><span>writer<span style="color:#f92672">.</span>save()
+</span></span></code></pre></div><h3 id="saving-objects">Saving objects</h3>
 <p>When we save this file as CSV, it takes almost 300 MB on the hard drive.</p>
-
-<pre><code class="language-python">df.to_csv('random_data.csv', index=False)
-</code></pre>
-
-<p>With a single argument compression=&lsquo;gzip&rsquo;, we can reduce the file size to 136 MB.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#39;random_data.csv&#39;</span>, index<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><p>With a single argument compression=&lsquo;gzip&rsquo;, we can reduce the file size to 136 MB.</p>
 <p>df.to_csv(&lsquo;random_data.gz&rsquo;, compression=&lsquo;gzip&rsquo;, index=False)</p>
-
 <p>It is also easy to read the gzipped data to the DataFrame, so we don’t lose any functionality.</p>
-
-<pre><code class="language-python">df = pd.read_csv('random_data.gz')
-</code></pre>
-
-<h2 id="specific-examples">Specific examples</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#39;random_data.gz&#39;</span>)
+</span></span></code></pre></div><h2 id="specific-examples">Specific examples</h2>
 <h3 id="negate-a-string-replacement">Negate a string replacement</h3>
-
 <p>You can use negative look ahead <code>(?!)</code> assertion; <code>^(?!.*fish).*\\(</code> will firstly assert the pattern doesn&rsquo;t contain the word fish and then match every thing till the end of string and replace it with foo:</p>
-
 <ul>
 <li><code>^</code> denotes the beginning of string, combined with <code>(?!.*fish)</code>, it asserts at BOS that there is no pattern like <code>.*fish</code> in the string;</li>
 <li>If the assertion succeeds, it matches everything till the end of string <code>.*\\)</code>, and replaces it with <code>foo</code>; If the assertion fails, the pattern doesn&rsquo;t match, nothing would happen;</li>
 </ul>
-
 <p>so:</p>
-
-<pre><code class="language-python">df.replace(r'^(?!.*fish).*$', 'foo', regex=True)
-</code></pre>
-
-<h3 id="remove-outliers">Remove Outliers</h3>
-
-<pre><code class="language-python">df['size_clip'] = df['size'].clip(df['size'].quantile(0.01),
-                                  df['size'].quantile(0.99))
-df.size_clip.plot(kind='box')
-</code></pre>
-
-<h3 id="bin-group-data">Bin / group data</h3>
-
-<pre><code class="language-python">df['price_discrete_labels'] = pd.cut(df.price, 5, labels=['very low', 'low', 'mid', 'high', 'very high'])
-df['price_discrete_labels'].value_counts()
-</code></pre>
-
-<p>Equal-sized groups</p>
-
-<pre><code class="language-python">df['price_discrete_equal_bins'] = pd.qcut(df.price, 5)
-df['price_discrete_equal_bins'].value_counts()
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;^(?!.*fish).*$&#39;</span>, <span style="color:#e6db74">&#39;foo&#39;</span>, regex<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><h3 id="remove-outliers">Remove Outliers</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;size_clip&#39;</span>] <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;size&#39;</span>]<span style="color:#f92672">.</span>clip(df[<span style="color:#e6db74">&#39;size&#39;</span>]<span style="color:#f92672">.</span>quantile(<span style="color:#ae81ff">0.01</span>),
+</span></span><span style="display:flex;"><span>                                  df[<span style="color:#e6db74">&#39;size&#39;</span>]<span style="color:#f92672">.</span>quantile(<span style="color:#ae81ff">0.99</span>))
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>size_clip<span style="color:#f92672">.</span>plot(kind<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;box&#39;</span>)
+</span></span></code></pre></div><h3 id="bin--group-data">Bin / group data</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;price_discrete_labels&#39;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>cut(df<span style="color:#f92672">.</span>price, <span style="color:#ae81ff">5</span>, labels<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;very low&#39;</span>, <span style="color:#e6db74">&#39;low&#39;</span>, <span style="color:#e6db74">&#39;mid&#39;</span>, <span style="color:#e6db74">&#39;high&#39;</span>, <span style="color:#e6db74">&#39;very high&#39;</span>])
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;price_discrete_labels&#39;</span>]<span style="color:#f92672">.</span>value_counts()
+</span></span></code></pre></div><p>Equal-sized groups</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;price_discrete_equal_bins&#39;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>qcut(df<span style="color:#f92672">.</span>price, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;price_discrete_equal_bins&#39;</span>]<span style="color:#f92672">.</span>value_counts()
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>After reviewing these examples, we hope you agree that R is a terse, minimalistic, and powerful language.  You can do so many things with just the dataframe operator that it makes interacting with R a joy.  It is so much of a joy that I typically don&rsquo;t know how the operations are actually being performed - they just work.</p>
-
 <p>Pandas is different.  It is bolted-on to Python, and its syntax is either not consistent or is just un-wieldly.  But maybe that is a good thing, because with Python I&rsquo;m typically automating a process - not performing an interactive investigation.  I want to be forced to understand how the data is actually being worked, and I want to optimize operations for performance because it is a process that will be automated.</p>
-
 <p>Let&rsquo;s stop the impassioned vitrioles of one clan against another, and use each of these tools for their respective strengths.</p>
 
         </div>
@@ -1703,36 +1492,37 @@ df['price_discrete_equal_bins'].value_counts()
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#introduction">Introduction</a>
-<ul>
-<li><a href="#setup">Setup</a></li>
-</ul></li>
-<li><a href="#syntax-differences">Syntax Differences</a>
-<ul>
-<li><a href="#basic-selection">Basic selection</a></li>
-<li><a href="#dataframe-index">Dataframe Index</a></li>
-<li><a href="#subset-replacement-the-settingwithcopy-warning">Subset replacement (the <code>SettingWithCopy</code> warning)</a></li>
-</ul></li>
-<li><a href="#general-usage">General Usage</a>
-<ul>
-<li><a href="#timestamps">Timestamps</a></li>
-<li><a href="#merge">Merge</a></li>
-<li><a href="#missing-values">Missing values</a></li>
-<li><a href="#report-creation">Report creation</a></li>
-<li><a href="#saving-objects">Saving objects</a></li>
-</ul></li>
-<li><a href="#specific-examples">Specific examples</a>
-<ul>
-<li><a href="#negate-a-string-replacement">Negate a string replacement</a></li>
-<li><a href="#remove-outliers">Remove Outliers</a></li>
-<li><a href="#bin-group-data">Bin / group data</a></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#setup">Setup</a></li>
+      </ul>
+    </li>
+    <li><a href="#syntax-differences">Syntax Differences</a>
+      <ul>
+        <li><a href="#basic-selection">Basic selection</a></li>
+        <li><a href="#dataframe-index">Dataframe Index</a></li>
+        <li><a href="#subset-replacement-the-settingwithcopy-warning">Subset replacement (the <code>SettingWithCopy</code> warning)</a></li>
+      </ul>
+    </li>
+    <li><a href="#general-usage">General Usage</a>
+      <ul>
+        <li><a href="#timestamps">Timestamps</a></li>
+        <li><a href="#merge">Merge</a></li>
+        <li><a href="#missing-values">Missing values</a></li>
+        <li><a href="#report-creation">Report creation</a></li>
+        <li><a href="#saving-objects">Saving objects</a></li>
+      </ul>
+    </li>
+    <li><a href="#specific-examples">Specific examples</a>
+      <ul>
+        <li><a href="#negate-a-string-replacement">Negate a string replacement</a></li>
+        <li><a href="#remove-outliers">Remove Outliers</a></li>
+        <li><a href="#bin--group-data">Bin / group data</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -1829,7 +1619,7 @@ df['price_discrete_equal_bins'].value_counts()
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

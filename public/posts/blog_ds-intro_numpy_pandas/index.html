@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,53 +106,39 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Numpy and Pandas are the basic data science tools in the Python environment.  Having a good understanding of their capabilities and how they process data is imperative to writing optimal code.  This post provides an introductory overview and a refresher for those who might come back to the libraries after taking a break.  The end of the post explains external interfaces for increasing code execution and performing more sophisticated matrix operations.</p>
-
+            <p>Numpy and Pandas are the basic data science tools in the Python environment.  Having a good understanding of their capabilities and how they process data is imperative to writing optimal code.  This post provides an introductory overview and a refresher for those who might come back to the libraries after taking a break.  The end of the post explains external interfaces for increasing code execution and performing more sophisticated matrix operations.</p>
 <h2 id="pandas-series-and-dataframe">Pandas Series and Dataframe</h2>
-
 <p>These are the basic data structures used by Pandas.  Pandas derives its name from Pan(el) da(ta)s. Panel data is an econometrics term for data recorded over time.  Pandas author, Wes McKinney, was working in the finanical industry when he began writing it.</p>
-
 <ul>
 <li>Series objects: 1D array, similar to a column in a spreadsheet</li>
 <li>DataFrame objects: 2D table, similar to a spreadsheet, dictionary of Series</li>
 <li><del>Panel objects: Dictionary of DataFrames, similar to sheet in MS Excel</del>removed in 0.25.0</li>
 </ul>
-
 <h3 id="config">Config</h3>
-
 <p>Let&rsquo;s load our modules.  Numpy is always used with Pandas because it is an underlying dependency.</p>
-
-<pre><code class="language-python">import numpy as np
-import pandas as pd
-</code></pre>
-
-<p>We will create a few DataFrames to work with throughout the post.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span></code></pre></div><p>We will create a few DataFrames to work with throughout the post.</p>
 <p>Series are similar to R&rsquo;s vector <code>c()</code>, and is a column within a Pandas Dataframe.</p>
-
-<pre><code class="language-python">import pandas as pd
-s = pd.Series([1,3,5,np.nan,6,8])
-dates = pd.date_range('20130101', periods=6)
-df1 = pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD'))
-df1
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span>s <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">5</span>,np<span style="color:#f92672">.</span>nan,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">8</span>])
+</span></span><span style="display:flex;"><span>dates <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>date_range(<span style="color:#e6db74">&#39;20130101&#39;</span>, periods<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>)
+</span></span><span style="display:flex;"><span>df1 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">4</span>), index<span style="color:#f92672">=</span>dates, columns<span style="color:#f92672">=</span>list(<span style="color:#e6db74">&#39;ABCD&#39;</span>))
+</span></span><span style="display:flex;"><span>df1
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -209,30 +195,27 @@ df1
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">df2 = pd.DataFrame({ 'E' : 1.,
-   ....:                      'F' : pd.Timestamp('20130102'),
-   ....:                      'G' : pd.Series(1,index=list(range(4)),dtype='float32'),
-   ....:                      'H' : np.array([3] * 4,dtype='int32'),
-   ....:                      'I' : pd.Categorical([&quot;test&quot;,&quot;train&quot;,&quot;test&quot;,&quot;train&quot;]),
-   ....:                      'J' : 'foo' })
-df2
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({ <span style="color:#e6db74">&#39;E&#39;</span> : <span style="color:#ae81ff">1.</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                      <span style="color:#e6db74">&#39;F&#39;</span> : pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74">&#39;20130102&#39;</span>),
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                      <span style="color:#e6db74">&#39;G&#39;</span> : pd<span style="color:#f92672">.</span>Series(<span style="color:#ae81ff">1</span>,index<span style="color:#f92672">=</span>list(range(<span style="color:#ae81ff">4</span>)),dtype<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;float32&#39;</span>),
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                      <span style="color:#e6db74">&#39;H&#39;</span> : np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>,dtype<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;int32&#39;</span>),
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                      <span style="color:#e6db74">&#39;I&#39;</span> : pd<span style="color:#f92672">.</span>Categorical([<span style="color:#e6db74">&#34;test&#34;</span>,<span style="color:#e6db74">&#34;train&#34;</span>,<span style="color:#e6db74">&#34;test&#34;</span>,<span style="color:#e6db74">&#34;train&#34;</span>]),
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                      <span style="color:#e6db74">&#39;J&#39;</span> : <span style="color:#e6db74">&#39;foo&#39;</span> })
+</span></span><span style="display:flex;"><span>df2
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -285,28 +268,25 @@ df2
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">tmpdf2 = df2.copy(deep=True)
-tmpdf2.set_index(tmpdf2.F, inplace=True)
-df3 = df1.join(tmpdf2, how='outer')
-#or: df3 = pd.merge(df1, tmpdf2, how='outer', left_index=True, right_index=True)
-df3
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmpdf2 <span style="color:#f92672">=</span> df2<span style="color:#f92672">.</span>copy(deep<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>tmpdf2<span style="color:#f92672">.</span>set_index(tmpdf2<span style="color:#f92672">.</span>F, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>df3 <span style="color:#f92672">=</span> df1<span style="color:#f92672">.</span>join(tmpdf2, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;outer&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#or: df3 = pd.merge(df1, tmpdf2, how=&#39;outer&#39;, left_index=True, right_index=True)</span>
+</span></span><span style="display:flex;"><span>df3
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -444,30 +424,27 @@ df3
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">df4 = pd.DataFrame({'A': ['foo', 'bar', 'foo', 'bar',
-   ....:                          'foo', 'bar', 'foo', 'foo'],
-   ....:                    'B': ['one', 'one', 'two', 'three',
-   ....:                          'two', 'two', 'one', 'three'],
-   ....:                    'C': np.random.randn(8),
-   ....:                    'D': np.random.randn(8)})
-df4
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df4 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({<span style="color:#e6db74">&#39;A&#39;</span>: [<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;bar&#39;</span>, <span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;bar&#39;</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                          <span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;bar&#39;</span>, <span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;foo&#39;</span>],
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                    <span style="color:#e6db74">&#39;B&#39;</span>: [<span style="color:#e6db74">&#39;one&#39;</span>, <span style="color:#e6db74">&#39;one&#39;</span>, <span style="color:#e6db74">&#39;two&#39;</span>, <span style="color:#e6db74">&#39;three&#39;</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                          <span style="color:#e6db74">&#39;two&#39;</span>, <span style="color:#e6db74">&#39;two&#39;</span>, <span style="color:#e6db74">&#39;one&#39;</span>, <span style="color:#e6db74">&#39;three&#39;</span>],
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                    <span style="color:#e6db74">&#39;C&#39;</span>: np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">8</span>),
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">....</span>:                    <span style="color:#e6db74">&#39;D&#39;</span>: np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">8</span>)})
+</span></span><span style="display:flex;"><span>df4
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -538,45 +515,35 @@ df4
   </tbody>
 </table>
 </div>
-
 <h3 id="index-and-axes">Index and axes</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>c <span style="color:#f92672">=</span> df1<span style="color:#f92672">.</span>columns<span style="color:#f92672">.</span>tolist()
+</span></span><span style="display:flex;"><span>c
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">c = df1.columns.tolist()
-c
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">['A', 'B', 'C', 'D']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df1<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>tolist()
+</span></span><span style="display:flex;"><span>n
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">n = df1.index.tolist()
-n
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[Timestamp('2013-01-01 00:00:00', freq='D'),
- Timestamp('2013-01-02 00:00:00', freq='D'),
- Timestamp('2013-01-03 00:00:00', freq='D'),
- Timestamp('2013-01-04 00:00:00', freq='D'),
- Timestamp('2013-01-05 00:00:00', freq='D'),
- Timestamp('2013-01-06 00:00:00', freq='D')]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[Timestamp(&#39;2013-01-01 00:00:00&#39;, freq=&#39;D&#39;),
+ Timestamp(&#39;2013-01-02 00:00:00&#39;, freq=&#39;D&#39;),
+ Timestamp(&#39;2013-01-03 00:00:00&#39;, freq=&#39;D&#39;),
+ Timestamp(&#39;2013-01-04 00:00:00&#39;, freq=&#39;D&#39;),
+ Timestamp(&#39;2013-01-05 00:00:00&#39;, freq=&#39;D&#39;),
+ Timestamp(&#39;2013-01-06 00:00:00&#39;, freq=&#39;D&#39;)]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#calculate sum (across rows) for each column</span>
+</span></span><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>sum(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#calculate sum (across rows) for each column
-df1.sum(axis=0)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">A   -5.885887
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">A   -5.885887
 B   -0.973229
 C   -3.602993
 D   -1.248308
@@ -585,24 +552,21 @@ dtype: float64
 
 </div>
 
-
-<pre><code class="language-python">pd.concat([df1,df3], axis=0, sort=False).head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>concat([df1,df3], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, sort<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -688,65 +652,47 @@ dtype: float64
   </tbody>
 </table>
 </div>
-
 <h3 id="data-types">Data types</h3>
-
 <p>NumPy arrays have one dtype for the entire array, while pandas DataFrames have one dtype per column. When you call <code>DataFrame.to_numpy()</code>, pandas will find the NumPy dtype that can hold all of the dtypes in the DataFrame. This may end up being object, which requires casting every value to a Python object.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>])
+</span></span><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>Series(arr)<span style="color:#f92672">.</span>values
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr = np.array([1,2,3])
-pd.Series(arr).values
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([1, 2, 3])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([1, 2, 3])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr<span style="color:#f92672">.</span>dtype
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr.dtype
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">dtype('int64')
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">dtype(&#39;int64&#39;)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>A<span style="color:#f92672">.</span>to_numpy()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1.A.to_numpy()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([-1.36082656, -0.2104261 , -1.82932214, -1.32563421, -1.18457701,
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([-1.36082656, -0.2104261 , -1.82932214, -1.32563421, -1.18457701,
         0.024899  ])
 </code></pre>
 
 </div>
 
-
 <h3 id="locate-by-column-label-index">Locate by column label, index</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n[<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">n[0]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Timestamp('2013-01-01 00:00:00', freq='D')
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Timestamp(&#39;2013-01-01 00:00:00&#39;, freq=&#39;D&#39;)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>loc[n[<span style="color:#ae81ff">0</span>],]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1.loc[n[0],]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">A   -1.360827
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">A   -1.360827
 B   -0.871347
 C   -1.603602
 D    0.073078
@@ -755,24 +701,21 @@ Name: 2013-01-01 00:00:00, dtype: float64
 
 </div>
 
-
-<pre><code class="language-python">df1.loc[:,[c[0],c[1]] ]
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>loc[:,[c[<span style="color:#ae81ff">0</span>],c[<span style="color:#ae81ff">1</span>]] ]
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -815,24 +758,18 @@ Name: 2013-01-01 00:00:00, dtype: float64
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>loc[n[<span style="color:#ae81ff">0</span>],c[<span style="color:#ae81ff">0</span>]]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1.loc[n[0],c[0]]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">-1.3608265619610327
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">-1.3608265619610327
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1[c[<span style="color:#ae81ff">0</span>]][:<span style="color:#ae81ff">5</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1[c[0]][:5]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2013-01-01   -1.360827
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2013-01-01   -1.360827
 2013-01-02   -0.210426
 2013-01-03   -1.829322
 2013-01-04   -1.325634
@@ -842,13 +779,10 @@ Freq: D, Name: A, dtype: float64
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">0</span>,]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1.iloc[0,]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">A   -1.360827
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">A   -1.360827
 B   -0.871347
 C   -1.603602
 D    0.073078
@@ -857,13 +791,10 @@ Name: 2013-01-01 00:00:00, dtype: float64
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>iloc[:,<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1.iloc[:,0]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2013-01-01   -1.360827
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2013-01-01   -1.360827
 2013-01-02   -0.210426
 2013-01-03   -1.829322
 2013-01-04   -1.325634
@@ -874,26 +805,19 @@ Freq: D, Name: A, dtype: float64
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1.iloc[0,0]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">-1.3608265619610327
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">-1.3608265619610327
 </code></pre>
 
 </div>
 
-
 <h3 id="locate-by-boolean">Locate by boolean</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>A <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1.A &gt; 0
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2013-01-01    False
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2013-01-01    False
 2013-01-02    False
 2013-01-03    False
 2013-01-04    False
@@ -904,24 +828,21 @@ Freq: D, Name: A, dtype: bool
 
 </div>
 
-
-<pre><code class="language-python">df1[df1.A &gt; 0]
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1[df1<span style="color:#f92672">.</span>A <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -943,15 +864,12 @@ Freq: D, Name: A, dtype: bool
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df5 <span style="color:#f92672">=</span> df1<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>df5[<span style="color:#e6db74">&#39;K&#39;</span>] <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;one&#39;</span>, <span style="color:#e6db74">&#39;one&#39;</span>,<span style="color:#e6db74">&#39;two&#39;</span>,<span style="color:#e6db74">&#39;three&#39;</span>,<span style="color:#e6db74">&#39;four&#39;</span>,<span style="color:#e6db74">&#39;three&#39;</span>]
+</span></span><span style="display:flex;"><span>df5[<span style="color:#e6db74">&#39;K&#39;</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df5 = df1.copy()
-df5['K'] = ['one', 'one','two','three','four','three']
-df5['K']
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2013-01-01      one
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2013-01-01      one
 2013-01-02      one
 2013-01-03      two
 2013-01-04    three
@@ -962,24 +880,21 @@ Freq: D, Name: K, dtype: object
 
 </div>
 
-
-<pre><code class="language-python">df5[df5['K'].isin(['two','four'])]
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df5[df5[<span style="color:#e6db74">&#39;K&#39;</span>]<span style="color:#f92672">.</span>isin([<span style="color:#e6db74">&#39;two&#39;</span>,<span style="color:#e6db74">&#39;four&#39;</span>])]
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1011,27 +926,23 @@ Freq: D, Name: K, dtype: object
   </tbody>
 </table>
 </div>
-
 <h3 id="sort-values">Sort values</h3>
-
-<pre><code class="language-python">#sort
-df1.sort_values([c[0]], ascending=False)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#sort</span>
+</span></span><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>sort_values([c[<span style="color:#ae81ff">0</span>]], ascending<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1088,26 +999,22 @@ df1.sort_values([c[0]], ascending=False)
   </tbody>
 </table>
 </div>
-
 <h3 id="subset">Subset</h3>
-
-<pre><code class="language-python">df1.query('A &gt; 0')
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;A &gt; 0&#39;</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1129,24 +1036,21 @@ df1.sort_values([c[0]], ascending=False)
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">df1[ (df1['A'] &gt; 0) ]
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1[ (df1[<span style="color:#e6db74">&#39;A&#39;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) ]
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1168,28 +1072,24 @@ df1.sort_values([c[0]], ascending=False)
   </tbody>
 </table>
 </div>
-
 <h3 id="setting-values">Setting values</h3>
-
-<pre><code class="language-python">s1 = pd.Series([1,2,3,4,5,6], index=pd.date_range('20130102', periods=6))
-df1['F'] = s1
-df1
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>s1 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>], index<span style="color:#f92672">=</span>pd<span style="color:#f92672">.</span>date_range(<span style="color:#e6db74">&#39;20130102&#39;</span>, periods<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>df1[<span style="color:#e6db74">&#39;F&#39;</span>] <span style="color:#f92672">=</span> s1
+</span></span><span style="display:flex;"><span>df1
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1253,26 +1153,23 @@ df1
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">df5 = df1.copy()
-df5[df5 &gt; 0] = -df5
-df5
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df5 <span style="color:#f92672">=</span> df1<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>df5[df5 <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>df5
+</span></span><span style="display:flex;"><span>df5
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1336,13 +1233,10 @@ df5
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df5<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>to_series()<span style="color:#f92672">.</span>apply(pd<span style="color:#f92672">.</span>to_datetime)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df5.index.to_series().apply(pd.to_datetime)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2013-01-01   2013-01-01
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2013-01-01   2013-01-01
 2013-01-02   2013-01-02
 2013-01-03   2013-01-03
 2013-01-04   2013-01-04
@@ -1353,13 +1247,10 @@ Freq: D, dtype: datetime64[ns]
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df5<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>to_series()<span style="color:#f92672">.</span>dt<span style="color:#f92672">.</span>year
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df5.index.to_series().dt.year
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2013-01-01    2013
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2013-01-01    2013
 2013-01-02    2013
 2013-01-03    2013
 2013-01-04    2013
@@ -1370,26 +1261,22 @@ Freq: D, dtype: int64
 
 </div>
 
-
 <h3 id="calculations">Calculations</h3>
-
-<pre><code class="language-python">df1.apply(np.cumsum)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>apply(np<span style="color:#f92672">.</span>cumsum)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1453,13 +1340,10 @@ Freq: D, dtype: int64
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> x<span style="color:#f92672">.</span>min())
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df1.apply(lambda x: x.max() - x.min())
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">A    1.854221
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">A    1.854221
 B    1.895637
 C    2.401903
 D    2.226167
@@ -1469,14 +1353,11 @@ dtype: float64
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># string ops - vectorized</span>
+</span></span><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>iloc[:,<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;str&#39;</span>)<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>lower()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python"># string ops - vectorized
-df1.iloc[:,1].astype('str').str.lower()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2013-01-01    -0.8713474062085093
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2013-01-01    -0.8713474062085093
 2013-01-02     0.5117196166006319
 2013-01-03     0.3435604532681823
 2013-01-04    0.17423665911328937
@@ -1487,27 +1368,23 @@ Freq: D, Name: B, dtype: object
 
 </div>
 
-
 <h3 id="missing-values">Missing values</h3>
-
-<pre><code class="language-python"># missing data
-df1.dropna(how='any')
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># missing data</span>
+</span></span><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>dropna(how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;any&#39;</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1563,24 +1440,21 @@ df1.dropna(how='any')
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">df1.dropna(subset=['F'], how='all')
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>dropna(subset<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;F&#39;</span>], how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;all&#39;</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1636,24 +1510,21 @@ df1.dropna(how='any')
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">df1.fillna(value=5)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>fillna(value<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1717,24 +1588,21 @@ df1.dropna(how='any')
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">pd.isnull(df1)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>isnull(df1)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1798,26 +1666,22 @@ df1.dropna(how='any')
   </tbody>
 </table>
 </div>
-
 <h3 id="merge-and-shape">Merge and shape</h3>
-
-<pre><code class="language-python">df1.append(df2, ignore_index=True, sort=True).head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df1<span style="color:#f92672">.</span>append(df2, ignore_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, sort<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1903,25 +1767,22 @@ df1.dropna(how='any')
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">pieces = [df1[:3], df1[3:7], df1[7:]]
-pd.concat(pieces).head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pieces <span style="color:#f92672">=</span> [df1[:<span style="color:#ae81ff">3</span>], df1[<span style="color:#ae81ff">3</span>:<span style="color:#ae81ff">7</span>], df1[<span style="color:#ae81ff">7</span>:]]
+</span></span><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>concat(pieces)<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1977,26 +1838,22 @@ pd.concat(pieces).head()
   </tbody>
 </table>
 </div>
-
 <h3 id="groupby">GroupBy</h3>
-
-<pre><code class="language-python">df4.groupby(['A','B']).sum()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df4<span style="color:#f92672">.</span>groupby([<span style="color:#e6db74">&#39;A&#39;</span>,<span style="color:#e6db74">&#39;B&#39;</span>])<span style="color:#f92672">.</span>sum()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2048,31 +1905,24 @@ pd.concat(pieces).head()
   </tbody>
 </table>
 </div>
-
 <h3 id="stacked">Stacked</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>stacked <span style="color:#f92672">=</span> df4<span style="color:#f92672">.</span>stack()
+</span></span><span style="display:flex;"><span>stacked<span style="color:#f92672">.</span>index[:<span style="color:#ae81ff">4</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">stacked = df4.stack()
-stacked.index[:4]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">MultiIndex([(0, 'A'),
-            (0, 'B'),
-            (0, 'C'),
-            (0, 'D')],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">MultiIndex([(0, &#39;A&#39;),
+            (0, &#39;B&#39;),
+            (0, &#39;C&#39;),
+            (0, &#39;D&#39;)],
            )
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>stacked<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">stacked.head()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0  A         foo
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0  A         foo
    B         one
    C   -0.870843
    D     1.25516
@@ -2082,24 +1932,21 @@ dtype: object
 
 </div>
 
-
-<pre><code class="language-python">stacked.unstack().head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>stacked<span style="color:#f92672">.</span>unstack()<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2149,26 +1996,22 @@ dtype: object
   </tbody>
 </table>
 </div>
-
 <h3 id="pivot-table">Pivot table</h3>
-
-<pre><code class="language-python">df4
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df4
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2239,31 +2082,26 @@ dtype: object
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python"># pivot tables (http://pbpython.com/pandas-pivot-table-explained.html)
-df4[&quot;A&quot;] = df4[&quot;A&quot;].astype(&quot;category&quot;)
-df4[&quot;A&quot;].cat.set_categories([&quot;foo&quot;, &quot;bar&quot;],inplace=True)
-</code></pre>
-
-<pre><code class="language-python">pd.pivot_table(df4,index=['A','B'])	#same as:
-df4.groupby(['A','B']).mean()
-df4.groupby(['A','B'])['D'].agg([np.sum,np.std])
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># pivot tables (http://pbpython.com/pandas-pivot-table-explained.html)</span>
+</span></span><span style="display:flex;"><span>df4[<span style="color:#e6db74">&#34;A&#34;</span>] <span style="color:#f92672">=</span> df4[<span style="color:#e6db74">&#34;A&#34;</span>]<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#34;category&#34;</span>)
+</span></span><span style="display:flex;"><span>df4[<span style="color:#e6db74">&#34;A&#34;</span>]<span style="color:#f92672">.</span>cat<span style="color:#f92672">.</span>set_categories([<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;bar&#34;</span>],inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>pivot_table(df4,index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;A&#39;</span>,<span style="color:#e6db74">&#39;B&#39;</span>])	<span style="color:#75715e">#same as:</span>
+</span></span><span style="display:flex;"><span>df4<span style="color:#f92672">.</span>groupby([<span style="color:#e6db74">&#39;A&#39;</span>,<span style="color:#e6db74">&#39;B&#39;</span>])<span style="color:#f92672">.</span>mean()
+</span></span><span style="display:flex;"><span>df4<span style="color:#f92672">.</span>groupby([<span style="color:#e6db74">&#39;A&#39;</span>,<span style="color:#e6db74">&#39;B&#39;</span>])[<span style="color:#e6db74">&#39;D&#39;</span>]<span style="color:#f92672">.</span>agg([np<span style="color:#f92672">.</span>sum,np<span style="color:#f92672">.</span>std])
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2315,24 +2153,21 @@ df4.groupby(['A','B'])['D'].agg([np.sum,np.std])
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">pd.pivot_table(df4,index=['A','B'], values=['D'], aggfunc=np.sum)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>pivot_table(df4,index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;A&#39;</span>,<span style="color:#e6db74">&#39;B&#39;</span>], values<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;D&#39;</span>], aggfunc<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>sum)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2376,28 +2211,25 @@ df4.groupby(['A','B'])['D'].agg([np.sum,np.std])
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">pd.pivot_table(df4,index=['A'], columns=['B'], values=['D'], aggfunc=np.sum)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>pivot_table(df4,index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;A&#39;</span>], columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;B&#39;</span>], values<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;D&#39;</span>], aggfunc<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>sum)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+.dataframe thead tr th {
+    text-align: left;
+}
 
-    .dataframe thead tr th {
-        text-align: left;
-    }
-
-    .dataframe thead tr:last-of-type th {
-        text-align: right;
-    }
-</style>
+.dataframe thead tr:last-of-type th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr>
@@ -2433,28 +2265,25 @@ df4.groupby(['A','B'])['D'].agg([np.sum,np.std])
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">pd.pivot_table(df4,index=['A'], columns=['B'], values=['D'], aggfunc=np.sum, fill_value=0,margins=True)
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>pivot_table(df4,index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;A&#39;</span>], columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;B&#39;</span>], values<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;D&#39;</span>], aggfunc<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>sum, fill_value<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,margins<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+.dataframe thead tr th {
+    text-align: left;
+}
 
-    .dataframe thead tr th {
-        text-align: left;
-    }
-
-    .dataframe thead tr:last-of-type th {
-        text-align: right;
-    }
-</style>
+.dataframe thead tr:last-of-type th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr>
@@ -2501,24 +2330,21 @@ df4.groupby(['A','B'])['D'].agg([np.sum,np.std])
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">pd.pivot_table(df4, index=['A', 'B'], columns=['C'], values='D')
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>pivot_table(df4, index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;A&#39;</span>, <span style="color:#e6db74">&#39;B&#39;</span>], columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;C&#39;</span>], values<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;D&#39;</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2618,28 +2444,25 @@ df4.groupby(['A','B'])['D'].agg([np.sum,np.std])
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">pd.pivot_table(df4, index=['A'], columns=['B','C'], values='D')
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>pivot_table(df4, index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;A&#39;</span>], columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;B&#39;</span>,<span style="color:#e6db74">&#39;C&#39;</span>], values<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;D&#39;</span>)
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+.dataframe thead tr th {
+    text-align: left;
+}
 
-    .dataframe thead tr th {
-        text-align: left;
-    }
-
-    .dataframe thead tr:last-of-type th {
-        text-align: right;
-    }
-</style>
+.dataframe thead tr:last-of-type th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr>
@@ -2697,17 +2520,13 @@ df4.groupby(['A','B'])['D'].agg([np.sum,np.std])
   </tbody>
 </table>
 </div>
-
 <h3 id="timeseries">Timeseries</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rng <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>date_range(<span style="color:#e6db74">&#39;1/1/2012&#39;</span>, periods<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, freq<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;S&#39;</span>)
+</span></span><span style="display:flex;"><span>ts <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">500</span>, len(rng)), index<span style="color:#f92672">=</span>rng)
+</span></span><span style="display:flex;"><span>ts<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">rng = pd.date_range('1/1/2012', periods=100, freq='S')
-ts = pd.Series(np.random.randint(0, 500, len(rng)), index=rng)
-ts.head()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2012-01-01 00:00:00    114
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2012-01-01 00:00:00    114
 2012-01-01 00:00:01    279
 2012-01-01 00:00:02     32
 2012-01-01 00:00:03    495
@@ -2717,28 +2536,22 @@ Freq: S, dtype: int64
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## frequency conversion (e.g., converting secondly data into 5-minutely data)</span>
+</span></span><span style="display:flex;"><span>ts<span style="color:#f92672">.</span>resample(<span style="color:#e6db74">&#39;5Min&#39;</span>)<span style="color:#f92672">.</span>sum()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">## frequency conversion (e.g., converting secondly data into 5-minutely data)
-ts.resample('5Min').sum()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2012-01-01    24652
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2012-01-01    24652
 Freq: 5T, dtype: int64
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## time zones</span>
+</span></span><span style="display:flex;"><span>ts_utc <span style="color:#f92672">=</span> ts<span style="color:#f92672">.</span>tz_localize(<span style="color:#e6db74">&#39;UTC&#39;</span>)
+</span></span><span style="display:flex;"><span>ts_utc<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74">&#39;US/Eastern&#39;</span>)<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">## time zones
-ts_utc = ts.tz_localize('UTC')
-ts_utc.tz_convert('US/Eastern').head()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2011-12-31 19:00:00-05:00    114
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2011-12-31 19:00:00-05:00    114
 2011-12-31 19:00:01-05:00    279
 2011-12-31 19:00:02-05:00     32
 2011-12-31 19:00:03-05:00    495
@@ -2748,17 +2561,14 @@ Freq: S, dtype: int64
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## format</span>
+</span></span><span style="display:flex;"><span>rng <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>date_range(<span style="color:#e6db74">&#39;1/1/2012&#39;</span>, periods<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, freq<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;M&#39;</span>)
+</span></span><span style="display:flex;"><span>ts <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(len(rng)), index<span style="color:#f92672">=</span>rng)
+</span></span><span style="display:flex;"><span>ps <span style="color:#f92672">=</span> ts<span style="color:#f92672">.</span>to_period()
+</span></span><span style="display:flex;"><span>ps<span style="color:#f92672">.</span>to_timestamp()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">## format
-rng = pd.date_range('1/1/2012', periods=5, freq='M')
-ts = pd.Series(np.random.randn(len(rng)), index=rng)
-ps = ts.to_period()
-ps.to_timestamp()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">2012-01-01    2.490119
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">2012-01-01    2.490119
 2012-02-01    0.237758
 2012-03-01    0.249177
 2012-04-01   -0.015938
@@ -2768,17 +2578,14 @@ Freq: MS, dtype: float64
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## timestamp conversion</span>
+</span></span><span style="display:flex;"><span>prng <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>period_range(<span style="color:#e6db74">&#39;1990Q1&#39;</span>, <span style="color:#e6db74">&#39;2000Q4&#39;</span>, freq<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Q-NOV&#39;</span>)
+</span></span><span style="display:flex;"><span>ts <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(len(prng)), prng)
+</span></span><span style="display:flex;"><span>ts<span style="color:#f92672">.</span>index <span style="color:#f92672">=</span> (prng<span style="color:#f92672">.</span>asfreq(<span style="color:#e6db74">&#39;M&#39;</span>, <span style="color:#e6db74">&#39;e&#39;</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>asfreq(<span style="color:#e6db74">&#39;H&#39;</span>, <span style="color:#e6db74">&#39;s&#39;</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span>ts<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">## timestamp conversion
-prng = pd.period_range('1990Q1', '2000Q4', freq='Q-NOV')
-ts = pd.Series(np.random.randn(len(prng)), prng)
-ts.index = (prng.asfreq('M', 'e') + 1).asfreq('H', 's') + 9
-ts.head()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">1990-03-01 09:00   -0.546684
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">1990-03-01 09:00   -0.546684
 1990-06-01 09:00    0.091767
 1990-09-01 09:00   -1.180808
 1990-12-01 09:00    0.929530
@@ -2788,32 +2595,26 @@ Freq: H, dtype: float64
 
 </div>
 
-
 <h3 id="categorical-data">Categorical data</h3>
-
-<pre><code class="language-python">df5 = df4.copy(deep=True)
-</code></pre>
-
-<pre><code class="language-python">## create categories
-df5['incomeranges'] = pd.cut(df5['C'], 14)
-df5[&quot;A&quot;] = df5[&quot;A&quot;].astype('category')
-df5.head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df5 <span style="color:#f92672">=</span> df4<span style="color:#f92672">.</span>copy(deep<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## create categories</span>
+</span></span><span style="display:flex;"><span>df5[<span style="color:#e6db74">&#39;incomeranges&#39;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>cut(df5[<span style="color:#e6db74">&#39;C&#39;</span>], <span style="color:#ae81ff">14</span>)
+</span></span><span style="display:flex;"><span>df5[<span style="color:#e6db74">&#34;A&#34;</span>] <span style="color:#f92672">=</span> df5[<span style="color:#e6db74">&#34;A&#34;</span>]<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;category&#39;</span>)
+</span></span><span style="display:flex;"><span>df5<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2869,13 +2670,10 @@ df5.head()
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df5<span style="color:#f92672">.</span>A
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df5.A
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">0    foo
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">0    foo
 1    bar
 2    foo
 3    bar
@@ -2889,26 +2687,23 @@ Categories (2, object): [foo, bar]
 
 </div>
 
-
-<pre><code class="language-python">#rename to more meaningful
-df5[&quot;A&quot;].cat.categories = [&quot;foo&quot;, &quot;bar&quot;]
-df5.head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#rename to more meaningful</span>
+</span></span><span style="display:flex;"><span>df5[<span style="color:#e6db74">&#34;A&#34;</span>]<span style="color:#f92672">.</span>cat<span style="color:#f92672">.</span>categories <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;bar&#34;</span>]
+</span></span><span style="display:flex;"><span>df5<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2964,26 +2759,23 @@ df5.head()
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python"># domain of categories
-df5[&quot;A&quot;] = df5[&quot;A&quot;].cat.set_categories([&quot;very bad&quot;, &quot;bar&quot;, &quot;medium&quot;, &quot;foo&quot;, &quot;very good&quot;])
-df5.sort_values(by=&quot;A&quot;).head()
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># domain of categories</span>
+</span></span><span style="display:flex;"><span>df5[<span style="color:#e6db74">&#34;A&#34;</span>] <span style="color:#f92672">=</span> df5[<span style="color:#e6db74">&#34;A&#34;</span>]<span style="color:#f92672">.</span>cat<span style="color:#f92672">.</span>set_categories([<span style="color:#e6db74">&#34;very bad&#34;</span>, <span style="color:#e6db74">&#34;bar&#34;</span>, <span style="color:#e6db74">&#34;medium&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;very good&#34;</span>])
+</span></span><span style="display:flex;"><span>df5<span style="color:#f92672">.</span>sort_values(by<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A&#34;</span>)<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3039,13 +2831,10 @@ df5.sort_values(by=&quot;A&quot;).head()
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df5[<span style="color:#e6db74">&#39;A&#39;</span>]<span style="color:#f92672">.</span>value_counts()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df5['A'].value_counts()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">foo          5
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">foo          5
 bar          3
 very good    0
 medium       0
@@ -3055,26 +2844,23 @@ Name: A, dtype: int64
 
 </div>
 
-
-<pre><code class="language-python">## subset on category
-tmp = df5[df5['A'] == &quot;foo&quot;]
-tmp
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## subset on category</span>
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> df5[df5[<span style="color:#e6db74">&#39;A&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;foo&#34;</span>]
+</span></span><span style="display:flex;"><span>tmp
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3130,40 +2916,32 @@ tmp
   </tbody>
 </table>
 </div>
-
-<pre><code class="language-python">##TODO:subset with limited column
-df5[A &amp; B][['C', 'D']][:10]
-</code></pre>
-
-<pre><code class="language-python">#TODO:Plotting
-## options
-### Make the graphs a bit prettier, and bigger
-pd.set_option('display.mpl_style', 'default') 
-### Always display all the columns
-pd.set_option('display.line_width', 5000) 
-pd.set_option('display.max_columns', 60) 
-figsize(15, 5)
-</code></pre>
-
-<h3 id="series-calculations">Series calculations</h3>
-
-<pre><code class="language-python">df2
-</code></pre>
-
-<div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">##TODO:subset with limited column</span>
+</span></span><span style="display:flex;"><span>df5[A <span style="color:#f92672">&amp;</span> B][[<span style="color:#e6db74">&#39;C&#39;</span>, <span style="color:#e6db74">&#39;D&#39;</span>]][:<span style="color:#ae81ff">10</span>]
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#TODO:Plotting</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## options</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### Make the graphs a bit prettier, and bigger</span>
+</span></span><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>set_option(<span style="color:#e6db74">&#39;display.mpl_style&#39;</span>, <span style="color:#e6db74">&#39;default&#39;</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### Always display all the columns</span>
+</span></span><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>set_option(<span style="color:#e6db74">&#39;display.line_width&#39;</span>, <span style="color:#ae81ff">5000</span>) 
+</span></span><span style="display:flex;"><span>pd<span style="color:#f92672">.</span>set_option(<span style="color:#e6db74">&#39;display.max_columns&#39;</span>, <span style="color:#ae81ff">60</span>) 
+</span></span><span style="display:flex;"><span>figsize(<span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><h3 id="series-calculations">Series calculations</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df2
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -3216,65 +2994,44 @@ figsize(15, 5)
   </tbody>
 </table>
 </div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df2<span style="color:#f92672">.</span>H<span style="color:#f92672">.</span>values
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df2.H.values
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([3, 3, 3, 3], dtype=int32)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([3, 3, 3, 3], dtype=int32)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df2<span style="color:#f92672">.</span>H<span style="color:#f92672">.</span>abs()<span style="color:#f92672">.</span>tolist()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df2.H.abs().tolist()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[3, 3, 3, 3]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[3, 3, 3, 3]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df2<span style="color:#f92672">.</span>H<span style="color:#f92672">.</span>mean()<span style="color:#f92672">.</span>tolist()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">df2.H.mean().tolist()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">3.0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">3.0
 </code></pre>
 
 </div>
-
 
 <h2 id="numpy">Numpy</h2>
-
 <p>Pandas uses Numpy&rsquo;s ndarray for many of its underlying operations.  For example, you can use the DataFrame attribute <code>.values</code> to represent a DataFrame df as a NumPy array. You can also pass pandas data structures to NumPy methods.</p>
-
 <p>Now that we&rsquo;ve looked into Pandas columns (Series), lets take at what is driving these operations.  This low-level perspective will help us understand strengths and weeknesses, as well as give us a much better look into how to improve our code.</p>
-
 <p><em>References</em></p>
-
 <ul>
 <li><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">doc: numpy</a></li>
 <li><a href="https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html">doc: ndarray</a></li>
 </ul>
-
 <h3 id="introduction">Introduction</h3>
-
 <p>NumPy&rsquo;s arrays are more compact than Python lists &ndash; a list of lists as you describe, in Python, would take at least 20 MB or so, while a NumPy 3D array with single-precision floats in the cells would fit in 4 MB. Access in reading and writing items is also faster with NumPy.</p>
-
 <p>The difference is mostly due to &ldquo;indirectness&rdquo; &ndash; a Python list is an array of pointers to Python objects, at least 4 bytes per pointer plus 16 bytes for even the smallest Python object (4 for type pointer, 4 for reference count, 4 for value &ndash; and the memory allocators rounds up to 16). A NumPy array is an array of uniform values &ndash; single-precision numbers takes 4 bytes each, double-precision ones, 8 bytes. Less flexible, but you pay substantially for the flexibility of standard Python lists!</p>
-
 <p>Because Numpy&rsquo;s popularity is based on optimization, lets focus work on memory and speed during our discussion.</p>
-
 <p><strong>Memory layout</strong></p>
-
 <p>The following attributes contain information about the memory layout of the array:</p>
-
 <ul>
 <li><code>ndarray.flags</code>   Information about the memory layout of the array.</li>
 <li><code>ndarray.shape</code>   Tuple of array dimensions.</li>
@@ -3287,68 +3044,54 @@ figsize(15, 5)
 <li><code>ndarray.nbytes</code>  Total bytes consumed by the elements of the array.</li>
 <li><code>ndarray.base</code>  Base object if memory is from some other object.</li>
 </ul>
-
 <p><code>ndarray.__sizeof__()</code> is somewhat bigger (includes the object overhead), than <code>ndarray.nbytes</code>, which is the number of bytes in the allocated array.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">10</span><span style="color:#f92672">**</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>lst <span style="color:#f92672">=</span> list(arr)
+</span></span><span style="display:flex;"><span>arr2d <span style="color:#f92672">=</span> arr<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">50</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( len(lst) )
+</span></span><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>shape )
+</span></span><span style="display:flex;"><span>print( arr2d<span style="color:#f92672">.</span>shape )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">import sys
-</code></pre>
-
-<pre><code class="language-python">arr = np.random.randn(10**3)
-lst = list(arr)
-arr2d = arr.reshape(20,50)
-</code></pre>
-
-<pre><code class="language-python">print( len(lst) )
-print( arr.shape )
-print( arr2d.shape )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">1000
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">1000
 (1000,)
 (20, 50)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( type(lst) )
+</span></span><span style="display:flex;"><span>print( type(arr) )
+</span></span><span style="display:flex;"><span>print( type(arr2d) )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print( type(lst[<span style="color:#ae81ff">0</span>]) )
+</span></span><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>dtype )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( type(lst) )
-print( type(arr) )
-print( type(arr2d) )
-
-print( type(lst[0]) )
-print( arr.dtype )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;class 'list'&gt;
-&lt;class 'numpy.ndarray'&gt;
-&lt;class 'numpy.ndarray'&gt;
-&lt;class 'numpy.float64'&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;class &#39;list&#39;&gt;
+&lt;class &#39;numpy.ndarray&#39;&gt;
+&lt;class &#39;numpy.ndarray&#39;&gt;
+&lt;class &#39;numpy.float64&#39;&gt;
 float64
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#item</span>
+</span></span><span style="display:flex;"><span>print( sys<span style="color:#f92672">.</span>getsizeof( lst[<span style="color:#ae81ff">0</span>] ) )
+</span></span><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>itemsize )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#total</span>
+</span></span><span style="display:flex;"><span>print( sys<span style="color:#f92672">.</span>getsizeof( lst ) )
+</span></span><span style="display:flex;"><span>print( sys<span style="color:#f92672">.</span>getsizeof( arr ) )
+</span></span><span style="display:flex;"><span>print( sys<span style="color:#f92672">.</span>getsizeof( arr2d ) )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>nbytes )
+</span></span><span style="display:flex;"><span>print( arr2d<span style="color:#f92672">.</span>nbytes )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#item
-print( sys.getsizeof( lst[0] ) )
-print( arr.itemsize )
-
-#total
-print( sys.getsizeof( lst ) )
-print( sys.getsizeof( arr ) )
-print( sys.getsizeof( arr2d ) )
-
-print( arr.nbytes )
-print( arr2d.nbytes )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">32
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">32
 8
 9112
 8096
@@ -3359,221 +3102,169 @@ print( arr2d.nbytes )
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>tobytes()[:<span style="color:#ae81ff">100</span>] )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( arr.tobytes()[:100] )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">b',!1\xcdk\\\xf0?\x8b\x0f\x93\x19)\xf0\xe7?v\xec3\xcb}e\xbf?\x89\x92\x0b\xac\xc4_\xb7?\x1d\xdb\\*\xdaG\xe2?}\x16\xf8n\x99\xcd\xd7\xbfc\xf3\xf9g\x87\xb5\x03\xc0\x04&amp;\x86\xc7\x08*\xf4?\xb8j\xd6\x03}\xed\xef\xbf\xe6\xcf\xb0\x0e\x90\xe1\xd8\xbf{\xa2\x1dn\xe1\xef\xe1\xbfF\x90{\xfd\xf2\x14\xde\xbf\\\xb8pv'
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">b&#39;,!1\xcdk\\\xf0?\x8b\x0f\x93\x19)\xf0\xe7?v\xec3\xcb}e\xbf?\x89\x92\x0b\xac\xc4_\xb7?\x1d\xdb\\*\xdaG\xe2?}\x16\xf8n\x99\xcd\xd7\xbfc\xf3\xf9g\x87\xb5\x03\xc0\x04&amp;\x86\xc7\x08*\xf4?\xb8j\xd6\x03}\xed\xef\xbf\xe6\xcf\xb0\x0e\x90\xe1\xd8\xbf{\xa2\x1dn\xe1\xef\xe1\xbfF\x90{\xfd\xf2\x14\xde\xbf\\\xb8pv&#39;
 </code></pre>
 
 </div>
-
 
 <h3 id="comparison-of-ndarry-to-list">Comparison of ndarry to list</h3>
-
 <p>Numpy array is easier to assign values than a list.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>])
+</span></span><span style="display:flex;"><span>a[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>a
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">a = np.array([1, 2, 5, 7, 8])
-a[1:3] = -1
-a
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ 1, -1, -1,  7,  8])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ 1, -1, -1,  7,  8])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>b <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    b[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;TypeError: can only assign an iterable&#34;</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">b = [1, 2, 5, 7, 8]
-try:
-    b[1:3] = -1
-except:
-    print(&quot;TypeError: can only assign an iterable&quot;)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">TypeError: can only assign an iterable
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">TypeError: can only assign an iterable
 </code></pre>
 
 </div>
-
 
 <p>ndarray slices are actually views on the same data buffer. If you modify it, it is going to modify the original ndarray as well.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>a<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>]
+</span></span><span style="display:flex;"><span>b<span style="color:#f92672">=</span>a[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>b[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>print(b)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">a=[1,2,5,7,8]
-b=a[1:5]
-b[1]=3
-print(a)
-print(b)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[1, 2, 5, 7, 8]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[1, 2, 5, 7, 8]
 [2, 3, 7, 8]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>])
+</span></span><span style="display:flex;"><span>a_slice <span style="color:#f92672">=</span> a[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>a_slice[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>print( a )
+</span></span><span style="display:flex;"><span>print( a_slice)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">a = np.array([1, 2, 5, 7, 8])
-a_slice = a[1:5]
-a_slice[1] = 1000
-print( a )
-print( a_slice)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[   1    2 1000    7    8]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[   1    2 1000    7    8]
 [   2 1000    7    8]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>])
+</span></span><span style="display:flex;"><span>a_slice <span style="color:#f92672">=</span> a[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">5</span>]<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>a_slice[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>print( a )
+</span></span><span style="display:flex;"><span>print( a_slice)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">a = np.array([1, 2, 5, 7, 8])
-a_slice = a[1:5].copy()
-a_slice[1] = 1000
-print( a )
-print( a_slice)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[1 2 5 7 8]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[1 2 5 7 8]
 [   2 1000    7    8]
 </code></pre>
 
 </div>
-
 
 <p>ndarray slicing is different.  It uses: <code>arr[row_start:row_end, col_start:col_end]</code></p>
-
 <p>ndarray also allows boolean indexing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>])<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>a
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">a = np.array([0, 1, 2, 5, 7, 8]).reshape(3,2)
-a
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[0, 1],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[0, 1],
        [2, 5],
        [7, 8]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rows_on <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#66d9ef">True</span>, <span style="color:#66d9ef">False</span>, <span style="color:#66d9ef">True</span>])
+</span></span><span style="display:flex;"><span>a[rows_on,:]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">rows_on = np.array([True, False, True])
-a[rows_on,:]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[0, 1],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[0, 1],
        [7, 8]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>(arr <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>)[:<span style="color:#ae81ff">10</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">(arr != 2)[:10]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ True,  True,  True,  True,  True,  True,  True,  True,  True,
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ True,  True,  True,  True,  True,  True,  True,  True,  True,
         True])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr[arr <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>] [:<span style="color:#ae81ff">10</span>]
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr[arr != 2] [:10]
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ 1.02256375,  0.74806647,  0.12264239,  0.09130506,  0.57127102,
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ 1.02256375,  0.74806647,  0.12264239,  0.09130506,  0.57127102,
        -0.37192379, -2.46363717,  1.26026228, -0.99774028, -0.38876726])
 </code></pre>
 
 </div>
 
-
 <p>A comparison test of speed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> numpy <span style="color:#f92672">import</span> arange
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> timeit <span style="color:#f92672">import</span> Timer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nelements <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>Ntimeits <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> arange(Nelements)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> range(Nelements)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>t_numpy <span style="color:#f92672">=</span> Timer(<span style="color:#e6db74">&#34;x.sum()&#34;</span>, <span style="color:#e6db74">&#34;from __main__ import x&#34;</span>)
+</span></span><span style="display:flex;"><span>t_list <span style="color:#f92672">=</span> Timer(<span style="color:#e6db74">&#34;sum(y)&#34;</span>, <span style="color:#e6db74">&#34;from __main__ import y&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;numpy: </span><span style="color:#e6db74">%.3e</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (t_numpy<span style="color:#f92672">.</span>timeit(Ntimeits)<span style="color:#f92672">/</span>Ntimeits,))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;list:  </span><span style="color:#e6db74">%.3e</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (t_list<span style="color:#f92672">.</span>timeit(Ntimeits)<span style="color:#f92672">/</span>Ntimeits,))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">from numpy import arange
-from timeit import Timer
-
-Nelements = 10000
-Ntimeits = 10000
-
-x = arange(Nelements)
-y = range(Nelements)
-
-t_numpy = Timer(&quot;x.sum()&quot;, &quot;from __main__ import x&quot;)
-t_list = Timer(&quot;sum(y)&quot;, &quot;from __main__ import y&quot;)
-print(&quot;numpy: %.3e&quot; % (t_numpy.timeit(Ntimeits)/Ntimeits,))
-print(&quot;list:  %.3e&quot; % (t_list.timeit(Ntimeits)/Ntimeits,))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">numpy: 1.171e-05
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">numpy: 1.171e-05
 list:  1.768e-04
 </code></pre>
 
 </div>
 
-
 <h3 id="creating-matrices">Creating matrices</h3>
-
 <p>Your typical arrays of random initializers are always useful.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>) )
+</span></span><span style="display:flex;"><span>print( np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>) )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( np.random.randint(1,10, 5) )
-print( np.arange(1,10) )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[8 8 7 4 3]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[8 8 7 4 3]
 [1 2 3 4 5 6 7 8 9]
 </code></pre>
 
 </div>
 
-
 <p>A matrix of random numbers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>) )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( np.random.rand(3,3) )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[[0.24273703 0.4428199  0.51066964]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[[0.24273703 0.4428199  0.51066964]
  [0.66546027 0.83538717 0.92546135]
  [0.63670416 0.83450213 0.57655533]]
 </code></pre>
 
 </div>
 
-
 <p>A matrix of zeros.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>))
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">np.zeros((4,3))
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[0., 0., 0.],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[0., 0., 0.],
        [0., 0., 0.],
        [0., 0., 0.],
        [0., 0., 0.]])
@@ -3581,15 +3272,11 @@ print( np.arange(1,10) )
 
 </div>
 
-
 <p>The identity matrix.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>np<span style="color:#f92672">.</span>eye(<span style="color:#ae81ff">4</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">np.eye(4)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[1., 0., 0., 0.],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[1., 0., 0., 0.],
        [0., 1., 0., 0.],
        [0., 0., 1., 0.],
        [0., 0., 0., 1.]])
@@ -3597,262 +3284,193 @@ print( np.arange(1,10) )
 
 </div>
 
-
 <h3 id="scalar-operations">Scalar operations</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>append(arr, <span style="color:#ae81ff">12</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr = np.arange(1,10)
-np.append(arr, 12)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 12])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 12])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>size )
+</span></span><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>mean() )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( arr.size )
-print( arr.mean() )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">9
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">9
 5.0
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>min() )
+</span></span><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>max() )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( arr.min() )
-print( arr.max() )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">1
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">1
 9
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( type(arr<span style="color:#f92672">.</span>tolist()) )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( type(arr.tolist()) )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">&lt;class 'list'&gt;
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">&lt;class &#39;list&#39;&gt;
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;str&#39;</span>) )
+</span></span><span style="display:flex;"><span>print( arr<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;int&#39;</span>) )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( arr.astype('str') )
-print( arr.astype('int') )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">['1' '2' '3' '4' '5' '6' '7' '8' '9']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[&#39;1&#39; &#39;2&#39; &#39;3&#39; &#39;4&#39; &#39;5&#39; &#39;6&#39; &#39;7&#39; &#39;8&#39; &#39;9&#39;]
 [1 2 3 4 5 6 7 8 9]
 </code></pre>
 
 </div>
 
-
 <h3 id="matrix-operations">Matrix operations</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>append(arr, <span style="color:#ae81ff">12</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr = np.arange(1,10)
-np.append(arr, 12)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 12])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 12])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( arr <span style="color:#f92672">+</span> arr )
+</span></span><span style="display:flex;"><span>print( arr <span style="color:#f92672">-</span> arr )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">print( arr + arr )
-print( arr - arr )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">[ 2  4  6  8 10 12 14 16 18]
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[ 2  4  6  8 10 12 14 16 18]
 [0 0 0 0 0 0 0 0 0]
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#A[n+1]-A[n]</span>
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>diff(arr, n<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">#A[n+1]-A[n]
-np.diff(arr, n=1)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([1, 1, 1, 1, 1, 1, 1, 1])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([1, 1, 1, 1, 1, 1, 1, 1])
 </code></pre>
 
 </div>
 
-
 <p>Broadcasting provides a means of vectorizing array operations so that looping occurs in an implementation of C, instead of in Python.  The term refers how numpy treats arrays with different shapes during arithmetic operations.  The smaller array is repeated so that it matches the size of the larger array.</p>
-
 <ul>
 <li><a href="https://docs.scipy.org/doc/numpy-1.10.0/user/basics.broadcasting.html">doc: broadcasting</a></li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr * 2
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ 2,  4,  6,  8, 10, 12, 14, 16, 18])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ 2,  4,  6,  8, 10, 12, 14, 16, 18])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>arr <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">arr + 4
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ 5,  6,  7,  8,  9, 10, 11, 12, 13])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ 5,  6,  7,  8,  9, 10, 11, 12, 13])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%%</span>timeit 
+</span></span><span style="display:flex;"><span>arr <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">%%timeit 
-arr * 2
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">1.36 µs ± 22 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">1.36 µs ± 22 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>twos <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">9</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%%</span>timeit
+</span></span><span style="display:flex;"><span>arr <span style="color:#f92672">*</span> twos
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">twos = np.ones(9) * 2
-</code></pre>
-
-<pre><code class="language-python">%%timeit
-arr * twos
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">1.45 µs ± 153 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">1.45 µs ± 153 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>M <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>)<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>M
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">M = np.arange(1,10).reshape(3,3)
-M
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[1, 2, 3],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[1, 2, 3],
        [4, 5, 6],
        [7, 8, 9]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>M<span style="color:#f92672">.</span>T
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">M.T
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[1, 4, 7],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[1, 4, 7],
        [2, 5, 8],
        [3, 6, 9]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>M<span style="color:#f92672">.</span>diagonal()
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">M.diagonal()
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([1, 5, 9])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([1, 5, 9])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>np<span style="color:#f92672">.</span>dot(M, M)
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">np.dot(M, M)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([[ 30,  36,  42],
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([[ 30,  36,  42],
        [ 66,  81,  96],
        [102, 126, 150]])
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>np<span style="color:#f92672">.</span>sum( M )
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">np.sum( M )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">45
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">45
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>np<span style="color:#f92672">.</span>sum(M, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)    <span style="color:#75715e">#sum along rows, use `axis=0` for columns</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-python">np.sum(M, axis=1)    #sum along rows, use `axis=0` for columns
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">array([ 6, 15, 24])
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">array([ 6, 15, 24])
 </code></pre>
 
 </div>
-
 
 <h2 id="external-interfaces">External Interfaces</h2>
-
 <h3 id="using-cuda-with-numba">Using CUDA with Numba</h3>
-
 <ul>
 <li><a href="https://devblogs.nvidia.com/numba-python-cuda-acceleration/">doc: nividia</a></li>
 <li><a href="https://nyu-cds.github.io/python-numba/05-cuda/">ref: nyu intro to numba</a></li>
 <li><a href="https://code-maven.com/showing-speed-improvement-with-gpu-cuda-numpy">ref: code-maven</a></li>
 </ul>
-
 <h3 id="basic-c">Basic C++</h3>
-
 <ul>
 <li><a href="https://blog.esciencecenter.nl/irregular-data-in-pandas-using-c-88ce311cb9ef">ref: using C++ with pandas</a></li>
 </ul>
-
 <h3 id="working-with-eigen">Working with Eigen</h3>
-
 <ul>
 <li><a href="https://github.com/jrl-umi3218/Eigen3ToPython">ref: eigen3topython</a></li>
 </ul>
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>Pandas provides fast and thorough means of manipulating data in Python.  It is powered by the operations in Numpy.  While Pandas is useful for preparing data, actual analysis and computations are typically performed on the Numpy set.  This is part of the reason Numpy is adopted by so many important libraries, such as SciKitLearn, PyTorch, and many others.</p>
 
         </div>
@@ -3862,46 +3480,46 @@ M
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#pandas-series-and-dataframe">Pandas Series and Dataframe</a>
-<ul>
-<li><a href="#config">Config</a></li>
-<li><a href="#index-and-axes">Index and axes</a></li>
-<li><a href="#data-types">Data types</a></li>
-<li><a href="#locate-by-column-label-index">Locate by column label, index</a></li>
-<li><a href="#locate-by-boolean">Locate by boolean</a></li>
-<li><a href="#sort-values">Sort values</a></li>
-<li><a href="#subset">Subset</a></li>
-<li><a href="#setting-values">Setting values</a></li>
-<li><a href="#calculations">Calculations</a></li>
-<li><a href="#missing-values">Missing values</a></li>
-<li><a href="#merge-and-shape">Merge and shape</a></li>
-<li><a href="#groupby">GroupBy</a></li>
-<li><a href="#stacked">Stacked</a></li>
-<li><a href="#pivot-table">Pivot table</a></li>
-<li><a href="#timeseries">Timeseries</a></li>
-<li><a href="#categorical-data">Categorical data</a></li>
-<li><a href="#series-calculations">Series calculations</a></li>
-</ul></li>
-<li><a href="#numpy">Numpy</a>
-<ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#comparison-of-ndarry-to-list">Comparison of ndarry to list</a></li>
-<li><a href="#creating-matrices">Creating matrices</a></li>
-<li><a href="#scalar-operations">Scalar operations</a></li>
-<li><a href="#matrix-operations">Matrix operations</a></li>
-</ul></li>
-<li><a href="#external-interfaces">External Interfaces</a>
-<ul>
-<li><a href="#using-cuda-with-numba">Using CUDA with Numba</a></li>
-<li><a href="#basic-c">Basic C++</a></li>
-<li><a href="#working-with-eigen">Working with Eigen</a></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#pandas-series-and-dataframe">Pandas Series and Dataframe</a>
+      <ul>
+        <li><a href="#config">Config</a></li>
+        <li><a href="#index-and-axes">Index and axes</a></li>
+        <li><a href="#data-types">Data types</a></li>
+        <li><a href="#locate-by-column-label-index">Locate by column label, index</a></li>
+        <li><a href="#locate-by-boolean">Locate by boolean</a></li>
+        <li><a href="#sort-values">Sort values</a></li>
+        <li><a href="#subset">Subset</a></li>
+        <li><a href="#setting-values">Setting values</a></li>
+        <li><a href="#calculations">Calculations</a></li>
+        <li><a href="#missing-values">Missing values</a></li>
+        <li><a href="#merge-and-shape">Merge and shape</a></li>
+        <li><a href="#groupby">GroupBy</a></li>
+        <li><a href="#stacked">Stacked</a></li>
+        <li><a href="#pivot-table">Pivot table</a></li>
+        <li><a href="#timeseries">Timeseries</a></li>
+        <li><a href="#categorical-data">Categorical data</a></li>
+        <li><a href="#series-calculations">Series calculations</a></li>
+      </ul>
+    </li>
+    <li><a href="#numpy">Numpy</a>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#comparison-of-ndarry-to-list">Comparison of ndarry to list</a></li>
+        <li><a href="#creating-matrices">Creating matrices</a></li>
+        <li><a href="#scalar-operations">Scalar operations</a></li>
+        <li><a href="#matrix-operations">Matrix operations</a></li>
+      </ul>
+    </li>
+    <li><a href="#external-interfaces">External Interfaces</a>
+      <ul>
+        <li><a href="#using-cuda-with-numba">Using CUDA with Numba</a></li>
+        <li><a href="#basic-c">Basic C++</a></li>
+        <li><a href="#working-with-eigen">Working with Eigen</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -3993,7 +3611,7 @@ M
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

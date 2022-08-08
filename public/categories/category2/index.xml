@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>category2 on IMTorg Kbase</title>
@@ -6,11 +6,7 @@
     <description>Recent content in category2 on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://imtorgdemo.github.io/categories/category2/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/category2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Processing Natural Language with Python and Friends</title>
       <link>https://imtorgdemo.github.io/posts/blog_nlp-intro_spacy/</link>
@@ -74,12 +70,12 @@ Fish is a commandline tool that is a great complement to BASH. It is highly conf
       <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/posts/blog_page-todo/</guid>
-      <description> This is a list of blog posts that are referenced, but not yet complete.
+      <description>This is a list of blog posts that are referenced, but not yet complete.
 List of Future Posts General Machine Learning
- scoring metrics, model performance metrics, and graphs imbalanced data feature engineering models in-depth  Natural Language Processing
- functional programming numpy nltk / spaCy gensim word2vec fasttext nlp overview  General Data Concepts
- datawarehousing infrastructure architectures serverless deployments  Business and Sales
- pricing pyramid matching problems and solutions marketing -&amp;gt; business development -&amp;gt; sales cycle and org structure  </description>
+scoring metrics, model performance metrics, and graphs imbalanced data feature engineering models in-depth Natural Language Processing
+functional programming numpy nltk / spaCy gensim word2vec fasttext nlp overview General Data Concepts
+datawarehousing infrastructure architectures serverless deployments Business and Sales
+pricing pyramid matching problems and solutions marketing -&amp;gt; business development -&amp;gt; sales cycle and org structure </description>
     </item>
     
   </channel>

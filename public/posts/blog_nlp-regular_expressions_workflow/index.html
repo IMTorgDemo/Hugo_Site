@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
 
-    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="generator" content="Hugo 0.101.0" />
 </head>
 
 
@@ -106,50 +106,27 @@
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            
-
-<p>Regular Expressions provide an important foundation for learning systems.  They are useful for quick and direct approaches to solving problems without creating mounds of training data, nor the infrastructure for deploying a model.  While they are a common programming technique, and simple enough to employ, they tend to be used so infrequently that you must re-learn them each time you wish to apply.    This post summarizes the basic regex syntax, strategies, and workflow in hopes it will decrease the time needed to implement.  A few different languages are used in examples, for various scenario.  Happy re-learning!</p>
-
+            <p>Regular Expressions provide an important foundation for learning systems.  They are useful for quick and direct approaches to solving problems without creating mounds of training data, nor the infrastructure for deploying a model.  While they are a common programming technique, and simple enough to employ, they tend to be used so infrequently that you must re-learn them each time you wish to apply.    This post summarizes the basic regex syntax, strategies, and workflow in hopes it will decrease the time needed to implement.  A few different languages are used in examples, for various scenario.  Happy re-learning!</p>
 <h2 id="regex-basics">Regex Basics</h2>
-
 <h3 id="operators">Operators</h3>
-
 <p><em>Character classes</em></p>
-
 <p><strong>abc</strong>, <strong>123</strong>, <strong>\d</strong>, <strong>\D</strong>: matches exact character, exact digit, any digit, any non-digit</p>
-
 <p><strong>\s</strong>, <strong>\S</strong>, <strong>\w</strong>, <strong>\W</strong> : matches white space, non-white space, alphanumeric word, non-alphanumeric word</p>
-
 <p><em>Boundaries</em></p>
-
 <p><strong>^</strong>, <strong>$</strong>, <strong>\b</strong>, <strong>\B</strong>: start of string, end of string, word boundary, not word boundary</p>
-
 <p><em>Quantifiers</em></p>
-
 <p><strong>x*</strong>: matches zero or multiple x</p>
-
 <p><strong>x+</strong>: matches one or multiple x</p>
-
 <p><strong>x{m,n}</strong>: matches x repeat m to n times. a{4} represent aaaa</p>
-
 <p><strong>x?</strong>: optional - matches one or zero x</p>
-
 <p><em>Groups, Ranges, and Capture</em></p>
-
 <p><strong>[xyz]</strong>, <strong>(x|y|z)</strong>: equals x or y or z</p>
-
 <p><strong>[^xyz]</strong>: not x or y or z</p>
-
 <p><strong>[x-z]</strong>: matches anyone between x and y</p>
-
 <p><strong>^x</strong>, <strong>[^xyz]</strong>: means any character that is not x, not any in group x|y|z</p>
-
 <p><strong>(xyz)</strong>, <strong>(xy(z))</strong>: capture group, capture group and sub-group</p>
-
 <h3 id="syntax-patterns">Syntax patterns</h3>
-
 <p>RegEx libraries typically provide functionality and components using similar patterns, such as the following:</p>
-
 <ul>
 <li><code>pattern</code> - encapsulate the expression that is sought using above syntax (mostly language agnostic)</li>
 <li><code>find</code> - apply a pattern, directly to text and return nothing, or a regex object</li>
@@ -157,38 +134,27 @@
 <li><code>sub</code> - substitute a pattern for a string</li>
 <li>convenience functionality</li>
 </ul>
-
 <h2 id="common-solution-approaches">Common Solution Approaches</h2>
-
 <h3 id="example-data">Example data</h3>
-
 <p>We will use the following file for example data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>%%bash
+</span></span><span style="display:flex;"><span>ls Data/Bloomberg_Chat
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-bash">%%bash
-ls Data/Bloomberg_Chat
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">example_chat.txt
-
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">example_chat.txt
 </code></pre>
 
 </div>
 
-
 <p>We will read-in and parse each line using a method similar to the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.io.InputStream
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;./Data/Bloomberg_Chat/example_chat.txt&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">withInputStream</span> <span style="color:#f92672">{</span> stream <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    stream<span style="color:#f92672">.</span><span style="color:#a6e22e">eachLine</span> <span style="color:#f92672">{</span> line <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        println line
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}}</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">import java.io.InputStream
-new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { stream -&gt;
-    stream.eachLine { line -&gt;
-        println line
-    }}
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Message#: 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Message#: 0
 
 Message Sent: 02/13/2019 08:42:15
 
@@ -201,105 +167,86 @@ Subject: Instant Bloomberg  Persistent
 02/19/2019 00:56:29  User_105,Says   Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa. 
 
 02/19/2019 00:55:35  User_68,has left the room
-
 </code></pre>
 
 </div>
-
 
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <h3 id="walking">Walking</h3>
-
 <p>Walking is one of the most direct approaches.  In the Walking method, you slowly move from the left to the right of your text, matching patterns along the way.  Your target text will everything at the end of the string.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.io.InputStream
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;./Data/Bloomberg_Chat/example_chat.txt&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">withInputStream</span> <span style="color:#f92672">{</span> stream <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    stream<span style="color:#f92672">.</span><span style="color:#a6e22e">eachLine</span> <span style="color:#f92672">{</span> line <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//find beginning
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        trgt <span style="color:#f92672">=</span> line <span style="color:#f92672">=~</span> <span style="color:#f92672">~</span><span style="color:#e6db74">/^Message\sSent:\s(.*)$/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>trgt<span style="color:#f92672">){</span>println trgt<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">][</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}}</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">import java.io.InputStream
-new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { stream -&gt;
-    stream.eachLine { line -&gt;
-        //find beginning
-        trgt = line =~ ~/^Message\sSent:\s(.*)$/
-        if(trgt){println trgt[0][1]}
-    }}
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">02/13/2019 08:42:15
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">02/13/2019 08:42:15
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <h3 id="bracketing">Bracketing</h3>
-
 <p>The Bracketing method is taken from the similar technique used in <a href="https://encyclopedia2.thefreedictionary.com/bracketing+method">field artillery</a> to range your inteded target.  First, pattern the string that begins just before your target text.  Next, pattern the string that ends just after your target text.  Your target text will be in the middle.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.io.InputStream
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;./Data/Bloomberg_Chat/example_chat.txt&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">withInputStream</span> <span style="color:#f92672">{</span> stream <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    stream<span style="color:#f92672">.</span><span style="color:#a6e22e">eachLine</span> <span style="color:#f92672">{</span> line <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//find beginning
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        tmp1 <span style="color:#f92672">=</span> line <span style="color:#f92672">=~</span> <span style="color:#f92672">~</span><span style="color:#e6db74">/^Message\sSent:\s(.*)$/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>tmp1<span style="color:#f92672">){</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//find end
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            trgt <span style="color:#f92672">=</span> tmp1<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">][</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">=~</span> <span style="color:#f92672">~</span><span style="color:#e6db74">/.+?(?=\s\d{2}:\d{2}:\d{2})/</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>trgt<span style="color:#f92672">){</span>
+</span></span><span style="display:flex;"><span>                println trgt<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}}</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">import java.io.InputStream
-new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { stream -&gt;
-    stream.eachLine { line -&gt;
-        //find beginning
-        tmp1 = line =~ ~/^Message\sSent:\s(.*)$/
-        if(tmp1){
-            //find end
-            trgt = tmp1[0][1] =~ ~/.+?(?=\s\d{2}:\d{2}:\d{2})/
-            if(trgt){
-                println trgt[0]
-            }
-        }
-    }}
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">02/13/2019
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">02/13/2019
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
-
 
 <h3 id="divide-and-conquer">Divide and conquer</h3>
-
 <p>Here, you have a few targets that you are interested in capturing.  Create nested capture groups within the original capture.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.io.InputStream
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;./Data/Bloomberg_Chat/example_chat.txt&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">withInputStream</span> <span style="color:#f92672">{</span> stream <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>    stream<span style="color:#f92672">.</span><span style="color:#a6e22e">eachLine</span> <span style="color:#f92672">{</span> line <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        trgt <span style="color:#f92672">=</span> line <span style="color:#f92672">=~</span> <span style="color:#f92672">~</span><span style="color:#e6db74">/^((\d{2}\S\d{2}\S\d{4}\s\d{2}:\d{2}:\d{2})\s([^,]+))(.*)$/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>trgt<span style="color:#f92672">){</span>
+</span></span><span style="display:flex;"><span>            println <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;--------Begin line---------&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            println trgt<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">][</span><span style="color:#ae81ff">2</span><span style="color:#f92672">]</span>                <span style="color:#75715e">//dtv
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            println trgt<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">][</span><span style="color:#ae81ff">3</span><span style="color:#f92672">]</span>                <span style="color:#75715e">//member
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            println trgt<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">][</span><span style="color:#ae81ff">4</span><span style="color:#f92672">]</span>                <span style="color:#75715e">//content
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            println <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;---------End line----------&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}}</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">import java.io.InputStream
-new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { stream -&gt;
-    stream.eachLine { line -&gt;
-        trgt = line =~ ~/^((\d{2}\S\d{2}\S\d{4}\s\d{2}:\d{2}:\d{2})\s([^,]+))(.*)$/
-        if(trgt){
-            println (&quot;--------Begin line---------&quot;)
-            println trgt[0][2]                //dtv
-            println trgt[0][3]                //member
-            println trgt[0][4]                //content
-            println (&quot;---------End line----------&quot;)
-        }
-    }}
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">--------Begin line---------
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">--------Begin line---------
 02/13/2019 08:42:15
  User_01
 ,has joined the room
@@ -318,42 +265,36 @@ new File(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;).withInputStream { s
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">null
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">null
 </code></pre>
 
 </div>
 
-
 <h3 id="parsing">Parsing</h3>
-
 <p>In this approach, you want to parse all pieces of a data into their respective fields.  This is often used when getting semi-structured data, such as log files, into a structured format, such as a table.  This is an example from pyspark.</p>
-
-<pre><code class="language-Groovy">%python #METHOD-1: RegEx
-from pyspark.sql import Row
-import re
-parts = [
-    r'(?P&lt;host&gt;\S+)',                   # host 
-    r'\S+',                             # indent (unused)
-    r'(?P&lt;user&gt;\S+)',                   # user 
-    r'\[(?P&lt;time&gt;.+)\]',                # time 
-    r'&quot;(?P&lt;request&gt;.*)&quot;',               # request 
-    r'(?P&lt;status&gt;[0-9]+)',              # status 
-    r'(?P&lt;size&gt;\S+)',                   # size 
-    r'&quot;(?P&lt;referrer&gt;.*)&quot;',              # referrer 
-    r'&quot;(?P&lt;agent&gt;.*)&quot;',                 # user agent 
-]
-pattern = re.compile(r'\s+'.join(parts)+r'\s*\Z')
-
-prs = logs.map(lambda x: pattern.match(x).groupdict() )
-rows = prs.map(lambda x: Row(**x))
-dfLogs = rows.toDF()
-dfLogs.show()
-</code></pre>
-
-<pre><code>+--------------------+-------------+--------------------+--------------------+-----+------+--------------------+----+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%</span>python <span style="color:#960050;background-color:#1e0010">#</span>METHOD<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">:</span> RegEx
+</span></span><span style="display:flex;"><span>from pyspark<span style="color:#f92672">.</span><span style="color:#a6e22e">sql</span> <span style="color:#f92672">import</span> Row
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span>parts <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;(?P&lt;host&gt;\S+)&#39;</span><span style="color:#f92672">,</span>                   <span style="color:#960050;background-color:#1e0010">#</span> host 
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;\S+&#39;</span><span style="color:#f92672">,</span>                             <span style="color:#960050;background-color:#1e0010">#</span> indent <span style="color:#f92672">(</span>unused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;(?P&lt;user&gt;\S+)&#39;</span><span style="color:#f92672">,</span>                   <span style="color:#960050;background-color:#1e0010">#</span> user 
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;\[(?P&lt;time&gt;.+)\]&#39;</span><span style="color:#f92672">,</span>                <span style="color:#960050;background-color:#1e0010">#</span> time 
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;&#34;(?P&lt;request&gt;.*)&#34;&#39;</span><span style="color:#f92672">,</span>               <span style="color:#960050;background-color:#1e0010">#</span> request 
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;(?P&lt;status&gt;[0-9]+)&#39;</span><span style="color:#f92672">,</span>              <span style="color:#960050;background-color:#1e0010">#</span> status 
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;(?P&lt;size&gt;\S+)&#39;</span><span style="color:#f92672">,</span>                   <span style="color:#960050;background-color:#1e0010">#</span> size 
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;&#34;(?P&lt;referrer&gt;.*)&#34;&#39;</span><span style="color:#f92672">,</span>              <span style="color:#960050;background-color:#1e0010">#</span> referrer 
+</span></span><span style="display:flex;"><span>    r<span style="color:#e6db74">&#39;&#34;(?P&lt;agent&gt;.*)&#34;&#39;</span><span style="color:#f92672">,</span>                 <span style="color:#960050;background-color:#1e0010">#</span> user agent 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>pattern <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span><span style="color:#a6e22e">compile</span><span style="color:#f92672">(</span>r<span style="color:#e6db74">&#39;\s+&#39;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">(</span>parts<span style="color:#f92672">)+</span>r<span style="color:#e6db74">&#39;\s*\Z&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prs <span style="color:#f92672">=</span> logs<span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>lambda x: pattern<span style="color:#f92672">.</span><span style="color:#a6e22e">match</span><span style="color:#f92672">(</span>x<span style="color:#f92672">).</span><span style="color:#a6e22e">groupdict</span><span style="color:#f92672">()</span> <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>rows <span style="color:#f92672">=</span> prs<span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>lambda x: Row<span style="color:#f92672">(**</span>x<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>dfLogs <span style="color:#f92672">=</span> rows<span style="color:#f92672">.</span><span style="color:#a6e22e">toDF</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>dfLogs<span style="color:#f92672">.</span><span style="color:#a6e22e">show</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><pre tabindex="0"><code>+--------------------+-------------+--------------------+--------------------+-----+------+--------------------+----+
 |               agent|         host|            referrer|             request| size|status|                time|user|
 +--------------------+-------------+--------------------+--------------------+-----+------+--------------------+----+
 |Mozilla/5.0 (comp...| 66.249.69.97|                   -|GET /071300/24215...|  514|   404|24/Sep/2014:22:25...|   -|
@@ -363,206 +304,155 @@ dfLogs.show()
 |Mozilla/5.0 (X11;...|71.19.157.174|http://www.holden...|GET /jobmineimg.p...|  222|   200|24/Sep/2014:22:26...|   -|
 |Mozilla/5.0 (X11;...|71.19.157.174|                   -|GET /error78978 H...|  505|   404|24/Sep/2014:22:26...|   -|
 +--------------------+-------------+--------------------+--------------------+-----+------+--------------------+----+
-</code></pre>
-
-<h3 id="convenience-structures">Convenience structures</h3>
-
+</code></pre><h3 id="convenience-structures">Convenience structures</h3>
 <p>Languages can have sytax conveniences to make working with regex much easier.  This can include making patterns part of case statements, such as is done in groovy and scala, and allowing for raw string input, such as in groovy and python.</p>
-
 <p>In addition, programmers can make their life easier by creating specific data structures that can hold the output of target matches.</p>
-
 <h2 id="language-groovy">Language: Groovy</h2>
-
 <p>The following functionality is commonly used with groovy:</p>
-
 <ul>
 <li><code>~string</code> - pattern operator</li>
 <li><code>=~</code> - find pattern</li>
 <li><code>==~</code> - exact match operator</li>
 <li><code>switch-case</code> - convenience functionality</li>
 </ul>
-
 <h3 id="the-pattern-operator-string">The pattern operator (~string)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.regex.Pattern
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> pattern <span style="color:#f92672">=</span> <span style="color:#f92672">~</span><span style="color:#e6db74">/([Gg])roovy/</span>
+</span></span><span style="display:flex;"><span>pattern<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span> <span style="color:#f92672">==</span> Pattern
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">import java.util.regex.Pattern
-
-def pattern = ~/([Gg])roovy/
-pattern.class == Pattern
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">true
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">true
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">//The slashy form of a Groovy string has a huge advantage over double (or single) quoted string - you don’t have to escape backslashes.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">(</span> <span style="color:#e6db74">/Version \d+\.\d+\.\d+/</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Version \\d+\\.\\d+\\.\\d+&#39;</span> <span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">//The slashy form of a Groovy string has a huge advantage over double (or single) quoted string - you don’t have to escape backslashes.
-( /Version \d+\.\d+\.\d+/ == 'Version \\d+\\.\\d+\\.\\d+' )
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">true
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">true
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span>p <span style="color:#f92672">=</span> <span style="color:#f92672">~</span><span style="color:#e6db74">/foo/</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> <span style="color:#f92672">~</span><span style="color:#e6db74">&#39;foo&#39;</span>                                                        
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> <span style="color:#f92672">~</span><span style="color:#e6db74">&#34;foo&#34;</span>                                                        
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> <span style="color:#f92672">~</span><span style="color:#e6db74">$/dollar/slashy $ string/$</span>                                   
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//p = ~&#34;${pattern}&#34;
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">p = ~/foo/
-p = ~'foo'                                                        
-p = ~&quot;foo&quot;                                                        
-p = ~$/dollar/slashy $ string/$                                   
-//p = ~&quot;${pattern}&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">dollar/slashy $ string
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">dollar/slashy $ string
 </code></pre>
 
 </div>
 
+<h3 id="the-find-operator-">The find operator (=~)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.regex.Matcher
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> matcher <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;My code is groovier and better when I use Groovy there&#34;</span> <span style="color:#f92672">=~</span> <span style="color:#e6db74">/\S+er\b/</span> 
+</span></span><span style="display:flex;"><span>println matcher<span style="color:#f92672">.</span><span style="color:#a6e22e">find</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>println matcher<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> 
+</span></span><span style="display:flex;"><span>matcher<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">..-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;groovier&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;better&#34;</span><span style="color:#f92672">]</span> 
+</span></span></code></pre></div><div class="output">
 
-<h3 id="the-find-operator">The find operator (=~)</h3>
-
-<pre><code class="language-Groovy">import java.util.regex.Matcher
-
-def matcher = &quot;My code is groovier and better when I use Groovy there&quot; =~ /\S+er\b/ 
-println matcher.find()
-println matcher.size() == 2 
-matcher[0..-1] == [&quot;groovier&quot;, &quot;better&quot;] 
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">true
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">true
 true
 </code></pre>
 
 </div>
 
-
 <div class="output">
 
-<pre><code class="language-nb-output">true
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">true
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;My code is groovier and better when I use Groovy there&#34;</span> <span style="color:#f92672">=~</span> <span style="color:#e6db74">/\S+er\b/</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;At least one element matches the pattern&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">if (&quot;My code is groovier and better when I use Groovy there&quot; =~ /\S+er\b/) {
-    &quot;At least one element matches the pattern&quot;
-}
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">At least one element matches the pattern
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">At least one element matches the pattern
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#f92672">(</span>first<span style="color:#f92672">,</span>second<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;My code is groovier and better when I use Groovy there&#34;</span> <span style="color:#f92672">=~</span> <span style="color:#e6db74">/\S+er\b/</span>
+</span></span><span style="display:flex;"><span>first <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;groovier&#34;</span> <span style="color:#f92672">&amp;</span> second <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;better&#34;</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def (first,second) = &quot;My code is groovier and better when I use Groovy there&quot; =~ /\S+er\b/
-first == &quot;groovier&quot; &amp; second == &quot;better&quot;
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">true
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">true
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#75715e">// With grouping we get a multidimensional array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> group <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;groovy and grails, ruby and rails&#39;</span> <span style="color:#f92672">=~</span> <span style="color:#e6db74">/(\w+) and (\w+)/</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>println group<span style="color:#f92672">.</span><span style="color:#a6e22e">hasGroup</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>println <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> group<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>println <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;groovy and grails&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;groovy&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;grails&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">==</span> group<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>println <span style="color:#e6db74">&#39;rails&#39;</span> <span style="color:#f92672">==</span> group<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">][</span><span style="color:#ae81ff">2</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><h3 id="the-exact-match-operator-">The exact match operator (==~)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#e6db74">&#34;My code is groovier and better when I use Groovy there&#34;</span> <span style="color:#f92672">==~</span> <span style="color:#e6db74">/\S+er\b/</span>    <span style="color:#75715e">//no exact match =&gt; only two words
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">// With grouping we get a multidimensional array
-def group = ('groovy and grails, ruby and rails' =~ /(\w+) and (\w+)/)
-println group.hasGroup()
-println 2 == group.size()
-println ['groovy and grails', 'groovy', 'grails'] == group[0]
-println 'rails' == group[1][2]
-</code></pre>
-
-<h3 id="the-exact-match-operator">The exact match operator (==~)</h3>
-
-<pre><code class="language-Groovy">&quot;My code is groovier and better when I use Groovy there&quot; ==~ /\S+er\b/    //no exact match =&gt; only two words
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">false
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">false
 </code></pre>
 
 </div>
 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#e6db74">&#34;My code is groovier and better when I use Groovy there&#34;</span> <span style="color:#f92672">==~</span> <span style="color:#e6db74">/^My code .* there$/</span>    <span style="color:#75715e">//exact match of beginning and end of string
+</span></span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">&quot;My code is groovier and better when I use Groovy there&quot; ==~ /^My code .* there$/    //exact match of beginning and end of string
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">true
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">true
 </code></pre>
 
 </div>
-
 
 <h3 id="the-pattern-with-switch-case">The pattern with switch case</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> input <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">switch</span> <span style="color:#f92672">(</span>input<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#f92672">~</span><span style="color:#e6db74">/\d{3}/</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;The number has 3 digits&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#f92672">~</span><span style="color:#e6db74">/\w{4}/</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;The word has 4 letters&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Unrecognized...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">def input = &quot;test&quot;
-
-switch (input) {
-    case ~/\d{3}/:
-        &quot;The number has 3 digits&quot;
-        break
-
-    case ~/\w{4}/:
-        &quot;The word has 4 letters&quot;
-        break
-
-    default:
-        &quot;Unrecognized...&quot;
-}
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">The word has 4 letters
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">The word has 4 letters
 </code></pre>
 
 </div>
 
-
 <h2 id="language-python">Language: Python</h2>
-
 <h3 id="reading-files">Reading files</h3>
-
 <p>You can read-in a file with the following:</p>
-
 <p><code>file_object  = open(“filename”, “mode”)</code></p>
-
 <p>The mode argument has a default value of <code>r</code> - read value, if omitted. The modes are:</p>
-
 <ul>
 <li><code>r</code> – Read mode which is used when the file is only being read</li>
 <li><code>w</code> – Write mode which is used to edit and write new information to the file (any existing files with the same name will be erased when this mode is activated)</li>
 <li><code>a</code> – Appending mode, which is used to add new data to the end of the file; that is new information is automatically amended to the end</li>
 <li><code>r+</code> – Special read and write mode, which is used to handle both actions when working with a file</li>
 </ul>
-
 <p>By using the <code>with</code> statement, you ensure proper handling of the file, including closing it when work is completed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>with <span style="color:#a6e22e">open</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;./Data/Bloomberg_Chat/example_chat.txt&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">as</span> file:
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> file<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">()</span> 
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>data<span style="color:#f92672">)</span> 
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-with open(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;) as file:
-    data = file.read() 
-    print(data) 
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Message#: 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Message#: 0
 
 Message Sent: 02/13/2019 08:42:15
 
@@ -575,76 +465,58 @@ Subject: Instant Bloomberg  Persistent
 02/19/2019 00:56:29  User_105,Says   Cupiditate voluptas sunt velit. Accusantium aliquid expedita excepturi quis laborum autem. Quas occaecati et atque est repellat dolores. Laudantium in molestiae consequatur voluptate ipsa. 
 
 02/19/2019 00:55:35  User_68,has left the room
-
-
 </code></pre>
 
 </div>
-
 
 <h3 id="ordinary-string-manipulation">Ordinary string manipulation</h3>
-
 <p>Before moving straight to regular expressions, users should take advantage of Python&rsquo;s built-in string manipulation functionality.  <em>Bracketing</em> textual start/end anchors with simple tools can keep your code clean and readable.  The following is an example of adding all text as a string, then using string methods and list comprehensions to select targets.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span>with <span style="color:#a6e22e">open</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;./Data/Bloomberg_Chat/example_chat.txt&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">as</span> file:
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> file<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>    content <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>data<span style="color:#f92672">.</span><span style="color:#a6e22e">split</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;,has left the room&#39;</span><span style="color:#f92672">)[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]).</span><span style="color:#a6e22e">split</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;has joined the room&#39;</span><span style="color:#f92672">)[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    lines <span style="color:#f92672">=</span> content<span style="color:#f92672">.</span><span style="color:#a6e22e">replace</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;\n&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">split</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;.&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    quote <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>x<span style="color:#f92672">.</span><span style="color:#a6e22e">strip</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> lines<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>quote  
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-with open(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;) as file:
-    data = file.read()
-    content = (data.split(',has left the room')[0]).split('has joined the room')[1]
-    lines = content.replace('\n', ' ').split('.')
-    quote = [x.strip() for x in lines]
-quote  
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">['02/19/2019 00:56:29  User_105,Says   Cupiditate voluptas sunt velit',
- 'Accusantium aliquid expedita excepturi quis laborum autem',
- 'Quas occaecati et atque est repellat dolores',
- 'Laudantium in molestiae consequatur voluptate ipsa',
- '02/19/2019 00:55:35  User_68']
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">[&#39;02/19/2019 00:56:29  User_105,Says   Cupiditate voluptas sunt velit&#39;,
+ &#39;Accusantium aliquid expedita excepturi quis laborum autem&#39;,
+ &#39;Quas occaecati et atque est repellat dolores&#39;,
+ &#39;Laudantium in molestiae consequatur voluptate ipsa&#39;,
+ &#39;02/19/2019 00:55:35  User_68&#39;]
 </code></pre>
 
 </div>
 
-
 <h3 id="using-regex">Using RegEx</h3>
-
 <p>Regualar expressions are more powerful not only for their patterns, but also because they can be compiled and used over large amounts of data.</p>
-
 <p>Use raw strings instead of regular Python strings. Raw strings begin with <code>r&quot;some text&quot;</code> and tell Python not to interpret backslashes and special metacharacters in the string.  This allows you to pass them to the regular expression engine, directly.</p>
-
 <p>An example is using <code>r&quot;\n\w&quot;</code> instead of <code>&quot;\\n\\w&quot;</code>.</p>
-
 <p>Below, we use the following methods from the <code>re</code> module:</p>
-
 <ul>
 <li><code>re.search()</code> - stop with first match</li>
 <li><code>re.findall() / re.finditer()</code> - search over entire string, returns a list (or iterator) of all captured data</li>
 <li><code>re.compile()</code> method to speed-up processing on larger data.  This is especially useful with a big data framework, such as Apache Spark</li>
 <li><code>re.sub()</code> - find and replace</li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Groovy" data-lang="Groovy"><span style="display:flex;"><span><span style="color:#f92672">%%</span>python
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>regexDate <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span><span style="color:#a6e22e">compile</span><span style="color:#f92672">(</span>r<span style="color:#e6db74">&#34;Message#:\s(\d+)&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>with <span style="color:#a6e22e">open</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;./Data/Bloomberg_Chat/example_chat.txt&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">as</span> file:
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> file<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">()</span> 
+</span></span><span style="display:flex;"><span>    grp <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>re<span style="color:#f92672">.</span><span style="color:#a6e22e">search</span><span style="color:#f92672">(</span>regexDate<span style="color:#f92672">,</span> data<span style="color:#f92672">)).</span><span style="color:#a6e22e">group</span><span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>    print<span style="color:#f92672">(</span>grp<span style="color:#f92672">)</span>
+</span></span></code></pre></div><div class="output">
 
-<pre><code class="language-Groovy">%%python
-import re
-
-regexDate = re.compile(r&quot;Message#:\s(\d+)&quot;)
-
-with open(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;) as file:
-    data = file.read() 
-    grp = (re.search(regexDate, data)).group(0) 
-    print(grp)
-</code></pre>
-
-<div class="output">
-
-<pre><code class="language-nb-output">Message#: 0
+<pre tabindex="0"><code class="language-nb-output" data-lang="nb-output">Message#: 0
 </code></pre>
 
 </div>
 
-
 <h2 id="language-javascript">Language: JavaScript</h2>
-
 <ul>
 <li><code>/\w+\d+/</code> - match a string of alpha-numeric characters</li>
 <li><code>RegExp(&quot;\\w+\\d+&quot;)</code> - constructor notation</li>
@@ -654,35 +526,27 @@ with open(&quot;./Data/Bloomberg_Chat/example_chat.txt&quot;) as file:
 <li><code>inputStr.match()</code> - returns an index of matches</li>
 <li><code>inputStr.replace()</code> - substitute a match with a string</li>
 </ul>
-
 <p>The flags are either appended after the regular expression in the literal notation, or passed into the constructor in the normal notation.</p>
-
 <ul>
 <li><code>g</code> - allows you to run RegExp.exec() multiple times to find every match in the input string until the method returns null.</li>
 <li><code>i</code> - makes the pattern case insensitive so that it matches strings of different capitalizations</li>
 <li><code>m</code> - is necessary if your input string has newline characters (\n), this flag allows the start and end metacharacter (^ and $ respectively) to match at the beginning and end of each line instead of at the beginning and end of the whole input string</li>
 <li><code>u</code> - interpret the regular expression as unicode codepoints</li>
 </ul>
-
-<pre><code class="language-javascript">%%javascript
-var fs = require('fs');
-fs.readFile( __dirname + '/Data/Bloomberg_Chat/example_chat.txt', function (err, data) {
-  if (err) {
-    throw err; 
-  }
-  console.log(data.toString());
-});
-</code></pre>
-
-<pre><code class="language-javascript">%%javascript
-
-console.log('hi')
-//process.stdout.write(&quot;hello: &quot;);
-process.stdout.write(&quot;Downloading &quot;);
-</code></pre>
-
-<h2 id="references">References</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#f92672">%%</span><span style="color:#a6e22e">javascript</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;fs&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFile</span>( <span style="color:#a6e22e">__dirname</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/Data/Bloomberg_Chat/example_chat.txt&#39;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">data</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">throw</span> <span style="color:#a6e22e">err</span>; 
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">toString</span>());
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#f92672">%%</span><span style="color:#a6e22e">javascript</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;hi&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//process.stdout.write(&#34;hello: &#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">stdout</span>.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">&#34;Downloading &#34;</span>);
+</span></span></code></pre></div><h2 id="references">References</h2>
 <ul>
 <li><a href="https://e.printstacktrace.blog/groovy-regular-expressions-the-definitive-guide/">groovy regex operators</a></li>
 <li><a href="https://www.cheatography.com/davechild/cheat-sheets/regular-expressions/">thorough cheatsheet</a></li>
@@ -697,40 +561,41 @@ process.stdout.write(&quot;Downloading &quot;);
         <div class="article-toc" style="display:none;">
             <h3>Contents</h3>
             <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#regex-basics">Regex Basics</a>
-<ul>
-<li><a href="#operators">Operators</a></li>
-<li><a href="#syntax-patterns">Syntax patterns</a></li>
-</ul></li>
-<li><a href="#common-solution-approaches">Common Solution Approaches</a>
-<ul>
-<li><a href="#example-data">Example data</a></li>
-<li><a href="#walking">Walking</a></li>
-<li><a href="#bracketing">Bracketing</a></li>
-<li><a href="#divide-and-conquer">Divide and conquer</a></li>
-<li><a href="#parsing">Parsing</a></li>
-<li><a href="#convenience-structures">Convenience structures</a></li>
-</ul></li>
-<li><a href="#language-groovy">Language: Groovy</a>
-<ul>
-<li><a href="#the-pattern-operator-string">The pattern operator (~string)</a></li>
-<li><a href="#the-find-operator">The find operator (=~)</a></li>
-<li><a href="#the-exact-match-operator">The exact match operator (==~)</a></li>
-<li><a href="#the-pattern-with-switch-case">The pattern with switch case</a></li>
-</ul></li>
-<li><a href="#language-python">Language: Python</a>
-<ul>
-<li><a href="#reading-files">Reading files</a></li>
-<li><a href="#ordinary-string-manipulation">Ordinary string manipulation</a></li>
-<li><a href="#using-regex">Using RegEx</a></li>
-</ul></li>
-<li><a href="#language-javascript">Language: JavaScript</a></li>
-<li><a href="#references">References</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#regex-basics">Regex Basics</a>
+      <ul>
+        <li><a href="#operators">Operators</a></li>
+        <li><a href="#syntax-patterns">Syntax patterns</a></li>
+      </ul>
+    </li>
+    <li><a href="#common-solution-approaches">Common Solution Approaches</a>
+      <ul>
+        <li><a href="#example-data">Example data</a></li>
+        <li><a href="#walking">Walking</a></li>
+        <li><a href="#bracketing">Bracketing</a></li>
+        <li><a href="#divide-and-conquer">Divide and conquer</a></li>
+        <li><a href="#parsing">Parsing</a></li>
+        <li><a href="#convenience-structures">Convenience structures</a></li>
+      </ul>
+    </li>
+    <li><a href="#language-groovy">Language: Groovy</a>
+      <ul>
+        <li><a href="#the-pattern-operator-string">The pattern operator (~string)</a></li>
+        <li><a href="#the-find-operator-">The find operator (=~)</a></li>
+        <li><a href="#the-exact-match-operator-">The exact match operator (==~)</a></li>
+        <li><a href="#the-pattern-with-switch-case">The pattern with switch case</a></li>
+      </ul>
+    </li>
+    <li><a href="#language-python">Language: Python</a>
+      <ul>
+        <li><a href="#reading-files">Reading files</a></li>
+        <li><a href="#ordinary-string-manipulation">Ordinary string manipulation</a></li>
+        <li><a href="#using-regex">Using RegEx</a></li>
+      </ul>
+    </li>
+    <li><a href="#language-javascript">Language: JavaScript</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
 </nav>
         </div>
         
@@ -817,7 +682,7 @@ process.stdout.write(&quot;Downloading &quot;);
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2020 IMTorg Kbase
+            &copy; 2022 IMTorg Kbase
             <br />
             <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
         </div>

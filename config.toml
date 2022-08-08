@@ -19,3 +19,8 @@ paginate = 10
 [[menu.main]]
     name = "About"
     url = "/pages/about/"
+    
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
