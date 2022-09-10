@@ -6,7 +6,194 @@
     <description>Recent content in Posts on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Comparing Brand Monitoring Vendors with Other Operational Awareness Approaches</title>
+      <link>https://imtorgdemo.github.io/posts/blog_biz-brand_monitoring/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_biz-brand_monitoring/</guid>
+      <description>Operational Awareness is one of the most important aspects a firm must perform. However, most firms don&amp;rsquo;t have an office directly responsible for this work. Instead, a subset of this work, Brand Monitoring, is part of the Marketing department, which might include a more general reputation and crisis management office, if the firm is large enough. Below, explores this field, as well as tools and approaches to improve efficacy of results.</description>
+    </item>
+    
+    <item>
+      <title>Programming for Balancing Short- and Long-Term Needs</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_paradigms/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_paradigms/</guid>
+      <description>Software engineering is all about design and balancing requirements. Anyone can learn syntax and how to code, but there are so many challenges to scaling as the codebase grows. Some aspects to balance include delivering functionality vs code debt, deploying solutions vs preferred architecture, and countless others. In addition, developers need to not only understand and keep updated on the language, but also the ecosystem of libraries and tools, underlying data structures and algorithms, and also design patterns.</description>
+    </item>
+    
+    <item>
+      <title>Cheatsheet for Documentation</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_docs/</link>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_docs/</guid>
+      <description>The README.md file Docstring Single-line for a function Focus on &amp;lsquo;do this, return that&amp;rsquo;. def multiplier(a,b): &amp;#34;&amp;#34;&amp;#34;Take in two numbers, return their product.&amp;#34; product = a*b return product Multi-line for function The PEP 257 provides standard conventions for usage. def multiplier(a,b): &amp;#34;&amp;#34;&amp;#34; Take in two numbers, return their product. This is typical multiplication for two scalars with no extension to matrices. Args: a(int): a decimal integer b(int): another decimal integer Returns: product(str): string of the product of a and b Raises: IOError: an error occurred.</description>
+    </item>
+    
+    <item>
+      <title>Cheatsheet for PyTest Configurations</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_pytest/</link>
+      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_pytest/</guid>
+      <description>Multiple tests Run the same test code with many different parameters to create multiple tests. All tests will run even if there is a failure.
+recs = [(1,2),(2,3),(3,4)] @pytest.mark.parametrize(&amp;#34;x, y&amp;#34;, recs ) def test_extract_process(x, y): val = my_function(x) assert val == y Fixtures Use fixtures to run code before and after all tests.
+Database fixture @pytest.fixture() def resource_db(): # setup log_file = Path(&amp;#39;./tests/tmp/process.log&amp;#39;) db_file = Path(&amp;#39;./tests/tmp/test.db&amp;#39;) logger = Logger(log_file).create_logger() db = Database(db_file = db_file, tables_list = LIST_ALL_TABLES, meta = meta, logger = logger, path_download = &amp;#39;.</description>
+    </item>
+    
+    <item>
+      <title>Terminology Useful for NLP</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-intro_terminology/</link>
+      <pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-intro_terminology/</guid>
+      <description>NLP allows for both theoretical and practical study of language. Below are a few of aspects of study, as well as terminology, that is frequently used within the field. Because of the interdisciplinary nature of computational linguistics, the terms come from linguistics, computer science, and mathematics.
+Semiotics - a philosophical theory covering the relationship between signs and the things they reference.
+Phonetic and Phonological Knowledge - Phonetics is the study of language at the level of sounds while phonology is the study of the combination of sounds into organized units of speech.</description>
+    </item>
+    
+    <item>
+      <title>Three Levels of Customer Explanations for Data Science</title>
+      <link>https://imtorgdemo.github.io/posts/blog_biz-customer_explanation/</link>
+      <pubDate>Fri, 10 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_biz-customer_explanation/</guid>
+      <description>Every customer is different. That seems obvious until they begin to ask you specific questions about your work - or they don&amp;rsquo;t ask anything at all. It is good to have a framework for providing information: starting general and moving to more specific. Note that at no time are you at the math or calculation level. I&amp;rsquo;ve never seen that go well.
+Solution level: What you&amp;rsquo;re doing Nothing special here, just input and output.</description>
+    </item>
+    
+    <item>
+      <title>Determining Sample Size for AI Models</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_calc/</link>
+      <pubDate>Thu, 09 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_calc/</guid>
+      <description>We are going to dive into the deep disturbing world of sample size in AI. This work is RARELY done as part of AI solutions. There are comparatively few research papers on this topic, and the approaches they offer tend to be specific to the underlying problem addressed in the paper. However, the simple fact that it is poorly understood gives great understanding to the world of AI, which is why I describe it as &amp;lsquo;disturbing&amp;rsquo;.</description>
+    </item>
+    
+    <item>
+      <title>Design Thinking and Employee Maturity</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-mentorship/</link>
+      <pubDate>Wed, 08 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-mentorship/</guid>
+      <description>I thought about why I felt like some data scientists are more Junior- to Mid- level data scientists; rather than Mid- to Senior- level. The reason I think this is because I often ask them to propose some type of design for a solution to multiple requirements / problems. The response is almost always &amp;lsquo;how do I do this?&amp;rsquo; - bad answer. This is very different from high-performing teams I&amp;rsquo;ve been on where it is more common to have multiple people arguing over multiple solution designs.</description>
+    </item>
+    
+    <item>
+      <title>SpaCy Internals</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-spacy_internals/</link>
+      <pubDate>Tue, 07 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-spacy_internals/</guid>
+      <description>I think there is some confusion about the different components - I&amp;rsquo;ll try to clarify:
+The tokenizer does not produce vectors. It&amp;rsquo;s just a component that segments texts into tokens. In spaCy, it&amp;rsquo;s rule-based and not trainable, and doesn&amp;rsquo;t have anything to do with vectors. It looks at whitespace and punctuation to determine which are the unique tokens in a sentence.
+An nlp model in spaCy can have predefined (static) word vectors that are accessible on the Token level.</description>
+    </item>
+    
+    <item>
+      <title>Powerpoint Usage: Commercial vs Government Firms</title>
+      <link>https://imtorgdemo.github.io/posts/blog_biz-communication/</link>
+      <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_biz-communication/</guid>
+      <description>Powerpoint is becoming a de-facto form of communication both within and between organizations. This has both pros and cons, but the important thing to emphasize, when you can, is that it is just a tool. As soon as slides become a sacred cow, then you&amp;rsquo;re no longer delivering value. You&amp;rsquo;re just pushing propaganda.
+Commercial
+can be a useful tool provide talking points a way to start a discussion with the customer leads to key concepts that customer should take away fewer presentations, but similar pitch, supports personal engagement will definitely have a few important numbers, that will be discussed not the place to make promises / commits; that is during contract negotiation and final delivery Government</description>
+    </item>
+    
+    <item>
+      <title>User Stories vs Data Stories</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-user_stories/</link>
+      <pubDate>Sun, 05 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-user_stories/</guid>
+      <description>Agile is used to remove uncertainty from projects, so that the features for development are fairly clear, at least for the current iteration. However, producing an analytics application creates many more tasks because it is focused on data. To remove uncertainty from these data tasks, and the overall project, we keep it separate from development. This ensures that we: i) understand the data, ii) have a clear methodology for addressing problems using the data.</description>
+    </item>
+    
+    <item>
+      <title>The &#39;Slack&#39; Form of Communication - From A Business Size Perspective</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_communication/</link>
+      <pubDate>Sat, 04 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_communication/</guid>
+      <description>A colleague of mine has put-off using Slack for a while. She&amp;rsquo;s totally committed to Skype for Business, which I&amp;rsquo;m a little revolted by. When I described Slack to her, &amp;lsquo;Instead of separate conversations, you have a continuing discussion or narrative with people. You often end using it as a Knowledge Base&amp;rsquo;. Her response to that, &amp;lsquo;so I can&amp;rsquo;t use it for the things that shouldn&amp;rsquo;t go in writing &amp;ndash; got it.</description>
+    </item>
+    
+    <item>
+      <title>Managing Cloud Infrastructure with Visual Tools</title>
+      <link>https://imtorgdemo.github.io/posts/blog_cloud-visual_tools/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_cloud-visual_tools/</guid>
+      <description>I&amp;rsquo;m a big fan of using cloud environments, especially for getting a product started. But for early prototyping with a small team, remembering everything that needs to be created / configured, as well as everything that is already performed, can be daunting. To improve this process, I&amp;rsquo;ve started using visual tools to help document my work. This is a reasonable approach because most aspects of the infrastructure should have a corresponding physical implementation.</description>
+    </item>
+    
+    <item>
+      <title>The Tech Stack Quick Start Guide</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_stack_guide/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_stack_guide/</guid>
+      <description>This is a guide to the fastest and cheapest way to get your development project moving forward with typical tools and infrastructure.
+Jira Jira is one of the oldest applications for applying Agile to a Team&amp;rsquo;s workflow. This is a really simple tool that comes across as overly-complicated because of all the available functionality. Stop trying to appease your corporate masters, Atlassian! New and simplified UIs are rolling-out to fix this.</description>
+    </item>
+    
+    <item>
+      <title>Why Data Scientists Need Some Fundamental Front End Skills</title>
+      <link>https://imtorgdemo.github.io/posts/blog_ds-web_skills/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_ds-web_skills/</guid>
+      <description>Most data scientists are lucky to have a basic understanding of HTML, or web applications, in general. However, this dearth of knowledge can be quite limiting as their career grows. They will not be able to grow their skills more broadly to areas such as data visualization or web scraping. They will also have difficulty leading mixed teams delivering complete solutions. They can be easily relegated to creating models of simple reports.</description>
+    </item>
+    
+    <item>
+      <title>Public vs Private Sector Employment</title>
+      <link>https://imtorgdemo.github.io/posts/blog_biz-hire_for_govt/</link>
+      <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_biz-hire_for_govt/</guid>
+      <description>Comparing offers between the federal government and private sector can be very difficult. It is more akin to choosing between an academic career than it is a choice with another commercial employer. Because of the benefits the government offers, it is very much an apples and oranges comparison.
+Here are three huge benefits of working with the government:
+Retirement - occaisionally, some very large, older firms (insurance or banking) will have a pension system.</description>
+    </item>
+    
+    <item>
+      <title>Difficulties in Working with Contractor Teams on Data Science Projects</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_contractors/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_contractors/</guid>
+      <description>Working with contractors can be very helpful in some situations. There is an understanding of support without long-term commitment. However, giving too much control to contractors can be very dangerous because their incentives are often quite different from yours.
+This is especially true in Data Science projects because of the long-term investments that must be made. There are several areas of caution which should be addressed to ensure the project is kept under control.</description>
+    </item>
+    
+    <item>
+      <title>What to do after an initial MVP: The &#39;Throw One Away&#39; Method</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_after_mvp/</link>
+      <pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_after_mvp/</guid>
+      <description>You built it, it works, but you&amp;rsquo;re far from monetization or even consistent users. So, how do you proceed? Below is a list of questions to ask yourself.
+Did you solve the problem for which you originally targeted? Is the original problem that you intended to solve still important? Oftentimes, you may need to decompose the problem in greater detail: What aspects of the problem are users most concerned? The greater problem depth will lend to 2-3 detailed solution methodologies: How (by what criteria) should we best solve it?</description>
+    </item>
+    
+    <item>
+      <title>A Reasonable MVP Tech Stack</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_stack/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_stack/</guid>
+      <description>This is a quick summary of products needed to get a development team started. We can manage accounts for code repositories. GitLab is especially good because it is open-source, and it is highly customizable. It is one of several Team ‘infrastructure’ projects necessary for effectively building software.
+This is a summary of code repository platforms with explanations:
+Atlassian (firm)– the company with a suite of different project management tools, including Trello, Jira, BitBucket, and others.</description>
+    </item>
+    
     <item>
       <title>Computer Vision Using PyTorch</title>
       <link>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</link>

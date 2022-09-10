@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Determining Sample Size for AI Models // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Determining Sample Size for AI Models" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_nlp-sample_size_calc/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.102.3" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Determining Sample Size for AI Models</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_nlp-sample_size_calc/" class="article-date">
+                <time datetime='2021-12-09T00:00:00.000&#43;00:00' itemprop="datePublished">2021-12-09</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/introduction_tutorial">Introduction_Tutorial</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/data_science">Data_Science</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>We are going to dive into the deep disturbing world of sample size in AI.  This work is RARELY done as part of AI solutions.  There are comparatively few research papers on this topic, and the approaches they offer tend to be specific to the underlying problem addressed in the paper.  However, the simple fact that it is poorly understood gives great understanding to the world of AI, which is why I describe it as &lsquo;disturbing&rsquo;.  I&rsquo;ve always found this subject to be important, but this is the first time I&rsquo;ve had a chance to study and work on it.  So, how many labeled samples do you need to feel confident in model outcomes?  Lets try to answer that question.</p>
+<h2 id="introduction">Introduction</h2>
+<p>One reason sampling for AI models is not studied more is because AI is a field dominated by computer science, but sampling theory is firmly in the realm of mathematical statistics.  Also, practically speaking, the topic is treated similar to clinical trial sample sizes which are determined more by the amount of time and money available for the study than by any theoretical calculation.  The answer is always get more samples.</p>
+<p>This is a very unsatisfying answer for AI practitioners who strive to master the discipline.  But, it also provides great insight.  This is because it demonstrates a few secrets about neural nets that make you question whether AI is more &lsquo;artificial&rsquo; than &lsquo;intelligent&rsquo;.</p>
+<h2 id="weaknesses-of-neural-network-models">Weaknesses of Neural Network Models</h2>
+<p>There are a few weaknesses concerning neural networks that decisively characterize how they perform.  First, neural net model output is based on correlations found in the data.  No &lsquo;understanding&rsquo; is taking place when a neural net model is being trained.  Rather, consistent patterns emerge from training that can be encapsulated in model parameters.  When the data is run through a classification model, it can provide a result that is inferred as the proportion of the time that input will be associated with a particular class label.  There is a &lsquo;cult&rsquo; of AI enthusiasts who totally reject this explanation, but this is the mathematical reality of what is happening.</p>
+<p>Examples of when reasonable models can fail spectacularly is provided by adversarial methods.  This field takes advantage of the correlated patterns to create deceptive input that will cause strange behavior in models.  Adding slight noise to an image of a panda will cause a model trained on animals to output the label as a gibbon, while humans cannot observe differences between the two images.</p>
+<p>Second, because of this associative aspect of neural nets, neural nets poorly generalize their results outside of a domain of samples.  For example, you&rsquo;ve trained a computer vision model to detect cars using a large number of automobile images.  However, all the images are captured at the ground-level perspective.  What happens if the model is given an image from the top of a building as input?  The model has not seen a car represented like this.  It is not intelligent in the sense that it can abstract the 3-dimensional, vertical-axis rotated, representation from the 2-dimensional images it was trained.  Instead, the AI developer must perform these pre-process steps for all (infinite) possible perspectives and use these images as training data to have any sense of how the model will perform.  The real intelligence is being performed before the model training.</p>
+<p>Finally, taking stock of the earlier facts, we must concede that we have very little control over the performance of neural net models, except through: i) the data that is used as input, ii) deployment of the model as a packaged solution.  This characteristic matters because there are many situations when an AI solution absolutely must correctly label an input.  An example for (ii) is a high-stakes solution that determines whether a Death occurred within the description of a report (unstructured text).  There are many ways to describe Death using formal medical terminology.  However, if an obvious statement such as, &lsquo;The patient died,&rsquo; is observed, then it must be labeled correctly.  Because the performance of a neural net model is difficult to control, it is good practice to use other methods (rule-based), in addition to neural net models, as part of a larger solution to ensure proper labeling of some input data.</p>
+<p>To address controlling the model through the input data (i), we have to understand the tools we have available.  The definition and scope for labeling input data must be clear.  Also many difficulties arise from using human-based labeling, especially with respect to consistency in labels.  The breadth and depth of the data available for labeling should be critically analyzed by accounting for the larger population, as well as what is sampled and sampling method.  This naturally leads to one factor in particular that affects all of these controls: number of labeled data records.</p>
+<h2 id="sample-size-in-ai-practice">Sample Size in AI Practice</h2>
+<p>This work is not often performed as part of AI solution development.  I could only find a few research papers on this topic, and the approaches they offer are specific to the underlying problem addressed in the paper.  I&rsquo;ve always found this subject to be important, but this is the first time I&rsquo;ve had a chance to study and work on it.</p>
+<p>Also, the topic is treated similar to clinical trial sample size which is practically based on the amount of time and money available for the study.  The answer is always get more samples.</p>
+<p>Many teams use the first few days of the project to label data.  This is an important time to familiarize yourself with the data and learn idiosyncrasies.</p>
+<p>However, correctly labeling data is resource intensive.</p>
+<p>The model learning curve provides a good understanding of how many samples are needed.</p>
+<p>However, it does not explain whether the samples are representative of the population we are interested in.</p>
+<h2 id="ensuring-representative-samples">Ensuring Representative Samples</h2>
+<p>To ensure repr we need a proper sampling methodology.  If done correctly, then we obtain an unbiased sample with the minimum required sample necessary to ensure our model can reasonably generalize.</p>
+<p>With a classification model, we are primarily concerned with getting a representative proportion.  We can use the confidence interval expression to formulate a sample size, given a margin of error.</p>
+<expression>
+<p>However, we will need to know the sample variance.  For a problem consisting of two labels, we determine the maximum variance using Bernoulli distribution</p>
+<expression>
+<p>This is an important point that the sample size is determined by variance, and the maximum variance can be taken without regard to the actual distribution.  This leads to ~1,100 samples be an appropriate sample size for any scenario with a large population.  This result is very counter-intuitive, as most people expect some type of linear relationship between the sample needed and the population size.  Andrew Gelman explains this for surveys by saying, &ldquo;You must first assume that the survey respondents have been sampled at random from the population&rdquo;<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.  He continues with caveat, &ldquo;The margin of error is a mathematical abstraction, and there are a number of reasons why actual errors in surveys are larger.&rdquo;</p>
+<p>But, it is also fortuitous as many labeling studies can afford 1,100 samples</p>
+<p>Stratification ???</p>
+<p>This are some basic foundations for understanding sample size.  This is not a popular topic in the literature, and the conclusions vary greatly <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.  For instance Alwosheel, etc. <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> found that 50 times the number of weights should determine the number of samples needed.  This is an extraordinary requirement considering that most transformer models measure their model size in millions of weights. Very few manually-labeled datasets would be able to meet this requirement.  However, the paper does not discuss fine-tuning or transfer learning where only a small proportion of the original weights are trained.  In addition, zero-shot or few-shot learning attempts to address classification with little or no training.</p>
+<h2 id="rare-event-populations">Rare Event Populations</h2>
+<h2 id="validate-with-the-prediction-interval">Validate with the Prediction Interval</h2>
+<p>Say the data is already labeled and the model is fit: how can we determine if our model classifies at the appropriate level?  We can construct a prediction interval from the output prediction probability.</p>
+<h2 id="using-samples-to-inform-model-selection">Using Samples to Inform Model Selection</h2>
+<p>Once final sampling is complete, the labeled data can be used to select models more effectively.  The AI practitioner has a many models to choose from, but should not immediately move to using the newest and most sophisticated.  The AI field is primarily directed to larger and more complex models that will fit whatever data is fed.  However, this comes with drawbacks, including large model files, as well as slower prediction latency.</p>
+<p>An alternative is to use multiple simpler models with groups of similarly-patterned text.  For example, the FastText architecture is the simplest possible for a neural network because it uses just one hidden layer.  However, it is also quite fast and produces strong results.  The low-complexity of the model does not allow it to fit any diversity of data used for training.</p>
+<p>Instead, labeled data can be grouped by similarity and a single model used for each group.  This both maximizes the information found in each labeled data, and ensures text patterns do not contain contradicting information.  Thereby, the resulting model groups may have similar scoring results, but with a much smaller disk footprint and resource demands.  The difficulty is effectively determining how the data should be grouped.  The number of samples needed for each group will also need to be calculated.</p>
+<h2 id="dangers-from-large-manually-labeled-data">Dangers from Large Manually-Labeled Data</h2>
+<h2 id="conclusions">Conclusions</h2>
+<p>However, we already invested many weeks labeling data.  I realize the minimal figure I offer, 1100 reports, seems small when compared to the great diversity in sentences available.  A typical response is one such as found in this Scientific American article.  This result follows from:
+mathematically, the proportion we are interested in is based on maximum variability of two outcomes: Death, NonDeath
+the hypothesis testing performed supports the basic assumptions for the two outcomes
+Furthermore, it may make more sense if you think of it from the perspective that there are a finite number of ways to describe Death, despite infinite ways the many different devices could kill someone.</p>
+<p>My assumptions and reasoning are quite conservative, as their is very little basis for beginning this work.  You stated that similar CDRH sampling investigations concluded much larger samples are necessary.  I would really enjoy hearing some of this work.  In addition, I fully accept that no one on this team has a background in sampling, so I&rsquo;d be happy to discuss the technical aspects with a subject matter expert.</p>
+<h2 id="references">References</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.scientificamerican.com/article/howcan-a-poll-of-only-100/">How can a poll of only 1,004 Americans represent 260 million?</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.ijcai.org/proceedings/2017/0318.pdf">Deep Neural Networks for High Dimension, Low Sample Size Data</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://www.sciencedirect.com/science/article/pii/B9780444887405500086">Small sample size problems in designing artificial neural networks</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://www.sciencedirect.com/science/article/abs/pii/S1755534518300058">Is your dataset big enough? Sample size requirements when using artificial neural networks for discrete choice analysis</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#weaknesses-of-neural-network-models">Weaknesses of Neural Network Models</a></li>
+    <li><a href="#sample-size-in-ai-practice">Sample Size in AI Practice</a></li>
+    <li><a href="#ensuring-representative-samples">Ensuring Representative Samples</a></li>
+    <li><a href="#rare-event-populations">Rare Event Populations</a></li>
+    <li><a href="#validate-with-the-prediction-interval">Validate with the Prediction Interval</a></li>
+    <li><a href="#using-samples-to-inform-model-selection">Using Samples to Inform Model Selection</a></li>
+    <li><a href="#dangers-from-large-manually-labeled-data">Dangers from Large Manually-Labeled Data</a></li>
+    <li><a href="#conclusions">Conclusions</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/nlp">nlp
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/linguistics">linguistics
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/sample_size">sample_size
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_biz-customer_explanation/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Three Levels of Customer Explanations for Data Science
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_pm-mentorship/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Design Thinking and Employee Maturity&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2022 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

@@ -6,7 +6,38 @@
     <description>Recent content in nlp on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 11 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Terminology Useful for NLP</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-intro_terminology/</link>
+      <pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-intro_terminology/</guid>
+      <description>NLP allows for both theoretical and practical study of language. Below are a few of aspects of study, as well as terminology, that is frequently used within the field. Because of the interdisciplinary nature of computational linguistics, the terms come from linguistics, computer science, and mathematics.
+Semiotics - a philosophical theory covering the relationship between signs and the things they reference.
+Phonetic and Phonological Knowledge - Phonetics is the study of language at the level of sounds while phonology is the study of the combination of sounds into organized units of speech.</description>
+    </item>
+    
+    <item>
+      <title>Determining Sample Size for AI Models</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_calc/</link>
+      <pubDate>Thu, 09 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_calc/</guid>
+      <description>We are going to dive into the deep disturbing world of sample size in AI. This work is RARELY done as part of AI solutions. There are comparatively few research papers on this topic, and the approaches they offer tend to be specific to the underlying problem addressed in the paper. However, the simple fact that it is poorly understood gives great understanding to the world of AI, which is why I describe it as &amp;lsquo;disturbing&amp;rsquo;.</description>
+    </item>
+    
+    <item>
+      <title>SpaCy Internals</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-spacy_internals/</link>
+      <pubDate>Tue, 07 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-spacy_internals/</guid>
+      <description>I think there is some confusion about the different components - I&amp;rsquo;ll try to clarify:
+The tokenizer does not produce vectors. It&amp;rsquo;s just a component that segments texts into tokens. In spaCy, it&amp;rsquo;s rule-based and not trainable, and doesn&amp;rsquo;t have anything to do with vectors. It looks at whitespace and punctuation to determine which are the unique tokens in a sentence.
+An nlp model in spaCy can have predefined (static) word vectors that are accessible on the Token level.</description>
+    </item>
+    
     <item>
       <title>Ranking Text With Word Embeddings</title>
       <link>https://imtorgdemo.github.io/posts/blog_nlp-rank_text_with_word_vector/</link>

@@ -6,29 +6,20 @@
     <description>Recent content in Categories on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Cheatsheet</title>
-      <link>https://imtorgdemo.github.io/categories/cheatsheet/</link>
-      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
+      <title>Business_and_Leadership</title>
+      <link>https://imtorgdemo.github.io/categories/business_and_leadership/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://imtorgdemo.github.io/categories/cheatsheet/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Data_Science</title>
-      <link>https://imtorgdemo.github.io/categories/data_science/</link>
-      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/data_science/</guid>
+      <guid>https://imtorgdemo.github.io/categories/business_and_leadership/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Introduction_Tutorial</title>
       <link>https://imtorgdemo.github.io/categories/introduction_tutorial/</link>
-      <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/introduction_tutorial/</guid>
       <description></description>
@@ -37,9 +28,72 @@
     <item>
       <title>Computer_Science_and_Programming</title>
       <link>https://imtorgdemo.github.io/categories/computer_science_and_programming/</link>
-      <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/computer_science_and_programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Innovation</title>
+      <link>https://imtorgdemo.github.io/categories/innovation/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/innovation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cheatsheet</title>
+      <link>https://imtorgdemo.github.io/categories/cheatsheet/</link>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/cheatsheet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data_Science</title>
+      <link>https://imtorgdemo.github.io/categories/data_science/</link>
+      <pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/data_science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Best_Practice</title>
+      <link>https://imtorgdemo.github.io/categories/best_practice/</link>
+      <pubDate>Wed, 08 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/best_practice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Comparison</title>
+      <link>https://imtorgdemo.github.io/categories/comparison/</link>
+      <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/comparison/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Architecture_and_DevOps</title>
+      <link>https://imtorgdemo.github.io/categories/architecture_and_devops/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/architecture_and_devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web_Frontend</title>
+      <link>https://imtorgdemo.github.io/categories/web_frontend/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/web_frontend/</guid>
       <description></description>
     </item>
     
@@ -76,15 +130,6 @@
       <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/bigdata/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Comparison</title>
-      <link>https://imtorgdemo.github.io/categories/comparison/</link>
-      <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/comparison/</guid>
       <description></description>
     </item>
     
@@ -130,24 +175,6 @@
       <pubDate>Wed, 29 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/history_arts/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Best_Practice</title>
-      <link>https://imtorgdemo.github.io/categories/best_practice/</link>
-      <pubDate>Tue, 28 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/best_practice/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Innovation</title>
-      <link>https://imtorgdemo.github.io/categories/innovation/</link>
-      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/innovation/</guid>
       <description></description>
     </item>
     

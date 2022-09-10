@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pytest on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/pytest/</link>
+    <description>Recent content in pytest on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 12 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/pytest/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cheatsheet for PyTest Configurations</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_pytest/</link>
+      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_pytest/</guid>
+      <description>Multiple tests Run the same test code with many different parameters to create multiple tests. All tests will run even if there is a failure.
+recs = [(1,2),(2,3),(3,4)] @pytest.mark.parametrize(&amp;#34;x, y&amp;#34;, recs ) def test_extract_process(x, y): val = my_function(x) assert val == y Fixtures Use fixtures to run code before and after all tests.
+Database fixture @pytest.fixture() def resource_db(): # setup log_file = Path(&amp;#39;./tests/tmp/process.log&amp;#39;) db_file = Path(&amp;#39;./tests/tmp/test.db&amp;#39;) logger = Logger(log_file).create_logger() db = Database(db_file = db_file, tables_list = LIST_ALL_TABLES, meta = meta, logger = logger, path_download = &amp;#39;.</description>
+    </item>
+    
+  </channel>
+</rss>

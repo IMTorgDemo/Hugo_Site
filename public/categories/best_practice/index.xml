@@ -6,7 +6,77 @@
     <description>Recent content in Best_Practice on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/best_practice/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 08 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/best_practice/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Design Thinking and Employee Maturity</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-mentorship/</link>
+      <pubDate>Wed, 08 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-mentorship/</guid>
+      <description>I thought about why I felt like some data scientists are more Junior- to Mid- level data scientists; rather than Mid- to Senior- level. The reason I think this is because I often ask them to propose some type of design for a solution to multiple requirements / problems. The response is almost always &amp;lsquo;how do I do this?&amp;rsquo; - bad answer. This is very different from high-performing teams I&amp;rsquo;ve been on where it is more common to have multiple people arguing over multiple solution designs.</description>
+    </item>
+    
+    <item>
+      <title>Managing Cloud Infrastructure with Visual Tools</title>
+      <link>https://imtorgdemo.github.io/posts/blog_cloud-visual_tools/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_cloud-visual_tools/</guid>
+      <description>I&amp;rsquo;m a big fan of using cloud environments, especially for getting a product started. But for early prototyping with a small team, remembering everything that needs to be created / configured, as well as everything that is already performed, can be daunting. To improve this process, I&amp;rsquo;ve started using visual tools to help document my work. This is a reasonable approach because most aspects of the infrastructure should have a corresponding physical implementation.</description>
+    </item>
+    
+    <item>
+      <title>The Tech Stack Quick Start Guide</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_stack_guide/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_stack_guide/</guid>
+      <description>This is a guide to the fastest and cheapest way to get your development project moving forward with typical tools and infrastructure.
+Jira Jira is one of the oldest applications for applying Agile to a Team&amp;rsquo;s workflow. This is a really simple tool that comes across as overly-complicated because of all the available functionality. Stop trying to appease your corporate masters, Atlassian! New and simplified UIs are rolling-out to fix this.</description>
+    </item>
+    
+    <item>
+      <title>Public vs Private Sector Employment</title>
+      <link>https://imtorgdemo.github.io/posts/blog_biz-hire_for_govt/</link>
+      <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_biz-hire_for_govt/</guid>
+      <description>Comparing offers between the federal government and private sector can be very difficult. It is more akin to choosing between an academic career than it is a choice with another commercial employer. Because of the benefits the government offers, it is very much an apples and oranges comparison.
+Here are three huge benefits of working with the government:
+Retirement - occaisionally, some very large, older firms (insurance or banking) will have a pension system.</description>
+    </item>
+    
+    <item>
+      <title>Difficulties in Working with Contractor Teams on Data Science Projects</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_contractors/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_contractors/</guid>
+      <description>Working with contractors can be very helpful in some situations. There is an understanding of support without long-term commitment. However, giving too much control to contractors can be very dangerous because their incentives are often quite different from yours.
+This is especially true in Data Science projects because of the long-term investments that must be made. There are several areas of caution which should be addressed to ensure the project is kept under control.</description>
+    </item>
+    
+    <item>
+      <title>What to do after an initial MVP: The &#39;Throw One Away&#39; Method</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_after_mvp/</link>
+      <pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_after_mvp/</guid>
+      <description>You built it, it works, but you&amp;rsquo;re far from monetization or even consistent users. So, how do you proceed? Below is a list of questions to ask yourself.
+Did you solve the problem for which you originally targeted? Is the original problem that you intended to solve still important? Oftentimes, you may need to decompose the problem in greater detail: What aspects of the problem are users most concerned? The greater problem depth will lend to 2-3 detailed solution methodologies: How (by what criteria) should we best solve it?</description>
+    </item>
+    
+    <item>
+      <title>A Reasonable MVP Tech Stack</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-tech_stack/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-tech_stack/</guid>
+      <description>This is a quick summary of products needed to get a development team started. We can manage accounts for code repositories. GitLab is especially good because it is open-source, and it is highly customizable. It is one of several Team ‘infrastructure’ projects necessary for effectively building software.
+This is a summary of code repository platforms with explanations:
+Atlassian (firm)– the company with a suite of different project management tools, including Trello, Jira, BitBucket, and others.</description>
+    </item>
+    
     <item>
       <title>Distributing Code in Python</title>
       <link>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</link>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>programming_paradigms on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/programming_paradigms/</link>
+    <description>Recent content in programming_paradigms on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/programming_paradigms/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programming for Balancing Short- and Long-Term Needs</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_paradigms/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_paradigms/</guid>
+      <description>Software engineering is all about design and balancing requirements. Anyone can learn syntax and how to code, but there are so many challenges to scaling as the codebase grows. Some aspects to balance include delivering functionality vs code debt, deploying solutions vs preferred architecture, and countless others. In addition, developers need to not only understand and keep updated on the language, but also the ecosystem of libraries and tools, underlying data structures and algorithms, and also design patterns.</description>
+    </item>
+    
+  </channel>
+</rss>

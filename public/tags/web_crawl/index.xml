@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>web_crawl on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/web_crawl/</link>
+    <description>Recent content in web_crawl on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/web_crawl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Comparing Brand Monitoring Vendors with Other Operational Awareness Approaches</title>
+      <link>https://imtorgdemo.github.io/posts/blog_biz-brand_monitoring/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_biz-brand_monitoring/</guid>
+      <description>Operational Awareness is one of the most important aspects a firm must perform. However, most firms don&amp;rsquo;t have an office directly responsible for this work. Instead, a subset of this work, Brand Monitoring, is part of the Marketing department, which might include a more general reputation and crisis management office, if the firm is large enough. Below, explores this field, as well as tools and approaches to improve efficacy of results.</description>
+    </item>
+    
+  </channel>
+</rss>

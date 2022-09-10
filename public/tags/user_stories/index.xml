@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>user_stories on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/user_stories/</link>
+    <description>Recent content in user_stories on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/user_stories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>User Stories vs Data Stories</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-user_stories/</link>
+      <pubDate>Sun, 05 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-user_stories/</guid>
+      <description>Agile is used to remove uncertainty from projects, so that the features for development are fairly clear, at least for the current iteration. However, producing an analytics application creates many more tasks because it is focused on data. To remove uncertainty from these data tasks, and the overall project, we keep it separate from development. This ensures that we: i) understand the data, ii) have a clear methodology for addressing problems using the data.</description>
+    </item>
+    
+  </channel>
+</rss>

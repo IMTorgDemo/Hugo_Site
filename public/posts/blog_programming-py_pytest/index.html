@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cheatsheet for PyTest Configurations // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Cheatsheet for PyTest Configurations" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_programming-py_pytest/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.102.3" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Cheatsheet for PyTest Configurations</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_programming-py_pytest/" class="article-date">
+                <time datetime='2021-12-12T00:00:00.000&#43;00:00' itemprop="datePublished">2021-12-12</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/cheatsheet">Cheatsheet</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/computer_science_and_programming">Computer_Science_and_Programming</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="multiple-tests">Multiple tests</h2>
+<p>Run the same test code with many different parameters to create multiple tests.  All tests will run even if there is a failure.</p>
+<pre tabindex="0"><code>recs = [(1,2),(2,3),(3,4)]
+@pytest.mark.parametrize(&#34;x, y&#34;, recs )
+def test_extract_process(x, y):
+    val = my_function(x)
+    assert val == y
+</code></pre><h2 id="fixtures">Fixtures</h2>
+<p>Use fixtures to run code before and after all tests.</p>
+<h3 id="database-fixture">Database fixture</h3>
+<pre tabindex="0"><code>@pytest.fixture()
+def resource_db():
+    # setup
+    log_file = Path(&#39;./tests/tmp/process.log&#39;)
+    db_file = Path(&#39;./tests/tmp/test.db&#39;)
+    logger = Logger(log_file).create_logger()
+    db = Database(db_file = db_file,
+                    tables_list = LIST_ALL_TABLES,
+                    meta = meta,
+                    logger = logger,
+                    path_download = &#39;./tests/tmp/downloads&#39;
+                    )
+    # tests
+    yield db
+
+    # tear-down
+    delete_folder( db.path_download )
+    del db
+    log_file.unlink() if log_file.is_file() else None
+    db_file.unlink() if db_file.is_file() else None
+    log_file.parent.rmdir()
+   
+    
+class TestResourceDb:
+
+    def test_check_db_file(self, resource_db):
+        # check after file creation
+        check_db = resource_db.check_db_file()
+        assert check_db == True
+</code></pre><h3 id="mock-fixture">Mock fixture</h3>
+<p>Mock functionality works by intercepting a call and returning a previously-created return output.</p>
+<p>Install with:</p>
+<pre tabindex="0"><code>pip install pytest-mock
+</code></pre><p>This mocks a call of the requests module.</p>
+<pre tabindex="0"><code>import pytest
+
+def test_change_in_10k_filing(self, mocker):
+
+        #mock: poll_sec_edgar()
+        output_data = {
+                    &#39;accessionNumber&#39;: [&#34;0001193125-22-138788&#34;],
+                    &#39;filingDate&#39;: [&#34;2022-05-03&#34;],
+                    &#39;form&#39;: [&#39;10-Q&#39;],
+                    &#39;size&#39;: [21073821],
+                    &#39;primaryDocument&#39;: [&#34;d306477d10q.htm&#34;]
+        }
+        mock_request = mocker.patch(&#39;sec_workflows.utils.api_request&#39;, 
+                                    return_value = output_data
+                                    ) 
+
+                                    
+changed_firms = poll_sec_edgar(tgt_firms, after_date)
+</code></pre><h2 id="commandline">Commandline</h2>
+<p>Basic testing can be performed using <code>pytest</code>.</p>
+<p>Command line testing of a specific test method can be performed using:  <code>pytest --trace tests/test_scraper.py -k test_get_data_atlantic</code>.</p>
+<p>Use the following commands:</p>
+<ul>
+<li>n(next) – step to the next line within the same function</li>
+<li>s(step) – step to the next line in this function or called function</li>
+<li>b(break) – set up new breakpoints without changing the code</li>
+<li>p(print) – evaluate and print the value of an expression</li>
+<li>c(continue) – continue execution and only stop when a breakpoint is encountered</li>
+<li>unt(until) – continue execution until the line with a number greater than the current one is reached</li>
+<li>q(quit) – quit the debugger/execution</li>
+</ul>
+<h2 id="test-coverage">Test Coverage</h2>
+<p>Run <code>pytest --cov=main_module --cov-report=xml tests</code>, where coverage is for <code>main_module</code> and <code>xml</code> is the generated <code>coverage.xml</code> report file that can be used with vscode extension <code>coverage gutters</code>.</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#multiple-tests">Multiple tests</a></li>
+    <li><a href="#fixtures">Fixtures</a>
+      <ul>
+        <li><a href="#database-fixture">Database fixture</a></li>
+        <li><a href="#mock-fixture">Mock fixture</a></li>
+      </ul>
+    </li>
+    <li><a href="#commandline">Commandline</a></li>
+    <li><a href="#test-coverage">Test Coverage</a></li>
+  </ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/python">python
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/pytest">pytest
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_programming-py_docs/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Cheatsheet for Documentation
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_nlp-intro_terminology/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Terminology Useful for NLP&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2022 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

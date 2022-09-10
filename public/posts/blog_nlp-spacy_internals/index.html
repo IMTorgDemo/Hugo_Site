@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SpaCy Internals // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="SpaCy Internals" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_nlp-spacy_internals/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.102.3" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">SpaCy Internals</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_nlp-spacy_internals/" class="article-date">
+                <time datetime='2021-12-07T00:00:00.000&#43;00:00' itemprop="datePublished">2021-12-07</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/introduction_tutorial">Introduction_Tutorial</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/data_science">Data_Science</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>I think there is some confusion about the different components - I&rsquo;ll try to clarify:</p>
+<p>The tokenizer does not produce vectors. It&rsquo;s just a component that segments texts into tokens. In spaCy, it&rsquo;s rule-based and not trainable, and doesn&rsquo;t have anything to do with vectors. It looks at whitespace and punctuation to determine which are the unique tokens in a sentence.</p>
+<p>An nlp model in spaCy can have predefined (static) word vectors that are accessible on the Token level. Every token with the same Lexeme gets the same vector. Some tokens/lexemes may indeed be OOV, like misspellings. If you want to redefine/extend all vectors used in a model, you can use something like init-model.</p>
+<p>The tok2vec layer is a machine learning component that learns how to produce suitable (dynamic) vectors for tokens. It does this by looking at lexical attributes of the token, but may also include the static vectors of the token (cf item 2). This component is generally not used by itself, but is part of another component, such as an NER. It will be the first layer of the NER model, and it can be trained as part of training the NER, to produce vectors that are suitable for your NER task.</p>
+<p>In spaCy v2, you can first train a tok2vec component with <code>pretrain</code>, and then use this component for a subsequent <code>train</code> command. Note that all settings need to be the same across both commands, for the layers to be compatible.</p>
+<p>To answer your questions:</p>
+<blockquote>
+<p>Isn&rsquo;t the tok2vec the part that generates the vectors?</p>
+</blockquote>
+<p>If you mean the static vectors, then no. The tok2vec component produces new vectors (possibly with a different dimension) on top of the static vectors, but it won&rsquo;t change the static ones.</p>
+<blockquote>
+<p>What does it mean loading pretrained vectors and then train a component to predict these vectors? What&rsquo;s the purpose of doing this?</p>
+</blockquote>
+<p>The purpose is to get a tok2vec component that is already pretrained from external vectors data. The external vectors data already embeds some &ldquo;meaning&rdquo; or &ldquo;similarity&rdquo; of the tokens, and this is -so to say- transferred into the tok2vec component, which learns to produce the same similarities. The point is that this new tok2vec component can then be used &amp; further fine-tuned in the subsequent train command (cf item 3)</p>
+<blockquote>
+<p>Is there a way to still make use of this for OOV words?</p>
+</blockquote>
+<p>It really depends on what your &ldquo;use&rdquo; is. As <a href="https://stackoverflow.com/a/57665799/7961860">https://stackoverflow.com/a/57665799/7961860</a> mentions, you can set the vectors yourself, or you can implement a user hook which will decide on how to define token.vector.</p>
+<p>I hope this helps. I can&rsquo;t really recommend the best approach for you to follow, without understanding why you want the OOV vectors / what your use-case is. Happy to discuss further in the comments!</p>
+<blockquote>
+<p>Is the tok2vec layer already trained for pretrained downloaded models, e.g. Spanish?</p>
+</blockquote>
+<p>Yes, the full model is trained, and the tok2vec layer is a part of it.</p>
+<blockquote>
+<p>If I replace the NER component of a pretrained model, does it keep the tok2vec layer untouched i.e. with the learned weights?</p>
+</blockquote>
+<p>No, not in the current spaCy v2. The tok2vec layer is part of the model, if you remove the model, you also remove the tok2vec layer. In the upcoming v3, you&rsquo;ll be able to separate these so you can in fact keep the tok2vec model separately, and share it between components.</p>
+<blockquote>
+<p>Is the tok2vec layer also trained when I train a NER model?</p>
+</blockquote>
+<p>Yes - see above</p>
+<blockquote>
+<p>Would the pretrain command help the tok2vec layer learn some domain-specific words that may be OOV?</p>
+</blockquote>
+<p>If you simply want your plug-vector instead of the SpaCy default all-zeros vector, you could just add an extra step where you replace any all-zeros vectors with yours. For example:</p>
+<pre tabindex="0"><code>words = [&#39;words&#39;, &#39;may&#39;, &#39;by&#39;, &#39;fehlt&#39;]
+my_oov_vec = ...  # whatever you like
+spacy_vecs = [nlp(word) for word in words]
+fixed_vecs = [vec if vec.any() else my_oov_vec 
+              for vec in spacy_vecs]
+</code></pre><p>I&rsquo;m not sure why you&rsquo;d want to do this. Lots of work with word-vectors simply elides out-of-vocabulary words; using any plug value, including SpaCy&rsquo;s zero-vector, may just be adding unhelpful noise.</p>
+<p>And if better handling of OOV words is important, note that some other word-vector models, like FastText, can synthesize better-than-nothing guess-vectors for OOV words, by using vectors learned for subword fragments during training. That&rsquo;s similar to how people can often work out the gist of a word from familiar word-roots.</p>
+<pre tabindex="0"><code>python -m spacy info         #spacy version
+python -m spacy validate     #models version
+</code></pre><p>Adding pipeline components:
+<a href="https://stackoverflow.com/questions/54855780/how-to-create-ner-pipeline-with-multiple-models-in-spacy">https://stackoverflow.com/questions/54855780/how-to-create-ner-pipeline-with-multiple-models-in-spacy</a></p>
+<p>Dangerous, but an important concept!!!</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents"></nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/nlp">nlp
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/linguistics">linguistics
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/posts/blog_pm-mentorship/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            Design Thinking and Employee Maturity
+        </div>
+    </a>
+    
+    
+    <a href="/posts/blog_biz-communication/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Powerpoint Usage: Commercial vs Government Firms&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2022 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

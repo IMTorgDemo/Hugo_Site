@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>project_managment on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/project_managment/</link>
+    <description>Recent content in project_managment on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/project_managment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Design Thinking and Employee Maturity</title>
+      <link>https://imtorgdemo.github.io/posts/blog_pm-mentorship/</link>
+      <pubDate>Wed, 08 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_pm-mentorship/</guid>
+      <description>I thought about why I felt like some data scientists are more Junior- to Mid- level data scientists; rather than Mid- to Senior- level. The reason I think this is because I often ask them to propose some type of design for a solution to multiple requirements / problems. The response is almost always &amp;lsquo;how do I do this?&amp;rsquo; - bad answer. This is very different from high-performing teams I&amp;rsquo;ve been on where it is more common to have multiple people arguing over multiple solution designs.</description>
+    </item>
+    
+  </channel>
+</rss>

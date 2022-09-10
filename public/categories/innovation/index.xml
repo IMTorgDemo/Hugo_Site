@@ -6,7 +6,26 @@
     <description>Recent content in Innovation on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/innovation/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/innovation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programming for Balancing Short- and Long-Term Needs</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_paradigms/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_paradigms/</guid>
+      <description>Software engineering is all about design and balancing requirements. Anyone can learn syntax and how to code, but there are so many challenges to scaling as the codebase grows. Some aspects to balance include delivering functionality vs code debt, deploying solutions vs preferred architecture, and countless others. In addition, developers need to not only understand and keep updated on the language, but also the ecosystem of libraries and tools, underlying data structures and algorithms, and also design patterns.</description>
+    </item>
+    
+    <item>
+      <title>Three Levels of Customer Explanations for Data Science</title>
+      <link>https://imtorgdemo.github.io/posts/blog_biz-customer_explanation/</link>
+      <pubDate>Fri, 10 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_biz-customer_explanation/</guid>
+      <description>Every customer is different. That seems obvious until they begin to ask you specific questions about your work - or they don&amp;rsquo;t ask anything at all. It is good to have a framework for providing information: starting general and moving to more specific. Note that at no time are you at the math or calculation level. I&amp;rsquo;ve never seen that go well.
+Solution level: What you&amp;rsquo;re doing Nothing special here, just input and output.</description>
+    </item>
+    
     <item>
       <title>Incorporating an Initial Training Sample into a Project</title>
       <link>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</link>

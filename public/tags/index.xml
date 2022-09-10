@@ -6,22 +6,220 @@
     <description>Recent content in Tags on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>classification</title>
-      <link>https://imtorgdemo.github.io/tags/classification/</link>
-      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
+      <title>brand_monitoring</title>
+      <link>https://imtorgdemo.github.io/tags/brand_monitoring/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://imtorgdemo.github.io/tags/classification/</guid>
+      <guid>https://imtorgdemo.github.io/tags/brand_monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>web_crawl</title>
+      <link>https://imtorgdemo.github.io/tags/web_crawl/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/web_crawl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>engineering</title>
+      <link>https://imtorgdemo.github.io/tags/engineering/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/engineering/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programming_paradigms</title>
+      <link>https://imtorgdemo.github.io/tags/programming_paradigms/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/programming_paradigms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docs</title>
+      <link>https://imtorgdemo.github.io/tags/docs/</link>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/docs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>python</title>
       <link>https://imtorgdemo.github.io/tags/python/</link>
-      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pytest</title>
+      <link>https://imtorgdemo.github.io/tags/pytest/</link>
+      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/pytest/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linguistics</title>
+      <link>https://imtorgdemo.github.io/tags/linguistics/</link>
+      <pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/linguistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nlp</title>
+      <link>https://imtorgdemo.github.io/tags/nlp/</link>
+      <pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/nlp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>customer_engagement</title>
+      <link>https://imtorgdemo.github.io/tags/customer_engagement/</link>
+      <pubDate>Fri, 10 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/customer_engagement/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sales</title>
+      <link>https://imtorgdemo.github.io/tags/sales/</link>
+      <pubDate>Fri, 10 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/sales/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sample_size</title>
+      <link>https://imtorgdemo.github.io/tags/sample_size/</link>
+      <pubDate>Thu, 09 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/sample_size/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mentorship</title>
+      <link>https://imtorgdemo.github.io/tags/mentorship/</link>
+      <pubDate>Wed, 08 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/mentorship/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>project_managment</title>
+      <link>https://imtorgdemo.github.io/tags/project_managment/</link>
+      <pubDate>Wed, 08 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/project_managment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>communication</title>
+      <link>https://imtorgdemo.github.io/tags/communication/</link>
+      <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/communication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>project_management</title>
+      <link>https://imtorgdemo.github.io/tags/project_management/</link>
+      <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/project_management/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data_stories</title>
+      <link>https://imtorgdemo.github.io/tags/data_stories/</link>
+      <pubDate>Sun, 05 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/data_stories/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>user_stories</title>
+      <link>https://imtorgdemo.github.io/tags/user_stories/</link>
+      <pubDate>Sun, 05 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/user_stories/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aws</title>
+      <link>https://imtorgdemo.github.io/tags/aws/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>diagrams</title>
+      <link>https://imtorgdemo.github.io/tags/diagrams/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/diagrams/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>create_team</title>
+      <link>https://imtorgdemo.github.io/tags/create_team/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/create_team/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>skills</title>
+      <link>https://imtorgdemo.github.io/tags/skills/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/skills/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>web</title>
+      <link>https://imtorgdemo.github.io/tags/web/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/web/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>classification</title>
+      <link>https://imtorgdemo.github.io/tags/classification/</link>
+      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/tags/classification/</guid>
       <description></description>
     </item>
     
@@ -157,15 +355,6 @@
       <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/tags/r_language/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>nlp</title>
-      <link>https://imtorgdemo.github.io/tags/nlp/</link>
-      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/nlp/</guid>
       <description></description>
     </item>
     
@@ -373,15 +562,6 @@
       <pubDate>Wed, 19 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/tags/fed/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sales</title>
-      <link>https://imtorgdemo.github.io/tags/sales/</link>
-      <pubDate>Wed, 19 Jun 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/tags/sales/</guid>
       <description></description>
     </item>
     

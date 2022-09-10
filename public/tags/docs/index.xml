@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docs on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/docs/</link>
+    <description>Recent content in docs on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 13 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cheatsheet for Documentation</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_docs/</link>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_docs/</guid>
+      <description>The README.md file Docstring Single-line for a function Focus on &amp;lsquo;do this, return that&amp;rsquo;. def multiplier(a,b): &amp;#34;&amp;#34;&amp;#34;Take in two numbers, return their product.&amp;#34; product = a*b return product Multi-line for function The PEP 257 provides standard conventions for usage. def multiplier(a,b): &amp;#34;&amp;#34;&amp;#34; Take in two numbers, return their product. This is typical multiplication for two scalars with no extension to matrices. Args: a(int): a decimal integer b(int): another decimal integer Returns: product(str): string of the product of a and b Raises: IOError: an error occurred.</description>
+    </item>
+    
+  </channel>
+</rss>

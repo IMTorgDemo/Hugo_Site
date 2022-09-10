@@ -6,7 +6,27 @@
     <description>Recent content in Cheatsheet on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/cheatsheet/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/cheatsheet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cheatsheet for Documentation</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_docs/</link>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_docs/</guid>
+      <description>The README.md file Docstring Single-line for a function Focus on &amp;lsquo;do this, return that&amp;rsquo;. def multiplier(a,b): &amp;#34;&amp;#34;&amp;#34;Take in two numbers, return their product.&amp;#34; product = a*b return product Multi-line for function The PEP 257 provides standard conventions for usage. def multiplier(a,b): &amp;#34;&amp;#34;&amp;#34; Take in two numbers, return their product. This is typical multiplication for two scalars with no extension to matrices. Args: a(int): a decimal integer b(int): another decimal integer Returns: product(str): string of the product of a and b Raises: IOError: an error occurred.</description>
+    </item>
+    
+    <item>
+      <title>Cheatsheet for PyTest Configurations</title>
+      <link>https://imtorgdemo.github.io/posts/blog_programming-py_pytest/</link>
+      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_programming-py_pytest/</guid>
+      <description>Multiple tests Run the same test code with many different parameters to create multiple tests. All tests will run even if there is a failure.
+recs = [(1,2),(2,3),(3,4)] @pytest.mark.parametrize(&amp;#34;x, y&amp;#34;, recs ) def test_extract_process(x, y): val = my_function(x) assert val == y Fixtures Use fixtures to run code before and after all tests.
+Database fixture @pytest.fixture() def resource_db(): # setup log_file = Path(&amp;#39;./tests/tmp/process.log&amp;#39;) db_file = Path(&amp;#39;./tests/tmp/test.db&amp;#39;) logger = Logger(log_file).create_logger() db = Database(db_file = db_file, tables_list = LIST_ALL_TABLES, meta = meta, logger = logger, path_download = &amp;#39;.</description>
+    </item>
+    
     <item>
       <title>Computer Vision Using PyTorch</title>
       <link>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</link>

@@ -2,11 +2,173 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://imtorgdemo.github.io/tags/brand_monitoring/</loc>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/business_and_leadership/</loc>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://imtorgdemo.github.io/categories/</loc>
-    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_biz-brand_monitoring/</loc>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/</loc>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/introduction_tutorial/</loc>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/</loc>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/</loc>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/web_crawl/</loc>
+    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/computer_science_and_programming/</loc>
+    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/engineering/</loc>
+    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/innovation/</loc>
+    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming-py_paradigms/</loc>
+    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/programming_paradigms/</loc>
+    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/categories/cheatsheet/</loc>
-    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming-py_docs/</loc>
+    <lastmod>2021-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/docs/</loc>
+    <lastmod>2021-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/python/</loc>
+    <lastmod>2021-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_programming-py_pytest/</loc>
+    <lastmod>2021-12-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/pytest/</loc>
+    <lastmod>2021-12-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/data_science/</loc>
+    <lastmod>2021-12-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/linguistics/</loc>
+    <lastmod>2021-12-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/nlp/</loc>
+    <lastmod>2021-12-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_nlp-intro_terminology/</loc>
+    <lastmod>2021-12-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/customer_engagement/</loc>
+    <lastmod>2021-12-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/sales/</loc>
+    <lastmod>2021-12-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_biz-customer_explanation/</loc>
+    <lastmod>2021-12-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_calc/</loc>
+    <lastmod>2021-12-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/sample_size/</loc>
+    <lastmod>2021-12-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/best_practice/</loc>
+    <lastmod>2021-12-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_pm-mentorship/</loc>
+    <lastmod>2021-12-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/mentorship/</loc>
+    <lastmod>2021-12-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/project_managment/</loc>
+    <lastmod>2021-12-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_nlp-spacy_internals/</loc>
+    <lastmod>2021-12-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/communication/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/comparison/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_biz-communication/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/project_management/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/data_stories/</loc>
+    <lastmod>2021-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_pm-user_stories/</loc>
+    <lastmod>2021-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/user_stories/</loc>
+    <lastmod>2021-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_pm-tech_communication/</loc>
+    <lastmod>2021-12-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/architecture_and_devops/</loc>
+    <lastmod>2021-12-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/aws/</loc>
+    <lastmod>2021-12-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/diagrams/</loc>
+    <lastmod>2021-12-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_cloud-visual_tools/</loc>
+    <lastmod>2021-12-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/create_team/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/skills/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_pm-tech_stack_guide/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/web/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/web_frontend/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_ds-web_skills/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_biz-hire_for_govt/</loc>
+    <lastmod>2021-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_pm-tech_contractors/</loc>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_pm-tech_after_mvp/</loc>
+    <lastmod>2021-10-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_pm-tech_stack/</loc>
+    <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/tags/classification/</loc>
     <lastmod>2020-07-02T00:00:00+00:00</lastmod>
@@ -14,26 +176,8 @@
     <loc>https://imtorgdemo.github.io/posts/blog_models-pytorch_computervision/</loc>
     <lastmod>2020-07-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://imtorgdemo.github.io/categories/data_science/</loc>
-    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/</loc>
-    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/posts/</loc>
-    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/tags/python/</loc>
-    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://imtorgdemo.github.io/tags/pytorch/</loc>
     <lastmod>2020-07-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/tags/</loc>
-    <lastmod>2020-07-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/categories/introduction_tutorial/</loc>
-    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_models-neuralnet_pytorch_intro/</loc>
     <lastmod>2020-07-01T00:00:00+00:00</lastmod>
@@ -51,9 +195,6 @@
     <lastmod>2020-06-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_programming_py-pipenv_virtualenv/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/categories/computer_science_and_programming/</loc>
     <lastmod>2020-03-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/tags/pipenv/</loc>
@@ -110,9 +251,6 @@
     <loc>https://imtorgdemo.github.io/posts/blog_ds_spark_deployment/</loc>
     <lastmod>2020-03-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://imtorgdemo.github.io/categories/comparison/</loc>
-    <lastmod>2020-03-02T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://imtorgdemo.github.io/tags/dataframe/</loc>
     <lastmod>2020-03-02T00:00:00+00:00</lastmod>
   </url><url>
@@ -137,9 +275,6 @@
     <loc>https://imtorgdemo.github.io/categories/mathematics/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://imtorgdemo.github.io/tags/nlp/</loc>
-    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_nlp-rank_text_with_word_vector/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
   </url><url>
@@ -155,9 +290,6 @@
     <loc>https://imtorgdemo.github.io/posts/blog_history-greatman_insecurity/</loc>
     <lastmod>2020-01-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://imtorgdemo.github.io/categories/best_practice/</loc>
-    <lastmod>2020-01-28T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_programming_py-distributing_code/</loc>
     <lastmod>2020-01-28T00:00:00+00:00</lastmod>
   </url><url>
@@ -171,9 +303,6 @@
     <lastmod>2020-01-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_math-reuse_tng_sample/</loc>
-    <lastmod>2020-01-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/categories/innovation/</loc>
     <lastmod>2020-01-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/tags/machine-learning/</loc>
@@ -300,9 +429,6 @@
     <lastmod>2019-06-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/tags/fed/</loc>
-    <lastmod>2019-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/tags/sales/</loc>
     <lastmod>2019-06-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_econ-return_rate/</loc>

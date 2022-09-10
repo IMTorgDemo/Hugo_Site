@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>skills on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/skills/</link>
+    <description>Recent content in skills on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 02 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/skills/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why Data Scientists Need Some Fundamental Front End Skills</title>
+      <link>https://imtorgdemo.github.io/posts/blog_ds-web_skills/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_ds-web_skills/</guid>
+      <description>Most data scientists are lucky to have a basic understanding of HTML, or web applications, in general. However, this dearth of knowledge can be quite limiting as their career grows. They will not be able to grow their skills more broadly to areas such as data visualization or web scraping. They will also have difficulty leading mixed teams delivering complete solutions. They can be easily relegated to creating models of simple reports.</description>
+    </item>
+    
+  </channel>
+</rss>
