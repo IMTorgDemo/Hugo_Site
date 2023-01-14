@@ -2,28 +2,61 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://imtorgdemo.github.io/categories/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/data_science/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_pred_intvl/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/innovation/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/nlp/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/sample_size/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/statistics/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/category2/</loc>
+    <lastmod>2022-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/children/</loc>
+    <lastmod>2022-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/tags/family/</loc>
+    <lastmod>2022-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/categories/health/</loc>
+    <lastmod>2022-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://imtorgdemo.github.io/posts/blog_health-paper_review_child_hormones/</loc>
+    <lastmod>2022-09-08T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://imtorgdemo.github.io/tags/brand_monitoring/</loc>
     <lastmod>2021-12-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/categories/business_and_leadership/</loc>
     <lastmod>2021-12-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://imtorgdemo.github.io/categories/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_biz-brand_monitoring/</loc>
     <lastmod>2021-12-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://imtorgdemo.github.io/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://imtorgdemo.github.io/categories/introduction_tutorial/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/posts/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/tags/</loc>
     <lastmod>2021-12-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/tags/web_crawl/</loc>
@@ -33,9 +66,6 @@
     <lastmod>2021-12-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/tags/engineering/</loc>
-    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/categories/innovation/</loc>
     <lastmod>2021-12-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_programming-py_paradigms/</loc>
@@ -62,13 +92,7 @@
     <loc>https://imtorgdemo.github.io/tags/pytest/</loc>
     <lastmod>2021-12-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://imtorgdemo.github.io/categories/data_science/</loc>
-    <lastmod>2021-12-11T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://imtorgdemo.github.io/tags/linguistics/</loc>
-    <lastmod>2021-12-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/tags/nlp/</loc>
     <lastmod>2021-12-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_nlp-intro_terminology/</loc>
@@ -84,9 +108,6 @@
     <lastmod>2021-12-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_calc/</loc>
-    <lastmod>2021-12-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/tags/sample_size/</loc>
     <lastmod>2021-12-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/categories/best_practice/</loc>
@@ -319,9 +340,6 @@
   </url><url>
     <loc>https://imtorgdemo.github.io/posts/blog_programming-language_syntax_comparison/</loc>
     <lastmod>2020-01-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://imtorgdemo.github.io/categories/category2/</loc>
-    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://imtorgdemo.github.io/tags/nltk/</loc>
     <lastmod>2019-11-18T00:00:00+00:00</lastmod>

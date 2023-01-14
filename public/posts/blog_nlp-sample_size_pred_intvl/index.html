@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Determine a Reasonable Sample Size for Training a Text Classifier // IMTorg Kbase</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Determine a Reasonable Sample Size for Training a Text Classifier" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://imtorgdemo.github.io/posts/blog_nlp-sample_size_pred_intvl/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="IMTorg Kbase" />
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/favico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png">
+	<link rel="manifest" href="/images/favico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    
+
+    <link href="https://imtorgdemo.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://imtorgdemo.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://imtorgdemo.github.io/css/style.css">
+
+    <meta name="generator" content="Hugo 0.102.3" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            
+            <a href="https://imtorgdemo.github.io/">
+            	<img src="/logo_CA_newblue.png" alt="Logo" style="max-width:100px; padding-top: 10px">
+            </a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/pages/about/">About</a>
+                
+                <a class="main-nav-link" href="/categories/">Categories</a>
+                
+                <a class="main-nav-link" href="/pages/search/">Search</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Determine a Reasonable Sample Size for Training a Text Classifier</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/posts/blog_nlp-sample_size_pred_intvl/" class="article-date">
+                <time datetime='2023-01-13T00:00:00.000&#43;00:00' itemprop="datePublished">2023-01-13</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/innovation">Innovation</a>
+                    
+                    
+                    <span>&gt;</span>
+                    
+                    <a class="article-category-link" href="https://imtorgdemo.github.io//categories/data_science">Data_Science</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>Consider that we are creating a text classification model that will discover a few target needles in a massive haystack of records.  Maybe we are looking for messages of Death among emergency services messages - 20 for every 50,000 messages.  Labeling this large dataset and finding the Death messages is costly, so we don&rsquo;t want to label more than is necessary.  If we already have enough to estimate the target proportion, let us determine whether the sample size used for training the classification model is large enough.  Earler, in &lsquo;Sample_Size_Review.ipynb&rsquo;, we attempted to calculate <em>n</em> from the Confidence Interval expression.  Now, we reverse this process to calculate the Prediction Interval from the selected <em>n</em>.</p>
+<p>The following bootstrap steps are used to create Prediction Intervals from a sample.  We will use Recall as our scoring estimate and we will use the FastText model (the simplest text classifier) as a surrogate Continuous Bag Of Words (CBOW) model to quickly train and get results.</p>
+<ul>
+<li>create N models</li>
+<li>predict on test data, then get counts from confusion matrix</li>
+<li>create distribution of proportion missing (recall)</li>
+<li>estimate sigma of distribution</li>
+</ul>
+<h2 id="configure-environment">Configure Environment</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>path_current <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span> ls <span style="color:#f92672">../../</span>GitLab<span style="color:#f92672">/</span>event<span style="color:#f92672">-</span>type<span style="color:#f92672">/</span>pipeline_components
+</span></span></code></pre></div><pre><code>encoder.py	 preprocess.py	Soln_EventType
+io_component.py  __pycache__	streamarray.py
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>path_data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;../../Data/Event_Type/model6&#39;</span>
+</span></span><span style="display:flex;"><span>path_models <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./models&#39;</span>
+</span></span><span style="display:flex;"><span>path_components <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;../../GitLab/event-type/&#39;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>load_ext autoreload
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>autoreload <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#(in term) apt install build-essential</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#! pip install fasttext==0.9.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#! pip install truecase</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir( os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(path_current, path_components) )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pipeline_components.preprocess <span style="color:#f92672">import</span> preprocess_data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pipeline_components <span style="color:#f92672">import</span> io_component
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#from pipeline_components import encoder</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir( path_current )
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> dill 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> csv
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> spacy 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> fasttext <span style="color:#66d9ef">as</span> ft
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>aimport
+</span></span></code></pre></div><pre><code>Modules to reload:
+all-except-skipped
+
+Modules to skip:
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ft<span style="color:#f92672">.</span>FastText<span style="color:#f92672">.</span>eprint <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: <span style="color:#66d9ef">None</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> warnings
+</span></span><span style="display:flex;"><span>warnings<span style="color:#f92672">.</span>filterwarnings(<span style="color:#e6db74">&#39;ignore&#39;</span>)
+</span></span><span style="display:flex;"><span>warnings<span style="color:#f92672">.</span>simplefilter(<span style="color:#e6db74">&#39;ignore&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>filename <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;globalsave.pkl&#39;</span>
+</span></span><span style="display:flex;"><span>dill<span style="color:#f92672">.</span>dump_session(filename)
+</span></span></code></pre></div><pre tabindex="0"><code># and to load the session again:
+dill.load_session(filename)
+</code></pre><h2 id="prepare-pipeline">Prepare Pipeline</h2>
+<h3 id="pipeline-components">Pipeline Components</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>nlp_spacy <span style="color:#f92672">=</span> spacy<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#34;en_core_web_sm&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pipeline_components <span style="color:#f92672">import</span> io_component
+</span></span><span style="display:flex;"><span>nlp_spacy<span style="color:#f92672">.</span>add_pipe(<span style="color:#e6db74">&#39;input_component&#39;</span>, last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pipeline_components.Soln_EventType <span style="color:#f92672">import</span> reportableEvent, EVENT_ACTION
+</span></span><span style="display:flex;"><span>nlp_spacy<span style="color:#f92672">.</span>add_pipe(<span style="color:#e6db74">&#34;reportableEvent_component&#34;</span>, last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><pre><code>&lt;pipeline_components.Soln_EventType.reportableEvent.reportableEventcomponent at 0x7fb68db6ef40&gt;
+</code></pre>
+<h3 id="prepare-text">Prepare Text</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir( os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(path_current, path_data) )
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dt <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#39;train_sent_v6.csv&#39;</span>)
+</span></span><span style="display:flex;"><span>dt_t <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#39;test_sent_v6.csv&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dt[<span style="color:#e6db74">&#39;label&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;__label__&#39;</span> <span style="color:#f92672">+</span> dt[<span style="color:#e6db74">&#39;label&#39;</span>]<span style="color:#f92672">.</span>astype(str)
+</span></span><span style="display:flex;"><span>dt_t[<span style="color:#e6db74">&#39;label&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;__label__&#39;</span> <span style="color:#f92672">+</span> dt_t[<span style="color:#e6db74">&#39;label&#39;</span>]<span style="color:#f92672">.</span>astype(str)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dfTrain <span style="color:#f92672">=</span> dt[[<span style="color:#e6db74">&#39;label&#39;</span>, <span style="color:#e6db74">&#39;sentence&#39;</span>]]
+</span></span><span style="display:flex;"><span>dfTest <span style="color:#f92672">=</span> dt_t[[<span style="color:#e6db74">&#39;label&#39;</span>, <span style="color:#e6db74">&#39;sentence&#39;</span>]]
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dfTrain[<span style="color:#e6db74">&#39;label&#39;</span>]<span style="color:#f92672">.</span>value_counts()
+</span></span></code></pre></div><pre><code>__label__Death       4220
+__label__NonDeath    1448
+Name: label, dtype: int64
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dfTest[<span style="color:#e6db74">&#39;label&#39;</span>]<span style="color:#f92672">.</span>value_counts()
+</span></span></code></pre></div><pre><code>__label__Death       499
+__label__NonDeath    159
+Name: label, dtype: int64
+</code></pre>
+<h3 id="prepare-code">Prepare Code</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Ensemble</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, number_of_models, model_directory):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>number_of_models <span style="color:#f92672">=</span> number_of_models
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>model_directory <span style="color:#f92672">=</span> model_directory
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>ensemble <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>prefix_model <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;fs_train_v&#39;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>prefix_validate <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;fs_validate_v&#39;</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">populate_ensemble_list</span>(self):
+</span></span><span style="display:flex;"><span>        newlist <span style="color:#f92672">=</span> [os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(dir, file) <span style="color:#66d9ef">for</span> file <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(dir) <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;.bin&#39;</span> <span style="color:#f92672">in</span> file]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>ensemble<span style="color:#f92672">.</span>extend( newlist)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_training_file</span>(self, iteration):
+</span></span><span style="display:flex;"><span>        name_train <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>prefix_model <span style="color:#f92672">+</span> str(iteration) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.txt&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>model_directory, name_train)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_validation_file</span>(self, iteration):
+</span></span><span style="display:flex;"><span>        name_train <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>prefix_validate <span style="color:#f92672">+</span> str(iteration) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.txt&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>model_directory, name_train)    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_model_binary</span>(self, iteration):
+</span></span><span style="display:flex;"><span>        name_binary <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>prefix_model <span style="color:#f92672">+</span> str(iteration) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.bin&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(self<span style="color:#f92672">.</span>model_directory, name_binary)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_model</span>(self, model_idx):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ft<span style="color:#f92672">.</span>load_model( self<span style="color:#f92672">.</span>ensemble[model_idx] )
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_model_predictions</span>(self, model_idx, text_list):
+</span></span><span style="display:flex;"><span>        model <span style="color:#f92672">=</span> ft<span style="color:#f92672">.</span>load_model( self<span style="color:#f92672">.</span>ensemble[model_idx] )
+</span></span><span style="display:flex;"><span>        predictions <span style="color:#f92672">=</span> [model<span style="color:#f92672">.</span>predict(text)[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> text <span style="color:#f92672">in</span> text_list]     <span style="color:#75715e">#&lt;&lt;&lt; this should take the text list directly - no need for a list comprhension</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> predictions
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_datasets</span>(self, dfTrain, dfTest, frac):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> iteration <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, (self<span style="color:#f92672">.</span>number_of_models<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>) ):
+</span></span><span style="display:flex;"><span>            name_train <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_training_file(iteration)
+</span></span><span style="display:flex;"><span>            name_validate <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_validation_file(iteration)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>            train <span style="color:#f92672">=</span> dfTrain<span style="color:#f92672">.</span>sample(frac<span style="color:#f92672">=</span>FRAC, replace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, random_state<span style="color:#f92672">=</span>iteration)
+</span></span><span style="display:flex;"><span>            idx <span style="color:#f92672">=</span> list(set(dfTrain<span style="color:#f92672">.</span>index) <span style="color:#f92672">-</span> set(train<span style="color:#f92672">.</span>index))
+</span></span><span style="display:flex;"><span>            validate <span style="color:#f92672">=</span> dfTrain<span style="color:#f92672">.</span>iloc[idx]
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#dfValidate = pd.concat([dfTest, validate], ignore_index=True)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#preprocessing is already performed</span>
+</span></span><span style="display:flex;"><span>            train<span style="color:#f92672">.</span>to_csv(name_train, 
+</span></span><span style="display:flex;"><span>                                          index <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>, 
+</span></span><span style="display:flex;"><span>                                          sep <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>,
+</span></span><span style="display:flex;"><span>                                          header <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, 
+</span></span><span style="display:flex;"><span>                                          quoting <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>QUOTE_NONE, 
+</span></span><span style="display:flex;"><span>                                          quotechar <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, 
+</span></span><span style="display:flex;"><span>                                          escapechar <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>            validate<span style="color:#f92672">.</span>to_csv(name_validate, 
+</span></span><span style="display:flex;"><span>                                          index <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>, 
+</span></span><span style="display:flex;"><span>                                          sep <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>,
+</span></span><span style="display:flex;"><span>                                          header <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, 
+</span></span><span style="display:flex;"><span>                                          quoting <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>QUOTE_NONE, 
+</span></span><span style="display:flex;"><span>                                          quotechar <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, 
+</span></span><span style="display:flex;"><span>                                          escapechar <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;completed created </span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>number_of_models<span style="color:#e6db74">}</span><span style="color:#e6db74"> training / validation datasets&#39;</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_models</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> iteration <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, (self<span style="color:#f92672">.</span>number_of_models<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>) ):
+</span></span><span style="display:flex;"><span>            print(iteration)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            input_file <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_training_file(iteration)
+</span></span><span style="display:flex;"><span>            model_file <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_model_binary(iteration)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            model <span style="color:#f92672">=</span> ft<span style="color:#f92672">.</span>train_supervised(input_file, lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>, epoch<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, loss <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;softmax&#39;</span>)
+</span></span><span style="display:flex;"><span>            model<span style="color:#f92672">.</span>save_model(model_file)
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>ensemble<span style="color:#f92672">.</span>append(model_file)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;completed training </span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>number_of_models<span style="color:#e6db74">}</span><span style="color:#e6db74"> models&#39;</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict_models</span>(self, text):
+</span></span><span style="display:flex;"><span>        text_predictions <span style="color:#f92672">=</span> [ensemble<span style="color:#f92672">.</span>get_model(idx)<span style="color:#f92672">.</span>predict(text)[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> idx, mdl <span style="color:#f92672">in</span> enumerate(self<span style="color:#f92672">.</span>ensemble)]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> text_predictions
+</span></span></code></pre></div><h2 id="prepare-workflow">Prepare Workflow</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>NUMBER_OF_MODELS <span style="color:#f92672">=</span> <span style="color:#ae81ff">2500</span>
+</span></span><span style="display:flex;"><span>FRAC <span style="color:#f92672">=</span> <span style="color:#ae81ff">.25</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(path_current, path_data, <span style="color:#e6db74">&#39;fasttext&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ensemble <span style="color:#f92672">=</span> Ensemble(NUMBER_OF_MODELS, model_dir)
+</span></span></code></pre></div><pre tabindex="0"><code>ensemble.populate_ensemble_list()
+</code></pre><h3 id="create-datasets">Create datasets</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ensemble<span style="color:#f92672">.</span>create_datasets(dfTrain, dfTest, FRAC)
+</span></span></code></pre></div><pre><code>completed created 2500 training / validation datasets
+</code></pre>
+<h3 id="train-models">Train models</h3>
+<p>You can fill about 10 models per GB of memory, so, 20GB will not work for 200 models.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>timeit <span style="color:#f92672">-</span>n1
+</span></span><span style="display:flex;"><span>ensemble<span style="color:#f92672">.</span>train_models()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#test</span>
+</span></span><span style="display:flex;"><span>print( ensemble<span style="color:#f92672">.</span>get_model(<span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>get_labels() )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mdl <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>text1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;AFTER THE CARDIAC ARREST THE PATIENT WAS REMOVED FROM THE VENTILATOR AND EXPIRED LATER THAT EVENING&#34;</span>
+</span></span><span style="display:flex;"><span>text2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;THE PATIENT WAS TOTALLY ALIVE&#34;</span>
+</span></span><span style="display:flex;"><span>print( ensemble<span style="color:#f92672">.</span>get_model(mdl)<span style="color:#f92672">.</span>predict(text1) )
+</span></span><span style="display:flex;"><span>print( ensemble<span style="color:#f92672">.</span>get_model(mdl)<span style="color:#f92672">.</span>predict(text2) )
+</span></span></code></pre></div><pre><code>['__label__Death', '__label__NonDeath']
+(('__label__Death',), array([0.78851449]))
+(('__label__NonDeath',), array([0.60587746]))
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ensemble<span style="color:#f92672">.</span>get_model(<span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>predict([text1,text2])[<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><pre><code>[['__label__Death'], ['__label__NonDeath']]
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ensemble<span style="color:#f92672">.</span>get_model_predictions(<span style="color:#ae81ff">0</span>, [text1,text2])
+</span></span></code></pre></div><pre><code>['__label__Death', '__label__NonDeath']
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> dill                            <span style="color:#75715e">#pip install dill --user</span>
+</span></span><span style="display:flex;"><span>filename <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;globalsave.pkl&#39;</span>
+</span></span><span style="display:flex;"><span>dill<span style="color:#f92672">.</span>dump_session(filename)
+</span></span></code></pre></div><h2 id="run">Run</h2>
+<h3 id="run-patterns">Run patterns</h3>
+<pre tabindex="0"><code>#test
+doc = nlp_spacy(text1)
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_pattern</span>(row):
+</span></span><span style="display:flex;"><span>    doc <span style="color:#f92672">=</span> nlp_spacy(row[<span style="color:#e6db74">&#39;sentence&#39;</span>])
+</span></span><span style="display:flex;"><span>    tag <span style="color:#f92672">=</span> [tag[<span style="color:#e6db74">&#39;pattern&#39;</span>] <span style="color:#66d9ef">for</span> tag <span style="color:#f92672">in</span> doc<span style="color:#f92672">.</span>_<span style="color:#f92672">.</span>result[<span style="color:#e6db74">&#39;text_extract&#39;</span>] <span style="color:#66d9ef">if</span> tag[<span style="color:#e6db74">&#39;model&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;reportablevent&#39;</span>][<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> tag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dfTest[<span style="color:#e6db74">&#39;patterns&#39;</span>] <span style="color:#f92672">=</span> dfTest<span style="color:#f92672">.</span>apply(run_pattern, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dfTest[[<span style="color:#e6db74">&#39;label&#39;</span>,<span style="color:#e6db74">&#39;patterns&#39;</span>]]<span style="color:#f92672">.</span>value_counts()
+</span></span></code></pre></div><pre><code>label              patterns           
+__label__Death     DEATH                  474
+__label__NonDeath  NEGATION_UNRELATED      19
+                   DEATH                   12
+__label__Death     NEGATION_UNRELATED       8
+                   DEATH_RESUSCITATION      6
+                   DEATH_UNRELATED          3
+__label__NonDeath  NEGATION                 1
+dtype: int64
+</code></pre>
+<h3 id="run-ensemble-and-solution-logic">Run ensemble and solution logic</h3>
+<p>For each model, for each test record:</p>
+<ul>
+<li>apply model</li>
+<li>get label prediction, determine TP, TN, FP, FN</li>
+<li>get scores for each model results</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_model_outcome</span>(actual_label, model_rslt):
+</span></span><span style="display:flex;"><span>    outcome <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;None&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> actual_label<span style="color:#f92672">==</span>model_rslt <span style="color:#f92672">and</span> model_rslt<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;__label__Death&#39;</span>:
+</span></span><span style="display:flex;"><span>        outcome <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;TP&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> actual_label<span style="color:#f92672">==</span>model_rslt <span style="color:#f92672">and</span> model_rslt<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;__label__NonDeath&#39;</span>:
+</span></span><span style="display:flex;"><span>        outcome <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;TN&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> actual_label<span style="color:#f92672">!=</span>model_rslt <span style="color:#f92672">and</span> model_rslt<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;__label__Death&#39;</span>:
+</span></span><span style="display:flex;"><span>        outcome <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;FP&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> actual_label<span style="color:#f92672">!=</span>model_rslt <span style="color:#f92672">and</span> model_rslt<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;__label__NonDeath&#39;</span>:
+</span></span><span style="display:flex;"><span>        outcome <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;FN&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> outcome
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_model_prediction</span>(col):
+</span></span><span style="display:flex;"><span>    lCol_texts <span style="color:#f92672">=</span> dfTest<span style="color:#f92672">.</span>sentence<span style="color:#f92672">.</span>tolist()
+</span></span><span style="display:flex;"><span>    predictions <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> idx, mdl <span style="color:#f92672">in</span> enumerate(ensemble<span style="color:#f92672">.</span>ensemble):
+</span></span><span style="display:flex;"><span>        predictions<span style="color:#f92672">.</span>append( ensemble<span style="color:#f92672">.</span>get_model_predictions(idx, lCol_texts))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> predictions
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>timeit <span style="color:#f92672">-</span>n1
+</span></span><span style="display:flex;"><span>Predictions <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> get_model_prediction( dfTest<span style="color:#f92672">.</span>sentence )
+</span></span><span style="display:flex;"><span>Predictions <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(tmp)<span style="color:#f92672">.</span>transpose()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Predictions<span style="color:#f92672">.</span>loc[<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><pre><code>0       __label__Death
+1       __label__Death
+2       __label__Death
+3       __label__Death
+4       __label__Death
+             ...      
+2495    __label__Death
+2496    __label__Death
+2497    __label__Death
+2498    __label__Death
+2499    __label__Death
+Name: 0, Length: 2500, dtype: object
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dfTest[<span style="color:#e6db74">&#39;idx&#39;</span>] <span style="color:#f92672">=</span> dfTest<span style="color:#f92672">.</span>index
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># run ensemble of models</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_ensemble</span>(row):
+</span></span><span style="display:flex;"><span>    idx_pred <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#39;idx&#39;</span>]
+</span></span><span style="display:flex;"><span>    label <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#39;label&#39;</span>]
+</span></span><span style="display:flex;"><span>    text <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#39;sentence&#39;</span>]
+</span></span><span style="display:flex;"><span>    pattern <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#39;patterns&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    mdl_results <span style="color:#f92672">=</span> Predictions<span style="color:#f92672">.</span>loc[idx_pred]<span style="color:#f92672">.</span>tolist()
+</span></span><span style="display:flex;"><span>    soln_results <span style="color:#f92672">=</span> [rslt  
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> rslt<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;__label__Death&#39;</span> <span style="color:#f92672">and</span>  pattern <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;NEGATION&#34;</span>, <span style="color:#e6db74">&#34;NONE&#34;</span>, <span style="color:#66d9ef">None</span>, <span style="color:#e6db74">&#34;NEGATION_UNRELATED&#34;</span>] 
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;__label__NonDeath&#39;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">for</span> rslt <span style="color:#f92672">in</span> mdl_results
+</span></span><span style="display:flex;"><span>                   ]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    soln_outcomes <span style="color:#f92672">=</span> [get_model_outcome(label, rslt) <span style="color:#66d9ef">for</span> rslt <span style="color:#f92672">in</span> soln_results]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> soln_outcomes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Outcomes <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
+</span></span><span style="display:flex;"><span>Outcomes <span style="color:#f92672">=</span> dfTest<span style="color:#f92672">.</span>apply(run_ensemble, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, result_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;expand&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_scores</span>(col):
+</span></span><span style="display:flex;"><span>    lCol <span style="color:#f92672">=</span> col<span style="color:#f92672">.</span>tolist()
+</span></span><span style="display:flex;"><span>    TPs <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> outcome <span style="color:#f92672">in</span> lCol <span style="color:#66d9ef">if</span> outcome <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;TP&#39;</span>]
+</span></span><span style="display:flex;"><span>    TNs <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> outcome <span style="color:#f92672">in</span> lCol <span style="color:#66d9ef">if</span> outcome <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;TN&#39;</span>]
+</span></span><span style="display:flex;"><span>    FPs <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> outcome <span style="color:#f92672">in</span> lCol <span style="color:#66d9ef">if</span> outcome <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;FP&#39;</span>]
+</span></span><span style="display:flex;"><span>    FNs <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> outcome <span style="color:#f92672">in</span> lCol <span style="color:#66d9ef">if</span> outcome <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;FN&#39;</span>]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    TP <span style="color:#f92672">=</span> sum(TPs)
+</span></span><span style="display:flex;"><span>    TN <span style="color:#f92672">=</span> sum(TNs)
+</span></span><span style="display:flex;"><span>    FP <span style="color:#f92672">=</span> sum(FPs)
+</span></span><span style="display:flex;"><span>    FN <span style="color:#f92672">=</span> sum(FNs)
+</span></span><span style="display:flex;"><span>    denom <span style="color:#f92672">=</span> TP <span style="color:#f92672">+</span> FN
+</span></span><span style="display:flex;"><span>    Recall <span style="color:#f92672">=</span> TP <span style="color:#f92672">/</span> denom <span style="color:#66d9ef">if</span> denom <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> TP,TN,FP,FN, Recall    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Scores <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> Outcomes<span style="color:#f92672">.</span>apply(get_scores, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, result_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;expand&#34;</span>)
+</span></span><span style="display:flex;"><span>Scores[[<span style="color:#e6db74">&#39;TP&#39;</span>, <span style="color:#e6db74">&#39;TN&#39;</span>, <span style="color:#e6db74">&#39;FP&#39;</span>, <span style="color:#e6db74">&#39;FN&#39;</span>, <span style="color:#e6db74">&#39;Recall&#39;</span>]] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>transpose()
+</span></span></code></pre></div><h2 id="results-review-bootstraping-methods">Results, review bootstraping methods</h2>
+<h3 id="individual-samples">Individual samples</h3>
+<p>Lets review the test data scores to determine the records that were missed the most.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#dfTest.head()</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Outcomes.loc[:,0]</span>
+</span></span><span style="display:flex;"><span>Scores<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TP</th>
+      <th>TN</th>
+      <th>FP</th>
+      <th>FN</th>
+      <th>Recall</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>471.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>28.0</td>
+      <td>0.943888</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>478.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>21.0</td>
+      <td>0.957916</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>473.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>26.0</td>
+      <td>0.947896</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>476.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>23.0</td>
+      <td>0.953908</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>475.0</td>
+      <td>149.0</td>
+      <td>10.0</td>
+      <td>24.0</td>
+      <td>0.951904</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Scores<span style="color:#f92672">.</span>sort_values([<span style="color:#e6db74">&#39;FN&#39;</span>], ascending<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)<span style="color:#f92672">.</span>sort_values([<span style="color:#e6db74">&#39;Recall&#39;</span>])
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TP</th>
+      <th>TN</th>
+      <th>FP</th>
+      <th>FN</th>
+      <th>Recall</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1550</th>
+      <td>458.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>41.0</td>
+      <td>0.917836</td>
+    </tr>
+    <tr>
+      <th>267</th>
+      <td>460.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>39.0</td>
+      <td>0.921844</td>
+    </tr>
+    <tr>
+      <th>385</th>
+      <td>462.0</td>
+      <td>149.0</td>
+      <td>10.0</td>
+      <td>37.0</td>
+      <td>0.925852</td>
+    </tr>
+    <tr>
+      <th>826</th>
+      <td>462.0</td>
+      <td>148.0</td>
+      <td>11.0</td>
+      <td>37.0</td>
+      <td>0.925852</td>
+    </tr>
+    <tr>
+      <th>1447</th>
+      <td>462.0</td>
+      <td>149.0</td>
+      <td>10.0</td>
+      <td>37.0</td>
+      <td>0.925852</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2402</th>
+      <td>481.0</td>
+      <td>148.0</td>
+      <td>11.0</td>
+      <td>18.0</td>
+      <td>0.963928</td>
+    </tr>
+    <tr>
+      <th>2156</th>
+      <td>481.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>18.0</td>
+      <td>0.963928</td>
+    </tr>
+    <tr>
+      <th>1431</th>
+      <td>481.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>18.0</td>
+      <td>0.963928</td>
+    </tr>
+    <tr>
+      <th>1316</th>
+      <td>481.0</td>
+      <td>148.0</td>
+      <td>11.0</td>
+      <td>18.0</td>
+      <td>0.963928</td>
+    </tr>
+    <tr>
+      <th>447</th>
+      <td>482.0</td>
+      <td>147.0</td>
+      <td>12.0</td>
+      <td>17.0</td>
+      <td>0.965932</td>
+    </tr>
+  </tbody>
+</table>
+<p>2500 rows × 5 columns</p>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> Outcomes<span style="color:#f92672">.</span>transpose()
+</span></span><span style="display:flex;"><span>tmp1 <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>loc[[<span style="color:#ae81ff">447</span>,<span style="color:#ae81ff">1316</span>,<span style="color:#ae81ff">1431</span>,<span style="color:#ae81ff">2156</span>,<span style="color:#ae81ff">2402</span>]]<span style="color:#f92672">.</span>transpose()
+</span></span><span style="display:flex;"><span>idx_FN <span style="color:#f92672">=</span> tmp1[tmp1[<span style="color:#ae81ff">447</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;FN&#39;</span>]<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>tolist()
+</span></span><span style="display:flex;"><span>sent_FN <span style="color:#f92672">=</span> dfTest<span style="color:#f92672">.</span>loc[idx_FN]<span style="color:#f92672">.</span>sentence
+</span></span></code></pre></div><p>No models correclty hit on the some of the setences.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Fraction of sentences that are very difficult to classify: </span><span style="color:#e6db74">{</span>len(sent_FN)<span style="color:#f92672">/</span>dfTest<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>sent_FN<span style="color:#f92672">.</span>tolist()
+</span></span></code></pre></div><br>
+<h3 id="distribution-of-recall-score">Distribution of Recall score</h3>
+<p>This is a HIGHLY conservative histogram of the Recall scores.  It is conservative because:</p>
+<ul>
+<li>we are using the simplest NLP model available - FastText</li>
+<li>the model is only trained on 25% of all labeled statements</li>
+</ul>
+<p>We are placing ourselves at this disadvantage to see how poor the results can be; however, they are still quite good.  We are also using the simple FastText model because the amount of time to train the production, Transformer model is prohibitively long.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> plotnine <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> plotnine.data <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    ggplot(Scores, aes(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Recall&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+</span> geom_histogram()
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+</span> scale_y_continuous(
+</span></span><span style="display:flex;"><span>        trans <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;log10&#34;</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+</span> ggtitle(<span style="color:#e6db74">&#39;Distribution of the Recall score&#39;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><img src="output_67_0.png" alt="png"></p>
+<pre><code>&lt;ggplot: (8776360785195)&gt;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    ggplot(Scores, aes(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Recall&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+</span> geom_histogram()
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+</span> scale_y_continuous(
+</span></span><span style="display:flex;"><span>        trans <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;log10&#34;</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+</span> xlim(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+</span> ggtitle(<span style="color:#e6db74">&#39;Distribution of the Recall score&#39;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><img src="output_68_0.png" alt="png"></p>
+<pre><code>&lt;ggplot: (8776360674042)&gt;
+</code></pre>
+<p>We can say with 90% probability that the true Recall score will be higher than 0.94.  So, we will use 0.94 as our worst-case estimate for Recall.  Note, that all of this analysis is done very conservatively by using weaker models with only 25% (~1400 samples) of the training data.  If we had not been so conservative, then the distribution would have been too narrow to investigate.</p>
+<p>With a 0.94 Recall score, our worst-case scenario is that, out of 100 Death events, we would miss 6.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print( <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;samplings: </span><span style="color:#e6db74">{</span>len(Scores<span style="color:#f92672">.</span>Recall) <span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>print( <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;mean: </span><span style="color:#e6db74">{</span>np<span style="color:#f92672">.</span>mean(Scores<span style="color:#f92672">.</span>Recall) <span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>print( <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;median: </span><span style="color:#e6db74">{</span>np<span style="color:#f92672">.</span>median(Scores<span style="color:#f92672">.</span>Recall) <span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>print( <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;quantile - [0.05, 0.10]: </span><span style="color:#e6db74">{</span>np<span style="color:#f92672">.</span>quantile(Scores<span style="color:#f92672">.</span>Recall, [<span style="color:#ae81ff">0.05</span>, <span style="color:#ae81ff">0.10</span>]) <span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><pre><code>samplings: 2500
+mean: 0.949211222444898
+median: 0.9498997995991983
+quantile - [0.05, 0.10]: [0.93787575 0.94188377]
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Scores[Scores[<span style="color:#e6db74">&#39;Recall&#39;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">.94</span>]<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">/</span> Scores<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><pre><code>0.0964
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Scores[Scores[<span style="color:#e6db74">&#39;Recall&#39;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.93</span>]<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">/</span> Scores<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><pre><code>0.0072
+</code></pre>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#configure-environment">Configure Environment</a></li>
+    <li><a href="#prepare-pipeline">Prepare Pipeline</a>
+      <ul>
+        <li><a href="#pipeline-components">Pipeline Components</a></li>
+        <li><a href="#prepare-text">Prepare Text</a></li>
+        <li><a href="#prepare-code">Prepare Code</a></li>
+      </ul>
+    </li>
+    <li><a href="#prepare-workflow">Prepare Workflow</a>
+      <ul>
+        <li><a href="#create-datasets">Create datasets</a></li>
+        <li><a href="#train-models">Train models</a></li>
+      </ul>
+    </li>
+    <li><a href="#run">Run</a>
+      <ul>
+        <li><a href="#run-patterns">Run patterns</a></li>
+        <li><a href="#run-ensemble-and-solution-logic">Run ensemble and solution logic</a></li>
+      </ul>
+    </li>
+    <li><a href="#results-review-bootstraping-methods">Results, review bootstraping methods</a>
+      <ul>
+        <li><a href="#individual-samples">Individual samples</a></li>
+        <li><a href="#distribution-of-recall-score">Distribution of Recall score</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/nlp">nlp
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/statistics">statistics
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="https://imtorgdemo.github.io//tags/sample_size">sample_size
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    
+    <a href="/posts/blog_health-paper_review_child_hormones/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Review of Research Paper: &#39;Pubertal Suppression for Transgender Youth and Risk of Suicidal Ideation&#39;&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2023 IMTorg Kbase
+            <br />
+            <b> Want to discuss software?</b><br>Send me a message <a href="mailto:information@mgmt-tech.org?Subject=Open%20Software" target="_top"></a> information@mgmt-tech.org
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha256-ExtbCSBuYA7kq1Pz362ibde9nnsHYPt6JxuxYeZbU+c=" crossorigin="anonymous"></script>
+        <script>renderMathInElement(document.body);</script>
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+    <script 
+	src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.8/lunr.min.js" 
+	integrity="sha256-34Si1Y6llMBKM3G0jQILVeoQKEwuxjbk4zGWXXMT4ps=" 
+	crossorigin="anonymous"></script>
+	<script src="https://imtorgdemo.github.io/js/search.js"></script>
+</footer>
+</div>
+</body>
+</html>

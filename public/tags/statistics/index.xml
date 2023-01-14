@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>statistics on IMTorg Kbase</title>
+    <link>https://imtorgdemo.github.io/tags/statistics/</link>
+    <description>Recent content in statistics on IMTorg Kbase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/tags/statistics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Determine a Reasonable Sample Size for Training a Text Classifier</title>
+      <link>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_pred_intvl/</link>
+      <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/posts/blog_nlp-sample_size_pred_intvl/</guid>
+      <description>Consider that we are creating a text classification model that will discover a few target needles in a massive haystack of records. Maybe we are looking for messages of Death among emergency services messages - 20 for every 50,000 messages. Labeling this large dataset and finding the Death messages is costly, so we don&amp;rsquo;t want to label more than is necessary. If we already have enough to estimate the target proportion, let us determine whether the sample size used for training the classification model is large enough.</description>
+    </item>
+    
+  </channel>
+</rss>

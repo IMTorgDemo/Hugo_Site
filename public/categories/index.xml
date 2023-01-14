@@ -6,7 +6,43 @@
     <description>Recent content in Categories on IMTorg Kbase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 13 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://imtorgdemo.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data_Science</title>
+      <link>https://imtorgdemo.github.io/categories/data_science/</link>
+      <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/data_science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Innovation</title>
+      <link>https://imtorgdemo.github.io/categories/innovation/</link>
+      <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/innovation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>category2</title>
+      <link>https://imtorgdemo.github.io/categories/category2/</link>
+      <pubDate>Thu, 08 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/category2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Health</title>
+      <link>https://imtorgdemo.github.io/categories/health/</link>
+      <pubDate>Thu, 08 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://imtorgdemo.github.io/categories/health/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Business_and_Leadership</title>
       <link>https://imtorgdemo.github.io/categories/business_and_leadership/</link>
@@ -35,29 +71,11 @@
     </item>
     
     <item>
-      <title>Innovation</title>
-      <link>https://imtorgdemo.github.io/categories/innovation/</link>
-      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/innovation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Cheatsheet</title>
       <link>https://imtorgdemo.github.io/categories/cheatsheet/</link>
       <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/cheatsheet/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Data_Science</title>
-      <link>https://imtorgdemo.github.io/categories/data_science/</link>
-      <pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/data_science/</guid>
       <description></description>
     </item>
     
@@ -184,15 +202,6 @@
       <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://imtorgdemo.github.io/categories/process/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>category2</title>
-      <link>https://imtorgdemo.github.io/categories/category2/</link>
-      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://imtorgdemo.github.io/categories/category2/</guid>
       <description></description>
     </item>
     
